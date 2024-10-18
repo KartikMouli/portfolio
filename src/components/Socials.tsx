@@ -1,5 +1,7 @@
 import data from "@/data/socials.json";
 import Icon from "./Icon";
+import { TbBrandLeetcode } from "react-icons/tb";
+import { SiLeetcode } from "react-icons/si";
 
 
 
@@ -14,14 +16,27 @@ export default function Socials() {
                     href={item.href}
                     key={item.name}
                     target="_blank"
-                    className="text-muted-foreground hover:text-foreground"
+                    className="text-gray-400 hover:text-white"
                     rel="noopener noreferrer"
+
                 >
                     <span className="sr-only">{item.name}</span>
                     <Icon name={item.icon} aria-hidden="true" className="size-5" />
                 </a>
             ))}
-        </section>
+            <a
+                href="https://leetcode.com/u/monchi02/"
+                target="_blank"
+                className="text-gray-400 hover:text-white"
+                rel="noopener noreferrer"
+
+            >
+                <span className="sr-only">Leetcode</span>
+                <SiLeetcode aria-hidden="true" className="size-5" />
+            </a>
+
+
+        </section >
 
     );
 }
