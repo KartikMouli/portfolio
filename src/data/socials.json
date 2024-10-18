@@ -1,0 +1,19 @@
+{
+    "socials": [
+        {
+            "name": "LinkedIn",
+            "href": "https://linkedin.com/in/kartik-mouli",
+            "icon": "linkedin"
+        },
+        {
+            "name": "GitHub",
+            "href": "https://github.com/KartikMouli",
+            "icon": "github"
+        },
+        {
+            "name": "Email",
+            "href": "mailto:kartikmouli156@gmail.com",
+            "icon": "mail"
+        }
+    ]
+}
