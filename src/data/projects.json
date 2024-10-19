@@ -1,0 +1,81 @@
+{
+    "projects": [
+        {
+            "name": "Valoarena",
+            "description": "A tournament booking platform for Valorant, allowing users to seamlessly create, manage, and join tournaments, driving community engagement and competitive interaction.",
+            "href": "https://valoarena.vercel.app/",
+            "image": "/valoarena.png",
+            "tags": [
+                "NextJS",
+                "TailwindCSS",
+                "Supabase",
+                "Prisma",
+                "Docker"
+            ],
+            "links": [
+                {
+                    "name": "Live Demo",
+                    "href": "https://valoarena.vercel.app/",
+                    "icon": "external-link"
+                },
+                {
+                    "name": "Source Code",
+                    "href": "https://github.com/KartikMouli/valoarena",
+                    "icon": "github"
+                }
+            ]
+        },
+        {
+            "name": "DexApp",
+            "description": "Mini version of cryptocurrency exchange with a liquidity provider interface and features like token transfer and swapping of tokens.",
+            "href": "https://dexapp-bc.vercel.app/",
+            "image": "/dexapp.webp",
+            "tags": [
+                "Blockchain",
+                "ReactJS",
+                "TailwindCSS",
+                "Sepolia Testnet",
+                "Ethereum",
+                "Solidity"
+            ],
+            "links": [
+                {
+                    "name": "Live Demo",
+                    "href": "https://dexapp-bc.vercel.app/",
+                    "icon": "external-link"
+                },
+                {
+                    "name": "Source Code",
+                    "href": "https://github.com/KartikMouli/DexApp",
+                    "icon": "github"
+                }
+            ]
+        },
+        {
+            "name": "DexApp",
+            "description": "Mini version of cryptocurrency exchange with a liquidity provider interface and features like token transfer and swapping of tokens– Smart contract with",
+            "href": "https://dexapp-bc.vercel.app/",
+            "image": "/old-portfolio.png",
+            "tags": [
+                "Blockchain",
+                "ReactJS",
+                "TailwindCSS",
+                "Sepolia Testnet",
+                "Ethereum",
+                "Solidity"
+            ],
+            "links": [
+                {
+                    "name": "Live Demo",
+                    "href": "https://dexapp-bc.vercel.app/",
+                    "icon": "external-link"
+                },
+                {
+                    "name": "Source Code",
+                    "href": "https://github.com/KartikMouli/DexApp",
+                    "icon": "github"
+                }
+            ]
+        }
+    ]
+}
