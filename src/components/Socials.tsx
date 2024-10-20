@@ -1,5 +1,5 @@
 import data from "@/data/socials.json";
-import Icon from "./Icon";
+import Icon from "./ui/Icon";
 import { TbBrandLeetcode } from "react-icons/tb";
 import { SiLeetcode } from "react-icons/si";
 

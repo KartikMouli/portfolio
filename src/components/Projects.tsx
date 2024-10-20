@@ -1,6 +1,6 @@
 import data from "@/data/projects.json";
 
-import { ProjectCard } from "./ProjectCard";
+import { ProjectCard } from "./ui/ProjectCard";
 
 interface Props {
     limit?: number;

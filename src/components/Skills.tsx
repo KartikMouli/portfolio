@@ -1,6 +1,6 @@
 "use client";
 
-import TechCard from "./TechCard";
+import TechCard from "./ui/TechCard";
 import data from "@/data/skills.json"
 
 const Skills = () => {

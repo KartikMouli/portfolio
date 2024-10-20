@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import Socials from "@/components/Socials";
-import ResumeButton from "@/components/ResumeButton";
+import ResumeButton from "@/components/ui/ResumeButton";
 import Education from "@/components/Education";
 import Projects from "@/components/Projects";
 import { ArrowRightIcon } from "lucide-react";
@@ -40,9 +40,15 @@ export default function Home() {
 
       {/* Skills Section */}
       <section className="mb-4">
-        <h2 className="text-3xl font-bold mb-6 text-gray-100 border-b-2 border-gray-700 pb-2">
-        Current technologies
-        </h2>
+        <div className="flex justify-between items-center border-b-2 border-gray-700 pb-2 mb-8">
+          <h2 className="text-3xl font-bold text-gray-100 ">
+            Current technologies
+          </h2>
+          <Link href="/skills" className="link flex items-center gap-2 font-light">
+            <ArrowRightIcon className="size-5" />
+            <span>view more</span>
+          </Link>
+        </div>
         <Skills />
       </section>
 
