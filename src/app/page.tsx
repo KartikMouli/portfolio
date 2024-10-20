@@ -2,17 +2,16 @@ import Image from "next/image";
 import Link from "next/link";
 import Socials from "@/components/Socials";
 import ResumeButton from "@/components/ui/ResumeButton";
-import Education from "@/components/Education";
 import Projects from "@/components/Projects";
 import { ArrowRightIcon } from "lucide-react";
 import Skills from "@/components/Skills";
 
 export default function Home() {
   return (
-    <div className="mt-8 flex flex-col gap-16 pb-16 text-white">
+    <div className="flex flex-col gap-16 pb-16 text-white">
 
       {/* Hero Section */}
-      <section className="flex flex-col items-start gap-8 md:flex-row-reverse md:items-center md:justify-between">
+      <section className="flex flex-col mt-8 gap-8 md:flex-row-reverse md:items-center md:justify-between">
         <Image
           className="rounded-lg shadow-lg"
           src="/img/pfp.jpg"
@@ -21,7 +20,7 @@ export default function Home() {
           height={175}
           priority
         />
-        <div className="flex flex-col">
+        <div className="flex flex-col ">
           <h1 className="title text-4xl mb-2 font-extrabold text-gradient">
             Kartik Mouli
           </h1>
@@ -52,14 +51,7 @@ export default function Home() {
         <Skills />
       </section>
 
-      {/* Education Section */}
-
-      <section className="mb-4">
-        <h2 className="text-3xl font-bold mb-6 text-gray-100 border-b-2 border-gray-700 pb-2">
-          Education
-        </h2>
-        <Education />
-      </section>
+     
 
       {/* Project Section */}
 

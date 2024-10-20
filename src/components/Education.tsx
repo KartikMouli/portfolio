@@ -11,7 +11,7 @@ const Education: React.FC = () => {
             {educationData.map((edu, index) => (
                 <li key={index} className="relative">
                     <div className="flex items-start mb-2">
-                        <div className="rounded-full p-1 mr-4 w-19 h-19 flex-shrink-0 flex items-center justify-center overflow-hidden">
+                        <div className="rounded-full p-1 mr-4 w-17 h-17 flex-shrink-0 flex items-center justify-center overflow-hidden">
                             <Image
                                 src={edu.image}
                                 alt={`${edu.university} logo`}
