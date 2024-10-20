@@ -11,11 +11,13 @@ import Link from "next/link";
 import Markdown from "react-markdown";
 import Icon from "./Icon";
 
+
+
 // Define the types for project and links
 interface ProjectLink {
     href: string;
     name: string;
-    icon: string;
+    icon: any;
 }
 
 interface Project {

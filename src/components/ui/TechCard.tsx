@@ -24,7 +24,7 @@ const TechCard = ({
                         opacity: opacity
                     }}
                 />
-                <div className="p-1 rounded-xl w-fit relative z-10"> {/* Positioning to ensure the image stays above */}
+                <div className="p-1 rounded-2xl w-fit relative z-10"> {/* Positioning to ensure the image stays above */}
                     <Image
                         src={imageUrl}
                         alt={`${name} logo`}
