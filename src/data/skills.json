@@ -1,0 +1,46 @@
+{
+    "skills": [
+        {
+            "name": "TypeScript",
+            "description": "JavaScript but better",
+            "imageUrl": "/typescriptlang-icon.svg",
+            "bgColor": "bg-[#3178C6]"
+        },
+        {
+            "name": "React",
+            "description": "JavaScript Library",
+            "imageUrl": "/react-svgrepo-com.svg",
+            "bgColor": "bg-[#61DAFB]"
+        },
+        {
+            "name": "NextJS",
+            "description": "React framework",
+            "imageUrl": "/nextjs-svgrepo-com.svg",
+            "bgColor": "bg-white"
+        },
+        {
+            "name": "Tailwind",
+            "description": "CSS framework",
+            "imageUrl": "/tailwind-svgrepo-com.svg",
+            "bgColor": "bg-[#0EA5E9]"
+        },
+        {
+            "name": "Git",
+            "description": "Version control",
+            "imageUrl": "/git-scm-icon.svg",
+            "bgColor": "bg-[#F1502F]"
+        },
+        {
+            "name": "Supabase",
+            "description": "Backend tool",
+            "imageUrl": "/supabase-icon.svg",
+            "bgColor": "bg-[#3ECF8E]"
+        },
+        {
+            "name": "Vercel",
+            "description": "Deployment",
+            "imageUrl": "/vercel-icon.svg",
+            "bgColor": "bg-[#F02D65]"
+        }
+    ]
+}

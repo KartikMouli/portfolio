@@ -5,13 +5,16 @@ import ResumeButton from "@/components/ResumeButton";
 import Education from "@/components/Education";
 import Projects from "@/components/Projects";
 import { ArrowRightIcon } from "lucide-react";
+import Skills from "@/components/Skills";
 
 export default function Home() {
   return (
     <div className="mt-8 flex flex-col gap-16 pb-16 text-white">
+
+      {/* Hero Section */}
       <section className="flex flex-col items-start gap-8 md:flex-row-reverse md:items-center md:justify-between">
         <Image
-          className="rounded-lg shadow-lg hover:scale-105 transition-transform duration-300"
+          className="rounded-lg shadow-lg"
           src="/pfp.jpg"
           alt="pfp of Kartik"
           width={175}
@@ -35,12 +38,24 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Skills Section */}
+      <section className="mb-4">
+        <h2 className="text-3xl font-bold mb-6 text-gray-100 border-b-2 border-gray-700 pb-2">
+        Current technologies
+        </h2>
+        <Skills />
+      </section>
+
+      {/* Education Section */}
+
       <section className="mb-4">
         <h2 className="text-3xl font-bold mb-6 text-gray-100 border-b-2 border-gray-700 pb-2">
           Education
         </h2>
         <Education />
       </section>
+
+      {/* Project Section */}
 
       <section className="flex flex-col gap-8">
 
