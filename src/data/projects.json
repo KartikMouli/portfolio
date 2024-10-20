@@ -52,27 +52,83 @@
             ]
         },
         {
-            "name": "DexApp",
-            "description": "Mini version of cryptocurrency exchange with a liquidity provider interface and features like token transfer and swapping of tokens– Smart contract with",
-            "href": "https://dexapp-bc.vercel.app/",
-            "image": "/old-portfolio.png",
+            "name": "ChatAI",
+            "description": "Developed an AI-driven chat platform with seamless user authentication using Clerk, providing real-time ChatGPT-like capabilities within a user-friendly dashboard.",
+            "href": "https://github.com/KartikMouli/ChatApp",
+            "image": "/chatAI.jpeg",
             "tags": [
-                "Blockchain",
-                "ReactJS",
-                "TailwindCSS",
-                "Sepolia Testnet",
-                "Ethereum",
-                "Solidity"
+                "MERN Stack",
+                "Google Gemini API",
+                "Clerk",
+                "ImageKit.io",
+                "React-Query"
             ],
             "links": [
                 {
                     "name": "Live Demo",
-                    "href": "https://dexapp-bc.vercel.app/",
+                    "href": "https://chat-ai-mu-dun.vercel.app/",
                     "icon": "external-link"
                 },
                 {
                     "name": "Source Code",
-                    "href": "https://github.com/KartikMouli/DexApp",
+                    "href": "https://github.com/KartikMouli/ChatAI",
+                    "icon": "github"
+                }
+            ]
+        },
+        {
+            "name": "Blogapp",
+            "description": "A dynamic blogging platform that enables users to publish and explore a diverse range of articles. With intuitive navigation and customizable features, it fosters a vibrant community of writers and readers.",
+            "href": "https://github.com/KartikMouli/blog_app",
+            "image": "/blogapp.png",
+            "tags": [
+                "NextJS",
+                "MongoDB",
+                "Prisma ORM",
+                "Google OAuth 2.0",
+                "Javascript"
+            ],
+            "links": [
+                {
+                    "name": "Source Code",
+                    "href": "https://github.com/KartikMouli/blog_app",
+                    "icon": "github"
+                }
+            ]
+        },
+        {
+            "name": "Chatapp",
+            "description": "A real-time chat application that connects users through seamless messaging and interactive features. With a sleek interface and advanced functionalities, it enhances communication for individuals and groups alike.",
+            "href": "https://github.com/KartikMouli/ChatApp",
+            "image": "/chatapp.png",
+            "tags": [
+                "ReactJS",
+                "ChatEngine",
+                "Javascript",
+                "Firebase"
+            ],
+            "links": [
+                {
+                    "name": "Source Code",
+                    "href": "https://github.com/KartikMouli/ChatApp",
+                    "icon": "github"
+                }
+            ]
+        },
+        {
+            "name": "Portfolio",
+            "description": "A portfolio website that showcases my projects, skills, and achievements in a clear layout. Built with Tailwind CSS for a responsive design, it highlights my work in software development.",
+            "href": "https://github.com/KartikMouli/Portfolio",
+            "image": "/portfolio.jpg",
+            "tags": [
+                "NextJS",
+                "TypeScript",
+                "TailwindCSS"
+            ],
+            "links": [
+                {
+                    "name": "Source Code",
+                    "href": "https://github.com/KartikMouli/Portfolio",
                     "icon": "github"
                 }
             ]

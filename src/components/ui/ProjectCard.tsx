@@ -44,7 +44,7 @@ export function ProjectCard({ project }: Props) {
                             alt={name}
                             width={500}
                             height={300}
-                            className="h-40 w-full object-cover object-top hover:scale-105 transition-transform duration-300"
+                            className="h-40 w-full rounded object-cover object-top hover:scale-105 transition-transform duration-300"
                         />
                     </Link>
                 )}
