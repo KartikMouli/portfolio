@@ -4,43 +4,43 @@
             "name": "TypeScript",
             "description": "JavaScript but better",
             "imageUrl": "/logo/programming-languages/typescript.svg",
-            "bgColor": "bg-[#3178C6]"
+            "bgColor": "#007ACC"
         },
         {
             "name": "ReactJS",
             "description": "JavaScript Library",
             "imageUrl": "/logo/webdev/react.svg",
-            "bgColor": "bg-[#61DAFB]"
+            "bgColor": "#61DAFB"
         },
         {
             "name": "NextJS",
             "description": "React framework",
             "imageUrl": "/logo/webdev/nextjs.svg",
-            "bgColor": "bg-white"
+            "bgColor": "white"
         },
         {
             "name": "TailwindCSS",
             "description": "CSS framework",
             "imageUrl": "/logo/webdev/tailwindcss.svg",
-            "bgColor": "bg-[#0EA5E9]"
+            "bgColor": "#0EA5E9"
         },
         {
             "name": "Git",
             "description": "Version control",
             "imageUrl": "/logo/webdev/git.svg",
-            "bgColor": "bg-[#F1502F]"
+            "bgColor": "#F1502F"
         },
         {
             "name": "Supabase",
             "description": "Database client",
-            "imageUrl": "/logo/webdev/django.svg",
-            "bgColor": "bg-[#3ECF8E]"
+            "imageUrl": "/logo/webdev/supabase.svg",
+            "bgColor": "#3ECF8E"
         },
         {
             "name": "Vercel",
             "description": "Deployment",
             "imageUrl": "/logo/webdev/vercel.svg",
-            "bgColor": "bg-white"
+            "bgColor": "white"
         }
     ],
     "Programming_Languages": [
@@ -48,37 +48,37 @@
             "name": "C",
             "description": "Programming Language",
             "imageUrl": "/logo/programming-languages/c.svg",
-            "bgColor": "bg-[#F02D65]"
+            "bgColor": "#004482"
         },
         {
             "name": "C++",
             "description": "Programming Language",
             "imageUrl": "/logo/programming-languages/c++.svg",
-            "bgColor": "bg-[#F02D65]"
+            "bgColor": "#004482"
         },
         {
             "name": "Python",
             "description": "Programming Language",
             "imageUrl": "/logo/programming-languages/python.svg",
-            "bgColor": "bg-[#F02D65]"
+            "bgColor": "#3771A1"
         },
         {
             "name": "JavaScript",
             "description": "Programming Language",
             "imageUrl": "/logo/programming-languages/javascript.svg",
-            "bgColor": "bg-[#F02D65]"
+            "bgColor": "#F0DB4F"
         },
         {
             "name": "TypeScript",
             "description": "Programming Language",
             "imageUrl": "/logo/programming-languages/typescript.svg",
-            "bgColor": "bg-[#F02D65]"
+            "bgColor": "#007ACC"
         },
         {
             "name": "SQL",
             "description": "Programming Language",
             "imageUrl": "/logo/programming-languages/sql.svg",
-            "bgColor": ""
+            "bgColor": "#00BCF2"
         }
     ],
     "WebDevelopment_Tech": [
@@ -86,55 +86,55 @@
             "name": "HTML",
             "description": "Frontend",
             "imageUrl": "/logo/webdev/html.svg",
-            "bgColor": "bg-[#F02D65]"
+            "bgColor": "#E34F26"
         },
         {
             "name": "CSS",
             "description": "Frontend",
             "imageUrl": "/logo/webdev/css.svg",
-            "bgColor": "bg-[#F02D65]"
+            "bgColor": "#1B73BA"
         },
         {
             "name": "TailwindCSS",
             "description": "CSS framework",
             "imageUrl": "/logo/webdev/tailwindcss.svg",
-            "bgColor": "bg-[#0EA5E9]"
+            "bgColor": "#0EA5E9"
         },
         {
             "name": "ReactJS",
             "description": "Frontend",
             "imageUrl": "/logo/webdev/react.svg",
-            "bgColor": "bg-[#F02D65]"
+            "bgColor": "#61DAFB"
         },
         {
             "name": "NextJS",
             "description": "React framework",
             "imageUrl": "/logo/webdev/nextjs.svg",
-            "bgColor": "bg-white"
+            "bgColor": "white"
         },
         {
             "name": "NodeJS",
             "description": "Backend tool",
             "imageUrl": "/logo/webdev/nodejs.svg",
-            "bgColor": "bg-white"
+            "bgColor": "white"
         },
         {
             "name": "ExpressJS",
             "description": "NodeJS framework",
             "imageUrl": "/logo/webdev/expressjs.svg",
-            "bgColor": "bg-white"
+            "bgColor": "white"
         },
         {
             "name": "Django",
             "description": "Backend tool",
             "imageUrl": "/logo/webdev/django.svg",
-            "bgColor": "bg-[#F02D65]"
+            "bgColor": "#2BA977"
         },
         {
             "name": "JWT",
             "description": "authentication and authorization",
             "imageUrl": "/logo/webdev/jwt.svg",
-            "bgColor": "bg-[#F1502F]"
+            "bgColor": "black"
         }
     ],
     "DevOps_Deployment_Tools": [
@@ -142,19 +142,19 @@
             "name": "Docker",
             "description": "Containerization",
             "imageUrl": "/logo/webdev/docker.svg",
-            "bgColor": "bg-[#F1502F]"
+            "bgColor": "#0091E2"
         },
         {
             "name": "Git",
             "description": "Version control",
             "imageUrl": "/logo/webdev/git.svg",
-            "bgColor": "bg-[#F1502F]"
+            "bgColor": "#F1502F"
         },
         {
             "name": "Vercel",
             "description": "Deployment",
             "imageUrl": "/logo/webdev/vercel.svg",
-            "bgColor": "bg-white"
+            "bgColor": "white"
         }
     ],
     "Database_Technologies": [
@@ -162,25 +162,25 @@
             "name": "MySQL",
             "description": "Relational Database",
             "imageUrl": "/logo/webdev/mysql.svg",
-            "bgColor": "bg-white"
+            "bgColor": "black"
         },
         {
             "name": "MongoDB",
             "description": "NoSQL Database",
             "imageUrl": "/logo/webdev/mongodb.svg",
-            "bgColor": "bg-[#F02D65]"
+            "bgColor": "black"
         },
         {
             "name": "Supabase",
             "description": "Postgres database",
-            "imageUrl": "/logo/webdev/django.svg",
-            "bgColor": "bg-[#F02D65]"
+            "imageUrl": "/logo/webdev/supabase.svg",
+            "bgColor": "#3ECF8E"
         },
         {
             "name": "Prisma",
             "description": "Database client",
             "imageUrl": "/logo/webdev/prisma.svg",
-            "bgColor": "bg-white"
+            "bgColor": "white"
         }
     ]
 }
