@@ -15,7 +15,7 @@ export default function Home() {
       <section className="flex flex-col items-start gap-8 md:flex-row-reverse md:items-center md:justify-between">
         <Image
           className="rounded-lg shadow-lg"
-          src="/pfp.jpg"
+          src="/img/pfp.jpg"
           alt="pfp of Kartik"
           width={175}
           height={175}
@@ -28,7 +28,7 @@ export default function Home() {
           <h2 className="text-xl text-gray-300 mb-4">Full Stack Web Developer</h2>
           <h3 className="text-lg text-gray-400 mb-4">📍 Nashik, Maharashtra, India</h3>
           <p className="text-gray-200 text-sm leading-relaxed">
-            Building Real Products For Real Clients, Not Just More Projects
+            Building Real Products For Fake Clients, Not Just any More Projects.
           </p>
 
           <section className="mt-8 flex items-center gap-8">

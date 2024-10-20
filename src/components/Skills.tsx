@@ -4,7 +4,7 @@ import TechCard from "./ui/TechCard";
 import data from "@/data/skills.json"
 
 const Skills = () => {
-    const techCardsItems = data.skills
+    const techCardsItems = data.currentTech
     return (
 
         <div

@@ -4,7 +4,7 @@
             "name": "Valoarena",
             "description": "A tournament booking platform for Valorant, allowing users to seamlessly create, manage, and join tournaments, driving community engagement and competitive interaction.",
             "href": "https://valoarena.vercel.app/",
-            "image": "/valoarena.png",
+            "image": "/img/project/valoarena.png",
             "tags": [
                 "NextJS",
                 "TailwindCSS",
@@ -29,7 +29,7 @@
             "name": "DexApp",
             "description": "Mini version of cryptocurrency exchange with a liquidity provider interface and features like token transfer and swapping of tokens.",
             "href": "https://dexapp-bc.vercel.app/",
-            "image": "/dexapp.webp",
+            "image": "/img/project/dexapp.webp",
             "tags": [
                 "Blockchain",
                 "ReactJS",
@@ -55,7 +55,7 @@
             "name": "ChatAI",
             "description": "Developed an AI-driven chat platform with seamless user authentication using Clerk, providing real-time ChatGPT-like capabilities within a user-friendly dashboard.",
             "href": "https://github.com/KartikMouli/ChatApp",
-            "image": "/chatAI.jpeg",
+            "image": "/img/project/chatAI.jpeg",
             "tags": [
                 "MERN Stack",
                 "Google Gemini API",
@@ -80,7 +80,7 @@
             "name": "Blogapp",
             "description": "A dynamic blogging platform that enables users to publish and explore a diverse range of articles. With intuitive navigation and customizable features, it fosters a vibrant community of writers and readers.",
             "href": "https://github.com/KartikMouli/blog_app",
-            "image": "/blogapp.png",
+            "image": "/img/project/blogapp.png",
             "tags": [
                 "NextJS",
                 "MongoDB",
@@ -100,7 +100,7 @@
             "name": "Chatapp",
             "description": "A real-time chat application that connects users through seamless messaging and interactive features. With a sleek interface and advanced functionalities, it enhances communication for individuals and groups alike.",
             "href": "https://github.com/KartikMouli/ChatApp",
-            "image": "/chatapp.png",
+            "image": "/img/project/chatapp.png",
             "tags": [
                 "ReactJS",
                 "ChatEngine",
@@ -119,7 +119,7 @@
             "name": "Portfolio",
             "description": "A portfolio website that showcases my projects, skills, and achievements in a clear layout. Built with Tailwind CSS for a responsive design, it highlights my work in software development.",
             "href": "https://github.com/KartikMouli/Portfolio",
-            "image": "/portfolio.jpg",
+            "image": "/img/project/portfolio.jpg",
             "tags": [
                 "NextJS",
                 "TypeScript",

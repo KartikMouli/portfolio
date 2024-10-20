@@ -4,19 +4,19 @@
             "degree": "BTech in Computer Science and Engineering",
             "university": "Indian Institute of Technology (IIT) Patna",
             "period": "Patna, Bihar | July 2020 - May 2024",
-            "image": "/iit_patna_logo.png"
+            "image": "/logo/edu/iit_patna_logo.png"
         },
         {
             "degree": "HSC Exam conducted by Maharashtra State Board",
             "university": "Global Public School & Jr. College",
             "period": "Nashik, Maharashtra | 2020",
-            "image": "/global_logo.jpg"
+            "image": "/logo/edu/global_logo.jpg"
         },
         {
             "degree": "SSC Exam conducted by Maharashtra State Board",
             "university": "New Maratha Highschool",
             "period": "Nashik, Maharashtra | 2017",
-            "image": "/mvp_logo.jpg"
+            "image": "/logo/edu/mvp_logo.jpg"
         }
     ]
 }
