@@ -1,4 +1,5 @@
 import Education from '@/components/Education'
+import { ArrowRightIcon } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react'
@@ -29,11 +30,25 @@ function About({ }: Props) {
                 </p>
             </div>
 
+            {/* Skills Section */}
+            <section className="mb-16">
+                <h3 className="text-3xl font-bold mb-4 text-gray-100">Skills</h3>
+                <p className="text-gray-300 mb-4">
+                    Curious about the tools and technologies I work with? Click below to explore my skillset!
+                </p>
+                <Link href="/skills">
+                    <button className="px-4 py-2 flex items-center gap-2 hover:bg-white text-white hover:text-[#111111] rounded transition duration-300  border border-white">
+                        Explore Skills
+                        <ArrowRightIcon className="size-5" />
+                    </button>
+                </Link>
+            </section>
+
             {/* Education Section */}
 
             <section className="mb-8">
                 <h2 className="text-3xl font-bold mb-6 text-gray-100">
-                    Education
+                    Learning Journey
                 </h2>
                 <Education />
             </section>

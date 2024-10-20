@@ -45,7 +45,7 @@ export default function Home() {
           </h2>
           <Link href="/skills" className="link flex items-center gap-2 font-light">
             <ArrowRightIcon className="size-5" />
-            <span>view more</span>
+            <span>Full skill overview</span>
           </Link>
         </div>
         <Skills />
