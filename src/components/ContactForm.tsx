@@ -32,12 +32,12 @@ function ContactForm({ }: Props) {
             {/* Send message */}
 
             <div className="mt-2">
-                <div className='inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium w-full bg-white text-[#111111] shadow hover:bg-white/90 h-9 px-4 py-2'>
-                    <button className='flex items-center'>
+                <button className='inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium w-full bg-white text-[#111111] shadow hover:bg-white/90 h-9 px-4 py-2'>
+                    <div className='flex items-center'>
                         <span>Send Message</span>
                         <Send className="ml-2" />
-                    </button>
-                </div>
+                    </div>
+                </button>
 
                 <p className="mt-4 text-xs text-muted-foreground">
                     By submitting this form, I agree to the{" "}
