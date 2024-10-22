@@ -13,16 +13,16 @@ function About() {
                 <h2 className="text-3xl font-bold mb-4">About Me</h2>
                 <div className="text-white p-6 mb-16 mt-8 rounded-lg bg-[#1a1a1a]">
                     <p className="mb-2">
-                        Hey! I&apos;m <span className="font-semibold">Kartik</span>, a proud <span className="italic">IIT Patna CSE '24</span> graduate. I focus on full-stack development, Web3, and competitive programming.
+                        Hey! I&apos;m <span className="font-semibold">Kartik</span>, a proud <span className="italic">IIT Patna CSE &apos;24</span> graduate. I focus on full-stack development, Web3, and competitive programming.
                     </p>
                     <p className="mb-2">
-                        Outside of coding, you&apos;ll find me on the football field or shooting hoops. I&apos;m also a huge movie enthusiast—whether it’s action-packed blockbusters or thought-provoking dramas.
+                        Outside of coding, you&apos;ll find me on the football field or shooting hoops. I&apos;m also a huge movie enthusiast—whether it&apos;s action-packed blockbusters or thought-provoking dramas.
                     </p>
                     <p className='mb-2'>
                         Originally from <span className="italic">Nashik</span>, I&apos;m always excited about creating new tech and exploring the world of open-source.
                     </p>
                     <p className="mt-4">
-                        <Link href="/contact" className='font-semibold hover:scale-105 transition-transform inline-block'>Let’s connect!</Link> I’m open to discussing tech, sports, or the latest movies.
+                        <Link href="/contact" className='font-semibold hover:scale-105 transition-transform inline-block'>Let&apos;s connect!</Link> I&apos;m open to discussing tech, sports, or the latest movies.
                     </p>
                 </div>
             </section>
