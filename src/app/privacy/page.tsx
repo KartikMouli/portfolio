@@ -4,7 +4,7 @@ const lastUpdated = "Oct 2024";
 
 export default function page() {
     return (
-        <article className="mt-8 pb-16 max-w-3xl mx-auto px-4 sm:px-8">
+        <section className="mt-8 pb-16 max-w-3xl mx-auto px-4 sm:px-8">
             {/* Header Section */}
             <div className="space-y-4 mb-8">
                 <h1 className="text-5xl font-bold text-gray-100">Privacy Policy</h1>
@@ -64,6 +64,6 @@ export default function page() {
                     <button className="mt-6 border text-white px-4 py-2 rounded-lg hover:bg-white hover:text-black transition duration-300">Contact Me</button>
                 </Link>
             </div>
-        </article>
+        </section>
     );
 }

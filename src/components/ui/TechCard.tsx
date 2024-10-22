@@ -14,7 +14,7 @@ const TechCard = ({
     // Determine opacity based on bgColor
     const opacity = bgColor === "white" ? 0.9 : 0.2;
     return (
-        <div className="flex items-center gap-4 p-2 rounded-xl border border-transparent bg-[#1E1E1E] hover:bg-[#2a2a2a] transition-colors duration-300 shadow-md hover:shadow-lg transform hover:border-[#61DAFB]/40">
+        <div className="flex items-center gap-4 p-2 rounded-xl border border-transparent bg-[#1E1E1E] hover:bg-[#2a2a2a] transition-colors duration-300 shadow-md hover:shadow-lg transform hover:border-[#61DAFB]/40" aria-label={`Technology: ${name}, Description: ${description}`}>
             <div className="relative">
                 {/* Background with reduced opacity for the image only */}
                 <div

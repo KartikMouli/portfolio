@@ -14,11 +14,6 @@
             "name": "Email",
             "href": "mailto:kartikmouli156@gmail.com",
             "icon": "mail"
-        },
-        {
-            "name": "Twitter",
-            "href": "https://x.com/kartikmouli",
-            "icon": "twitter"
         }
     ]
 }

@@ -27,7 +27,7 @@ function ContactForm({ }: Props) {
         // Simple validation
         if (!name || !email || !message) {
             setErrorMessage("All fields are required!");
-            return; // Exit if validation fails
+            return;
         }
 
         setErrorMessage('');
@@ -53,8 +53,8 @@ function ContactForm({ }: Props) {
             const result = await response.json();
 
             if (response.ok && result.success) {
-                setSuccessMessage("Form submitted successfully!");
-                setFormState({ name: '', email: '', message: '' }); // Clear form
+                setSuccessMessage("Thanks for reaching out! Your form has been submitted.");
+                setFormState({ name: '', email: '', message: '' });
             } else {
                 setErrorMessage("Form submission failed. Please try again.");
             }
