@@ -4,9 +4,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 
-type Props = {};
 
-function About({ }: Props) {
+function About() {
     return (
         <>
             {/* About Me Section */}
@@ -14,7 +13,7 @@ function About({ }: Props) {
                 <h2 className="text-3xl font-bold mb-4">About Me</h2>
                 <div className="text-white p-6 mb-16 mt-8 rounded-lg bg-[#1a1a1a]">
                     <p className="mb-2">
-                        Hey! I’m <span className="font-semibold">Kartik</span>, a proud <span className="italic">IIT Patna CSE '24</span> graduate. I focus on full-stack development, Web3, and competitive programming.
+                        Hey! I&apos;m <span className="font-semibold">Kartik</span>, a proud <span className="italic">IIT Patna CSE '24</span> graduate. I focus on full-stack development, Web3, and competitive programming.
                     </p>
                     <p className="mb-2">
                         Outside of coding, you’ll find me on the football field or shooting hoops. I’m also a huge movie enthusiast—whether it’s action-packed blockbusters or thought-provoking dramas.

@@ -3,9 +3,9 @@ import React, { useState } from 'react';
 import { Send } from 'lucide-react';
 import Link from 'next/link';
 
-type Props = {}
 
-function ContactForm({ }: Props) {
+
+function ContactForm() {
     const [formState, setFormState] = useState({
         name: '',
         email: '',

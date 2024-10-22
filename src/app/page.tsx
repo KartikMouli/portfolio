@@ -27,7 +27,7 @@ export default function Home() {
           <h2 className="text-xl text-gray-300 mb-4">Full Stack Web Developer</h2>
           <h3 className="text-lg text-gray-400 mb-4">📍 Nashik, Maharashtra, India</h3>
           <p className="text-gray-200 text-sm leading-relaxed">
-          IITP CSE '24 | Exploring Web3 and advancing in Fullstack Development
+          IITP CSE &apos;24 | Exploring Web3 and advancing in Fullstack Development
           </p>
 
           <section className="mt-8 flex items-center gap-8">

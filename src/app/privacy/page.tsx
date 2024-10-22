@@ -18,7 +18,7 @@ export default function page() {
                     Thanks for visiting! This <b>Privacy Policy</b> explains how things work here. My site is primarily for showcasing my work, and I take your privacy seriously.
                 </p>
 
-                <h2 className="text-3xl font-semibold text-gray-200">Information I Collect (Spoiler: It's Not Much)</h2>
+                <h2 className="text-3xl font-semibold text-gray-200">Information I Collect (Spoiler: It&apos;s Not Much)</h2>
                 <p className="text-gray-300">
                     Since this is a static portfolio, I don’t collect any personal data. No account creation, tracking cookies, or hidden data collection.
                 </p>
