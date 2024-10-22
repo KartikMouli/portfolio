@@ -27,7 +27,7 @@ export default function Home() {
           <h2 className="text-xl text-gray-300 mb-4">Full Stack Web Developer</h2>
           <h3 className="text-lg text-gray-400 mb-4">📍 Nashik, Maharashtra, India</h3>
           <p className="text-gray-200 text-sm leading-relaxed">
-            Building Real Products For Fake Clients, Not Just any More Projects.
+          IITP CSE '24 | Exploring Web3 and advancing in Fullstack Development
           </p>
 
           <section className="mt-8 flex items-center gap-8">
@@ -43,7 +43,7 @@ export default function Home() {
           <h2 className="text-3xl font-bold text-gray-100 ">
             Current technologies
           </h2>
-          <Link href="/skills" className="link flex items-center gap-2 font-light">
+          <Link href="/skills" className="link flex items-center gap-2 font-light hover:scale-105">
             <ArrowRightIcon className="size-5" />
             <span>Full skill overview</span>
           </Link>
@@ -59,8 +59,8 @@ export default function Home() {
 
         <div className="flex justify-between items-center border-b-2 border-gray-700 pb-3">
           <h2 className="text-3xl font-bold  text-gray-100 ">Featured Projects</h2>
-          <Link href="/projects" className="link flex items-center gap-2 font-light">
-            <ArrowRightIcon className="size-5" />
+          <Link href="/projects" className="link flex items-center gap-2 font-light hover:scale-105">
+            <ArrowRightIcon className="size-5 " />
             <span>view more</span>
           </Link>
         </div>
