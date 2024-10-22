@@ -16,10 +16,10 @@ function About() {
                         Hey! I&apos;m <span className="font-semibold">Kartik</span>, a proud <span className="italic">IIT Patna CSE '24</span> graduate. I focus on full-stack development, Web3, and competitive programming.
                     </p>
                     <p className="mb-2">
-                        Outside of coding, you’ll find me on the football field or shooting hoops. I’m also a huge movie enthusiast—whether it’s action-packed blockbusters or thought-provoking dramas.
+                        Outside of coding, you&apos;ll find me on the football field or shooting hoops. I&apos;m also a huge movie enthusiast—whether it’s action-packed blockbusters or thought-provoking dramas.
                     </p>
                     <p className='mb-2'>
-                        Originally from <span className="italic">Nashik</span>, I’m always excited about creating new tech and exploring the world of open-source.
+                        Originally from <span className="italic">Nashik</span>, I&apos;m always excited about creating new tech and exploring the world of open-source.
                     </p>
                     <p className="mt-4">
                         <Link href="/contact" className='font-semibold hover:scale-105 transition-transform inline-block'>Let’s connect!</Link> I’m open to discussing tech, sports, or the latest movies.

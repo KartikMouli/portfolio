@@ -1,9 +1,9 @@
 import React from 'react'
 import data from "@/data/skills.json"
 import TechCard from '@/components/ui/TechCard'
-type Props = {}
 
-function page({ }: Props) {
+
+function page() {
 
     const Programming_Languages = data.Programming_Languages
     const WebDevelopment_Tech = data.WebDevelopment_Tech
@@ -13,7 +13,7 @@ function page({ }: Props) {
     return (
         <div className='mt-8 flex flex-col gap-8 pb-16 p-1'>
 
-            <h1 className="text-2xl font-semibold">Development Stack I’m Familiar With</h1>
+            <h1 className="text-2xl font-semibold">Development Stack I&apos;m Familiar With</h1>
 
             {/* Programming Languages  */}
 

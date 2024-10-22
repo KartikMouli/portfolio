@@ -4,7 +4,6 @@ import { Send } from 'lucide-react';
 import Link from 'next/link';
 
 
-
 function ContactForm() {
     const [formState, setFormState] = useState({
         name: '',
