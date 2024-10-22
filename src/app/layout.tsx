@@ -5,6 +5,8 @@ import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
+import { Analytics } from '@vercel/analytics/react';
+
 const raleway = Raleway({ subsets: ["latin"] });
 
 
@@ -20,12 +22,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body 
+      <body
         className={`${raleway.className} mx-auto flex min-h-screen max-w-3xl flex-col px-8 pb-16 antialiased`}
       >
-        <Header/>
+        <Header />
+        <main className="flex-grow">
           {children}
-        <Footer/>
+          <Analytics />
+        </main>
+        <Footer />
       </body>
     </html>
   );
