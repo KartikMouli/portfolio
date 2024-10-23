@@ -4,7 +4,7 @@ import { FaGithub, FaEnvelope, FaLinkedin } from 'react-icons/fa';
 
 export default function Socials() {
     return (
-        <section className="flex gap-6">
+        <section className="flex gap-5 md:gap-6">
             <a
                 href="https://linkedin.com/in/kartik-mouli"
                 target="_blank"

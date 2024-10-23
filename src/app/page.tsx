@@ -30,7 +30,7 @@ export default function Home() {
           IITP CSE &apos;24 | Exploring Web3 and advancing in Fullstack Development
           </p>
 
-          <section className="mt-8 flex items-center gap-8">
+          <section className="mt-8 flex items-center gap-6">
             <ResumeButton />
             <Socials />
           </section>

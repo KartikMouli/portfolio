@@ -15,7 +15,7 @@ const TechCard = ({
     const opacity = bgColor === "white" ? 0.9 : 0.2;
     return (
         <div className="flex items-center whitespace-nowrap gap-4 p-2 rounded-xl border border-transparent bg-[#1E1E1E] hover:bg-[#2a2a2a] transition-colors duration-300 shadow-md hover:shadow-lg transform hover:border-[#61DAFB]/40" aria-label={`Technology: ${name}, Description: ${description}`}>
-            <div className="relative ">
+            <div className="relative flex-shrink-0">
                 {/* Background with reduced opacity for the image only */}
                 <div
                     className="absolute inset-0 rounded"
@@ -35,7 +35,7 @@ const TechCard = ({
                 </div>
             </div>
             <div className="relative z-10 text-ellipsis overflow-hidden ..."> {/* Ensure text is above the background */}
-                <h5 className="text-sm font-semibold text-white">{name}</h5>
+                <h5 className="text-sm font-semibold text-white text-ellipsis overflow-hidden ...">{name}</h5>
                 <p className="text-xs text-gray-400 text-ellipsis overflow-hidden ..." >{description}</p>
             </div>
         </div>
