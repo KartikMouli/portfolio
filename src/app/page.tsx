@@ -58,7 +58,7 @@ export default function Home() {
       <section className="flex flex-col gap-8">
 
         <div className="flex justify-between items-center border-b-2 border-gray-700 pb-3">
-          <h2 className="text-3xl font-bold  text-gray-100 ">Featured Projects</h2>
+          <h2 className="text-3xl font-bold  text-gray-100 ">Featured projects</h2>
           <Link href="/projects" className="link flex items-center gap-2 font-light hover:scale-105">
             <ArrowRightIcon className="size-5 " />
             <span>view more</span>

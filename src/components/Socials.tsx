@@ -11,7 +11,7 @@ export default function Socials() {
                 className="text-gray-400 hover:text-white transition duration-300 ease-in-out"
                 rel="noopener noreferrer"
             >
-                <span className="sr-only">X</span>
+                <span className="sr-only">Linkedin</span>
                 <FaLinkedin aria-hidden="true" className="w-5 h-5" /> {/* Consistent size */}
             </a>
             <a
@@ -20,7 +20,7 @@ export default function Socials() {
                 className="text-gray-400 hover:text-white transition duration-300 ease-in-out"
                 rel="noopener noreferrer"
             >
-                <span className="sr-only">X</span>
+                <span className="sr-only">Github</span>
                 <FaGithub aria-hidden="true" className="w-5 h-5" /> {/* Consistent size */}
             </a>
             <a
@@ -29,7 +29,7 @@ export default function Socials() {
                 className="text-gray-400 hover:text-white transition duration-300 ease-in-out"
                 rel="noopener noreferrer"
             >
-                <span className="sr-only">X</span>
+                <span className="sr-only">Email</span>
                 <FaEnvelope aria-hidden="true" className="w-5 h-5" /> {/* Consistent size */}
             </a>
 

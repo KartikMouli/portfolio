@@ -17,7 +17,7 @@ function page() {
 
             {/* Programming Languages  */}
 
-            <h3 className='text-xl'>Programming Languages</h3>
+            <h3 className='text-xl'>Programming languages</h3>
 
             <div
                 className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 items-center justify-between gap-4"
@@ -29,7 +29,7 @@ function page() {
 
             {/* WebDevelopment Frameworks */}
 
-            <h3 className='text-xl'>Web Developement Technologies</h3>
+            <h3 className='text-xl'>Web developement technologies</h3>
 
             <div
                 className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 items-center justify-between gap-4"
@@ -41,7 +41,7 @@ function page() {
 
             {/* Database_Technologies */}
 
-            <h3 className='text-xl'>Database Technologies</h3>
+            <h3 className='text-xl'>Database technologies</h3>
 
             <div
                 className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 items-center justify-between gap-4"
@@ -53,7 +53,7 @@ function page() {
 
 
             {/* DevOps & Deployment Tools */}
-            <h3 className='text-xl'>DevOps & Deployment Tools</h3>
+            <h3 className='text-xl'>DevOps & Deployment tools</h3>
 
             <div
                 className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 items-center justify-between gap-4"
