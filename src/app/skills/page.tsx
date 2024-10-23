@@ -20,7 +20,7 @@ function page() {
             <h3 className='text-xl'>Programming Languages</h3>
 
             <div
-                className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 items-center justify-between gap-4"
+                className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 items-center justify-between gap-4"
             >
                 {Programming_Languages.map((cardItem) => (
                     <TechCard key={cardItem.name} cardInfo={cardItem} />
@@ -32,7 +32,7 @@ function page() {
             <h3 className='text-xl'>Web Developement Technologies</h3>
 
             <div
-                className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 items-center justify-between gap-4"
+                className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 items-center justify-between gap-4"
             >
                 {WebDevelopment_Tech.map((cardItem) => (
                     <TechCard key={cardItem.name} cardInfo={cardItem} />
@@ -44,7 +44,7 @@ function page() {
             <h3 className='text-xl'>Database Technologies</h3>
 
             <div
-                className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 items-center justify-between gap-4"
+                className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 items-center justify-between gap-4"
             >
                 {Database_Technologies.map((cardItem) => (
                     <TechCard key={cardItem.name} cardInfo={cardItem} />
@@ -56,7 +56,7 @@ function page() {
             <h3 className='text-xl'>DevOps & Deployment Tools</h3>
 
             <div
-                className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 items-center justify-between gap-4"
+                className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 items-center justify-between gap-4"
             >
                 {DevOps_Deployment_Tools.map((cardItem) => (
                     <TechCard key={cardItem.name} cardInfo={cardItem} />
