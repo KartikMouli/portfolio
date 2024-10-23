@@ -13,7 +13,7 @@ function page() {
     return (
         <div className='mt-8 flex flex-col gap-8 pb-16 p-1'>
 
-            <h1 className="text-2xl font-semibold">Development Stack I&apos;m Familiar With</h1>
+            <h1 className="text-2xl font-semibold">Development stack I&apos;m familiar with</h1>
 
             {/* Programming Languages  */}
 

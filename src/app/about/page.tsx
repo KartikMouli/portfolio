@@ -10,7 +10,7 @@ function About() {
         <>
             {/* About Me Section */}
             <section className='mt-8 pb-2'>
-                <h2 className="text-3xl font-bold mb-4">About Me</h2>
+                <h2 className="text-3xl font-bold mb-4">About me</h2>
                 <div className="text-white p-6 mb-16 mt-8 rounded-lg bg-[#1a1a1a]">
                     <p className="mb-2">
                         Hey! I&apos;m <span className="font-semibold">Kartik</span>, a proud <span className="italic">IIT Patna CSE &apos;24</span> graduate. I focus on full-stack development, Web3, and competitive programming.
@@ -50,8 +50,8 @@ function About() {
             {/* Stats Overview Section */}
             <section className='mb-16'>
                 <h3 className="text-3xl font-bold mt-6 mb-6">Data Playground</h3>
-                <div className="flex gap-4 flex-wrap">
-                    <div className="flex-1 rounded overflow-hidden shadow-lg p-4">
+                <div className="flex flex-col">
+                    <div className="flex-1 rounded overflow-hidden p-4">
                         <Image
                             src="https://github-readme-streak-stats.herokuapp.com/?user=kartikmouli&theme=dark"
                             alt="GitHub Streak"
@@ -59,7 +59,7 @@ function About() {
                             height={300}
                         />
                     </div>
-                    <div className="flex-1 rounded overflow-hidden shadow-lg p-4">
+                    <div className="flex-1 rounded overflow-hidden p-4">
                         <Image
                             src="https://leetcard.jacoblin.cool/monchi02?ext=heatmap"
                             alt="LeetCode Stats"
