@@ -77,31 +77,6 @@
             ]
         },
         {
-            "name": "Motion classification on ESP32",
-            "description": "The aim of the project was to implent a Neural Network on ESP32.",
-            "href": "https://github.com/KartikMouli/Portfolio",
-            "image": "/img/project/motion_classification.jpg",
-            "tags": [
-                "ESP32",
-                "MPU6050",
-                "Deep Learning",
-                "Edge Impulse Studio",
-                "Arduino IDE"
-            ],
-            "links": [
-                {
-                    "name": "Live Demo",
-                    "href": "https://youtu.be/LtaKCfnE5EM",
-                    "icon": "external-link"
-                },
-                {
-                    "name": "Source Code",
-                    "href": "https://github.com/KartikMouli/Motion_Cassification_using_Deep_Learning_On_ESP32",
-                    "icon": "github"
-                }
-            ]
-        },
-        {
             "name": "AI NFT generator",
             "description": "An AI-powered platform that creates unique, one-of-a-kind NFTs by generating custom art pieces based on user inputs, utilizing machine learning algorithms to craft digital collectibles.",
             "href": "https://github.com/KartikMouli/AI-NFT-Generator",
@@ -118,26 +93,6 @@
                 {
                     "name": "Source Code",
                     "href": "https://github.com/KartikMouli/AI-NFT-Generator",
-                    "icon": "github"
-                }
-            ]
-        },
-        {
-            "name": "Blogapp",
-            "description": "A dynamic blogging platform that enables users to publish and explore a diverse range of articles. With intuitive navigation and customizable features, it fosters a vibrant community of writers and readers.",
-            "href": "https://github.com/KartikMouli/blog_app",
-            "image": "/img/project/blogapp.png",
-            "tags": [
-                "NextJS",
-                "MongoDB",
-                "Prisma ORM",
-                "Google OAuth 2.0",
-                "Javascript"
-            ],
-            "links": [
-                {
-                    "name": "Source Code",
-                    "href": "https://github.com/KartikMouli/blog_app",
                     "icon": "github"
                 }
             ]
@@ -175,6 +130,53 @@
                 {
                     "name": "Source Code",
                     "href": "https://github.com/KartikMouli/Portfolio",
+                    "icon": "github"
+                }
+            ]
+        }
+    ],
+    "extras": [
+        {
+            "name": "Blogapp",
+            "description": "A dynamic blogging platform that enables users to publish and explore a diverse range of articles. With intuitive navigation and customizable features, it fosters a vibrant community of writers and readers.",
+            "href": "https://github.com/KartikMouli/blog_app",
+            "image": "/img/project/blogapp.png",
+            "tags": [
+                "NextJS",
+                "MongoDB",
+                "Prisma ORM",
+                "Google OAuth 2.0",
+                "Javascript"
+            ],
+            "links": [
+                {
+                    "name": "Source Code",
+                    "href": "https://github.com/KartikMouli/blog_app",
+                    "icon": "github"
+                }
+            ]
+        },
+        {
+            "name": "Motion classification on ESP32",
+            "description": "The aim of the project was to implent a Neural Network on ESP32.",
+            "href": "https://github.com/KartikMouli/Portfolio",
+            "image": "/img/project/motion_classification.jpg",
+            "tags": [
+                "ESP32",
+                "MPU6050",
+                "Deep Learning",
+                "Edge Impulse Studio",
+                "Arduino IDE"
+            ],
+            "links": [
+                {
+                    "name": "Live Demo",
+                    "href": "https://youtu.be/LtaKCfnE5EM",
+                    "icon": "external-link"
+                },
+                {
+                    "name": "Source Code",
+                    "href": "https://github.com/KartikMouli/Motion_Cassification_using_Deep_Learning_On_ESP32",
                     "icon": "github"
                 }
             ]
