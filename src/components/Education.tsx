@@ -1,6 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 import data from '@/data/education.json'
+import Link from 'next/link';
 
 const educationData = data.educationData;
 
@@ -11,6 +12,7 @@ const Education: React.FC = () => {
             {educationData.map((edu, index) => (
                 <li key={index} className="relative">
                     <div className="flex items-start mb-2">
+
                         <div className="rounded-full p-1 mr-4 w-17 h-17 flex-shrink-0 flex items-center justify-center overflow-hidden">
                             <Image
                                 src={edu.image}
@@ -21,7 +23,11 @@ const Education: React.FC = () => {
                             />
                         </div>
                         <div className="flex-grow">
-                            <h2 className="font-semibold text-gray-100">{edu.university}</h2>
+                            <Link href={edu.web} target="_blank"
+                                rel="noopener noreferrer" >
+                                <h2 className="font-semibold text-gray-100 hover:text-white">{edu.university}</h2>
+                            </Link>
+
                             <p className="text-sm  text-gray-300">{edu.degree}</p>
                             <p className="text-xs  text-gray-400">{edu.period}</p>
 

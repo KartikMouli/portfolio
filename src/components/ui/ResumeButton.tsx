@@ -2,10 +2,11 @@
 
 import React from 'react';
 import { FileDown } from "lucide-react";
+import Link from 'next/link';
 
 const ResumeButton: React.FC = () => {
     return (
-        <a
+        <Link
             href="https://drive.google.com/file/d/16ebey3K6tIWcpgVi0Gc7zI3mYVpgdHxR/view?usp=drive_link"
             target="_blank"
             rel="noopener noreferrer" 
@@ -13,7 +14,7 @@ const ResumeButton: React.FC = () => {
         >
             <FileDown size={18} className="mr-2" />
             Resume
-        </a>
+        </Link>
     );
 };
 
