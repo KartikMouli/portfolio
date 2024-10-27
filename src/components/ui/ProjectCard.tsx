@@ -28,7 +28,7 @@ export function ProjectCard({ project }: Props) {
     const { name, href, description, image, tags, links } = project;
 
     return (
-        <div className="flex flex-col rounded-xl border border-gray-700 ">
+        <div className="flex flex-col rounded-xl border border-gray-700">
             {/* Images  */}
             <div className="flex flex-col space-y-1.5 p-6">
                 {image && (

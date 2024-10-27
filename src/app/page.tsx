@@ -40,13 +40,15 @@ export default function Home() {
 
         {/* Scroll Down Icon */}
         <div className="flex justify-center pb-8 mt-8 md:mt-16">
-          <ArrowDown className="w-5 h-5 md:w-6 md:h-6 animate-bounce text-gray-300" aria-hidden="true" />
+          <Link href="#technologies" scroll={true} >
+            <ArrowDown className="w-5 h-5 md:w-6 md:h-6 animate-bounce text-gray-300" />
+          </Link>
         </div>
       </section>
 
 
       {/* Skills Section */}
-      <section className="mb-4">
+      <section id="technologies" className="mb-4 pt-24 -mt-16">
         <div className="flex justify-between items-center border-b-2 border-gray-700 pb-2 mb-8">
           <h2 className="text-3xl font-bold text-gray-100 ">
             Current technologies
