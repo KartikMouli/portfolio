@@ -15,7 +15,7 @@ export default function page() {
             <div className="space-y-8">
                 <h2 className="text-3xl font-semibold text-gray-200">Welcome!</h2>
                 <p className="text-gray-300">
-                    Thanks for stopping by! This <b>Privacy Policy</b> explains how things work here. Spoiler alert: my site is mainly a showcase for my work, and your privacy is a big deal—just not a huge one since I don't collect much.
+                    Thanks for stopping by! This <b>Privacy Policy</b> explains how things work here. Spoiler alert: my site is mainly a showcase for my work, and your privacy is a big deal—just not a huge one since I don&apos;t collect much.
                 </p>
 
                 <h2 className="text-3xl font-semibold text-gray-200">Information I Collect (Spoiler: It&apos;s Not Much)</h2>
