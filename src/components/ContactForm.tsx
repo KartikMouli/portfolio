@@ -68,7 +68,7 @@ function ContactForm() {
                 setErrorMessage("Form submission failed. Please try again.");
                 setIsModalOpen(true); // Open the modal
             }
-        } catch (error) {
+        } catch{
             setErrorMessage("Error submitting the form. Please check your connection.");
             setIsModalOpen(true); // Open the modal
         } finally {

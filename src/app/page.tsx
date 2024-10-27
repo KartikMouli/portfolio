@@ -26,7 +26,7 @@ export default function Home() {
             <h1 className="text-3xl md:text-4xl font-extrabold text-gradient mb-2">Kartik Mouli</h1>
             <h2 className="text-lg md:text-xl text-gray-300 mb-2">Full Stack Developer</h2>
             <h3 className="text-sm text-gray-400 mb-3">
-              ⚲ Maharashtra, <span className="text-xs mr-1">IN</span>🇮🇳
+              <span className="text-gray-300">⚲</span> Maharashtra, <span className="text-xs">IN 🇮🇳</span>
             </h3>
             <p className="text-gray-200 text-sm md:text-base leading-relaxed mb-5 md:mb-6">
               IITP CSE &apos;24 | Exploring Web3 and advancing in Fullstack Development
