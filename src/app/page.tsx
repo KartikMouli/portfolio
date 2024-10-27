@@ -1,3 +1,5 @@
+'use client'
+
 import Image from "next/image";
 import Link from "next/link";
 import Socials from "@/components/Socials";
@@ -7,6 +9,14 @@ import { ArrowDown, ArrowRightIcon } from "lucide-react";
 import Skills from "@/components/Skills";
 
 export default function Home() {
+
+  const scrollToTechnologies = () => {
+    const section = document.getElementById('currtechnologies');
+    if (section) {
+      section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
+
   return (
     <div className="flex flex-col gap-16 pb-16 text-white">
 
@@ -24,12 +34,12 @@ export default function Home() {
 
           <div className="flex flex-col items-center md:items-start">
             <h1 className="text-3xl md:text-4xl font-extrabold text-gradient mb-2">Kartik Mouli</h1>
-            <h2 className="text-lg md:text-xl text-gray-300 mb-2">Full Stack Developer</h2>
-            <h3 className="text-sm text-gray-400 mb-3">
-              <span className="text-gray-300">⚲</span> Maharashtra, <span className="text-xs">IN 🇮🇳</span>
+            <h2 className="text-lg md:text-xl text-gray-300 mb-2">Full-Stack Developer & Competitive Programmer</h2>
+            <h3 className="text-sm text-gray-300 mb-3">
+              ⚲ Nashik, Maharashtra, 🇮🇳
             </h3>
             <p className="text-gray-200 text-sm md:text-base leading-relaxed mb-5 md:mb-6">
-              IITP CSE &apos;24 | Exploring Web3 and advancing in Fullstack Development
+              <span className="font-mono text-blue-500">IITP CSE&apos;24</span> | Exploring Web3 and advancing in Fullstack Development
             </p>
             <div className="flex flex-wrap justify-center md:justify-start gap-10 md:gap-5 mt-5">
               <ResumeButton />
@@ -39,22 +49,22 @@ export default function Home() {
         </div>
 
         {/* Scroll Down Icon */}
-        <div className="flex justify-center pb-8 mt-8 md:mt-16">
-          <Link href="#technologies" scroll={true} >
-            <ArrowDown className="w-5 h-5 md:w-6 md:h-6 animate-bounce text-gray-300" />
-          </Link>
+        <div className="flex justify-center pb-8 mt-8 mb-6 md:mt-16">
+          <button onClick={scrollToTechnologies} aria-label="Scroll down to current technologies">
+            <ArrowDown className="w-5 h-5 md:w-6 md:h-6 animate-bounce text-gray-300 cursor-pointer"/>
+          </button>
         </div>
       </section>
 
 
       {/* Skills Section */}
-      <section id="technologies" className="mb-4 pt-24 -mt-16">
+      <section id="currtechnologies" className="mb-4 pt-24 -mt-16">
         <div className="flex justify-between items-center border-b-2 border-gray-700 pb-2 mb-8">
           <h2 className="text-3xl font-bold text-gray-100 ">
             Current technologies
           </h2>
           <Link href="/skills" className="link flex items-center gap-2 font-light hover:scale-105">
-            <ArrowRightIcon className="size-5" />
+            <ArrowRightIcon className="size-5 cursor-pointer animate-pulse" />
             <span>Full skill overview</span>
           </Link>
         </div>
@@ -70,7 +80,7 @@ export default function Home() {
         <div className="flex justify-between items-center border-b-2 border-gray-700 pb-3">
           <h2 className="text-3xl font-bold  text-gray-100 ">Featured projects</h2>
           <Link href="/projects" className="link flex items-center gap-2 font-light hover:scale-105">
-            <ArrowRightIcon className="size-5 " />
+            <ArrowRightIcon className="size-5 cursor-pointer animate-pulse" />
             <span>view more</span>
           </Link>
         </div>
