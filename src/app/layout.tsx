@@ -7,12 +7,16 @@ import Footer from "@/components/Footer";
 
 import { Analytics } from '@vercel/analytics/react';
 
-const raleway = Raleway({ subsets: ["latin"] });
+const raleway = Raleway({
+  subsets: ["latin"],
+  display: 'swap', // Ensures a fallback font is displayed until the font loads
+});
 
 
 export const metadata: Metadata = {
   title: "Kartik's Portfolio",
-  description: "Personal portfolio",
+  description: "Personal portfolio showcasing projects and skills.",
+  keywords: "Kartik, Portfolio, Web Development, Software Engineering, Projects"
 };
 
 export default function RootLayout({
