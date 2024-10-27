@@ -3,7 +3,7 @@ import Link from "next/link";
 import Socials from "@/components/Socials";
 import ResumeButton from "@/components/ui/ResumeButton";
 import Projects from "@/components/Projects";
-import { ArrowRightIcon } from "lucide-react";
+import { ArrowDown, ArrowRightIcon } from "lucide-react";
 import Skills from "@/components/Skills";
 
 export default function Home() {
@@ -11,31 +11,39 @@ export default function Home() {
     <div className="flex flex-col gap-16 pb-16 text-white">
 
       {/* Hero Section */}
-      <section className="flex flex-col mt-8 gap-8 md:flex-row-reverse md:items-center md:justify-between">
-        <Image
-          className="rounded-lg shadow-lg"
-          src="/img/pfp.jpg"
-          alt="pfp of Kartik"
-          width={175}
-          height={175}
-          priority
-        />
-        <div className="flex flex-col ">
-          <h1 className="title text-4xl mb-2 font-extrabold text-gradient">
-            Kartik Mouli
-          </h1>
-          <h2 className="text-xl text-gray-300 mb-4">Full Stack Developer</h2>
-          <h3 className="text-sm text-gray-400 mb-5 ">⚲ Maharashtra, <span className="text-xs mr-1">IN</span>🇮🇳</h3>
-          <p className="text-gray-200 text-sm leading-relaxed">
-            IITP CSE &apos;24 | Exploring Web3 and advancing in Fullstack Development
-          </p>
+      <section className="min-h-screen md:pt-20 flex flex-col justify-center md:justify-start items-center  text-center md:text-left px-4 md:px-0 gap-10">
+        <div className="flex flex-col md:flex-row-reverse items-center md:justify-between gap-6 md:gap-8 w-full max-w-4xl mx-auto">
+          <Image
+            className="rounded-lg shadow-lg w-36 h-36 md:w-44 md:h-44" // Adjust image size responsively
+            src="/img/pfp.jpg"
+            alt="pfp of Kartik"
+            width={175}
+            height={175}
+            priority
+          />
 
-          <section className="mt-8 flex items-center gap-6">
-            <ResumeButton />
-            <Socials />
-          </section>
+          <div className="flex flex-col items-center md:items-start">
+            <h1 className="text-3xl md:text-4xl font-extrabold text-gradient mb-2">Kartik Mouli</h1>
+            <h2 className="text-lg md:text-xl text-gray-300 mb-2">Full Stack Developer</h2>
+            <h3 className="text-sm text-gray-400 mb-3">
+              ⚲ Maharashtra, <span className="text-xs mr-1">IN</span>🇮🇳
+            </h3>
+            <p className="text-gray-200 text-sm md:text-base leading-relaxed mb-5 md:mb-6">
+              IITP CSE &apos;24 | Exploring Web3 and advancing in Fullstack Development
+            </p>
+            <div className="flex flex-wrap justify-center md:justify-start gap-10 md:gap-5 mt-5">
+              <ResumeButton />
+              <Socials />
+            </div>
+          </div>
+        </div>
+
+        {/* Scroll Down Icon */}
+        <div className="flex justify-center pb-8 mt-8 md:mt-16">
+          <ArrowDown className="w-5 h-5 md:w-6 md:h-6 animate-bounce text-gray-300" aria-hidden="true" />
         </div>
       </section>
+
 
       {/* Skills Section */}
       <section className="mb-4">

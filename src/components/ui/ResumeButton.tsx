@@ -10,7 +10,7 @@ const ResumeButton: React.FC = () => {
             href="https://drive.google.com/file/d/16ebey3K6tIWcpgVi0Gc7zI3mYVpgdHxR/view?usp=drive_link"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center hover:bg-white text-white hover:text-[#111111] px-3 py-1 rounded transition duration-500 mr-4 border border-white"
+            className="flex items-center justify-center hover:bg-white text-white hover:text-[#111111] px-3 py-1 md:mr-4 rounded transition duration-500  border border-white"
         >
             <FileDown size={18} className="mr-2" />
             Resume

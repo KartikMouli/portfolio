@@ -6,15 +6,16 @@ interface ModalProps {
     onClose: () => void;
     message: string;
     title: string; // Added title prop
+    isError?: boolean; //to indicate if it's an error
 }
 
-const Modal: React.FC<ModalProps> = ({ isOpen, onClose, message, title }) => {
+const Modal: React.FC<ModalProps> = ({ isOpen, onClose, message, title ,isError}) => {
     if (!isOpen) return null; // Don't render if not open
 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-80">
             <div className="bg-[#111111] rounded-lg p-6 shadow-md w-96 text-center transition-transform transform-gpu scale-100 hover:scale-105">
-                <h2 className="text-xl font-bold text-white mb-3">{title}</h2> {/* Dynamic title */}
+                <h2 className={`text-xl font-bold mb-3 ${isError ? 'text-red-500':'text-green-500'}`}>{title}</h2> {/* Dynamic title */}
                 <p className="mt-2 text-gray-200 text-sm leading-relaxed">{message}</p>
                 <button
                     onClick={onClose}

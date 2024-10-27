@@ -6,7 +6,6 @@ interface Props {
     limit?: number;
 }
 
-
 export default function Projects({ limit }: Props) {
     let projects = data.projects;
     if (limit) {

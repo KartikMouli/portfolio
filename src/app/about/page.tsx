@@ -42,7 +42,7 @@ function About() {
             </section>
 
             {/* Education Section */}
-            <section className="mb-8">
+            <section className="mb-16">
                 <h2 className="text-3xl font-bold mb-6 text-gray-100">Learning Journey</h2>
                 <Education />
             </section>

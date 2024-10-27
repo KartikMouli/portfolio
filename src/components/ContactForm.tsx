@@ -84,7 +84,6 @@ function ContactForm() {
 
     // Determine modal message and title based on success or error
     const modalMessage = successMessage || errorMessage;
-    const modalTitle = successMessage ? "Success" : "Error";
 
     return (
         <>
@@ -169,7 +168,8 @@ function ContactForm() {
                 isOpen={isModalOpen}
                 onClose={handleCloseModal}
                 message={modalMessage}
-                title={modalTitle}
+                title={errorMessage ? "Error" : "Success"}
+                isError={!!errorMessage} 
             />
         </>
     )
