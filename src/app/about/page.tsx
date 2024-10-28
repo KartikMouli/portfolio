@@ -50,25 +50,46 @@ function About() {
             {/* Stats Overview Section */}
             <section className='mb-16'>
                 <h3 className="text-3xl font-bold mt-6 mb-6">Data Playground</h3>
-                <div className="flex flex-col">
-                    <div className="flex-1 rounded overflow-hidden p-4">
-                        <Image
-                            src="https://github-readme-streak-stats.herokuapp.com/?user=kartikmouli&theme=dark"
-                            alt="GitHub Streak"
-                            width={400}
-                            height={300}
-                        />
-                    </div>
-                    <div className="flex-1 rounded overflow-hidden p-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 pr-24 gap-4">
+                    <div className="pt-1 rounded overflow-hidden shadow-lg transition-transform transform hover:scale-105">
                         <Image
                             src="https://leetcard.jacoblin.cool/monchi02?ext=heatmap"
                             alt="LeetCode Stats"
-                            width={400}
-                            height={300}
+                            width={400} // Set a wider width
+                            height={150} // Set a taller height
+                            className="w-300 h-auto"
+                            priority // Ensure the image loads faster
                         />
                     </div>
+
+                    <div className="rounded overflow-hidden shadow-lg transition-transform transform hover:scale-105">
+                        <Image
+                            src="https://raw.githubusercontent.com/KartikMouli/cf-stats/refs/heads/main/output/light_card.svg"
+                            alt="Codeforces Stats"
+                            width={400} // Set a wider width
+                            height={150} // Set a taller height
+                            className="w-300 h-auto"
+                            priority // Ensure the image loads faster
+                        />
+                    </div>
+
+                    <div className="rounded overflow-hidden shadow-lg transition-transform transform hover:scale-105">
+                        <Image
+                            src="https://github-readme-streak-stats.herokuapp.com/?user=kartikmouli&theme=dark"
+                            alt="GitHub Stats"
+                            width={400} // Set a wider width
+                            height={150} // Set a taller height
+                            className="w-300 h-auto"
+                            priority // Ensure the image loads faster
+                        />
+                    </div>
+
+
                 </div>
             </section>
+
+
+
         </>
     );
 }

@@ -4,7 +4,8 @@ const nextConfig = {
         domains: [
             'github-readme-streak-stats.herokuapp.com',
             'leetcard.jacoblin.cool',
-            'cdn.svgator.com'
+            'cdn.svgator.com',
+            'raw.githubusercontent.com'
         ],
         dangerouslyAllowSVG: true, // Allow SVG images
 
