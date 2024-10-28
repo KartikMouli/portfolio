@@ -1,13 +1,14 @@
 import Education from '@/components/Education';
+import StatsCard from '@/components/ui/StatsCard';
 import { ArrowRightIcon } from 'lucide-react';
-import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 
 
+
 function About() {
     return (
-        <>
+        <React.Fragment>
             {/* About Me Section */}
             <section className='mt-8 pb-2'>
                 <h2 className="text-3xl font-bold mb-4">About me</h2>
@@ -34,7 +35,7 @@ function About() {
                     Want to know more about the tools and technologies I work with? Click below to dive into my skillset.
                 </p>
                 <Link href="/skills">
-                    <button className="px-4 py-2 flex items-center gap-2 hover:bg-white text-white hover:text-[#111111] rounded transition duration-300 border border-white">
+                    <button className="px-4 py-2 flex items-center gap-2 hover:bg-white text-white hover:text-[#111111] rounded transition duration-300 border border-white focus:outline-none focus:ring focus:ring-white">
                         Explore Skills
                         <ArrowRightIcon className="size-5" />
                     </button>
@@ -43,54 +44,20 @@ function About() {
 
             {/* Education Section */}
             <section className="mb-16">
-                <h2 className="text-3xl font-bold mb-6 text-gray-100">Learning Journey</h2>
+                <h2 className="text-3xl font-bold mb-10 text-gray-100">Learning Journey</h2>
                 <Education />
             </section>
 
             {/* Stats Overview Section */}
             <section className='mb-16'>
                 <h3 className="text-3xl font-bold mt-6 mb-6">Data Playground</h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 pr-24 gap-4">
-                    <div className="pt-1 rounded overflow-hidden shadow-lg transition-transform transform hover:scale-105">
-                        <Image
-                            src="https://leetcard.jacoblin.cool/monchi02?ext=heatmap"
-                            alt="LeetCode Stats"
-                            width={400} // Set a wider width
-                            height={150} // Set a taller height
-                            className="w-300 h-auto"
-                            priority // Ensure the image loads faster
-                        />
-                    </div>
-
-                    <div className="rounded overflow-hidden shadow-lg transition-transform transform hover:scale-105">
-                        <Image
-                            src="https://raw.githubusercontent.com/KartikMouli/cf-stats/refs/heads/main/output/light_card.svg"
-                            alt="Codeforces Stats"
-                            width={400} // Set a wider width
-                            height={150} // Set a taller height
-                            className="w-300 h-auto"
-                            priority // Ensure the image loads faster
-                        />
-                    </div>
-
-                    <div className="rounded overflow-hidden shadow-lg transition-transform transform hover:scale-105">
-                        <Image
-                            src="https://github-readme-streak-stats.herokuapp.com/?user=kartikmouli&theme=dark"
-                            alt="GitHub Stats"
-                            width={400} // Set a wider width
-                            height={150} // Set a taller height
-                            className="w-300 h-auto"
-                            priority // Ensure the image loads faster
-                        />
-                    </div>
-
-
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-10">
+                    <StatsCard src="https://leetcard.jacoblin.cool/monchi02?ext=heatmap" alt="LeetCode Heatmap Stats" />
+                    <StatsCard src="https://raw.githubusercontent.com/KartikMouli/cf-stats/refs/heads/main/output/light_card.svg" alt="Codeforces Statistics Card" />
+                    <StatsCard src="https://github-readme-streak-stats.herokuapp.com/?user=kartikmouli&theme=dark" alt="GitHub Streak Stats" />
                 </div>
             </section>
-
-
-
-        </>
+        </React.Fragment>
     );
 }
 
