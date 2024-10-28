@@ -8,7 +8,7 @@ import React from 'react';
 
 function About() {
     return (
-        <React.Fragment>
+        <>
             {/* About Me Section */}
             <section className='mt-8 pb-2'>
                 <h2 className="text-3xl font-bold mb-4">About me</h2>
@@ -57,7 +57,7 @@ function About() {
                     <StatsCard src="https://github-readme-streak-stats.herokuapp.com/?user=kartikmouli&theme=dark" alt="GitHub Streak Stats" />
                 </div>
             </section>
-        </React.Fragment>
+        </>
     );
 }
 
