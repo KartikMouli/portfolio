@@ -21,7 +21,7 @@ export default function Home() {
     <div className="flex flex-col gap-16 pb-16 text-white">
 
       {/* Hero Section */}
-      <section className="min-h-screen md:pt-20 flex flex-col justify-center md:justify-start items-center  text-center md:text-left px-4 md:px-0 gap-10">
+      <section className="min-h-screen pb-10 sm:pb-0 sm:min-h-0 md:pt-20 flex flex-col justify-center md:justify-start items-center text-center md:text-left md:px-0 gap-10">
         <div className="flex flex-col md:flex-row-reverse items-center md:justify-between gap-6 md:gap-8 w-full max-w-4xl mx-auto">
           <Image
             className="rounded-lg shadow-lg w-36 h-36 md:w-44 md:h-44" // Adjust image size responsively
@@ -46,19 +46,20 @@ export default function Home() {
               <Socials />
             </div>
           </div>
-        </div>
 
-        {/* Scroll Down Icon */}
-        <div className="flex justify-center pb-8 mt-8 mb-6 md:mt-16">
-          <button onClick={scrollToTechnologies} aria-label="Scroll down to current technologies">
-            <ArrowDown className="w-5 h-5 md:w-6 md:h-6 animate-bounce text-gray-300 cursor-pointer"/>
-          </button>
+          {/* Arrow Down Button */}
+          <div className="relative bottom-1 pb-8 mt-8 mb-6 md:hidden">
+            <button onClick={scrollToTechnologies} aria-label="Scroll down to current technologies">
+              <ArrowDown className="w-5 h-5 md:w-6 md:h-6 animate-bounce text-gray-300 cursor-pointer" />
+            </button>
+          </div>
+
         </div>
       </section>
 
 
       {/* Skills Section */}
-      <section id="currtechnologies" className="mb-4 pt-24 -mt-16">
+      <section id="currtechnologies" className="mb-4 pt-24 -mt-16 md:mb-0 md:pt-0 md:-mt-0">
         <div className="flex justify-between items-center border-b-2 border-gray-700 pb-2 mb-8">
           <h2 className="text-3xl font-bold text-gray-100 ">
             Current technologies
