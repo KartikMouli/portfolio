@@ -7,6 +7,7 @@ import ResumeButton from "@/components/ui/ResumeButton";
 import Projects from "@/components/Projects";
 import { ArrowDown, ArrowRightIcon } from "lucide-react";
 import Skills from "@/components/Skills";
+import { useEffect, useState } from "react";
 
 export default function Home() {
 
@@ -17,20 +18,47 @@ export default function Home() {
     }
   };
 
+  const [isFlipped, setIsFlipped] = useState(false);
+
+  useEffect(() => {
+    // Automatically flip the avatar on page load
+    setIsFlipped(true);
+
+    // Rotate back after 2 seconds
+    const timer = setTimeout(() => setIsFlipped(false), 1500);
+
+    // Cleanup timer on component unmount
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <div className="flex flex-col gap-16 pb-16 text-white">
 
       {/* Hero Section */}
       <section className="min-h-screen pb-10 sm:pb-0 sm:min-h-0 md:pt-20 flex flex-col justify-center md:justify-start items-center text-center md:text-left md:px-0 gap-10">
         <div className="flex flex-col md:flex-row-reverse items-center md:justify-between gap-6 md:gap-8 w-full max-w-4xl mx-auto">
-          <Image
-            className="rounded-lg shadow-lg w-36 h-36 md:w-44 md:h-44" // Adjust image size responsively
-            src="/img/pfp.jpg"
-            alt="pfp of Kartik"
-            width={175}
-            height={175}
-            priority
-          />
+          <div className="avatar-container">
+            <div className={`avatar front ${isFlipped ? 'flipped' : ''}`}>
+              <Image
+                className="rounded-lg shadow-lg w-36 h-36 md:w-44 md:h-44"
+                src="/img/pfp.jpg"
+                alt="Front Profile of Kartik"
+                width={175}
+                height={175}
+                priority
+              />
+            </div>
+            <div className={`avatar back ${isFlipped ? 'flipped' : ''}`}>
+              <Image
+                className="rounded-lg shadow-lg w-36 h-36 md:w-44 md:h-44"
+                src="/img/pfp-back.webp"
+                alt="Back Profile of Kartik"
+                width={175}
+                height={175}
+                priority
+              />
+            </div>
+          </div>
 
           <div className="flex flex-col items-center md:items-start">
             <h1 className="text-3xl md:text-4xl font-extrabold text-gradient mb-2">Kartik Mouli</h1>
