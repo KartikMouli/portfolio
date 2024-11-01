@@ -40,24 +40,25 @@ export default function Home() {
           <div className="avatar-container md:mb-6">
             <div className={`avatar front ${isFlipped ? 'flipped' : ''}`}>
               <Image
-                className="rounded-lg w-36 h-36 md:w-44 md:h-44"
+                className="rounded-lg w-36 h-36 md:w-44 md:h-44" // Change the classes here
                 src="/img/pfp.jpg"
                 alt="Front Profile of Kartik"
-                width={144}
-                height={144}
+                width={175}
+                height={175}
                 priority
               />
             </div>
             <div className={`avatar back ${isFlipped ? 'flipped' : ''}`}>
               <Image
-                className="rounded-lg w-36 h-36 md:w-44 md:h-44"
+                className="rounded-lg w-36 h-36 md:w-44 md:h-44" // Change the classes here
                 src="/img/pfp-back.webp"
                 alt="Back Profile of Kartik"
-                width={144}
-                height={144}
+                width={175}
+                height={175}
                 priority
               />
             </div>
+
           </div>
 
           <div className="flex flex-col items-center md:items-start">
