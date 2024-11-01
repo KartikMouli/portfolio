@@ -28,7 +28,7 @@ export function ProjectCard({ project }: Props) {
     const { name, href, description, image, tags, links } = project;
 
     return (
-        <div className="flex flex-col rounded-xl border border-gray-700">
+        <div className="flex flex-col rounded-xl border border-gray-800">
             {/* Images  */}
             <div className="flex flex-col space-y-1.5 p-6">
                 {image && (
@@ -51,22 +51,23 @@ export function ProjectCard({ project }: Props) {
                     {description}
                 </Markdown>
             </div>
-            
+
             {/* Links  and Tags */}
             <div className="flex h-full flex-col justify-between gap-4 items-center p-6 pt-0">
                 {tags && tags.length > 0 && (
                     <div className="mt-2 flex flex-wrap gap-1">
                         {tags.sort().map((tag) => (
-                            <span key={tag} className={`inline-flex bg-amber-700 text-amber-100 bg-opacity-40 px-3 py-1 text-xs font-medium  rounded-full`}>
+                            <span key={tag} className={`inline-flex bg-[#E6E6FA] text-white bg-opacity-10 px-3 py-1 text-xs rounded-full`}>
                                 {tag}
                             </span>
+
                         ))}
                     </div>
                 )}
                 {links && links.length > 0 && (
                     <div className="flex flex-row flex-wrap items-start gap-4">
                         {links.sort().map((link, idx) => (
-                            <Link href={link?.href} key={idx} target="_blank" className="flex border rounded-md px-2.5 py-0.5 items-center text-gray-300 hover:text-orange-300 transition-colors duration-300" aria-label={`Link to ${link.name}`}>
+                            <Link href={link?.href} key={idx} target="_blank" className="flex border rounded-md px-2.5 py-0.5 items-center text-[#CCCCCC] hover:text-white transition duration-300" aria-label={`Link to ${link.name}`}>
                                 {link.name === "Live Demo" ? <FaExternalLinkAlt className="size-4 mr-2" /> : <FaGithub className="size-4 mr-2" />}
                                 <span>{link.name}</span>
                             </Link>
