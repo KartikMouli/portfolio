@@ -51,8 +51,8 @@ body {
 
 .avatar-container {
   position: relative;
-  width: 175px;
-  height: 175px;
+  width: 144px;
+  height: 144px;
   perspective: 1000px;
 }
 

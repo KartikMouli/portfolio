@@ -40,21 +40,21 @@ export default function Home() {
           <div className="avatar-container md:mb-6">
             <div className={`avatar front ${isFlipped ? 'flipped' : ''}`}>
               <Image
-                className="rounded-lg shadow-lg w-36 h-36 md:w-44 md:h-44"
+                className="rounded-lg w-36 h-36 md:w-44 md:h-44"
                 src="/img/pfp.jpg"
                 alt="Front Profile of Kartik"
-                width={175}
-                height={175}
+                width={144}
+                height={144}
                 priority
               />
             </div>
             <div className={`avatar back ${isFlipped ? 'flipped' : ''}`}>
               <Image
-                className="rounded-lg shadow-lg w-36 h-36 md:w-44 md:h-44"
+                className="rounded-lg w-36 h-36 md:w-44 md:h-44"
                 src="/img/pfp-back.webp"
                 alt="Back Profile of Kartik"
-                width={175}
-                height={175}
+                width={144}
+                height={144}
                 priority
               />
             </div>
