@@ -58,8 +58,6 @@ function ContactForm() {
 
             const result = await response.json();
 
-            console.log(result)
-
             if (response.ok && result.success) {
                 setSuccessMessage("Thanks for reaching out! Your form has been submitted.");
                 setIsModalOpen(true); // Open the modal
