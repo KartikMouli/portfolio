@@ -35,7 +35,7 @@ export default function Home() {
     <div className="flex flex-col gap-16 pb-16 text-white">
 
       {/* Hero Section */}
-      <section className="min-h-screen pb-10 sm:pb-0 sm:min-h-0 md:pt-20 flex flex-col justify-center md:justify-start items-center text-center md:text-left md:px-0 gap-10">
+      <section className="min-h-screen pb-10 sm:pb-0 sm:min-h-0 md:pt-16 flex flex-col justify-center md:justify-start items-center text-center md:text-left md:px-0 gap-10">
         <div className="flex flex-col md:flex-row-reverse items-center md:justify-between gap-6 md:gap-8 w-full max-w-4xl mx-auto">
           <div className="avatar-container">
             <div className={`avatar front ${isFlipped ? 'flipped' : ''}`}>
