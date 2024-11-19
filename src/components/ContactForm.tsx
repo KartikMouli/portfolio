@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { Send } from 'lucide-react';
 import Link from 'next/link';
 import Modal from './ui/Modal';
+import axios from 'axios';
 
 function ContactForm() {
     const [formState, setFormState] = useState({
@@ -33,44 +34,26 @@ function ContactForm() {
         setErrorMessage('');
         setLoading(true); // Start loading
 
-        const accessKey = process.env.NEXT_PUBLIC_WEB3FORMS_PUBLIC_ACCESS_KEY;
-
-        if (!accessKey) {
-            setErrorMessage("Submission error: Access key is missing.");
-            setLoading(false);
-            return;
-        }
-
         try {
-            const response = await fetch("https://api.web3forms.com/submit", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    Accept: "application/json",
-                },
-                body: JSON.stringify({
-                    access_key: accessKey,
-                    name,
-                    email,
-                    message,
-                }),
+            const response = await axios.post('/api/contact', {
+                name,
+                email,
+                message,
             });
 
-            const result = await response.json();
-
-            if (response.ok && result.success) {
+            if (response.status === 200 && response.data.success) {
                 setSuccessMessage("Thanks for reaching out! Your form has been submitted.");
-                setIsModalOpen(true); // Open the modal
+                setIsModalOpen(true);
                 setFormState({ name: '', email: '', message: '' });
             } else {
                 setErrorMessage("Form submission failed. Please try again.");
-                setIsModalOpen(true); // Open the modal
+                setIsModalOpen(true);
             }
-        } catch{
+        } catch (error) {
             setErrorMessage("Error submitting the form. Please check your connection.");
-            setIsModalOpen(true); // Open the modal
+            setIsModalOpen(true);
         } finally {
-            setLoading(false); // Stop loading
+            setLoading(false);
         }
     }
 
@@ -133,7 +116,7 @@ function ContactForm() {
                     </div>
                 </div>
 
-                
+
 
                 {/* Send message */}
                 <div className="mt-2">
@@ -167,7 +150,7 @@ function ContactForm() {
                 onClose={handleCloseModal}
                 message={modalMessage}
                 title={errorMessage ? "Error" : "Success"}
-                isError={!!errorMessage} 
+                isError={!!errorMessage}
             />
         </>
     )

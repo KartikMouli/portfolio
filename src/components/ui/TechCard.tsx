@@ -31,6 +31,7 @@ const TechCard = ({
                         width={40}
                         height={40}
                         className="size-8 rounded"
+                        priority
                     />
                 </div>
             </div>

@@ -5,7 +5,8 @@ const nextConfig = {
             'github-readme-streak-stats.herokuapp.com',
             'leetcard.jacoblin.cool',
             'cdn.svgator.com',
-            'raw.githubusercontent.com'
+            'raw.githubusercontent.com',
+            'holopin.me'
         ],
         dangerouslyAllowSVG: true, // Allow SVG images
 

@@ -51,10 +51,12 @@ function About() {
             {/* Stats Overview Section */}
             <section className='mb-16'>
                 <h3 className="text-3xl font-bold mt-6 mb-6">Data Playground</h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-10">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-10 align-center items-center">
                     <StatsCard src="https://leetcard.jacoblin.cool/monchi02?ext=heatmap" alt="LeetCode Heatmap Stats" />
                     <StatsCard src="https://raw.githubusercontent.com/KartikMouli/cf-stats/refs/heads/main/output/light_card.svg" alt="Codeforces Statistics Card" />
                     <StatsCard src="https://github-readme-streak-stats.herokuapp.com/?user=kartikmouli&theme=dark" alt="GitHub Streak Stats" />
+                    <StatsCard src="https://holopin.me/kartikmouli" alt="Holopin Badges" />
+
                 </div>
             </section>
         </>
