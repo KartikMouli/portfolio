@@ -18,11 +18,9 @@ export default function Home() {
     }
   };
 
-  const [isFlipped, setIsFlipped] = useState(false);
+  const [isFlipped, setIsFlipped] = useState(true);
 
   useEffect(() => {
-    // Automatically flip the avatar on page load
-    setIsFlipped(true);
 
     // Rotate back after 2 seconds
     const timer = setTimeout(() => setIsFlipped(false), 1500);
@@ -62,7 +60,7 @@ export default function Home() {
           </div>
 
           <div className="flex flex-col items-center md:items-start">
-            <h1 className="text-3xl md:text-4xl font-extrabold text-gradient mb-2">Hey, I&apos;m Kartik</h1>
+            <h1 className="text-3xl md:text-4xl font-extrabold text-gradient mb-2">Hey, I&apos;m Kartik <span className="waving-hand">👋</span></h1>
             <h2 className="text-lg md:text-xl mb-2  dark:text-gray-300">Full-Stack Developer & Competitive Programmer</h2>
             <div className="flex gap-2 items-center justify-center align-center mb-3 font-light dark:text-gray-300" >
               <MapPinHouseIcon width={16} height={16} /> <h3 className="text-md">Nashik, Maharashtra, 🇮🇳</h3>

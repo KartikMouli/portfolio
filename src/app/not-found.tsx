@@ -36,7 +36,7 @@ export default function NotFound() {
                                 Looks like this page decided to take a little break. Don&apos;t stress; we all need a moment sometimes!
                             </p>
 
-                            <p className="mt-4 text-gray-400 text-sm sm:text-base">
+                            <p className="mt-4 dark:text-gray-400 text-sm sm:text-base">
                                 Thanks for your patience! The rest of the site is actually pretty chill, I promise.
                             </p>
                         </div>

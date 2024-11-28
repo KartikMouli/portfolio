@@ -2,7 +2,6 @@ import React from 'react';
 import Image from 'next/image';
 import data from '@/data/education.json'
 import Link from 'next/link';
-import { z } from 'zod';
 import {EducationDataSchema} from '@/lib/schemas';
 
 
