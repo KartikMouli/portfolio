@@ -1,6 +1,7 @@
 import { SiLeetcode } from "react-icons/si";
 import { FaXTwitter } from 'react-icons/fa6';
 import { FaGithub, FaEnvelope, FaLinkedin } from 'react-icons/fa';
+import Link from "next/link";
 
 const socialLinks = [
     {
@@ -34,17 +35,17 @@ export default function Socials() {
     return (
         <section className="flex justify-center gap-4 md:gap-5">
             {socialLinks.map(({ href, icon, label }) => (
-                <a
+                <Link
                     key={label}
                     href={href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center justify-center w-8 h-8 text-gray-400 hover:text-white transition duration-300 ease-in-out transform hover:scale-110"
+                    className="flex items-center justify-center w-8 h-8 transition duration-300 ease-in-out transform hover:scale-110"
                     title={label}
                 >
                     <span className="sr-only">{label}</span>
                     {icon}
-                </a>
+                </Link>
             ))}
         </section>
     );

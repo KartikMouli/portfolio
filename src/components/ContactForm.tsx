@@ -1,159 +1,119 @@
 "use client";
-import React, { useState } from 'react';
-import { Send } from 'lucide-react';
-import Link from 'next/link';
-import Modal from './ui/Modal';
-import axios from 'axios';
 
-function ContactForm() {
-    const [formState, setFormState] = useState({
-        name: '',
-        email: '',
-        message: '',
+import { Button } from "./ui/button";
+import { Input } from "./ui/input";
+import { Textarea } from "./ui/textarea";
+import { Form, FormField, FormItem, FormLabel, FormMessage, FormControl } from "@/components/ui/form";
+import { useToast } from "@/hooks/use-toast";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { Send } from "lucide-react";
+import axios from "axios";
+import { formSchema } from "@/lib/schemas";
+
+
+
+
+export default function ContactForm() {
+    const { toast } = useToast();
+
+    const form = useForm({
+        resolver: zodResolver(formSchema),
+        defaultValues: {
+            name: "",
+            email: "",
+            message: "",
+        },
     });
-    const [loading, setLoading] = useState(false);
-    const [successMessage, setSuccessMessage] = useState('');
-    const [errorMessage, setErrorMessage] = useState('');
-    const [isModalOpen, setIsModalOpen] = useState(false);
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        const { name, value } = e.target;
-        setFormState((prev) => ({ ...prev, [name]: value }));
-    };
-
-    async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-        e.preventDefault();
-        const { name, email, message } = formState;
-
-        // Simple validation
-        if (!name || !email || !message) {
-            setErrorMessage("All fields are required!");
-            return;
-        }
-
-        setErrorMessage('');
-        setLoading(true); // Start loading
-
+    const onSubmit = async (data: z.infer<typeof formSchema>) => {
         try {
-            const response = await axios.post('/api/contact', {
-                name,
-                email,
-                message,
-            });
+            const response = await axios.post("/api/contact", data);
 
             if (response.status === 200 && response.data.success) {
-                setSuccessMessage("Thanks for reaching out! Your form has been submitted.");
-                setIsModalOpen(true);
-                setFormState({ name: '', email: '', message: '' });
+                toast({
+                    title: "Success",
+                    description: "Thanks for reaching out! Your form has been submitted.",
+                    variant: "success",
+                });
+                form.reset(); // Reset form on success
             } else {
-                setErrorMessage("Form submission failed. Please try again.");
-                setIsModalOpen(true);
+                toast({
+                    title: "Error",
+                    description: "Form submission failed. Please try again.",
+                    variant: "destructive",
+                });
             }
-        } catch (error) {
-            setErrorMessage("Error submitting the form. Please check your connection.");
-            setIsModalOpen(true);
-        } finally {
-            setLoading(false);
+        } catch {
+            toast({
+                title: "Error",
+                description: "Error submitting the form. Please check your connection.",
+                variant: "destructive",
+            });
         }
-    }
-
-    const handleCloseModal = () => {
-        setIsModalOpen(false); // Close the modal
-        setSuccessMessage(''); // Clear success message
-        setErrorMessage(''); // Clear error message
     };
 
-    // Determine modal message and title based on success or error
-    const modalMessage = successMessage || errorMessage;
-
     return (
-        <>
-            <form onSubmit={handleSubmit}>
+        <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+                {/* Name Field */}
                 <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
-                    {/* Name */}
-                    <div className='h-16'>
-                        <label htmlFor="name" className="sr-only">Name</label>
-                        <input
-                            id="name"
-                            name="name"
-                            type="text"
-                            placeholder="Name"
-                            autoComplete="given-name"
-                            value={formState.name}
-                            onChange={handleChange}
-                            className='flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50'
-                        />
-                    </div>
-
-                    {/* Email */}
-                    <div className='h-16'>
-                        <label htmlFor="email" className="sr-only">Email</label>
-                        <input
-                            id="email"
-                            name="email"
-                            type="email"
-                            placeholder='Email'
-                            autoComplete='email'
-                            value={formState.email}
-                            onChange={handleChange}
-                            className='flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50'
-                        />
-                    </div>
-
-                    {/* Message */}
-                    <div className='h-32 sm:col-span-2'>
-                        <label htmlFor="message" className="sr-only">Message</label>
-                        <textarea
-                            id="message"
-                            name="message"
-                            rows={4}
-                            placeholder='Leave feedback about the site, career opportunities, or just to say hello.'
-                            autoComplete="Message"
-                            value={formState.message}
-                            onChange={handleChange}
-                            className="flex min-h-[60px] w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 resize-none"
-                        />
-                    </div>
-                </div>
-
-
-
-                {/* Send message */}
-                <div className="mt-2">
-                    <button
-                        type="submit"
-                        className={`inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium w-full bg-white text-[#111111] shadow hover:bg-white/90 h-9 px-4 py-2 ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
-                        disabled={loading} // Disable button when loading
-                    >
-                        {loading ? (
-                            <span>Loading...</span> // Loading indicator
-                        ) : (
-                            <div className='flex items-center'>
-                                <span>Send Message</span>
-                                <Send className="ml-2" />
-                            </div>
+                    <FormField
+                        control={form.control}
+                        name="name"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Name</FormLabel>
+                                <FormControl>
+                                    <Input placeholder="Your name" {...field} />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
                         )}
-                    </button>
+                    />
 
-                    <p className="mt-4 text-xs text-muted-foreground">
-                        By submitting this form, I agree to the{" "}
-                        <Link href="/privacy" className="link font-semibold">
-                            privacy&nbsp;policy.
-                        </Link>
-                    </p>
+                    {/* Email Field */}
+                    <FormField
+                        control={form.control}
+                        name="email"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Email</FormLabel>
+                                <FormControl>
+                                    <Input placeholder="Your email" {...field} />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
                 </div>
+
+                {/* Message Field */}
+                <FormField
+                    control={form.control}
+                    name="message"
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Message</FormLabel>
+                            <FormControl>
+                                <Textarea
+                                    placeholder="Leave feedback about the site, career opportunities, or just to say hello."
+                                    {...field}
+                                    rows={4}
+                                />
+                            </FormControl>
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                />
+
+                {/* Submit Button */}
+                <Button type="submit" className="w-full">
+                    {form.formState.isSubmitting ? "Sending..." : "Send Message"}
+                    <Send className="ml-2 w-4 h-4" />
+                </Button>
             </form>
-
-            {/* Modal for success or error message */}
-            <Modal
-                isOpen={isModalOpen}
-                onClose={handleCloseModal}
-                message={modalMessage}
-                title={errorMessage ? "Error" : "Success"}
-                isError={!!errorMessage}
-            />
-        </>
-    )
+        </Form>
+    );
 }
-
-export default ContactForm;

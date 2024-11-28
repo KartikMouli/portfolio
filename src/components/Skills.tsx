@@ -1,4 +1,4 @@
-import TechCard from "./ui/TechCard";
+import TechCard from "./TechCard";
 import data from "@/data/skills.json";
 
 const Skills = () => {
@@ -11,7 +11,7 @@ const Skills = () => {
                     <TechCard key={cardItem.name} cardInfo={cardItem} />
                 ))
             ) : (
-                <p className="text-gray-300">No skills available.</p> // Updated message if no skills found
+                <p className="dark:text-gray-300">No skills available.</p> // Updated message if no skills found
             )}
         </div>
     );

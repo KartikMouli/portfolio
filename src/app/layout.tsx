@@ -6,6 +6,11 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
 import { Analytics } from '@vercel/analytics/react';
+import { ThemeProvider } from "@/components/theme-provider";
+import { Toaster } from "@/components/ui/toaster"
+
+
+
 
 const raleway = Raleway({
   subsets: ["latin"],
@@ -25,17 +30,27 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
+
       <body
         className={`${raleway.className} mx-auto flex min-h-screen max-w-3xl flex-col px-8 pb-16 antialiased`}
       >
-        <Header />
-        <main className="flex-grow">
-          {children}
-          <Analytics />
-        </main>
-        <Footer />
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <Header />
+          <main className="flex-grow">
+            {children}
+            <Analytics />
+          </main>
+          <Toaster />
+          <Footer />
+        </ThemeProvider>
+
       </body>
-    </html>
+    </html >
   );
 }
