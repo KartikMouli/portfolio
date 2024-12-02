@@ -11,7 +11,6 @@ import { Toaster } from "@/components/ui/toaster"
 
 
 
-
 const raleway = Raleway({
   subsets: ["latin"],
   display: 'swap', // Ensures a fallback font is displayed until the font loads
@@ -19,10 +18,29 @@ const raleway = Raleway({
 
 
 export const metadata: Metadata = {
-  title: "Kartik's Portfolio",
-  description: "Personal portfolio showcasing projects and skills.",
-  keywords: "Kartik, Portfolio, Web Development, Software Engineering, Projects"
+  title: "Kartik's Portfolio", 
+  description: "Showcasing Kartik's projects and skills.", 
+  openGraph: {
+    title: "Kartik's Portfolio",
+    description: "Personal portfolio showcasing projects and skills.",
+    url: "https://kartikmoulidev.vercel.app", 
+    siteName: "Kartik's Portfolio",
+    type: "website",
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Kartik's Portfolio",
+    description: "Showcasing Kartik's projects and skills.",
+  },
+  verification: {
+    google: "AY_tNfWVLsBZCnrbEeAyG93iDeRouDolzW8EonaejmQ", // Replace with Google site verification code
+  },
 };
+
 
 export default function RootLayout({
   children,
