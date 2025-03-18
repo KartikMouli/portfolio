@@ -5,6 +5,7 @@ import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
+import { SpeedInsights } from "@vercel/speed-insights/next"
 import { Analytics } from '@vercel/analytics/react';
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/toaster"
@@ -63,6 +64,7 @@ export default function RootLayout({
           <main className="flex-grow">
             {children}
             <Analytics />
+            <SpeedInsights/>
           </main>
           <Toaster />
           <Footer />
