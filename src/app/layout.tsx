@@ -63,7 +63,7 @@ export default function RootLayout({
           <Header />
           <main className="flex-grow">
             {children}
-            <Analytics />
+            <Analytics endpoint="https://kartikmoulidev.vercel.app/_vercel/insights" />
             <SpeedInsights/>
           </main>
           <Toaster />
