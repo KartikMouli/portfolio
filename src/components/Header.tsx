@@ -1,8 +1,8 @@
-"use client"
+"use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { motion } from "framer-motion";
 import ThemeToggle from "./ThemeToggle";
-
 
 const navLinks = [
     {
@@ -23,25 +23,53 @@ const navLinks = [
     },
 ];
 
+const linkVariants = {
+    initial: { opacity: 0, y: -10 },
+    animate: { opacity: 1, y: 0, transition: { duration: 0.5 } },
+    hover: { scale: 1.1, transition: { duration: 0.3 } },
+    tap: { scale: 0.95 },
+};
+
 export default function Header() {
     const pathname = usePathname(); // Get the current pathname
 
     return (
-        <header className="sticky top-0 z-50 py-6 backdrop-blur-sm">
+        <motion.header
+            className="sticky top-0 z-50 py-6 backdrop-blur-sm"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+        >
             <nav className="flex items-center justify-between">
-                <ul className="flex gap-4 sm:gap-8">
+                {/* Navigation Links */}
+                <motion.ul
+                    className="flex gap-4 sm:gap-8"
+                    initial="initial"
+                    animate="animate"
+                >
                     {navLinks.map((nav, id) => (
-                        <li key={id} className={`link hover:font-semibold transition duration-200 ${pathname === nav.href ? "dark:text-white font-bold" : ""
-                            }`}>
+                        <motion.li
+                            key={id}
+                            className={`link ${pathname === nav.href ? "dark:text-white font-bold" : ""
+                                }`}
+                            variants={linkVariants}
+                            whileHover="hover"
+                            whileTap="tap"
+                        >
                             <Link href={nav.href}>{nav.name}</Link>
-
-                        </li>
+                        </motion.li>
                     ))}
-                </ul>
-                <div className="flex gap-0 sm:gap-4">
-                </div>
-                <ThemeToggle/>
+                </motion.ul>
+
+                {/* Theme Toggle */}
+                <motion.div
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.6, delay: 0.2 }}
+                >
+                    <ThemeToggle />
+                </motion.div>
             </nav>
-        </header>
+        </motion.header>
     );
 }

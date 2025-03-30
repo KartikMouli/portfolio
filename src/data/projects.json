@@ -79,7 +79,7 @@
             ]
         },
         {
-            "name": "LinkHub",
+            "name": "Linkhub",
             "description": "LinkHub is a sleek, Linktree-style page built with Next.js, TypeScript, and Tailwind CSS. It offers an easy-to-use admin dashboard for managing and analyzing links stats.",
             "href": "https://kartiklinks.vercel.app/",
             "image": "/img/project/linktree.png",
@@ -103,7 +103,7 @@
             ]
         },
         {
-            "name": "DexApp",
+            "name": "Dexapp",
             "description": "Mini version of cryptocurrency exchange with a liquidity provider interface and features like token transfer and swapping of tokens.",
             "href": "https://dexapp-bc.vercel.app/",
             "image": "/img/project/dexapp.webp",
