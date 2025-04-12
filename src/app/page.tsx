@@ -8,15 +8,36 @@ import Projects from "@/components/Projects";
 import { ArrowRightIcon, MapPinHouseIcon } from "lucide-react";
 import Skills from "@/components/Skills";
 import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import { motion, useAnimation } from "framer-motion";
 
 export default function Home() {
   const [isFlipped, setIsFlipped] = useState(true);
+  const [isVisible, setIsVisible] = useState(false);
+  const controls = useAnimation();
 
   useEffect(() => {
     const timer = setTimeout(() => setIsFlipped(false), 1500);
     return () => clearTimeout(timer);
   }, []);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsVisible(entry.isIntersecting);
+        if (entry.isIntersecting) {
+          controls.start('visible');
+        }
+      },
+      { threshold: 0.1 }
+    );
+    
+    const currentElement = document.querySelector('.skills-section');
+    if (currentElement) observer.observe(currentElement);
+    
+    return () => {
+      if (currentElement) observer.unobserve(currentElement);
+    };
+  }, [controls]);
 
   return (
     <motion.div
@@ -114,6 +135,7 @@ export default function Home() {
             >
               Full-Stack Web Developer
             </motion.h2>
+            
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
@@ -129,7 +151,15 @@ export default function Home() {
               transition={{ duration: 1, delay: 1.4 }}
               className="dark:text-gray-200 text-sm md:text-base leading-relaxed mb-5 md:mb-6"
             >
-              <span className="font-mono dark:text-white">IITP CSE&apos;24</span> | Advancing in Fullstack Web Development
+              <span className="font-mono dark:text-white">IITP CSE&apos;24</span> |{" "}
+              <Link 
+                href="https://unizoy.com" 
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-muted-foreground hover:text-foreground transition-colors duration-200"
+              >
+                Full Stack Developer Intern @Unizoy
+              </Link>
             </motion.p>
             <motion.div
               initial={{ opacity: 0, scale: 0.8 }}
@@ -158,7 +188,27 @@ export default function Home() {
             <ArrowRightIcon className="size-5 cursor-pointer animate-pulse" />
           </Link>
         </motion.div>
-        <Skills />
+        <motion.section
+          className="skills-section"
+          initial="hidden"
+          animate={controls}
+          variants={{
+            visible: {
+              opacity: 1,
+              y: 0,
+              transition: {
+                duration: 0.8,
+                staggerChildren: 0.1
+              }
+            },
+            hidden: {
+              opacity: 0,
+              y: 50
+            }
+          }}
+        >
+          <Skills />
+        </motion.section>
       </section>
 
       {/* Project Section */}

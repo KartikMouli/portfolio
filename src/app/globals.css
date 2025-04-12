@@ -17,6 +17,12 @@
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: 0; /* Firefox */
   }
+
+  .bg-grid-primary\/5 {
+    background-size: 40px 40px;
+    background-image: linear-gradient(to right, rgb(var(--primary) / 0.05) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(var(--primary) / 0.05) 1px, transparent 1px);
+  }
 }
 
 @layer base {
@@ -53,6 +59,13 @@
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
     --radius: 0.5rem;
+    
+    /* Social Icons Colors - Light Mode */
+    --social-linkedin-color: #0077B5;
+    --social-github-color: #24292e;
+    --social-email-color: #EA4335;
+    --social-x-color: #000000;
+    --social-leetcode-color: #FFA116;
   }
   .dark {
     --background: 240 10% 3.9%;
@@ -79,6 +92,13 @@
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
+    
+    /* Social Icons Colors - Dark Mode */
+    --social-linkedin-color: #0A66C2;
+    --social-github-color: #c9d1d9;
+    --social-email-color: #FF5A52;
+    --social-x-color: #ffffff;
+    --social-leetcode-color: #FFA116;
   }
 }
 

@@ -1,53 +1,95 @@
-import { ArrowLeftIcon } from "lucide-react";
-import Image from "next/image";
+'use client';
+
+import { ArrowLeftIcon, Home } from "lucide-react";
 import Link from "next/link";
+import { motion } from "framer-motion";
 
 export default function NotFound() {
-    return (
-        <article className="flex flex-col gap-8 mt-2">
-            <div className="flex flex-col items-center justify-center">
-                <div className="max-w-3xl mx-auto text-center sm:text-left">
-                    <section className="flex flex-col sm:flex-row items-center sm:items-start">
-                        <p className="text-6xl sm:text-8xl font-bold text-muted-foreground mb-4 sm:mb-0">
-                            404
-                        </p>
-                        <div className="sm:ml-6 sm:border-l sm:border-gray-200 sm:pl-6">
-                            <h1 className="text-3xl sm:text-5xl font-semibold mb-4">
-                                Oops! We Can&apos;t Find That Page!
-                            </h1>
-                            <div className="w-full flex justify-center sm:justify-start">
-                                <object
-                                    type="image/svg+xml"
-                                    data="https://cdn.svgator.com/images/2022/01/404-svg-animation.svg"
-                                    title="Kitty Yarn Play 404 page animation - Made by SVGator"
-                                    className="w-3/4 max-w-sm sm:max-w-md mb-4 rounded-xl"
-                                >
-                                    {/* Fallback for browsers that do not support object tags */}
-                                    <Image
-                                        src="https://cdn.svgator.com/images/2022/01/404-svg-animation.svg"
-                                        alt="Kitty Yarn Play 404 page animation - Made by SVGator"
-                                        width={400}
-                                        height={250}
-                                        className="w-full h-auto"
-                                    />
-                                </object>
-                            </div>
-                            <p className="mt-2 text-base text-muted-foreground sm:text-lg">
-                                Looks like this page decided to take a little break. Don&apos;t stress; we all need a moment sometimes!
-                            </p>
+    // Animation variants
+    const containerVariants = {
+        hidden: { opacity: 0 },
+        visible: { 
+            opacity: 1,
+            transition: { 
+                duration: 0.5,
+                staggerChildren: 0.1 
+            }
+        }
+    };
 
-                            <p className="mt-4 dark:text-gray-400 text-sm sm:text-base">
-                                Thanks for your patience! The rest of the site is actually pretty chill, I promise.
-                            </p>
-                        </div>
-                    </section>
-                    <div className="mt-8 sm:mt-10 flex justify-center sm:justify-start space-x-3">
-                        <Link href="/" className="inline-flex items-center text-blue-500 underline hover:text-blue-300 text-sm sm:text-base">
-                            <ArrowLeftIcon className="w-4 h-4 mr-1" /> Back to reality, aka the homepage
+    const itemVariants = {
+        hidden: { y: 20, opacity: 0 },
+        visible: { 
+            y: 0, 
+            opacity: 1,
+            transition: { duration: 0.5 }
+        }
+    };
+
+    return (
+        <motion.div 
+            className="min-h-[80vh] flex flex-col items-center justify-center p-4"
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+        >
+            <div className="w-full max-w-4xl mx-auto text-center">
+                {/* 404 Display */}
+                <motion.div 
+                    className="relative mb-8"
+                    variants={itemVariants}
+                >
+                    <h1 className="text-8xl md:text-9xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-blue-600 dark:from-blue-400 dark:to-purple-400">
+                        404
+                    </h1>
+                </motion.div>
+
+                {/* Content */}
+                <motion.div
+                    className="space-y-6"
+                    variants={itemVariants}
+                >
+                    <h2 className="text-4xl font-bold">
+                        Page Not Found
+                    </h2>
+                    
+                    <p className="text-lg text-muted-foreground max-w-md mx-auto">
+                        Oops! Looks like you&apos;ve ventured into uncharted territory. 
+                        Don&apos;t worry, even the best explorers get lost sometimes.
+                    </p>
+
+                    <motion.div 
+                        className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-8"
+                        variants={itemVariants}
+                    >
+                        <Link href="/">
+                            <motion.button
+                                className="px-6 py-3 bg-primary text-primary-foreground rounded-lg font-medium flex items-center gap-2 hover:opacity-90 transition-all"
+                                whileHover={{ scale: 1.05 }}
+                                whileTap={{ scale: 0.95 }}
+                            >
+                                <Home className="w-4 h-4" />
+                                Return Home
+                            </motion.button>
                         </Link>
-                    </div>
+                        
+                        <Link href="/contact">
+                            <motion.button
+                                className="px-6 py-3 border border-input rounded-lg font-medium hover:bg-accent hover:text-accent-foreground transition-colors"
+                                whileHover={{ scale: 1.05 }}
+                                whileTap={{ scale: 0.95 }}
+                            >
+                                Report This Issue
+                            </motion.button>
+                        </Link>
+                    </motion.div>
+                </motion.div>
+
+                {/* Decorative Elements */}
+                <div className="absolute inset-0 -z-10 overflow-hidden">
+                    <div className="absolute inset-0 bg-grid-primary/5 [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]" />
                 </div>
             </div>
-        </article>
+        </motion.div>
     );
 }

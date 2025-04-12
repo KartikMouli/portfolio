@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import Markdown from "react-markdown";
 import { FaGithub, FaExternalLinkAlt } from "react-icons/fa";
+import { motion } from "framer-motion";
 
 import {
     Card,
@@ -47,69 +48,141 @@ export function ProjectCard({ project }: Props) {
 
     const { name, href, description, image, tags, links } = project;
 
+    // Animation variants for card elements
+    const cardContentVariants = {
+        hidden: { opacity: 0 },
+        visible: { 
+            opacity: 1,
+            transition: { duration: 0.3 }
+        }
+    };
+
+    const imageVariants = {
+        hover: { scale: 1.05 }
+    };
+
+    const tagVariants = {
+        initial: { scale: 0.8, opacity: 0 },
+        animate: { scale: 1, opacity: 1 },
+        hover: { scale: 1.1 }
+    };
 
     return (
-        <Card className="flex flex-col border dark:border-gray-800 rounded-xl">
+        <Card className="flex flex-col border dark:border-gray-800 rounded-xl h-full">
             {/* Image Section */}
             {image && (
                 <Link href={href || image}>
-                    <Image
-                        src={image}
-                        alt={name}
-                        width={500}
-                        height={300}
-                        className="w-full h-40 px-4 pt-4 object-cover object-top hover:scale-105 transition-transform duration-300"
-                        priority
-                    />
+                    <motion.div
+                        whileHover="hover"
+                        initial="initial"
+                        animate="animate"
+                    >
+                        <motion.div
+                            variants={imageVariants}
+                            className="overflow-hidden"
+                        >
+                            <Image
+                                src={image}
+                                alt={name}
+                                width={500}
+                                height={300}
+                                className="w-full h-40 px-4 pt-4 object-cover object-top"
+                                priority
+                            />
+                        </motion.div>
+                    </motion.div>
                 </Link>
             )}
 
-            {/* Card Header */}
-            <CardHeader className="p-6 pb-0">
-                <CardTitle className="text-lg font-semibold">{name}</CardTitle>
-            </CardHeader>
+            {/* Main Content Wrapper */}
+            <div className="flex flex-col flex-grow">
+                {/* Card Header */}
+                <motion.div
+                    variants={cardContentVariants}
+                    initial="hidden"
+                    animate="visible"
+                >
+                    <CardHeader className="p-6 pb-0">
+                        <CardTitle className="text-lg font-semibold">{name}</CardTitle>
+                    </CardHeader>
 
-            {/* Card Content */}
-            <CardContent className="p-6 pt-2">
-                <Markdown className="text-sm font-sans text-pretty">
-                    {description}
-                </Markdown>
-                {tags && tags.length > 0 && (
-                    <div className="mt-4 flex flex-wrap gap-2">
-                        {tags.sort().map((tag) => (
-                            <Badge
-                                key={tag}
-                                variant="secondary"
+                    {/* Card Content */}
+                    <CardContent className="p-6 pt-2">
+                        <Markdown className="text-sm font-sans text-pretty">
+                            {description}
+                        </Markdown>
+                        {tags && tags.length > 0 && (
+                            <motion.div 
+                                className="mt-4 flex flex-wrap gap-2"
+                                initial="hidden"
+                                animate="visible"
+                                variants={{
+                                    hidden: {},
+                                    visible: {
+                                        transition: {
+                                            staggerChildren: 0.05
+                                        }
+                                    }
+                                }}
                             >
-                                {tag}
-                            </Badge>
-                        ))}
-                    </div>
-                )}
-            </CardContent>
+                                {tags.sort().map((tag) => (
+                                    <motion.div
+                                        key={tag}
+                                        variants={tagVariants}
+                                        whileHover={{ scale: 1.05 }}
+                                        transition={{ duration: 0.2 }}
+                                    >
+                                        <Badge variant="secondary">
+                                            {tag}
+                                        </Badge>
+                                    </motion.div>
+                                ))}
+                            </motion.div>
+                        )}
+                    </CardContent>
+                </motion.div>
 
-            {/* Card Footer */}
-            {links && links.length > 0 && (
-                <CardFooter className="flex flex-wrap mt-auto gap-2">
-                    {links.sort().map((link, idx) => (
-                        <Link
-                            href={link.href}
-                            key={idx}
-                            target="_blank"
-                            aria-label={`Link to ${link.name}`}
-                        >
-                            <Button variant="outline" className="transition-transform duration-300 hover:scale-105">
-                                {link.name === "Live Demo" ? (
-                                    <FaExternalLinkAlt />
-                                ) : (
-                                    <FaGithub />
-                                )}
-                                <span className="text-sm">{link.name}</span>
-                            </Button>
-                        </Link>
-                    ))}
-                </CardFooter>
-            )}
+                {/* Spacer to push footer to bottom */}
+                <div className="flex-grow" />
+
+                {/* Card Footer */}
+                {links && links.length > 0 && (
+                    <motion.div
+                        variants={cardContentVariants}
+                        initial="hidden"
+                        animate="visible"
+                        className="p-6 pt-0"
+                    >
+                        <CardFooter className="flex flex-wrap gap-2 p-0">
+                            {links.sort().map((link, idx) => (
+                                <motion.div
+                                    key={idx}
+                                    whileHover={{ scale: 1.05 }}
+                                    whileTap={{ scale: 0.95 }}
+                                >
+                                    <Link
+                                        href={link.href}
+                                        target="_blank"
+                                        aria-label={`Link to ${link.name}`}
+                                    >
+                                        <Button 
+                                            variant="outline"
+                                            className="border-gray-200 dark:border-gray-800"
+                                        >
+                                            {link.name === "Live Demo" ? (
+                                                <FaExternalLinkAlt className="mr-1 h-4 w-4" />
+                                            ) : (
+                                                <FaGithub className="mr-1 h-4 w-4" />
+                                            )}
+                                            <span className="text-sm">{link.name}</span>
+                                        </Button>
+                                    </Link>
+                                </motion.div>
+                            ))}
+                        </CardFooter>
+                    </motion.div>
+                )}
+            </div>
         </Card>
     );
 }
