@@ -9,6 +9,7 @@ import { ArrowRightIcon, MapPinHouseIcon } from "lucide-react";
 import Skills from "@/components/Skills";
 import { useEffect, useState } from "react";
 import { motion, useAnimation } from "framer-motion";
+import Chatbot from "@/components/Chatbot";
 
 export default function Home() {
   const [isFlipped, setIsFlipped] = useState(true);
@@ -227,6 +228,9 @@ export default function Home() {
         </motion.div>
         <Projects limit={2} />
       </section>
+
+      {/* Chatbot Component */}
+      <Chatbot />
     </motion.div>
   );
 }
