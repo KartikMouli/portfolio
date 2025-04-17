@@ -9,8 +9,9 @@ import { Send, MessageSquare, X, Bot, Sparkles, ChevronDown, User, ChevronRight 
 import { motion, AnimatePresence } from 'framer-motion';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { Badge } from './ui/badge';
-import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
-import { Message, FAQ, FAQ_DATA, SUGGESTED_QUESTIONS, CHATBOT_TEXT, PROMPT_CONTEXT } from '../data/chatbot';
+import { Avatar, AvatarFallback } from './ui/avatar';
+import { Message, FAQ, SUGGESTED_QUESTIONS, CHATBOT_TEXT, PROMPT_CONTEXT } from '../data/chatbot';
+import ReactMarkdown from 'react-markdown';
 
 
 
@@ -43,51 +44,36 @@ export default function Chatbot() {
         }
     };
 
-    const getGenAI = () => {
-        const apiKey = process.env.NEXT_PUBLIC_GEMINI_API_KEY;
-        if (!apiKey) {
-            throw new Error('Gemini API key is not configured. Please set NEXT_PUBLIC_GEMINI_API_KEY in your environment variables.');
-        }
-        return new GoogleGenerativeAI(apiKey);
-    };
 
     const handleSendMessage = async () => {
         if (!input.trim()) return;
 
-        const userMessage: Message = { role: 'user', content: input };
-        setMessages((prev) => [...prev, userMessage]);
-        setInput('');
+        const userMessage = input.trim();
+        setInput("");
+        setMessages((prev) => [...prev, { role: "user", content: userMessage }]);
         setIsLoading(true);
 
         try {
-            const genAI = getGenAI();
-            const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash' });
+            const response = await fetch("/api/chat", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ message: userMessage }),
+            });
 
-            const prompt = `${PROMPT_CONTEXT}${input}`;
-
-            const result = await model.generateContent(prompt);
-            const response = await result.response;
-            const text = response.text();
-
-            const assistantMessage: Message = { role: 'assistant', content: text };
-            setMessages((prev) => [...prev, assistantMessage]);
-        } catch (error) {
-            console.error('Error:', error);
-            let errorMessage = CHATBOT_TEXT.error.default;
-
-            if (error instanceof Error) {
-                if (error.message.includes('API key')) {
-                    errorMessage = CHATBOT_TEXT.error.apiKey;
-                } else if (error.message.includes('quota')) {
-                    errorMessage = CHATBOT_TEXT.error.quota;
-                }
+            if (!response.ok) {
+                throw new Error("Failed to get response");
             }
 
-            const errorResponse: Message = {
-                role: 'assistant',
-                content: errorMessage,
-            };
-            setMessages((prev) => [...prev, errorResponse]);
+            const data = await response.json();
+            setMessages((prev) => [...prev, { role: "assistant", content: data.response }]);
+        } catch (error) {
+            console.error("Error:", error);
+            setMessages((prev) => [
+                ...prev,
+                { role: "assistant", content: "Sorry, I encountered an error. Please try again." },
+            ]);
         } finally {
             setIsLoading(false);
         }
@@ -221,30 +207,61 @@ export default function Chatbot() {
                                                         {messages.map((message, index) => (
                                                             <motion.div
                                                                 key={index}
-                                                                initial={{ opacity: 0, y: 5 }}
+                                                                initial={{ opacity: 0, y: 20 }}
                                                                 animate={{ opacity: 1, y: 0 }}
-                                                                className={`flex items-start gap-2 ${message.role === 'user' ? 'justify-end' : 'justify-start'
-                                                                    }`}
+                                                                className={`flex gap-2 ${
+                                                                    message.role === "user" ? "justify-end" : "justify-start"
+                                                                }`}
                                                             >
-                                                                {message.role === 'assistant' && (
+                                                                {message.role === "assistant" && (
                                                                     <Avatar className="h-6 w-6">
-                                                                        <AvatarFallback className="bg-primary/10">
-                                                                            <Bot className="h-3 w-3" />
+                                                                        <AvatarFallback>
+                                                                        <Bot className="h-4 w-4" />
                                                                         </AvatarFallback>
                                                                     </Avatar>
                                                                 )}
                                                                 <div
-                                                                    className={`max-w-[80%] rounded-lg p-2.5 text-sm ${message.role === 'user'
-                                                                        ? 'bg-primary text-primary-foreground'
-                                                                        : 'bg-muted'
-                                                                        }`}
+                                                                    className={`max-w-[80%] rounded-lg p-2 text-sm ${
+                                                                        message.role === "user"
+                                                                            ? "bg-primary text-primary-foreground"
+                                                                            : "bg-muted"
+                                                                    }`}
                                                                 >
-                                                                    {message.content}
+                                                                    <ReactMarkdown
+                                                                        components={{
+                                                                            p: ({ children }) => <p className="mb-1.5 last:mb-0 text-sm">{children}</p>,
+                                                                            ul: ({ children }) => <ul className="list-disc pl-3 mb-1.5 text-sm">{children}</ul>,
+                                                                            ol: ({ children }) => <ol className="list-decimal pl-3 mb-1.5 text-sm">{children}</ol>,
+                                                                            li: ({ children }) => <li className="mb-0.5 text-sm">{children}</li>,
+                                                                            code: ({ children }) => (
+                                                                                <code className="bg-muted-foreground/10 rounded px-1 py-0.5 text-xs">
+                                                                                    {children}
+                                                                                </code>
+                                                                            ),
+                                                                            pre: ({ children }) => (
+                                                                                <pre className="bg-muted-foreground/10 rounded p-1.5 my-1.5 overflow-x-auto text-xs">
+                                                                                    {children}
+                                                                                </pre>
+                                                                            ),
+                                                                            a: ({ href, children }) => (
+                                                                                <a
+                                                                                    href={href}
+                                                                                    target="_blank"
+                                                                                    rel="noopener noreferrer"
+                                                                                    className="text-primary hover:underline text-sm"
+                                                                                >
+                                                                                    {children}
+                                                                                </a>
+                                                                            ),
+                                                                        }}
+                                                                    >
+                                                                        {message.content}
+                                                                    </ReactMarkdown>
                                                                 </div>
-                                                                {message.role === 'user' && (
+                                                                {message.role === "user" && (
                                                                     <Avatar className="h-6 w-6">
-                                                                        <AvatarFallback className="bg-muted">
-                                                                            <User className="h-3 w-3" />
+                                                                        <AvatarFallback>
+                                                                            <User className="h-4 w-4" />
                                                                         </AvatarFallback>
                                                                     </Avatar>
                                                                 )}

@@ -1,6 +1,6 @@
 'use client';
 
-import { ArrowLeftIcon, Home } from "lucide-react";
+import { Home } from "lucide-react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 
