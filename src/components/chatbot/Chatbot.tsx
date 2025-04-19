@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
-import { GoogleGenerativeAI } from '@google/generative-ai';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
 import { ScrollArea } from '../ui/scroll-area';
@@ -10,8 +9,9 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
 import { Badge } from '../ui/badge';
 import { Avatar, AvatarFallback } from '../ui/avatar';
-import { Message, FAQ, SUGGESTED_QUESTIONS, CHATBOT_TEXT, PROMPT_CONTEXT } from '../../data/chatbot';
+import { Message, FAQ, SUGGESTED_QUESTIONS, CHATBOT_TEXT} from '../../data/chatbot';
 import ReactMarkdown from 'react-markdown';
+import axios from 'axios';
 
 
 
@@ -54,20 +54,8 @@ export default function Chatbot() {
         setIsLoading(true);
 
         try {
-            const response = await fetch("/api/chat", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ message: userMessage }),
-            });
-
-            if (!response.ok) {
-                throw new Error("Failed to get response");
-            }
-
-            const data = await response.json();
-            setMessages((prev) => [...prev, { role: "assistant", content: data.response }]);
+            const response = await axios.post("/api/chat", { message: userMessage });
+            setMessages((prev) => [...prev, { role: "assistant", content: response.data.response  }]);
         } catch (error) {
             console.error("Error:", error);
             setMessages((prev) => [
