@@ -1,4 +1,4 @@
-import TechCard from "./TechCard";
+import TechCard from "../tech-card/TechCard";
 import data from "@/data/skills.json";
 import { motion } from "framer-motion";
 

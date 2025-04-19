@@ -2,7 +2,7 @@
 
 import React from 'react';
 import data from "@/data/skills.json";
-import TechCard from '@/components/TechCard';
+import TechCard from '@/components/tech-card/TechCard';
 import { motion } from 'framer-motion';
 
 // Define the type for each tech item

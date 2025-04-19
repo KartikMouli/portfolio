@@ -1,7 +1,7 @@
 'use client';
 
 import Link from "next/link";
-import Socials from "./Socials";
+import Socials from "../socials/Socials";
 import { motion } from "framer-motion";
 
 export default function Footer() {

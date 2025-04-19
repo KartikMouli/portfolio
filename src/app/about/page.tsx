@@ -1,12 +1,13 @@
 'use client';
 
-import Education from '@/components/Education';
-import StatsCard from '@/components/StatsCard';
+import Education from '@/components/about/Education';
+
 import { Button } from '@/components/ui/button';
 import { ArrowRightIcon } from 'lucide-react';
 import Link from 'next/link';
 import React from 'react';
 import { motion } from 'framer-motion';
+import StatsCard from '@/components/about/StatsCard';
 
 function About() {
     // Fade in and slide up animation for sections

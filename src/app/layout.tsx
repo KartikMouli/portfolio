@@ -2,13 +2,13 @@ import type { Metadata } from "next";
 import { Raleway } from "next/font/google";
 import "./globals.css";
 
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
-import Chatbot from "@/components/Chatbot";
+import Header from "@/components/layout/Header";
+import Footer from "@/components/layout/Footer";
+import Chatbot from "@/components/chatbot/Chatbot";
 
 import { SpeedInsights } from "@vercel/speed-insights/next"
 import { Analytics } from '@vercel/analytics/react';
-import { ThemeProvider } from "@/components/theme-provider";
+import { ThemeProvider } from "@/components/theme/theme-provider";
 import { Toaster } from "@/components/ui/toaster"
 
 
@@ -39,7 +39,7 @@ export const metadata: Metadata = {
     description: "Showcasing Kartik's projects and skills.",
   },
   verification: {
-    google: "AY_tNfWVLsBZCnrbEeAyG93iDeRouDolzW8EonaejmQ", // Replace with Google site verification code
+    google: "AY_tNfWVLsBZCnrbEeAyG93iDeRouDolzW8EonaejmQ", 
   },
 };
 

@@ -2,15 +2,15 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { GoogleGenerativeAI } from '@google/generative-ai';
-import { Button } from './ui/button';
-import { Input } from './ui/input';
-import { ScrollArea } from './ui/scroll-area';
+import { Button } from '../ui/button';
+import { Input } from '../ui/input';
+import { ScrollArea } from '../ui/scroll-area';
 import { Send, MessageSquare, X, Bot, Sparkles, ChevronDown, User, ChevronRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
-import { Badge } from './ui/badge';
-import { Avatar, AvatarFallback } from './ui/avatar';
-import { Message, FAQ, SUGGESTED_QUESTIONS, CHATBOT_TEXT, PROMPT_CONTEXT } from '../data/chatbot';
+import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
+import { Badge } from '../ui/badge';
+import { Avatar, AvatarFallback } from '../ui/avatar';
+import { Message, FAQ, SUGGESTED_QUESTIONS, CHATBOT_TEXT, PROMPT_CONTEXT } from '../../data/chatbot';
 import ReactMarkdown from 'react-markdown';
 
 
@@ -117,8 +117,8 @@ export default function Chatbot() {
                 >
                     <Button
                         size="icon"
-                        variant="ghost"
-                        className="rounded-full w-12 h-12 bg-background/80 text-foreground shadow-sm hover:bg-background/90 transition-all duration-200"
+                        variant="outline"
+                        className="rounded-full w-10 h-10 bg-background/80 text-foreground shadow-sm hover:bg-background/90 transition-all duration-200"
                         onClick={() => setIsOpen(true)}
                     >
                         <MessageSquare className="h-5 w-5" />

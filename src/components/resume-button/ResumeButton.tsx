@@ -3,7 +3,7 @@
 import React from 'react';
 import { FileDown } from "lucide-react";
 import Link from 'next/link';
-import { Button } from './ui/button';
+import { Button } from '../ui/button';
 import { motion } from 'framer-motion';
 
 const ResumeButton: React.FC = () => {
