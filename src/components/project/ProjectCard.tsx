@@ -95,7 +95,7 @@ export function ProjectCard({ project }: Props) {
             )}
 
             {/* Main Content Wrapper */}
-            <div className="flex flex-col flex-grow">
+            <div className="flex flex-col grow">
                 {/* Card Header */}
                 <motion.div
                     variants={cardContentVariants}
@@ -143,7 +143,7 @@ export function ProjectCard({ project }: Props) {
                 </motion.div>
 
                 {/* Spacer to push footer to bottom */}
-                <div className="flex-grow" />
+                <div className="grow" />
 
                 {/* Card Footer */}
                 {links && links.length > 0 && (

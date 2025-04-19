@@ -16,7 +16,7 @@ const Education: React.FC = () => {
                 <li key={index} className="relative ml-11 -left-20">
                     <div className="flex items-start mb-2">
 
-                        <div className="rounded-full p-1 mr-4 w-17 h-17 flex-shrink-0 flex items-center justify-center overflow-hidden">
+                        <div className="rounded-full p-1 mr-4 w-17 h-17 shrink-0 flex items-center justify-center overflow-hidden">
                             <Image
                                 src={edu.image}
                                 alt={`${edu.university} logo`}
@@ -25,7 +25,7 @@ const Education: React.FC = () => {
                                 className="object-cover w-full h-full rounded-full"
                             />
                         </div>
-                        <div className="flex-grow">
+                        <div className="grow">
                             <Link href={edu.web} target="_blank"
                                 rel="noopener noreferrer" >
                                 <h2 className="font-semibold dark:text-gray-100 hover:text-white">{edu.university}</h2>

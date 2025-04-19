@@ -39,7 +39,7 @@ export default function NotFound() {
                     className="relative mb-8"
                     variants={itemVariants}
                 >
-                    <h1 className="text-8xl md:text-9xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-blue-600 dark:from-blue-400 dark:to-purple-400">
+                    <h1 className="text-8xl md:text-9xl font-bold bg-clip-text text-transparent bg-linear-to-r from-primary to-blue-600 dark:from-blue-400 dark:to-purple-400">
                         404
                     </h1>
                 </motion.div>
