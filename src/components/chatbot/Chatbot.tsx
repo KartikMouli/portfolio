@@ -91,7 +91,7 @@ export default function Chatbot() {
                     initial={{ opacity: 0, x: 20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 1, duration: 0.5 }}
-                    className="flex items-center gap-2 bg-background/80 px-3 py-1.5 rounded-full shadow-sm border text-xs text-muted-foreground"
+                    className="flex items-center gap-2 bg-background/80 px-3 py-1.5 rounded-full shadow-xs border text-xs text-muted-foreground"
                 >
                     <span>{CHATBOT_TEXT.hint}</span>
                     <motion.div
@@ -118,7 +118,7 @@ export default function Chatbot() {
                     <Button
                         size="icon"
                         variant="outline"
-                        className="rounded-full w-10 h-10 bg-background/80 text-foreground shadow-sm hover:bg-background/90 transition-all duration-200"
+                        className="rounded-full w-10 h-10 bg-background/80 text-foreground shadow-xs hover:bg-background/90 transition-all duration-200"
                         onClick={() => setIsOpen(true)}
                     >
                         <MessageSquare className="h-5 w-5" />
@@ -147,7 +147,7 @@ export default function Chatbot() {
                             }}
                             className="fixed bottom-4 right-4 z-50 w-[350px]"
                         >
-                            <Card className="bg-background/90 border shadow-sm">
+                            <Card className="bg-background/90 border shadow-xs">
                                 <CardHeader className="p-3 pb-2 border-b">
                                     <div className="flex items-center justify-between">
                                         <div className="flex items-center gap-2">
@@ -301,7 +301,7 @@ export default function Chatbot() {
                                                 <Button
                                                     size="icon"
                                                     variant="secondary"
-                                                    className="h-7 w-7 rounded-full shadow-sm"
+                                                    className="h-7 w-7 rounded-full shadow-xs"
                                                     onClick={scrollToBottom}
                                                 >
                                                     <ChevronDown className="h-3.5 w-3.5" />

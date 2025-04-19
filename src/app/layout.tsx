@@ -62,7 +62,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <Header />
-          <main className="flex-grow">
+          <main className="grow">
             {children}
             <Analytics endpoint="https://kartikmoulidev.vercel.app/_vercel/insights" />
             <SpeedInsights/>

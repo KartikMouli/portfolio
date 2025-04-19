@@ -33,7 +33,7 @@ const TechCard = ({
             aria-label={`Technology: ${name}, Description: ${description}`}
         >
             {/* Image Section */}
-            <div className="mx-2 relative flex-shrink-0">
+            <div className="mx-2 relative shrink-0">
                 {/* Background with reduced opacity for the image */}
                 <div
                     className="absolute inset-0 rounded-full"
