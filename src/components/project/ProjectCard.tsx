@@ -108,7 +108,7 @@ export function ProjectCard({ project }: Props) {
 
                     {/* Card Content */}
                     <CardContent className="p-6 pt-2">
-                        <Markdown className="text-sm font-sans text-pretty">
+                        <Markdown >
                             {description}
                         </Markdown>
                         {tags && tags.length > 0 && (
