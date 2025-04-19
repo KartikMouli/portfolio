@@ -3,6 +3,7 @@
 import Link from "next/link";
 import Socials from "./Socials";
 import { motion } from "framer-motion";
+import VisitorCounter from "./visit-count/VisitorCounter";
 
 export default function Footer() {
     // Animation variants for the footer container
@@ -60,7 +61,7 @@ export default function Footer() {
             </motion.div>
 
             <motion.section 
-                className="mt-8 sm:mt-0"
+                className="mt-8 sm:mt-0 flex flex-col items-start gap-2"
                 variants={elementVariants}
             >
                 <motion.div 
@@ -96,6 +97,7 @@ export default function Footer() {
                         </Link>
                     </motion.span>
                 </motion.div>
+                <VisitorCounter />
             </motion.section>
         </motion.footer>
     );
