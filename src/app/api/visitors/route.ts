@@ -2,6 +2,9 @@ import { NextResponse } from 'next/server';
 import connectDB from '@/lib/mongodb';
 import Visitor from '@/models/Visitor';
 
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 export async function GET() {
   try {
     await connectDB();
@@ -14,7 +17,11 @@ export async function GET() {
 
     return NextResponse.json({ count: visitor.count });
   } catch (error) {
-    return NextResponse.json({ error: 'Failed to fetch visitor count' }, { status: 500 });
+    console.error('Error in GET /api/visitors:', error);
+    return NextResponse.json(
+      { error: 'Failed to fetch view count' },
+      { status: 500 }
+    );
   }
 }
 
@@ -32,6 +39,10 @@ export async function POST() {
 
     return NextResponse.json({ count: visitor.count });
   } catch (error) {
-    return NextResponse.json({ error: 'Failed to update visitor count' }, { status: 500 });
+    console.error('Error in POST /api/visitors:', error);
+    return NextResponse.json(
+      { error: 'Failed to update view count' },
+      { status: 500 }
+    );
   }
 } 
