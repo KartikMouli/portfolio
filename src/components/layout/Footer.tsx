@@ -3,7 +3,8 @@
 import Link from "next/link";
 import Socials from "../socials/Socials";
 import { motion } from "framer-motion";
-import VisitorCounter from "./visit-count/VisitorCounter";
+import VisitorCounter from "../visit-count/VisitorCounter";
+
 
 export default function Footer() {
     // Animation variants for the footer container
