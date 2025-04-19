@@ -2,13 +2,16 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import Socials from "@/components/Socials";
-import ResumeButton from "@/components/ResumeButton";
-import Projects from "@/components/Projects";
+import Socials from "@/components/socials/Socials";
+
+import Projects from "@/components/project/Projects";
 import { ArrowRightIcon, MapPinHouseIcon } from "lucide-react";
-import Skills from "@/components/Skills";
+
 import { useEffect, useState } from "react";
 import { motion, useAnimation } from "framer-motion";
+import Chatbot from "@/components/chatbot/Chatbot";
+import Skills from "@/components/skill/Skills";
+import ResumeButton from "@/components/resume-button/ResumeButton";
 
 export default function Home() {
   const [isFlipped, setIsFlipped] = useState(true);
@@ -227,6 +230,9 @@ export default function Home() {
         </motion.div>
         <Projects limit={2} />
       </section>
+
+      {/* Chatbot Component */}
+      <Chatbot />
     </motion.div>
   );
 }
