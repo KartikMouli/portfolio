@@ -3,6 +3,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
 import ThemeToggle from "../theme/ThemeToggle";
+import ChatToggle from "../chatbot/chatbot-toggle";
 
 
 const navLinks = [
@@ -68,7 +69,10 @@ export default function Header() {
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.6, delay: 0.2 }}
                 >
+
+                    <ChatToggle />
                     <ThemeToggle />
+
                 </motion.div>
             </nav>
         </motion.header>

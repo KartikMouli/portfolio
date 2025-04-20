@@ -1,6 +1,5 @@
 import Image from "next/image";
 import Link from "next/link";
-import Markdown from "react-markdown";
 import { FaGithub, FaExternalLinkAlt } from "react-icons/fa";
 import { motion } from "framer-motion";
 
@@ -108,9 +107,10 @@ export function ProjectCard({ project }: Props) {
 
                     {/* Card Content */}
                     <CardContent className="p-6 pt-2">
-                        <Markdown >
+                        <p className="text-sm text-gray-500 dark:text-gray-400">
                             {description}
-                        </Markdown>
+                        </p>
+                        
                         {tags && tags.length > 0 && (
                             <motion.div 
                                 className="mt-4 flex flex-wrap gap-2"
@@ -153,7 +153,7 @@ export function ProjectCard({ project }: Props) {
                         animate="visible"
                         className="p-6 pt-0"
                     >
-                        <CardFooter className="flex flex-wrap gap-2 p-0">
+                        <CardFooter className="flex flex-wrap gap-1 md:gap-2 p-0">
                             {links.sort().map((link, idx) => (
                                 <motion.div
                                     key={idx}
