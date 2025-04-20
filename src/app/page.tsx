@@ -10,7 +10,7 @@ import { motion, useAnimation } from "framer-motion";
 import Chatbot from "@/components/chatbot/Chatbot";
 import Skills from "@/components/skill/Skills";
 import ResumeButton from "@/components/resume-button/ResumeButton";
-import { useSpotify } from "@/components/spotify/spotify-context";
+import { useSpotify } from "@/context/spotify/spotify-context";
 
 export default function Home() {
   const [isFlipped, setIsFlipped] = useState(true);

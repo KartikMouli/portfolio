@@ -4,14 +4,9 @@ import "./globals.css";
 
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
-import Chatbot from "@/components/chatbot/Chatbot";
-
 import { SpeedInsights } from "@vercel/speed-insights/next"
 import { Analytics } from '@vercel/analytics/react';
-import { ThemeProvider } from "@/components/theme/theme-provider";
-import { Toaster } from "@/components/ui/toaster"
-import { ChatProvider } from "@/components/chatbot/chat-context";
-import { SpotifyProvider } from "@/components/spotify/spotify-context";
+import { Providers } from "@/components/providers/providers";
 
 
 
@@ -58,26 +53,15 @@ export default function RootLayout({
         suppressHydrationWarning
         className={`${raleway.className} mx-auto flex min-h-screen max-w-3xl flex-col px-8 pb-16 antialiased`}
       >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <ChatProvider>
-            <SpotifyProvider>
-              <Header />
-              <main className="grow">
-                {children}
-                <Analytics />
-                <SpeedInsights />
-              </main>
-              <Toaster />
-              <Chatbot />
-              <Footer />
-            </SpotifyProvider>
-          </ChatProvider>
-        </ThemeProvider>
+        <Providers>
+          <Header />
+          <main className="grow">
+            {children}
+            <Analytics />
+            <SpeedInsights />
+          </main>
+          <Footer />
+        </Providers>
 
       </body>
     </html >

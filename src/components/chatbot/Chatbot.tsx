@@ -12,7 +12,7 @@ import { Avatar, AvatarFallback } from '../ui/avatar';
 import { Message, FAQ, SUGGESTED_QUESTIONS, CHATBOT_TEXT } from '../../data/chatbot';
 import ReactMarkdown from 'react-markdown';
 import axios from 'axios';
-import { useChatbot } from './chat-context';
+import { useChatbot } from '../../context/chatbot/chat-context';
 
 
 

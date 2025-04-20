@@ -20,7 +20,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { useSpotify } from "./spotify-context";
+import { useSpotify } from "../../context/spotify/spotify-context";
 
 
 
