@@ -8,6 +8,8 @@ import { Button } from "@/components/ui/button";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Label } from "@/components/ui/label";
 import { Loader2 } from "lucide-react";
+import { useSearchParams } from 'next/navigation';
+import { toast } from '@/hooks/use-toast';
 
 export default function AdminPage() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -16,10 +18,25 @@ export default function AdminPage() {
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSpotifyConnected, setIsSpotifyConnected] = useState(false);
+  
+  const searchParams = useSearchParams();
+  const success = searchParams.get('success');
 
   useEffect(() => {
     checkAuth();
   }, []);
+
+  useEffect(() => {
+    if (success) {
+      setIsSpotifyConnected(true);
+      toast({
+        title: "🎉 Success!",
+        description: "Spotify connected successfully. Your currently playing track will now be displayed.",
+        className: "bg-green-500/10 border-green-500/20 text-green-500",
+      });
+    }
+  }, [success]);
 
   const checkAuth = async () => {
     try {
@@ -152,18 +169,27 @@ export default function AdminPage() {
             <CardDescription>Manage your portfolio settings and integrations</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="space-y-4">
+            <div className="space-y-6">
               <div className="space-y-2">
                 <h2 className="text-xl font-semibold">Spotify Integration</h2>
-                <p className="text-muted-foreground">
-                  Connect your Spotify account to display your currently playing track
-                </p>
-                <Button 
-                  onClick={handleConnectSpotify} 
-                  className="bg-green-600 hover:bg-green-700"
-                >
-                  Connect Spotify
-                </Button>
+                {isSpotifyConnected ? (
+                  <div className="flex items-center gap-2 text-green-500">
+                    <div className="h-2 w-2 rounded-full bg-green-500" />
+                    <p>Spotify is connected</p>
+                  </div>
+                ) : (
+                  <>
+                    <p className="text-muted-foreground">
+                      Connect your Spotify account to display your currently playing track
+                    </p>
+                    <Button 
+                      onClick={handleConnectSpotify} 
+                      className="bg-[#1DB954] hover:bg-[#1DB954]/90 text-white"
+                    >
+                      Connect Spotify
+                    </Button>
+                  </>
+                )}
               </div>
             </div>
           </CardContent>
