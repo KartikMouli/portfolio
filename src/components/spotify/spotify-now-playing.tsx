@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { FaSpotify } from "react-icons/fa";
-import {  Music } from "lucide-react";
+import { Music, Play, Pause } from "lucide-react";
 import axios from "axios";
 import Image from "next/image";
 import {
@@ -125,6 +125,8 @@ export default function SpotifyNowPlaying() {
   const [spotifyData, setSpotifyData] = useState<SpotifyData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [isPlayingPreview, setIsPlayingPreview] = useState(false);
+  const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
   const isMobile = useMediaQuery("(max-width: 768px)");
 
   useEffect(() => {
@@ -142,12 +144,47 @@ export default function SpotifyNowPlaying() {
     };
 
     fetchSpotifyData();
-    const interval = setInterval(fetchSpotifyData, 1*60*1000); // Refresh every 1 minute
+    const interval = setInterval(fetchSpotifyData, 1*60*1000);
 
-    return () => clearInterval(interval);
+    return () => {
+      clearInterval(interval);
+      if (audio) {
+        audio.pause();
+        audio.src = '';
+      }
+    };
   }, []);
 
-  
+
+  useEffect(() => {
+    if (audio) {
+      audio.addEventListener('ended', () => setIsPlayingPreview(false));
+      return () => {
+        audio.removeEventListener('ended', () => setIsPlayingPreview(false));
+      };
+    }
+  }, [audio]);
+
+  const handlePreviewPlay = () => {
+    if (!spotifyData?.item?.preview_url) return;
+
+    if (audio) {
+      audio.pause();
+      audio.src = '';
+    }
+
+    const newAudio = new Audio(spotifyData.item.preview_url);
+    setAudio(newAudio);
+    newAudio.play();
+    setIsPlayingPreview(true);
+  };
+
+  const handlePreviewPause = () => {
+    if (audio) {
+      audio.pause();
+      setIsPlayingPreview(false);
+    }
+  };
 
   const formatTime = (ms: number) => {
     const minutes = Math.floor(ms / 1000 / 60);
@@ -203,6 +240,26 @@ export default function SpotifyNowPlaying() {
               <span>{formatTime(spotifyData.item.duration_ms)}</span>
             </div>
           </div>
+
+          {spotifyData.item.preview_url && (
+            <div className="flex items-center gap-2">
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={isPlayingPreview ? handlePreviewPause : handlePreviewPlay}
+                className="h-8 w-8"
+              >
+                {isPlayingPreview ? (
+                  <Pause className="h-4 w-4" />
+                ) : (
+                  <Play className="h-4 w-4" />
+                )}
+              </Button>
+              <p className="text-xs text-muted-foreground">
+                Preview available - {isPlayingPreview ? "Playing" : "Click to play"}
+              </p>
+            </div>
+          )}
 
           {spotifyData.device && (
             <div className="text-xs text-muted-foreground flex items-center gap-1">
