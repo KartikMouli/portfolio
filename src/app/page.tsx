@@ -264,7 +264,7 @@ export default function Home() {
           >
             <h2 className="text-2xl font-bold text-center">Join the Vibe</h2>
             <p className="text-muted-foreground text-center max-w-md">
-              Play the same song as me and let's vibe together! <Music className="size-5 inline-block" />
+              Play the same song as me and let&apos;s vibe together! <Music className="size-5 inline-block" />
             </p>
             <div className="w-full max-w-md">
               <iframe 
