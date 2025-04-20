@@ -3,10 +3,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import Socials from "@/components/socials/Socials";
-
 import Projects from "@/components/project/Projects";
 import { ArrowRightIcon, AtSign, MapPinHouseIcon, Music } from "lucide-react";
-
 import { useEffect, useState } from "react";
 import { motion, useAnimation } from "framer-motion";
 import Chatbot from "@/components/chatbot/Chatbot";
