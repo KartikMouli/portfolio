@@ -75,7 +75,7 @@ export default function VisitorCounter() {
       <span>
         {count !== null ? (
           <>
-            <span className="font-semibold text-primary">{count.toLocaleString()}</span> views
+            <span className="font-serif text-primary">{count.toLocaleString()}</span> views
           </>
         ) : (
           'Loading...'

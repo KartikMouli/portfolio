@@ -48,7 +48,7 @@ export default function Footer() {
     };
 
     return (
-        <motion.footer 
+        <motion.footer
             className="flex flex-col items-center justify-center sm:flex-row-reverse sm:justify-between px-6 pt-6 border-t mt-12"
             variants={footerVariants}
             initial="hidden"
@@ -61,11 +61,11 @@ export default function Footer() {
                 <Socials />
             </motion.div>
 
-            <motion.section 
+            <motion.section
                 className="mt-8 sm:mt-0 flex flex-col items-start gap-2"
                 variants={elementVariants}
             >
-                <motion.div 
+                <motion.div
                     className="text-center text-sm"
                     variants={elementVariants}
                 >
@@ -98,7 +98,17 @@ export default function Footer() {
                         </Link>
                     </motion.span>
                 </motion.div>
-                <VisitorCounter />
+                <div className="flex items-center gap-2">
+                    <motion.div
+                        className="text-center text-sm text-muted-foreground dark:text-gray-400"
+                        variants={elementVariants}
+                    >
+                        Made with ❤️ by kartikmouli
+                    </motion.div>
+                    {" | "}
+                    <VisitorCounter />
+                </div>
+
             </motion.section>
         </motion.footer>
     );
