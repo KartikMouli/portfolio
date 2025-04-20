@@ -3,20 +3,22 @@
 import Image from "next/image";
 import Link from "next/link";
 import Socials from "@/components/socials/Socials";
-
 import Projects from "@/components/project/Projects";
-import { ArrowRightIcon, AtSign, MapPinHouseIcon } from "lucide-react";
-
+import { ArrowRightIcon, AtSign, MapPinHouseIcon, Music } from "lucide-react";
 import { useEffect, useState } from "react";
 import { motion, useAnimation } from "framer-motion";
 import Chatbot from "@/components/chatbot/Chatbot";
 import Skills from "@/components/skill/Skills";
 import ResumeButton from "@/components/resume-button/ResumeButton";
+import { useSpotify } from "@/components/spotify/spotify-context";
 
 export default function Home() {
   const [isFlipped, setIsFlipped] = useState(true);
   const [isVisible, setIsVisible] = useState(false);
+  const {spotifyData} = useSpotify();
   const controls = useAnimation();
+
+ 
 
   useEffect(() => {
     const timer = setTimeout(() => setIsFlipped(false), 1500);
@@ -119,7 +121,7 @@ export default function Home() {
             </motion.div>
           </motion.div>
 
-         
+
 
           <div className="flex flex-col items-center md:items-start">
             <motion.h1
@@ -233,6 +235,34 @@ export default function Home() {
         </motion.div>
         <Projects limit={2} />
       </section>
+
+      {/* Spotify Section */}
+      {spotifyData?.is_playing && spotifyData?.item?.id && (
+        <section className="flex flex-col gap-8">
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1 }}
+            className="flex flex-col items-center gap-4"
+          >
+            <h2 className="text-2xl font-bold text-center">Join the Vibe</h2>
+            <p className="text-muted-foreground text-center max-w-md">
+              Play the same song as me and let&apos;s vibe together! <Music className="size-5 inline-block" />
+            </p>
+            <div className="w-full max-w-md">
+              <iframe 
+                style={{ borderRadius: "12px" }} 
+                src={`https://open.spotify.com/embed/track/${spotifyData.item.id}?utm_source=generator`} 
+                width="100%" 
+                height="152" 
+                frameBorder="0" 
+                allow="clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+                loading="lazy" 
+              />
+            </div>
+          </motion.div>
+        </section>
+      )}
 
       {/* Chatbot Component */}
       <Chatbot />

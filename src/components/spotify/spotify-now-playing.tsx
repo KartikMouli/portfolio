@@ -1,10 +1,8 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { FaSpotify } from "react-icons/fa";
-import {  Music } from "lucide-react";
-import axios from "axios";
+import { Music } from "lucide-react";
 import Image from "next/image";
 import {
   Tooltip,
@@ -22,132 +20,14 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { useSpotify } from "./spotify-context";
 
-interface SpotifyData {
-  device?: {
-    id: string;
-    is_active: boolean;
-    is_private_session: boolean;
-    is_restricted: boolean;
-    name: string;
-    type: string;
-    volume_percent: number;
-    supports_volume: boolean;
-  };
-  repeat_state?: string;
-  shuffle_state?: boolean;
-  context?: {
-    type: string;
-    href: string;
-    external_urls: {
-      spotify: string;
-    };
-    uri: string;
-  };
-  timestamp?: number;
-  progress_ms?: number;
-  is_playing: boolean;
-  item?: {
-    album: {
-      album_type: string;
-      total_tracks: number;
-      available_markets: string[];
-      external_urls: {
-        spotify: string;
-      };
-      href: string;
-      id: string;
-      images: {
-        url: string;
-        height: number;
-        width: number;
-      }[];
-      name: string;
-      release_date: string;
-      release_date_precision: string;
-      type: string;
-      uri: string;
-      artists: {
-        external_urls: {
-          spotify: string;
-        };
-        href: string;
-        id: string;
-        name: string;
-        type: string;
-        uri: string;
-      }[];
-    };
-    artists: {
-      external_urls: {
-        spotify: string;
-      };
-      href: string;
-      id: string;
-      name: string;
-      type: string;
-      uri: string;
-    }[];
-    available_markets: string[];
-    disc_number: number;
-    duration_ms: number;
-    explicit: boolean;
-    external_urls: {
-      spotify: string;
-    };
-    href: string;
-    id: string;
-    is_playable: boolean;
-    name: string;
-    popularity: number;
-    preview_url: string;
-    track_number: number;
-    type: string;
-    uri: string;
-    is_local: boolean;
-  };
-  currently_playing_type?: string;
-  actions?: {
-    interrupting_playback: boolean;
-    pausing: boolean;
-    resuming: boolean;
-    seeking: boolean;
-    skipping_next: boolean;
-    skipping_prev: boolean;
-    toggling_repeat_context: boolean;
-    toggling_shuffle: boolean;
-    toggling_repeat_track: boolean;
-    transferring_playback: boolean;
-  };
-}
+
 
 export default function SpotifyNowPlaying() {
-  const [spotifyData, setSpotifyData] = useState<SpotifyData | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const {spotifyData, isLoading} = useSpotify();
   const isMobile = useMediaQuery("(max-width: 768px)");
 
-  useEffect(() => {
-    const fetchSpotifyData = async () => {
-      try {
-        const response = await axios.get("/api/spotify/now-playing");
-        setSpotifyData(response.data);
-        setError(null);
-      } catch (error) {
-        console.error("Error fetching Spotify data:", error);
-        setError("Failed to fetch Spotify data");
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchSpotifyData();
-    const interval = setInterval(fetchSpotifyData, 1*60*1000); // Refresh every 1 minute
-
-    return () => clearInterval(interval);
-  }, []);
-
-  
 
   const formatTime = (ms: number) => {
     const minutes = Math.floor(ms / 1000 / 60);

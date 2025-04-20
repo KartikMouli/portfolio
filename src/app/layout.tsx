@@ -11,6 +11,7 @@ import { Analytics } from '@vercel/analytics/react';
 import { ThemeProvider } from "@/components/theme/theme-provider";
 import { Toaster } from "@/components/ui/toaster"
 import { ChatProvider } from "@/components/chatbot/chat-context";
+import { SpotifyProvider } from "@/components/spotify/spotify-context";
 
 
 
@@ -64,15 +65,17 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <ChatProvider>
-            <Header />
-            <main className="grow">
-              {children}
-              <Analytics />
-              <SpeedInsights />
-            </main>
-            <Toaster />
-            <Chatbot />
-            <Footer />
+            <SpotifyProvider>
+              <Header />
+              <main className="grow">
+                {children}
+                <Analytics />
+                <SpeedInsights />
+              </main>
+              <Toaster />
+              <Chatbot />
+              <Footer />
+            </SpotifyProvider>
           </ChatProvider>
         </ThemeProvider>
 
