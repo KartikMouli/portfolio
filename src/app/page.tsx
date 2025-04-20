@@ -12,30 +12,15 @@ import { motion, useAnimation } from "framer-motion";
 import Chatbot from "@/components/chatbot/Chatbot";
 import Skills from "@/components/skill/Skills";
 import ResumeButton from "@/components/resume-button/ResumeButton";
-import axios from "axios";
+import { useSpotify } from "@/components/spotify/spotify-context";
 
 export default function Home() {
   const [isFlipped, setIsFlipped] = useState(true);
   const [isVisible, setIsVisible] = useState(false);
-  const [spotifyData, setSpotifyData] = useState<{ item?: { id: string }; is_playing: boolean } | null>(null);
+  const {spotifyData} = useSpotify();
   const controls = useAnimation();
 
-  useEffect(() => {
-    const fetchSpotifyData = async () => {
-      try {
-        const response = await axios.get("/api/spotify/now-playing");
-        setSpotifyData(response.data);
-      } catch (error) {
-        console.error("Error fetching Spotify data:", error);
-        setSpotifyData(null);
-      }
-    };
-
-    fetchSpotifyData();
-    const interval = setInterval(fetchSpotifyData, 10000);
-
-    return () => clearInterval(interval);
-  }, []);
+ 
 
   useEffect(() => {
     const timer = setTimeout(() => setIsFlipped(false), 1500);

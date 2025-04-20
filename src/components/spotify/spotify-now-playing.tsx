@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { FaSpotify } from "react-icons/fa";
-import { Music, Play, Pause } from "lucide-react";
+import { Music } from "lucide-react";
 import axios from "axios";
 import Image from "next/image";
 import {
@@ -22,6 +22,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { useSpotify } from "./spotify-context";
 
 interface SpotifyData {
   device?: {
@@ -122,70 +123,10 @@ interface SpotifyData {
 }
 
 export default function SpotifyNowPlaying() {
-  const [spotifyData, setSpotifyData] = useState<SpotifyData | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const [isPlayingPreview, setIsPlayingPreview] = useState(false);
-  const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
+  const {spotifyData, isLoading, error} = useSpotify();
   const isMobile = useMediaQuery("(max-width: 768px)");
 
-  useEffect(() => {
-    const fetchSpotifyData = async () => {
-      try {
-        const response = await axios.get("/api/spotify/now-playing");
-        setSpotifyData(response.data);
-        setError(null);
-      } catch (error) {
-        console.error("Error fetching Spotify data:", error);
-        setError("Failed to fetch Spotify data");
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchSpotifyData();
-    const interval = setInterval(fetchSpotifyData, 1*60*1000);
-
-    return () => {
-      clearInterval(interval);
-      if (audio) {
-        audio.pause();
-        audio.src = '';
-      }
-    };
-  }, []);
-
-  console.log(spotifyData);
-
-  useEffect(() => {
-    if (audio) {
-      audio.addEventListener('ended', () => setIsPlayingPreview(false));
-      return () => {
-        audio.removeEventListener('ended', () => setIsPlayingPreview(false));
-      };
-    }
-  }, [audio]);
-
-  const handlePreviewPlay = () => {
-    if (!spotifyData?.item?.preview_url) return;
-
-    if (audio) {
-      audio.pause();
-      audio.src = '';
-    }
-
-    const newAudio = new Audio(spotifyData.item.preview_url);
-    setAudio(newAudio);
-    newAudio.play();
-    setIsPlayingPreview(true);
-  };
-
-  const handlePreviewPause = () => {
-    if (audio) {
-      audio.pause();
-      setIsPlayingPreview(false);
-    }
-  };
+ 
 
   const formatTime = (ms: number) => {
     const minutes = Math.floor(ms / 1000 / 60);
@@ -241,26 +182,6 @@ export default function SpotifyNowPlaying() {
               <span>{formatTime(spotifyData.item.duration_ms)}</span>
             </div>
           </div>
-
-          {spotifyData.item.preview_url && (
-            <div className="flex items-center gap-2">
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={isPlayingPreview ? handlePreviewPause : handlePreviewPlay}
-                className="h-8 w-8"
-              >
-                {isPlayingPreview ? (
-                  <Pause className="h-4 w-4" />
-                ) : (
-                  <Play className="h-4 w-4" />
-                )}
-              </Button>
-              <p className="text-xs text-muted-foreground">
-                Preview available - {isPlayingPreview ? "Playing" : "Click to play"}
-              </p>
-            </div>
-          )}
 
           {spotifyData.device && (
             <div className="text-xs text-muted-foreground flex items-center gap-1">
