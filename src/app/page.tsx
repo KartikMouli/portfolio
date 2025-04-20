@@ -50,7 +50,7 @@ export default function Home() {
       className="flex flex-col gap-16 mt-8"
     >
       {/* Hero Section */}
-      <section className="sm:pb-0 sm:min-h-0 md:pt-10 flex flex-col justify-center md:justify-start items-center text-center md:text-left md:px-0 gap-10">
+      <section className="sm:pb-0 sm:min-h-0 sm:pt-10 md:pt-6 flex flex-col justify-center md:justify-start items-center text-center md:text-left md:px-0 gap-10">
         <motion.div
           initial={{ opacity: 0, y: -50 }}
           animate={{ opacity: 1, y: 0 }}
@@ -152,7 +152,7 @@ export default function Home() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, delay: 1.4 }}
-              className="flex dark:text-gray-200 text-sm md:text-base leading-relaxed mb-5 md:mb-6"
+              className="md:flex dark:text-gray-200 text-sm md:text-base leading-relaxed mb-5 md:mb-6"
             >
               <span className="font-mono dark:text-white mr-1">IITP CSE&apos;24</span> |{" "}
               <div className="flex items-center ml-1">

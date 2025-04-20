@@ -53,6 +53,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
 
       <body
+        suppressHydrationWarning
         className={`${raleway.className} mx-auto flex min-h-screen max-w-3xl flex-col px-8 pb-16 antialiased`}
       >
         <ThemeProvider
@@ -64,7 +65,7 @@ export default function RootLayout({
           <Header />
           <main className="grow">
             {children}
-            <Analytics endpoint="https://kartikmoulidev.vercel.app/_vercel/insights" />
+            <Analytics/>
             <SpeedInsights/>
           </main>
           <Toaster />
