@@ -155,6 +155,7 @@ export default function SpotifyNowPlaying() {
     };
   }, []);
 
+  console.log(spotifyData);
 
   useEffect(() => {
     if (audio) {
