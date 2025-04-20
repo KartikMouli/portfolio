@@ -10,6 +10,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next"
 import { Analytics } from '@vercel/analytics/react';
 import { ThemeProvider } from "@/components/theme/theme-provider";
 import { Toaster } from "@/components/ui/toaster"
+import { ChatProvider } from "@/components/chatbot/chat-context";
 
 
 
@@ -20,12 +21,12 @@ const raleway = Raleway({
 
 
 export const metadata: Metadata = {
-  title: "Kartik's Portfolio", 
-  description: "Showcasing Kartik's projects and skills.", 
+  title: "Kartik's Portfolio",
+  description: "Showcasing Kartik's projects and skills.",
   openGraph: {
     title: "Kartik's Portfolio",
     description: "Personal portfolio showcasing projects and skills.",
-    url: "https://kartikmoulidev.vercel.app", 
+    url: "https://kartikmoulidev.vercel.app",
     siteName: "Kartik's Portfolio",
     type: "website",
   },
@@ -39,7 +40,7 @@ export const metadata: Metadata = {
     description: "Showcasing Kartik's projects and skills.",
   },
   verification: {
-    google: "AY_tNfWVLsBZCnrbEeAyG93iDeRouDolzW8EonaejmQ", 
+    google: "AY_tNfWVLsBZCnrbEeAyG93iDeRouDolzW8EonaejmQ",
   },
 };
 
@@ -62,15 +63,17 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <Header />
-          <main className="grow">
-            {children}
-            <Analytics/>
-            <SpeedInsights/>
-          </main>
-          <Toaster />
-          <Chatbot />
-          <Footer />
+          <ChatProvider>
+            <Header />
+            <main className="grow">
+              {children}
+              <Analytics />
+              <SpeedInsights />
+            </main>
+            <Toaster />
+            <Chatbot />
+            <Footer />
+          </ChatProvider>
         </ThemeProvider>
 
       </body>
