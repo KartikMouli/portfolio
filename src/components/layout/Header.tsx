@@ -48,10 +48,11 @@ export default function Header() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
         >
-            <nav className="container mx-auto px-4">
+            <nav className="container px-4">
                 <div className="flex items-center justify-between">
-                    {/* Left side - Navigation Links and Icons */}
-                    <div className="flex items-center gap-6">
+                    
+                    {/* Right side - Navigation Links and Icons */}
+                    <div className="flex items-center justify-between w-full">
                         {/* Navigation Links - Hidden on mobile */}
                         {!isMobile && (
                             <motion.ul
@@ -80,7 +81,7 @@ export default function Header() {
                         </div>
                     </div>
 
-                    {/* Right side - Mobile Menu */}
+                    {/* Mobile Menu */}
                     {isMobile && (
                         <div className="relative">
                             <Button 

@@ -147,6 +147,8 @@ export default function SpotifyNowPlaying() {
     return () => clearInterval(interval);
   }, []);
 
+  
+
   const formatTime = (ms: number) => {
     const minutes = Math.floor(ms / 1000 / 60);
     const seconds = Math.floor((ms / 1000) % 60);
@@ -257,9 +259,13 @@ export default function SpotifyNowPlaying() {
             )}
           </motion.div>
         </TooltipTrigger>
-        <TooltipContent className="p-0" side="bottom" align="start">
-          <Card className="w-[300px] border-none shadow-lg">
+        <TooltipContent className="p-0 rounded-2xl border-none" side="bottom" align="start">
+          <Card className="w-[300px]">
             <CardContent className="p-4">
+              <div className="flex items-center gap-2 mb-4">
+                <FaSpotify className="text-[#1DB954]" />
+                <h3 className="font-semibold">Kartik currently listening to</h3>
+              </div>
               {renderSpotifyContent()}
             </CardContent>
           </Card>
