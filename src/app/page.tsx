@@ -119,7 +119,7 @@ export default function Home() {
             </motion.div>
           </motion.div>
 
-
+         
 
           <div className="flex flex-col items-center md:items-start">
             <motion.h1

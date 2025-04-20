@@ -21,7 +21,12 @@ const nextConfig = {
             {
                 protocol: 'https',
                 hostname: 'holopin.me',
+            },
+            {
+                protocol: 'https',
+                hostname: 'i.scdn.co',
             }
+
         ],
         dangerouslyAllowSVG: true, // Allow SVG images
     },
