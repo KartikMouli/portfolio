@@ -1,12 +1,15 @@
 "use client"
 
 import { ThemeProvider } from "@/context/theme/theme-provider"
-import { SpotifyProvider } from "../../context/spotify/spotify-context"
 import { ChatProvider } from "../../context/chatbot/chat-context"
 import { Toaster } from "../ui/toaster"
 import Chatbot from "../chatbot/Chatbot"
+import { useState } from "react"
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
 export function Providers({ children }: { children: React.ReactNode }) {
+    const [queryClient] = useState(() => new QueryClient());
+
     return (
         <ThemeProvider
             attribute="class"
@@ -14,13 +17,13 @@ export function Providers({ children }: { children: React.ReactNode }) {
             enableSystem
             disableTransitionOnChange
         >
-            <ChatProvider>
-                <SpotifyProvider>
+            <QueryClientProvider client={queryClient}>
+                <ChatProvider>
                     {children}
-                </SpotifyProvider>
-                <Toaster />
-                <Chatbot />
-            </ChatProvider>
+                    <Toaster />
+                    <Chatbot />
+                </ChatProvider>
+            </QueryClientProvider>
         </ThemeProvider>
     )
 }

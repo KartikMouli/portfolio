@@ -7,18 +7,15 @@ import Projects from "@/components/project/Projects";
 import { ArrowRightIcon, AtSign, MapPinHouseIcon, Music } from "lucide-react";
 import { useEffect, useState } from "react";
 import { motion, useAnimation } from "framer-motion";
-import Chatbot from "@/components/chatbot/Chatbot";
 import Skills from "@/components/skill/Skills";
 import ResumeButton from "@/components/resume-button/ResumeButton";
-import { useSpotify } from "@/context/spotify/spotify-context";
+import { useSpotifyData } from "@/hooks/useSpotifyData";
 
 export default function Home() {
   const [isFlipped, setIsFlipped] = useState(true);
   const [isVisible, setIsVisible] = useState(false);
-  const {spotifyData} = useSpotify();
+  const { data: spotifyData } = useSpotifyData();
   const controls = useAnimation();
-
- 
 
   useEffect(() => {
     const timer = setTimeout(() => setIsFlipped(false), 1500);
@@ -264,8 +261,6 @@ export default function Home() {
         </section>
       )}
 
-      {/* Chatbot Component */}
-      <Chatbot />
     </motion.div>
   );
 }

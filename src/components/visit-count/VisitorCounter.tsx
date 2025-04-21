@@ -20,6 +20,7 @@ export default function VisitorCounter() {
           setError('Failed to fetch view count');
         }
       } catch (err) {
+        console.error('Error updating view count:', err);
         setError('Failed to update view count');
       }
     };

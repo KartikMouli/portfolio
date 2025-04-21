@@ -20,14 +20,14 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { useSpotify } from "../../context/spotify/spotify-context";
+import { useSpotifyData } from "@/hooks/useSpotifyData";
+
 
 
 
 export default function SpotifyNowPlaying() {
-  const {spotifyData, isLoading} = useSpotify();
+  const { data: spotifyData, isLoading } = useSpotifyData()
   const isMobile = useMediaQuery("(max-width: 768px)");
-
 
   const formatTime = (ms: number) => {
     const minutes = Math.floor(ms / 1000 / 60);

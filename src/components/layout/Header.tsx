@@ -5,10 +5,11 @@ import { motion } from "framer-motion";
 import { Menu } from "lucide-react";
 import ThemeToggle from "../theme/ThemeToggle";
 import ChatToggle from "../chatbot/chatbot-toggle";
-import SpotifyNowPlaying from "../spotify/spotify-now-playing";
+
 import { useMediaQuery } from "@/hooks/use-media-query";
 import { Button } from "../ui/button";
 import { useState } from "react";
+import SpotifyNowPlaying from "../spotify/spotify-now-playing";
 
 const navLinks = [
     {
