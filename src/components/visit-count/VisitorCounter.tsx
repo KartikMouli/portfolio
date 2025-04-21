@@ -2,11 +2,12 @@
 
 import { useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import axios from 'axios';
+import getQueryClient from '@/lib/getQueryClient';
 
 export default function VisitorCounter() {
-  const queryClient = useQueryClient();
+  const queryClient = getQueryClient();
 
   const { data: count, error, isLoading } = useQuery({
     queryKey: ['visitorCount'],
@@ -14,6 +15,7 @@ export default function VisitorCounter() {
       const response = await axios.get('/api/visitors');
       return response.data.count;
     },
+    staleTime: 1000 * 60 * 10, // 5 minutes
   });
 
   const { mutate: updateCount } = useMutation({

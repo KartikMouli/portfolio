@@ -1,5 +1,18 @@
-import { QueryClient } from '@tanstack/react-query'
-import { cache } from 'react'
+import { QueryClient, isServer } from '@tanstack/react-query'
 
-const getQueryClient = cache(() => new QueryClient())
-export default getQueryClient 
+
+function makeQueryClient() {
+    return new QueryClient()
+}
+
+let browserQueryClient: QueryClient;
+
+export default function getQueryClient() {
+    if (isServer) {
+        return makeQueryClient()
+    }
+    if (!browserQueryClient) {
+        browserQueryClient = makeQueryClient()
+    }
+    return browserQueryClient
+}

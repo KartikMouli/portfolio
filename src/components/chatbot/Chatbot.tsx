@@ -13,7 +13,8 @@ import { Message, FAQ, SUGGESTED_QUESTIONS, CHATBOT_TEXT } from '../../data/chat
 import ReactMarkdown from 'react-markdown';
 import axios from 'axios';
 import { useChatbot } from '../../context/chatbot/chat-context';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import getQueryClient from '@/lib/getQueryClient';
 
 export default function Chatbot() {
     const [input, setInput] = useState('');
@@ -21,7 +22,7 @@ export default function Chatbot() {
     const [showScrollButton, setShowScrollButton] = useState(false);
     const messagesEndRef = useRef<HTMLDivElement>(null);
     const scrollAreaRef = useRef<HTMLDivElement>(null);
-    const queryClient = useQueryClient();
+    const queryClient = getQueryClient();
 
     const { isVisible } = useChatbot();
 
