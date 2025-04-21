@@ -52,6 +52,7 @@ const ResumeButton: React.FC = () => {
             animate="animate"
             whileHover="hover"
             whileTap="tap"
+           
         >
             <Link
                 href="https://drive.google.com/file/d/16ebey3K6tIWcpgVi0Gc7zI3mYVpgdHxR/view?usp=drive_link"
@@ -60,7 +61,7 @@ const ResumeButton: React.FC = () => {
             >
                 <Button 
                     variant="outline" 
-                    className="px-3 py-1 relative overflow-hidden group"
+                    className="px-3 py-1 relative overflow-hidden group hover:cursor-pointer justify-center items-center"
                 >
                     <motion.span
                         initial={{ opacity: 1 }}
