@@ -12,27 +12,68 @@ import { Avatar, AvatarFallback } from '../ui/avatar';
 import { Message, FAQ, SUGGESTED_QUESTIONS, CHATBOT_TEXT } from '../../data/chatbot';
 import ReactMarkdown from 'react-markdown';
 import axios from 'axios';
-import { useChatbot } from './chat-context';
-
-
+import { useChatbot } from '../../context/chatbot/chat-context';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import getQueryClient from '@/lib/getQueryClient';
 
 export default function Chatbot() {
-    const [messages, setMessages] = useState<Message[]>([]);
     const [input, setInput] = useState('');
-    const [isLoading, setIsLoading] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
     const [showScrollButton, setShowScrollButton] = useState(false);
     const messagesEndRef = useRef<HTMLDivElement>(null);
     const scrollAreaRef = useRef<HTMLDivElement>(null);
+    const queryClient = getQueryClient();
 
     const { isVisible } = useChatbot();
+
+    // Query for messages
+    const { data: messages = [] } = useQuery<Message[]>({
+        queryKey: ['chatMessages'],
+        queryFn: async () => [],
+        initialData: [],
+    });
+
+    // Mutation for sending messages
+    const { mutate: sendMessage, isPending: isSending } = useMutation({
+        mutationFn: async (message: string) => {
+            try {
+                const response = await axios.post("/api/chat", { message });
+                return response.data.response;
+            } catch (error) {
+                console.error('Chat API Error:', error);
+                throw error;
+            }
+        },
+        onMutate: (newMessage) => {
+            const currentMessages = queryClient.getQueryData(['chatMessages']) as Message[] || [];
+            queryClient.setQueryData(['chatMessages'], [
+                ...currentMessages,
+                { role: "user", content: newMessage },
+            ]);
+        },
+        onSuccess: (response) => {
+            const currentMessages = queryClient.getQueryData(['chatMessages']) as Message[] || [];
+            queryClient.setQueryData(['chatMessages'], [
+                ...currentMessages,
+                { role: "assistant", content: response },
+            ]);
+        },
+        onError: (error) => {
+            console.error('Chat Error:', error);
+            const currentMessages = queryClient.getQueryData(['chatMessages']) as Message[] || [];
+            queryClient.setQueryData(['chatMessages'], [
+                ...currentMessages,
+                { role: "assistant", content: "Sorry, I encountered an error. Please try again." },
+            ]);
+        },
+    });
 
     // Auto-scroll to bottom when new messages arrive
     useEffect(() => {
         if (messagesEndRef.current) {
             messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
         }
-    }, [messages, isLoading]);
+    }, [messages, isSending]);
 
     // Handle scroll events to show/hide scroll button
     const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
@@ -47,32 +88,17 @@ export default function Chatbot() {
         }
     };
 
-
-    const handleSendMessage = async () => {
+    const handleSendMessage = () => {
         if (!input.trim()) return;
-
         const userMessage = input.trim();
         setInput("");
-        setMessages((prev) => [...prev, { role: "user", content: userMessage }]);
-        setIsLoading(true);
-
-        try {
-            const response = await axios.post("/api/chat", { message: userMessage });
-            setMessages((prev) => [...prev, { role: "assistant", content: response.data.response }]);
-        } catch (error) {
-            console.error("Error:", error);
-            setMessages((prev) => [
-                ...prev,
-                { role: "assistant", content: "Sorry, I encountered an error. Please try again." },
-            ]);
-        } finally {
-            setIsLoading(false);
-        }
+        sendMessage(userMessage);
     };
 
     const handleFaqClick = (faq: FAQ) => {
         setInput(faq.question);
     };
+
 
     return (
         isVisible && (
@@ -174,7 +200,7 @@ export default function Chatbot() {
                                                 onScroll={handleScroll}
                                             >
                                                 <div className="p-3 space-y-3">
-                                                    {messages.length === 0 ? (
+                                                    {messages.length === 0 && !isSending ? (
                                                         <div className="space-y-3">
                                                             <p className="text-xs text-muted-foreground">
                                                                 Try asking me about:
@@ -201,8 +227,7 @@ export default function Chatbot() {
                                                                     key={index}
                                                                     initial={{ opacity: 0, y: 20 }}
                                                                     animate={{ opacity: 1, y: 0 }}
-                                                                    className={`flex gap-2 ${message.role === "user" ? "justify-end" : "justify-start"
-                                                                        }`}
+                                                                    className={`flex gap-2 ${message.role === "user" ? "justify-end" : "justify-start"}`}
                                                                 >
                                                                     {message.role === "assistant" && (
                                                                         <Avatar className="h-6 w-6">
@@ -212,10 +237,9 @@ export default function Chatbot() {
                                                                         </Avatar>
                                                                     )}
                                                                     <div
-                                                                        className={`max-w-[80%] rounded-lg p-2 text-sm ${message.role === "user"
-                                                                                ? "bg-primary text-primary-foreground"
-                                                                                : "bg-muted"
-                                                                            }`}
+                                                                        className={`max-w-[80%] rounded-lg p-2 text-sm ${
+                                                                            message.role === "user" ? "bg-primary text-primary-foreground" : "bg-muted"
+                                                                        }`}
                                                                     >
                                                                         <ReactMarkdown
                                                                             components={{
@@ -257,27 +281,27 @@ export default function Chatbot() {
                                                                     )}
                                                                 </motion.div>
                                                             ))}
+                                                            {isSending && (
+                                                                <motion.div
+                                                                    initial={{ opacity: 0 }}
+                                                                    animate={{ opacity: 1 }}
+                                                                    className="flex items-start gap-2"
+                                                                >
+                                                                    <Avatar className="h-6 w-6">
+                                                                        <AvatarFallback className="bg-primary/10">
+                                                                            <Bot className="h-3 w-3" />
+                                                                        </AvatarFallback>
+                                                                    </Avatar>
+                                                                    <div className="bg-muted rounded-lg p-2.5 text-sm">
+                                                                        <div className="flex gap-1.5">
+                                                                            <div className="h-1.5 w-1.5 rounded-full bg-muted-foreground/50 animate-bounce" style={{ animationDelay: '0ms' }} />
+                                                                            <div className="h-1.5 w-1.5 rounded-full bg-muted-foreground/50 animate-bounce" style={{ animationDelay: '150ms' }} />
+                                                                            <div className="h-1.5 w-1.5 rounded-full bg-muted-foreground/50 animate-bounce" style={{ animationDelay: '300ms' }} />
+                                                                        </div>
+                                                                    </div>
+                                                                </motion.div>
+                                                            )}
                                                         </div>
-                                                    )}
-                                                    {isLoading && (
-                                                        <motion.div
-                                                            initial={{ opacity: 0 }}
-                                                            animate={{ opacity: 1 }}
-                                                            className="flex items-start gap-2"
-                                                        >
-                                                            <Avatar className="h-6 w-6">
-                                                                <AvatarFallback className="bg-primary/10">
-                                                                    <Bot className="h-3 w-3" />
-                                                                </AvatarFallback>
-                                                            </Avatar>
-                                                            <div className="bg-muted rounded-lg p-2.5 text-sm">
-                                                                <div className="flex gap-1.5">
-                                                                    <div className="h-1.5 w-1.5 rounded-full bg-muted-foreground/50 animate-bounce" style={{ animationDelay: '0ms' }} />
-                                                                    <div className="h-1.5 w-1.5 rounded-full bg-muted-foreground/50 animate-bounce" style={{ animationDelay: '150ms' }} />
-                                                                    <div className="h-1.5 w-1.5 rounded-full bg-muted-foreground/50 animate-bounce" style={{ animationDelay: '300ms' }} />
-                                                                </div>
-                                                            </div>
-                                                        </motion.div>
                                                     )}
                                                     <div ref={messagesEndRef} />
                                                 </div>
@@ -308,7 +332,7 @@ export default function Chatbot() {
                                                 />
                                                 <Button
                                                     onClick={handleSendMessage}
-                                                    disabled={isLoading || !input.trim()}
+                                                    disabled={isSending || !input.trim()}
                                                     size="icon"
                                                     className="h-8 w-8 rounded-full"
                                                 >
