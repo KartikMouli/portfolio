@@ -12,6 +12,7 @@ import { Send } from "lucide-react";
 import axios from "axios";
 import { formSchema } from "@/lib/schemas";
 import { motion, AnimatePresence } from "framer-motion";
+import { useMutation } from "@tanstack/react-query";
 
 export default function ContactForm() {
     const { toast } = useToast();
@@ -22,6 +23,28 @@ export default function ContactForm() {
             name: "",
             email: "",
             message: "",
+        },
+    });
+
+    const { mutate: submitForm, isPending } = useMutation({
+        mutationFn: async (data: z.infer<typeof formSchema>) => {
+            const response = await axios.post("/api/contact", data);
+            return response.data;
+        },
+        onSuccess: () => {
+            toast({
+                title: "Success",
+                description: "Thanks for reaching out! Your form has been submitted.",
+                variant: "success",
+            });
+            form.reset();
+        },
+        onError: () => {
+            toast({
+                title: "Error",
+                description: "Error submitting the form. Please check your connection.",
+                variant: "destructive",
+            });
         },
     });
 
@@ -64,31 +87,8 @@ export default function ContactForm() {
         tap: { scale: 0.98 }
     };
 
-    const onSubmit = async (data: z.infer<typeof formSchema>) => {
-        try {
-            const response = await axios.post("/api/contact", data);
-
-            if (response.status === 200 && response.data.success) {
-                toast({
-                    title: "Success",
-                    description: "Thanks for reaching out! Your form has been submitted.",
-                    variant: "success",
-                });
-                form.reset();
-            } else {
-                toast({
-                    title: "Error",
-                    description: "Form submission failed. Please try again.",
-                    variant: "destructive",
-                });
-            }
-        } catch {
-            toast({
-                title: "Error",
-                description: "Error submitting the form. Please check your connection.",
-                variant: "destructive",
-            });
-        }
+    const onSubmit = (data: z.infer<typeof formSchema>) => {
+        submitForm(data);
     };
 
     return (
@@ -223,10 +223,10 @@ export default function ContactForm() {
                         <Button 
                             type="submit" 
                             className="w-full relative overflow-hidden group"
-                            disabled={form.formState.isSubmitting}
+                            disabled={isPending}
                         >
                             <motion.span
-                                animate={form.formState.isSubmitting ? {
+                                animate={isPending ? {
                                     opacity: [1, 0.5, 1],
                                     transition: {
                                         duration: 1.5,
@@ -235,11 +235,11 @@ export default function ContactForm() {
                                     }
                                 } : {}}
                             >
-                                {form.formState.isSubmitting ? "Sending..." : "Send Message"}
+                                {isPending ? "Sending..." : "Send Message"}
                             </motion.span>
                             <motion.span
                                 className="ml-2 inline-flex"
-                                animate={form.formState.isSubmitting ? {
+                                animate={isPending ? {
                                     rotate: 360,
                                     transition: {
                                         duration: 1,
