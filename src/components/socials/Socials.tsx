@@ -5,57 +5,37 @@ import { FaXTwitter } from 'react-icons/fa6';
 import { FaGithub, FaEnvelope, FaLinkedin } from 'react-icons/fa';
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { cn } from "@/lib/utils";
 
 const socialLinks = [
     {
         href: "https://linkedin.com/in/kartik-mouli",
-        icon: <FaLinkedin className="w-5 h-5" />,
-        label: "LinkedIn",
-        colors: {
-            light: "#0077B5",
-            dark: "#0A66C2"
-        }
+        icon: <FaLinkedin className="w-4 h-4" />,
+        label: "LinkedIn"
     },
     {
         href: "https://github.com/KartikMouli",
-        icon: <FaGithub className="w-5 h-5" />,
-        label: "GitHub",
-        colors: {
-            light: "#24292e",
-            dark: "#c9d1d9"
-        }
+        icon: <FaGithub className="w-4 h-4" />,
+        label: "GitHub"
     },
     {
         href: "mailto:kartikmouli156@gmail.com",
-        icon: <FaEnvelope className="w-5 h-5" />,
-        label: "Email",
-        colors: {
-            light: "#EA4335",
-            dark: "#FF5A52"
-        }
+        icon: <FaEnvelope className="w-4 h-4" />,
+        label: "Email"
     },
     {
         href: "https://x.com/kartikmouli",
-        icon: <FaXTwitter className="w-5 h-5" />,
-        label: "X",
-        colors: {
-            light: "#000000",
-            dark: "#ffffff"
-        }
+        icon: <FaXTwitter className="w-4 h-4" />,
+        label: "X"
     },
     {
         href: "https://leetcode.com/u/monchi02/",
-        icon: <SiLeetcode className="w-5 h-5" />,
-        label: "LeetCode",
-        colors: {
-            light: "#FFA116",
-            dark: "#FFA116"
-        }
+        icon: <SiLeetcode className="w-4 h-4" />,
+        label: "LeetCode"
     },
 ];
 
 export default function Socials() {
-    // Container animation variants
     const containerVariants = {
         hidden: { opacity: 0 },
         visible: {
@@ -67,31 +47,33 @@ export default function Socials() {
         }
     };
 
-    // Item animation variants
     const itemVariants = {
-        hidden: { y: 20, opacity: 0 },
+        hidden: { y: 10, opacity: 0 },
         visible: {
             y: 0,
             opacity: 1,
             transition: {
-                duration: 0.5,
+                duration: 0.4,
                 ease: "easeOut"
             }
         }
     };
 
-    // Hover animation variants
     const hoverVariants = {
-        rest: { scale: 1 },
+        rest: { 
+            scale: 1,
+            y: 0
+        },
         hover: { 
-            scale: 1.2,
+            scale: 1.05,
+            y: -2,
             transition: {
                 duration: 0.2,
-                ease: "easeInOut"
+                ease: "easeOut"
             }
         },
         tap: { 
-            scale: 0.95,
+            scale: 0.98,
             transition: {
                 duration: 0.1
             }
@@ -100,7 +82,7 @@ export default function Socials() {
 
     return (
         <motion.section 
-            className="flex justify-center gap-4 md:gap-5"
+            className="flex justify-center gap-3"
             variants={containerVariants}
             initial="hidden"
             animate="visible"
@@ -123,23 +105,17 @@ export default function Socials() {
                             href={href}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="flex items-center justify-center w-8 h-8"
+                            className={cn(
+                                "flex items-center justify-center w-8 h-8 rounded-full",
+                                "bg-transparent hover:bg-accent/50",
+                                "transition-all duration-300",
+                                "border border-border/50 hover:border-border",
+                                "text-dark hover:text-foreground"
+                            )}
                             title={label}
                         >
-                            <motion.span 
-                                className="sr-only"
-                            >
-                                {label}
-                            </motion.span>
-                            <motion.div
-                                className="text-gray-700 dark:text-gray-300 transition-colors duration-200"
-                                whileHover={{
-                                    color: `var(--social-${label.toLowerCase()}-color)`,
-                                    transition: { duration: 0.2 }
-                                }}
-                            >
-                                {icon}
-                            </motion.div>
+                            <motion.span className="sr-only">{label}</motion.span>
+                            {icon}
                         </Link>
                     </motion.div>
                 </motion.div>
