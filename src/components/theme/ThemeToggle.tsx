@@ -29,7 +29,7 @@ export default function ThemeToggle() {
                 <TooltipTrigger asChild>
                     <Button
                         size="icon"
-                        variant="ghost"
+                        variant="link"
                         onClick={() => {
                             setTheme(resolvedTheme === "dark" ? "light" : "dark");
                         }}
@@ -42,8 +42,8 @@ export default function ThemeToggle() {
                         )}
                     </Button>
                 </TooltipTrigger>
-                <TooltipContent className="bg-popover border p-2 text-popover-foreground">
-                    <p>{resolvedTheme === "dark" ? "click to switch to light mode" : "click to switch to dark mode"}</p>
+                <TooltipContent className="bg-popover border mt-1 text-popover-foreground">
+                    <p>{resolvedTheme === "dark" ? "Light Mode" : "Dark Mode"}</p>
                 </TooltipContent>
             </Tooltip>
         </TooltipProvider>

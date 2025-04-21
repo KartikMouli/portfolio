@@ -48,7 +48,7 @@ export default function Header() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
         >
-            <nav className="container px-4">
+            <nav className="container ">
                 <div className="flex items-center justify-between">
                     
                     {/* Right side - Navigation Links and Icons */}
@@ -61,20 +61,17 @@ export default function Header() {
                                 animate="animate"
                             >
                                 {navLinks.map((nav, id) => (
-                                    <motion.li
+                                    <li
                                         key={id}
                                         className={`link ${pathname === nav.href ? "dark:text-white font-bold" : ""}`}
-                                        variants={linkVariants}
-                                        whileHover="hover"
-                                        whileTap="tap"
                                     >
                                         <Link href={nav.href}>{nav.name}</Link>
-                                    </motion.li>
+                                    </li>
                                 ))}
                             </motion.ul>
                         )}
                         {/* Icons */}
-                        <div className="flex items-center gap-3">
+                        <div className="flex items-center gap-4">
                             <SpotifyNowPlaying />
                             <ChatToggle />
                             <ThemeToggle />

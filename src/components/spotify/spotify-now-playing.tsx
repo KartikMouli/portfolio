@@ -11,7 +11,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { Skeleton } from "../ui/skeleton";
-import { Card, CardContent } from "../ui/card";
+import { Card, CardContent, CardHeader } from "../ui/card";
 import { Progress } from "../ui/progress";
 import { useMediaQuery } from "@/hooks/use-media-query";
 import { Button } from "../ui/button";
@@ -21,13 +21,13 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { useSpotify } from "./spotify-context";
-
-
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { Badge } from "../ui/badge";
+import Marquee from "react-fast-marquee";
 
 export default function SpotifyNowPlaying() {
-  const {spotifyData, isLoading} = useSpotify();
+  const { spotifyData, isLoading } = useSpotify();
   const isMobile = useMediaQuery("(max-width: 768px)");
-
 
   const formatTime = (ms: number) => {
     const minutes = Math.floor(ms / 1000 / 60);
@@ -43,31 +43,34 @@ export default function SpotifyNowPlaying() {
   const renderSpotifyContent = () => {
     if (isLoading) {
       return (
-        <div className="space-y-4">
-          <Skeleton className="h-4 w-[200px]" />
-          <Skeleton className="h-4 w-[150px]" />
-          <Skeleton className="h-12 w-12 rounded" />
+        <div className="space-y-3">
+          <div className="flex items-start gap-3">
+            <Skeleton className="w-12 h-12 rounded-full" />
+            <div className="space-y-2">
+              <Skeleton className="h-4 w-[150px]" />
+              <Skeleton className="h-4 w-[100px]" />
+            </div>
+          </div>
         </div>
       );
     }
 
     if (spotifyData?.is_playing && spotifyData?.item) {
       return (
-        <div className="space-y-3">
+        <div className="space-y-4">
           <div className="flex items-start gap-3">
-            {spotifyData.item.album.images[0] ? (
-              <Image
-                src={spotifyData.item.album.images[0].url}
-                alt={spotifyData.item.album.name}
-                className="w-12 h-12 rounded shadow-md"
-                height={48}
-                width={48}
-              />
-            ) : (
-              <div className="w-12 h-12 rounded bg-muted flex items-center justify-center">
-                <Music className="w-6 h-6 text-muted-foreground" />
-              </div>
-            )}
+            <Avatar className="w-12 h-12">
+              {spotifyData.item.album.images[0] ? (
+                <AvatarImage
+                  src={spotifyData.item.album.images[0].url}
+                  alt={spotifyData.item.album.name}
+                />
+              ) : (
+                <AvatarFallback>
+                  <Music className="w-6 h-6" />
+                </AvatarFallback>
+              )}
+            </Avatar>
             <div className="flex-1 min-w-0">
               <p className="font-semibold truncate">{spotifyData.item.name}</p>
               <p className="text-sm text-muted-foreground truncate">
@@ -75,8 +78,8 @@ export default function SpotifyNowPlaying() {
               </p>
             </div>
           </div>
-          
-          <div className="space-y-1">
+
+          <div className="space-y-2">
             <Progress value={getProgressPercentage()} className="h-1" />
             <div className="flex justify-between text-xs text-muted-foreground">
               <span>{formatTime(spotifyData.progress_ms || 0)}</span>
@@ -85,9 +88,13 @@ export default function SpotifyNowPlaying() {
           </div>
 
           {spotifyData.device && (
-            <div className="text-xs text-muted-foreground flex items-center gap-1">
-              <span>Playing on</span>
-              <span className="font-medium">{spotifyData.device.name}</span>
+            <div className="flex items-center gap-2">
+              <Badge variant="outline" className="text-xs">
+                <span className="flex items-center gap-1">
+                  <span>Playing on</span>
+                  <span className="font-medium">{spotifyData.device.name}</span>
+                </span>
+              </Badge>
             </div>
           )}
         </div>
@@ -105,18 +112,33 @@ export default function SpotifyNowPlaying() {
     return (
       <Popover>
         <PopoverTrigger asChild>
-          <Button variant="ghost" size="icon" className="h-9 w-9">
+        <div
+            className="flex items-center gap-2"
+          >
             <FaSpotify className="text-[#1DB954] text-xl" />
-          </Button>
+            {spotifyData?.is_playing && spotifyData?.item && (
+              <div className="w-full max-w-[100px]">
+                <Marquee
+                  speed={30}
+                >                
+                  <span className="text-sm font-medium">
+                    {spotifyData.item.name}
+                  </span>
+                </Marquee>
+              </div>
+            )}
+          </div>
         </PopoverTrigger>
-        <PopoverContent className="w-[300px] p-0" align="end">
-          <div className="p-4">
-            <div className="flex items-center gap-2 mb-4">
+        <PopoverContent className="w-[300px] mt-2 p-0" align="start">
+          <Card>
+            <CardHeader className="flex flex-row items-center gap-2 pb-2">
               <FaSpotify className="text-[#1DB954]" />
               <h3 className="font-semibold">Kartik is listening to now</h3>
-            </div>
-            {renderSpotifyContent()}
-          </div>
+            </CardHeader>
+            <CardContent>
+              {renderSpotifyContent()}
+            </CardContent>
+          </Card>
         </PopoverContent>
       </Popover>
     );
@@ -126,26 +148,32 @@ export default function SpotifyNowPlaying() {
     <TooltipProvider>
       <Tooltip>
         <TooltipTrigger asChild>
-          <motion.div
-            className="flex items-center gap-2 cursor-pointer"
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.95 }}
+          <div
+            className="flex items-center gap-2"
           >
             <FaSpotify className="text-[#1DB954] text-xl" />
             {spotifyData?.is_playing && spotifyData?.item && (
-              <span className="text-sm font-medium">
-                {spotifyData.item.name}
-              </span>
-            )}
-          </motion.div>
-        </TooltipTrigger>
-        <TooltipContent className="p-0 rounded-2xl border-none" side="bottom" align="start">
-          <Card className="w-[300px]">
-            <CardContent className="p-4">
-              <div className="flex items-center gap-2 mb-4">
-                <FaSpotify className="text-[#1DB954]" />
-                <h3 className="font-semibold">Kartik currently listening to</h3>
+              <div className="w-full max-w-[150px]">
+                <Marquee
+                  speed={30}
+                  pauseOnHover={true}
+                  pauseOnClick={true}
+                >
+                  <span className="text-sm font-medium">
+                    {spotifyData.item.name}
+                  </span>
+                </Marquee>
               </div>
+            )}
+          </div>
+        </TooltipTrigger>
+        <TooltipContent className="p-0 rounded-2xl mt-3" side="bottom" align="start">
+          <Card className="w-[300px]">
+            <CardHeader className="flex flex-row items-center gap-2 pb-2">
+              <FaSpotify className="text-[#1DB954]" />
+              <h3 className="font-semibold">Kartik currently listening to</h3>
+            </CardHeader>
+            <CardContent>
               {renderSpotifyContent()}
             </CardContent>
           </Card>
