@@ -49,8 +49,8 @@ function Contact() {
                         variants={itemVariants}
                         className="text-muted-foreground max-w-2xl mx-auto text-lg"
                     >
-                        Have a question or want to work together? I'd love to hear from you. 
-                        Fill out the form below and I'll get back to you as soon as possible.
+                        Have a question or want to work together? I&apos;d love to hear from you. 
+                        Fill out the form below and I&apos;ll get back to you as soon as possible.
                     </motion.p>
                 </div>
 

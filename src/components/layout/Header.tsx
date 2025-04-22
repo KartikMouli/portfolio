@@ -34,7 +34,6 @@ const navLinks = [
     },
 ];
 
-
 export default function Header() {
     const pathname = usePathname();
     const isMobile = useMediaQuery("(max-width: 768px)");

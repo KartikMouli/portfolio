@@ -56,16 +56,16 @@ function About() {
                 >
                     <motion.div variants={fadeInUp}>
                         <p className="text-lg text-muted-foreground mb-4">
-                            Hey! I'm a proud <span className="font-medium">IIT Patna CSE '24</span> graduate. 
+                            Hey! I&apos;m a proud <span className="font-medium">IIT Patna CSE &apos;24</span> graduate. 
                             I focus on full-stack development, Web3, and competitive programming.
                         </p>
                         <p className="text-lg text-muted-foreground mb-4">
-                            Outside of coding, you'll find me on the football field or shooting hoops. 
-                            I'm also a huge movie enthusiast—whether it's action-packed blockbusters or 
+                            Outside of coding, you&apos;ll find me on the football field or shooting hoops. 
+                            I&apos;m also a huge movie enthusiast—whether it&apos;s action-packed blockbusters or 
                             thought-provoking dramas.
                         </p>
                         <p className="text-lg text-muted-foreground mb-6">
-                            Originally from <span className="font-medium">Nashik</span>, I'm always excited 
+                            Originally from <span className="font-medium">Nashik</span>, I&apos;m always excited 
                             about creating new tech and exploring the world of open-source.
                         </p>
                         <motion.div 
