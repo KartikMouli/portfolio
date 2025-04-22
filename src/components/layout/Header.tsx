@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { Menu } from "lucide-react";
 import ThemeToggle from "../theme/ThemeToggle";
 import ChatToggle from "../chatbot/chatbot-toggle";
@@ -86,31 +86,69 @@ export default function Header() {
                                 variant="ghost" 
                                 size="icon"
                                 onClick={() => setIsMenuOpen(!isMenuOpen)}
-                                className="h-9 w-9"
+                                className="h-9 w-9 relative z-50"
                             >
-                                <Menu className="w-5 h-5" />
-                            </Button>
-                            {isMenuOpen && (
                                 <motion.div
-                                    initial={{ opacity: 0, y: -10 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    exit={{ opacity: 0, y: -10 }}
-                                    className="absolute right-0 top-full mt-2 w-48 bg-background border rounded-lg shadow-lg p-4"
+                                    animate={isMenuOpen ? "open" : "closed"}
+                                    className="relative w-5 h-5"
                                 >
-                                    <div className="flex flex-col gap-2">
-                                        {navLinks.map((nav, id) => (
-                                            <Link
-                                                key={id}
-                                                href={nav.href}
-                                                className={`text-lg ${pathname === nav.href ? "font-bold" : ""}`}
-                                                onClick={() => setIsMenuOpen(false)}
-                                            >
-                                                {nav.name}
-                                            </Link>
-                                        ))}
-                                    </div>
+                                    <motion.span
+                                        className="absolute h-[2px] w-5 bg-foreground"
+                                        variants={{
+                                            closed: { rotate: 0, y: 0 },
+                                            open: { rotate: 45, y: 6 }
+                                        }}
+                                    />
+                                    <motion.span
+                                        className="absolute h-[2px] w-5 bg-foreground"
+                                        variants={{
+                                            closed: { opacity: 1 },
+                                            open: { opacity: 0 }
+                                        }}
+                                    />
+                                    <motion.span
+                                        className="absolute h-[2px] w-5 bg-foreground"
+                                        variants={{
+                                            closed: { rotate: 0, y: 8 },
+                                            open: { rotate: -45, y: 6 }
+                                        }}
+                                    />
                                 </motion.div>
-                            )}
+                            </Button>
+                            <AnimatePresence>
+                                {isMenuOpen && (
+                                    <motion.div
+                                        initial={{ opacity: 0, y: -10 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        exit={{ opacity: 0, y: -10 }}
+                                        transition={{ duration: 0.2 }}
+                                        className="absolute right-0 top-full mt-2 w-48 bg-background/80 dark:bg-background/80 backdrop-blur-sm border border-border/50 rounded-lg shadow-lg p-4"
+                                    >
+                                        <div className="flex flex-col gap-2">
+                                            {navLinks.map((nav, id) => (
+                                                <motion.div
+                                                    key={id}
+                                                    initial={{ opacity: 0, x: -10 }}
+                                                    animate={{ opacity: 1, x: 0 }}
+                                                    transition={{ delay: id * 0.1 }}
+                                                >
+                                                    <Link
+                                                        href={nav.href}
+                                                        className={`block px-3 py-2 text-sm rounded-md transition-colors
+                                                            ${pathname === nav.href 
+                                                                ? "bg-primary/10 text-primary font-medium" 
+                                                                : "text-foreground/80 hover:bg-muted/50"
+                                                            }`}
+                                                        onClick={() => setIsMenuOpen(false)}
+                                                    >
+                                                        {nav.name}
+                                                    </Link>
+                                                </motion.div>
+                                            ))}
+                                        </div>
+                                    </motion.div>
+                                )}
+                            </AnimatePresence>
                         </div>
                     )}
                 </div>
