@@ -127,7 +127,7 @@ export default function HomeClient() {
               <h1 className="text-3xl md:text-4xl font-bold text-gradient">
                 Hey, I&apos;m Kartik Mouli
               </h1>
-              <div className="w-full flex sm:justify-center md:justify-start items-center gap-2">
+              <div className="mt-1 gap-2">
                 <span className="text-sm px-2 py-1 rounded-full border border-gray-300 dark:border-gray-700 text-muted-foreground">
                   Full-Stack Developer
                 </span>
