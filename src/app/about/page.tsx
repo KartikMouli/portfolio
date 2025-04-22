@@ -1,6 +1,5 @@
 'use client';
-
-import Education from '@/components/about/Education';
+;
 import { Button } from '@/components/ui/button';
 import { ArrowRightIcon } from 'lucide-react';
 import { FaFacebook, FaInstagram, FaSnapchat, FaThreads } from "react-icons/fa6";
@@ -37,7 +36,7 @@ function About() {
     };
 
     return (
-        <div className="max-w-4xl mx-auto px-4 py-12">
+        <div className="max-w-4xl mx-auto px-4 ">
             {/* Hero Section */}
             <motion.section 
                 className="mb-20"

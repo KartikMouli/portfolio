@@ -32,7 +32,7 @@ function Contact() {
             variants={containerVariants}
             initial="hidden"
             animate="visible"
-            className="min-h-screen flex flex-col items-center justify-center py-16 px-4 sm:px-6 lg:px-8"
+            className="min-h-screen flex flex-col items-center justify-center px-4 sm:px-6 lg:px-8"
         >
             <motion.div
                 variants={itemVariants}
