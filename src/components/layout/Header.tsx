@@ -44,14 +44,15 @@ export default function Header() {
 
     return (
         <motion.header
-            className="sticky top-0 z-50 py-4 sm:py-6 backdrop-blur-xs"
+            className="sticky top-0 z-50 py-4 sm:py-6 backdrop-blur-sm bg-background/80 dark:bg-background/80 border-b border-border/50"
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
         >
-            <nav className="container ">
+            <nav className="container">
                 <div className="flex items-center justify-between">
                     
+
                     {/* Right side - Navigation Links and Icons */}
                     <div className="flex items-center justify-between w-full">
                         {/* Navigation Links - Hidden on mobile */}
@@ -62,12 +63,33 @@ export default function Header() {
                                 animate="animate"
                             >
                                 {navLinks.map((nav, id) => (
-                                    <li
+                                    <motion.li
                                         key={id}
-                                        className={`link ${pathname === nav.href ? "dark:text-white font-bold" : ""}`}
+                                        variants={linkVariants}
+                                        className={`relative group ${
+                                            pathname === nav.href
+                                                ? "dark:text-white font-bold"
+                                                : ""
+                                        }`}
                                     >
-                                        <Link href={nav.href}>{nav.name}</Link>
-                                    </li>
+                                        <Link
+                                            href={nav.href}
+                                            className="relative inline-block py-2 text-sm font-medium transition-colors hover:text-primary"
+                                        >
+                                            {nav.name}
+                                            {pathname === nav.href && (
+                                                <motion.span
+                                                    className="absolute bottom-0 left-0 h-0.5 w-full bg-primary"
+                                                    layoutId="activeIndicator"
+                                                    transition={{
+                                                        type: "spring",
+                                                        stiffness: 300,
+                                                        damping: 30,
+                                                    }}
+                                                />
+                                            )}
+                                        </Link>
+                                    </motion.li>
                                 ))}
                             </motion.ul>
                         )}
