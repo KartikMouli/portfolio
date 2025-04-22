@@ -5,7 +5,8 @@ const nextConfig = {
       'leetcard.jacoblin.cool',
       'raw.githubusercontent.com',
       'github-readme-streak-stats.herokuapp.com',
-      'holopin.me'
+      'holopin.me',
+      'avatars.githubusercontent.com'
     ],
   },
 }
