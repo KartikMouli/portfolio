@@ -3,12 +3,19 @@
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
-import { Form, FormField, FormItem, FormLabel, FormMessage, FormControl } from "../ui/form";
+import {
+    Form,
+    FormField,
+    FormItem,
+    FormLabel,
+    FormMessage,
+    FormControl
+} from "../ui/form";
 import { useToast } from "@/hooks/use-toast";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { Send } from "lucide-react";
+import { Send, Loader2 } from "lucide-react";
 import axios from "axios";
 import { formSchema } from "@/lib/schemas";
 import { motion, AnimatePresence } from "framer-motion";
@@ -96,12 +103,13 @@ export default function ContactForm() {
             variants={formVariants}
             initial="hidden"
             animate="visible"
+            className="w-full max-w-2xl mx-auto p-6 rounded-lg border border-border/50 bg-card/50 backdrop-blur-sm"
         >
             <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
                     {/* Name and Email Fields */}
                     <motion.div 
-                        className="grid grid-cols-1 gap-2 sm:grid-cols-2"
+                        className="grid grid-cols-1 gap-4 sm:grid-cols-2"
                         variants={fieldVariants}
                     >
                         <FormField
@@ -109,7 +117,7 @@ export default function ContactForm() {
                             name="name"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Name</FormLabel>
+                                    <FormLabel className="text-sm font-medium">Name</FormLabel>
                                     <FormControl>
                                         <motion.div
                                             whileHover={{ scale: 1.01 }}
@@ -143,7 +151,7 @@ export default function ContactForm() {
                             name="email"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Email</FormLabel>
+                                    <FormLabel className="text-sm font-medium">Email</FormLabel>
                                     <FormControl>
                                         <motion.div
                                             whileHover={{ scale: 1.01 }}
@@ -182,7 +190,7 @@ export default function ContactForm() {
                             name="message"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Message</FormLabel>
+                                    <FormLabel className="text-sm font-medium">Message</FormLabel>
                                     <FormControl>
                                         <motion.div
                                             whileHover={{ scale: 1.01 }}
@@ -248,7 +256,7 @@ export default function ContactForm() {
                                     }
                                 } : {}}
                             >
-                                <Send className="w-4 h-4" />
+                                {isPending ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
                             </motion.span>
                         </Button>
                     </motion.div>
