@@ -2,7 +2,7 @@
 
 import { Bot, BotOff } from "lucide-react";
 import { Button } from "../ui/button";
-import { useChatbot } from "./chat-context";
+import { useChatbot } from "../../context/chatbot/chat-context";
 import {
   Tooltip,
   TooltipContent,

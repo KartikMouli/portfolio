@@ -1,31 +1,35 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import axios from 'axios';
+import { useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import axios from 'axios';
+import getQueryClient from '@/lib/getQueryClient';
 
 export default function VisitorCounter() {
-  const [count, setCount] = useState<number | null>(null);
-  const [error, setError] = useState<string | null>(null);
+  const queryClient = getQueryClient();
+
+  const { data: count, error, isLoading } = useQuery({
+    queryKey: ['visitorCount'],
+    queryFn: async () => {
+      const response = await axios.get('/api/visitors');
+      return response.data.count;
+    },
+    staleTime: 1000 * 60 * 10, // 5 minutes
+  });
+
+  const { mutate: updateCount } = useMutation({
+    mutationFn: async () => {
+      await axios.post('/api/visitors');
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['visitorCount'] });
+    },
+  });
 
   useEffect(() => {
-    const updateVisitorCount = async () => {
-      try {
-        await axios.post('/api/visitors');
-        const response = await axios.get('/api/visitors');
-        
-        if (response.data.count !== undefined) {
-          setCount(response.data.count);
-        } else {
-          setError('Failed to fetch view count');
-        }
-      } catch (err) {
-        setError('Failed to update view count');
-      }
-    };
-
-    updateVisitorCount();
-  }, []);
+    updateCount();
+  }, [updateCount]);
 
   if (error) {
     return (
@@ -34,7 +38,7 @@ export default function VisitorCounter() {
         animate={{ opacity: 1, y: 0 }}
         className="text-destructive text-sm"
       >
-        {error}
+        Failed to fetch view count
       </motion.div>
     );
   }
@@ -73,12 +77,12 @@ export default function VisitorCounter() {
         </svg>
       </motion.div>
       <span>
-        {count !== null ? (
-          <>
-            <span className="font-serif text-primary">{count.toLocaleString()}</span> views
-          </>
-        ) : (
+        {isLoading ? (
           'Loading...'
+        ) : (
+          <>
+            <span className="font-serif text-primary">{count?.toLocaleString()}</span> views
+          </>
         )}
       </span>
     </motion.div>
