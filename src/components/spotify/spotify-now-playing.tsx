@@ -20,13 +20,13 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { useSpotify } from "./spotify-context";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Badge } from "../ui/badge";
 import Marquee from "react-fast-marquee";
+import { useSpotifyData } from "@/hooks/useSpotifyData";
 
 export default function SpotifyNowPlaying() {
-  const { spotifyData, isLoading } = useSpotify();
+  const { data: spotifyData, isLoading } = useSpotifyData()
   const isMobile = useMediaQuery("(max-width: 768px)");
 
   const formatTime = (ms: number) => {

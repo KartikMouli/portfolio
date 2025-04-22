@@ -44,7 +44,7 @@ export default function Projects({ limit }: Props) {
 
     return (
         <motion.section 
-            className="grid grid-cols-1 gap-4 sm:grid-cols-2 p-2"
+            className="grid grid-cols-1 gap-6 sm:grid-cols-2 px-1"
             variants={containerVariants}
             initial="hidden"
             whileInView="visible"
@@ -54,8 +54,8 @@ export default function Projects({ limit }: Props) {
                 <motion.div
                     key={id}
                     variants={itemVariants}
-                    whileHover={{ scale: 1.02 }}
-                    transition={{ duration: 0.2 }}
+                    whileHover={{ scale: 1.01 }}
+                    transition={{ duration: 0.2, ease: "easeOut" }}
                 >
                     <ProjectCard project={project} />
                 </motion.div>
