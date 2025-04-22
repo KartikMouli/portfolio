@@ -10,6 +10,8 @@ import { motion, useAnimation } from "framer-motion";
 import Skills from "@/components/skill/Skills";
 import ResumeButton from "@/components/resume-button/ResumeButton";
 import { useSpotifyData } from "@/hooks/useSpotifyData";
+import SpotifyWidget from "@/components/spotify/SpotifyWidget";
+import { FaSpotify } from "react-icons/fa";
 
 export default function HomeClient() {
   const [isFlipped, setIsFlipped] = useState(true);
@@ -239,22 +241,34 @@ export default function HomeClient() {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1 }}
-            className="flex flex-col items-center gap-4"
+            className="flex flex-col md:flex-row items-center md:items-start gap-8 md:gap-12 w-full max-w-5xl mx-auto px-4"
           >
-            <h2 className="text-2xl font-bold text-center">Join the Vibe</h2>
-            <p className="text-muted-foreground text-center max-w-md">
-              Play the same song as me and let&apos;s vibe together! <Music className="size-5 inline-block" />
-            </p>
-            <div className="w-full max-w-md">
-              <iframe
-                style={{ borderRadius: "12px" }}
-                src={`https://open.spotify.com/embed/track/${spotifyData.item.id}?utm_source=generator`}
-                width="100%"
-                height="152"
-                frameBorder="0"
-                allow="clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-                loading="lazy"
-              />
+            {/* Left side - Text */}
+            <div className="flex flex-col items-center md:items-start gap-4 w-full md:w-1/2">
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.5 }}
+                className="flex flex-col gap-3"
+              >
+                <div className="flex items-center gap-2">
+                  <FaSpotify className="text-[#1DB954] text-2xl" />
+                  <h2 className="text-2xl font-bold bg-gradient-to-r from-[#1DB954] to-[#1DB954]/80 bg-clip-text text-transparent">
+                    Join the Vibe
+                  </h2>
+                </div>
+                <p className="text-muted-foreground text-lg">
+                  Play the same song as me and let&apos;s vibe together! <Music className="size-5 inline-block ml-1" />
+                </p>
+                <p className="text-sm text-muted-foreground/80">
+                  Click the card to play this song on your device !
+                </p>
+              </motion.div>
+            </div>
+
+            {/* Right side - Spotify Widget */}
+            <div className="w-full md:w-1/2">
+              <SpotifyWidget />
             </div>
           </motion.div>
         </section>
