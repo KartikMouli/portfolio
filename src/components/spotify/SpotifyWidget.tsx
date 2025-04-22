@@ -2,9 +2,9 @@
 
 import { motion } from 'framer-motion';
 import { useSpotifyData } from '@/hooks/useSpotifyData';
-import { Music } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { FaSpotify } from 'react-icons/fa';
+import Image from 'next/image';
 
 export default function SpotifyWidget() {
   const { data: spotifyData } = useSpotifyData();
@@ -46,9 +46,11 @@ export default function SpotifyWidget() {
             whileTap={{ scale: 0.95 }}
             className="relative w-16 h-16 rounded-lg overflow-hidden"
           >
-            <img
+            <Image
               src={spotifyData.item.album.images[0]?.url}
               alt={spotifyData.item.album.name}
+              width={64}
+              height={64}
               className="w-full h-full object-cover"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
