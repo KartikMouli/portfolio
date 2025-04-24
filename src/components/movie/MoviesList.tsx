@@ -49,9 +49,8 @@ interface MoviesListProps {
 export function MoviesList({ sortBy, searchQuery }: MoviesListProps) {
     const [currentPage, setCurrentPage] = useState(1);
     const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
-    const [isLoadingMore, setIsLoadingMore] = useState(false);
 
-    const { data: movies = [], isLoading, isFetching } = useQuery<Movie[]>({
+    const { data: movies = [], isLoading} = useQuery<Movie[]>({
         queryKey: ['movies'],
         queryFn: async () => {
             const response = await axios.get('/api/movies');

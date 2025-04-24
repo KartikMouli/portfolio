@@ -20,7 +20,7 @@ export default function MoviesAdmin() {
             const response = await axios.post('/api/movies', formData);
             return response.data;
         },
-        onSuccess: (data) => {
+        onSuccess: () => {
             toast({
                 title: "Success",
                 description: "Movies updated successfully",
