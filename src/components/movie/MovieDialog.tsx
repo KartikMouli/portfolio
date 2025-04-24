@@ -5,6 +5,8 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } f
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
+import { useQuery } from '@tanstack/react-query';
+import axios from 'axios';
 
 interface MovieDialogProps {
     movie: {
@@ -21,7 +23,29 @@ interface MovieDialogProps {
     onOpenChange: (open: boolean) => void;
 }
 
+interface Trailer {
+    key: string;
+    name: string;
+    site: string;
+    type: string;
+    official: boolean;
+}
+
 export function MovieDialog({ movie, open, onOpenChange }: MovieDialogProps) {
+    const [showTrailer, setShowTrailer] = React.useState(false);
+
+    const { data: trailers = [] } = useQuery<Trailer[]>({
+        queryKey: ['trailer', movie.tmdb_id],
+        queryFn: async () => {
+            if (!movie.tmdb_id) return [];
+            const response = await axios.get(`/api/movies/${movie.tmdb_id}/videos`);
+            return response.data;
+        },
+        enabled: !!movie.tmdb_id && open,
+    });
+
+    const officialTrailer = trailers.find(t => t.official && t.type === 'Trailer') || trailers[0];
+
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
             <AnimatePresence>
@@ -35,7 +59,7 @@ export function MovieDialog({ movie, open, onOpenChange }: MovieDialogProps) {
                             className="fixed inset-0 bg-background/80 backdrop-blur-sm z-40"
                             onClick={() => onOpenChange(false)}
                         />
-                        <DialogContent className="max-w-[90vw] sm:max-w-[800px] bg-background/95 backdrop-blur-sm border-border p-0 mb-24 sm:mb-0 overflow-hidden z-50">
+                        <DialogContent className="max-w-[95vw] sm:max-w-[800px] bg-background/95 backdrop-blur-sm border-border p-0 mb-16 sm:mb-0 overflow-hidden z-50">
                             <DialogDescription className="sr-only">
                                 Movie details for {movie.name}{movie.year ? ` (${movie.year})` : ''}
                             </DialogDescription>
@@ -50,7 +74,7 @@ export function MovieDialog({ movie, open, onOpenChange }: MovieDialogProps) {
                                     initial={{ scale: 0.9 }}
                                     animate={{ scale: 1 }}
                                     transition={{ duration: 0.3, delay: 0.1 }}
-                                    className="relative w-full sm:w-1/3 aspect-[3/4] sm:aspect-[2/3]"
+                                    className="relative w-full sm:w-1/3 aspect-[3/4] sm:aspect-[2/3] max-h-[40vh] sm:max-h-none"
                                 >
                                     {movie.poster_path ? (
                                         <Image
@@ -60,6 +84,7 @@ export function MovieDialog({ movie, open, onOpenChange }: MovieDialogProps) {
                                             className="object-contain transition-transform duration-300 hover:scale-105"
                                             sizes="(max-width: 800px) 100vw, 300px"
                                             loading="lazy"
+                                            
                                         />
                                     ) : (
                                         <motion.div 
@@ -83,10 +108,10 @@ export function MovieDialog({ movie, open, onOpenChange }: MovieDialogProps) {
                                     initial={{ opacity: 0, x: 20 }}
                                     animate={{ opacity: 1, x: 0 }}
                                     transition={{ duration: 0.3, delay: 0.2 }}
-                                    className="p-3 sm:p-6 flex-1 space-y-2 sm:space-y-4 text-foreground"
+                                    className="p-3 sm:p-6 flex-1 space-y-2 sm:space-y-4 text-foreground overflow-y-auto max-h-[50vh] sm:max-h-none"
                                 >
                                     <DialogHeader className="p-0">
-                                        <DialogTitle className="text-base sm:text-2xl font-bold">
+                                        <DialogTitle className="text-lg sm:text-2xl font-bold">
                                             {movie.name}
                                             {movie.year && (
                                                 <motion.span 
@@ -107,14 +132,42 @@ export function MovieDialog({ movie, open, onOpenChange }: MovieDialogProps) {
                                             transition={{ duration: 0.3, delay: 0.4 }}
                                             className="space-y-1"
                                         >
-                                            <h3 className="text-xs sm:text-lg font-semibold text-white">Overview</h3>
-                                            <p className="text-xs sm:text-sm leading-relaxed line-clamp-2 sm:line-clamp-none">{movie.overview}</p>
+                                            <h3 className="text-sm sm:text-lg font-semibold text-white">Overview</h3>
+                                            <p className="text-xs sm:text-sm leading-relaxed line-clamp-3 sm:line-clamp-none">{movie.overview}</p>
+                                        </motion.div>
+                                    )}
+                                    {officialTrailer && (
+                                        <motion.div 
+                                            initial={{ opacity: 0, y: 10 }}
+                                            animate={{ opacity: 1, y: 0 }}
+                                            transition={{ duration: 0.3, delay: 0.5 }}
+                                            className="space-y-2"
+                                        >
+                                            <Button
+                                                variant="outline"
+                                                size="sm"
+                                                onClick={() => setShowTrailer(!showTrailer)}
+                                                className="w-full h-7 sm:h-9"
+                                            >
+                                                {showTrailer ? 'Hide Trailer' : 'Watch Trailer'}
+                                            </Button>
+                                            {showTrailer && (
+                                                <div className="relative w-full aspect-video rounded-lg overflow-hidden">
+                                                    <iframe
+                                                        src={`https://www.youtube.com/embed/${officialTrailer.key}?autoplay=1`}
+                                                        title={officialTrailer.name}
+                                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                                        allowFullScreen
+                                                        className="absolute inset-0 w-full h-full"
+                                                    />
+                                                </div>
+                                            )}
                                         </motion.div>
                                     )}
                                     <motion.div 
                                         initial={{ opacity: 0, y: 10 }}
                                         animate={{ opacity: 1, y: 0 }}
-                                        transition={{ duration: 0.3, delay: 0.5 }}
+                                        transition={{ duration: 0.3, delay: 0.6 }}
                                         className="grid grid-cols-2 gap-2"
                                     >
                                         {movie.release_date && (
@@ -138,7 +191,7 @@ export function MovieDialog({ movie, open, onOpenChange }: MovieDialogProps) {
                                     >
                                         {movie.letterboxd_uri && (
                                             <Button
-                                                className="hover:cursor-pointer"
+                                                className="hover:cursor-pointer h-7 sm:h-9"
                                                 variant="outline"
                                                 onClick={() => movie.letterboxd_uri && window.open(movie.letterboxd_uri, '_blank')}
                                             >
@@ -147,7 +200,7 @@ export function MovieDialog({ movie, open, onOpenChange }: MovieDialogProps) {
                                         )}
                                         {movie.tmdb_id && (
                                             <Button
-                                                className="hover:cursor-pointer"
+                                                className="hover:cursor-pointer h-7 sm:h-9"
                                                 variant="outline"
                                                 onClick={() => window.open(`https://www.themoviedb.org/movie/${movie.tmdb_id}`, '_blank')}
                                             >
