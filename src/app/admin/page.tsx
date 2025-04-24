@@ -10,7 +10,7 @@ import { Label } from "@/components/ui/label";
 import { Loader2 } from "lucide-react";
 import { useSearchParams } from 'next/navigation';
 import { toast } from '@/hooks/use-toast';
-import MoviesAdmin from '@/components/MoviesAdmin';
+import MoviesAdmin from '@/components/movie/MoviesAdmin';
 
 function AdminContent() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);

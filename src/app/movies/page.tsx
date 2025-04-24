@@ -12,7 +12,6 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 import { Loader2, Search, AlertCircle } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import {
@@ -24,7 +23,8 @@ import {
   PaginationPrevious,
   PaginationEllipsis,
 } from "@/components/ui/pagination";
-import { MovieDialog } from "@/components/MovieDialog";
+import { MovieDialog } from "@/components/movie/MovieDialog";
+import { SortFilter, type SortOption } from '@/components/movie/SortFilter';
 
 interface Movie {
     date: string | null;
@@ -64,6 +64,16 @@ export default function MoviesList() {
     const [searchQuery, setSearchQuery] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
     const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
+    const [sortBy, setSortBy] = useState('date-desc');
+
+    const sortOptions: SortOption[] = [
+        { label: 'Added Date (Newest)', value: 'date-desc', direction: 'desc' },
+        { label: 'Added Date (Oldest)', value: 'date-asc', direction: 'asc' },
+        { label: 'Release Year (Newest)', value: 'year-desc', direction: 'desc' },
+        { label: 'Release Year (Oldest)', value: 'year-asc', direction: 'asc' },
+        { label: 'Name (A-Z)', value: 'title-asc', direction: 'asc' },
+        { label: 'Name (Z-A)', value: 'title-desc', direction: 'desc' },
+    ];
 
     const { data: movies = [], isLoading, isError, error, isFetching } = useQuery<Movie[], Error>({
         queryKey: ['movies'],
@@ -80,19 +90,39 @@ export default function MoviesList() {
                 movie.name.toLowerCase().includes(searchQuery.toLowerCase())
             )
             .sort((a: Movie, b: Movie) => {
-                // Handle null dates by putting them at the end
-                if (!a.date && !b.date) return 0;
-                if (!a.date) return 1;
-                if (!b.date) return -1;
+                const [sortField, sortDirection] = sortBy.split('-');
                 
-                // Convert dates to timestamps for comparison
-                const dateA = new Date(a.date).getTime();
-                const dateB = new Date(b.date).getTime();
-                
-                // Sort in descending order (newest first)
-                return dateB - dateA;
+                switch (sortField) {
+                    case 'date':
+                        // Handle null dates by putting them at the end
+                        if (!a.date && !b.date) return 0;
+                        if (!a.date) return 1;
+                        if (!b.date) return -1;
+                        
+                        const dateA = new Date(a.date).getTime();
+                        const dateB = new Date(b.date).getTime();
+                        return sortDirection === 'desc' ? dateB - dateA : dateA - dateB;
+                    
+                    case 'year':
+                        // Handle null years by putting them at the end
+                        if (!a.year && !b.year) return 0;
+                        if (!a.year) return 1;
+                        if (!b.year) return -1;
+                        
+                        return sortDirection === 'desc' 
+                            ? (b.year || 0) - (a.year || 0)
+                            : (a.year || 0) - (b.year || 0);
+                    
+                    case 'title':
+                        return sortDirection === 'desc' 
+                            ? b.name.localeCompare(a.name)
+                            : a.name.localeCompare(b.name);
+                    
+                    default:
+                        return 0;
+                }
             });
-    }, [movies, searchQuery]);
+    }, [movies, searchQuery, sortBy]);
 
     const totalPages = Math.ceil(filteredMovies.length / ITEMS_PER_PAGE);
     const paginatedMovies = useMemo(() => {
@@ -219,16 +249,26 @@ export default function MoviesList() {
                         <Loader2 className="h-4 w-4 animate-spin text-muted-foreground" />
                     )}
                 </div>
-                <div className="w-full sm:w-64">
-                    <Input
-                        type="text"
-                        placeholder="Search movies..."
-                        value={searchQuery}
-                        onChange={(e) => {
-                            setSearchQuery(e.target.value);
+                <div className="flex items-center gap-4">
+                    <div className="w-full sm:w-64">
+                        <Input
+                            type="text"
+                            placeholder="Search movies..."
+                            value={searchQuery}
+                            onChange={(e) => {
+                                setSearchQuery(e.target.value);
+                                setCurrentPage(1);
+                            }}
+                            className="w-full"
+                        />
+                    </div>
+                    <SortFilter
+                        options={sortOptions}
+                        value={sortBy}
+                        onChange={(value) => {
+                            setSortBy(value);
                             setCurrentPage(1);
                         }}
-                        className="w-full"
                     />
                 </div>
             </motion.div>
@@ -286,17 +326,17 @@ export default function MoviesList() {
                                                     className="h-[207px] sm:h-[231px] rounded-lg overflow-hidden cursor-pointer bg-muted border border-border hover:border-foreground/20 transition-colors duration-300"
                                                     onClick={() => setSelectedMovie(movie)}
                                                 >
-                                                    {movie.poster_path ? (
-                                                        <Image
-                                                            src={movie.poster_path}
-                                                            alt={movie.name}
+                                    {movie.poster_path ? (
+                                        <Image
+                                            src={movie.poster_path}
+                                            alt={movie.name}
                                                             width={156}
                                                             height={231}
                                                             className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-105"
                                                             loading="lazy"
                                                             quality={75}
-                                                        />
-                                                    ) : (
+                                        />
+                                    ) : (
                                                         <motion.div 
                                                             whileHover={{ scale: 1.02 }}
                                                             transition={{ duration: 0.2 }}
@@ -308,13 +348,13 @@ export default function MoviesList() {
                                                                 transition={{ duration: 0.5 }}
                                                                 className="text-foreground text-2xl font-bold group-hover:scale-105 transition-transform"
                                                             >
-                                                                {movie.name.charAt(0).toUpperCase()}
+                                                {movie.name.charAt(0).toUpperCase()}
                                                             </motion.div>
                                                         </motion.div>
                                                     )}
                                                 </motion.div>
                                             </TooltipTrigger>
-                                            <TooltipContent>
+                                            <TooltipContent className="bg-background text-foreground border" >
                                                 <p>{movie.name}</p>
                                                 {movie.year && <p className="text-sm text-muted-foreground">{movie.year}</p>}
                                             </TooltipContent>
