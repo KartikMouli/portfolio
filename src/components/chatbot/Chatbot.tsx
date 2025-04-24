@@ -136,7 +136,7 @@ export default function Chatbot() {
                         <Button
                             size="icon"
                             variant="outline"
-                            className="rounded-full w-10 h-10 bg-background/80 text-foreground shadow-xs hover:bg-background/90 transition-all duration-200"
+                            className="rounded-full w-10 h-10 bg-background/80 text-foreground shadow-xs hover:bg-background/90 transition-all duration-200 hover:cursor-pointer"
                             onClick={() => setIsOpen(true)}
                         >
                             <MessageSquare className="h-5 w-5" />

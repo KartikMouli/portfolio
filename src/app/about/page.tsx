@@ -1,17 +1,18 @@
 'use client';
-
-import Education from '@/components/about/Education';
-
+;
 import { Button } from '@/components/ui/button';
 import { ArrowRightIcon } from 'lucide-react';
+import { FaFacebook, FaInstagram, FaSnapchat, FaThreads } from "react-icons/fa6";
 import Link from 'next/link';
 import React from 'react';
 import { motion } from 'framer-motion';
 import StatsCard from '@/components/about/StatsCard';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import Timeline from '@/components/about/Timeline';
 
 function About() {
-    // Fade in and slide up animation for sections
-    const sectionVariants = {
+    const fadeInUp = {
         hidden: { opacity: 0, y: 20 },
         visible: {
             opacity: 1,
@@ -23,27 +24,7 @@ function About() {
         }
     };
 
-    // Text animation variants
-    const textVariants = {
-        hidden: { opacity: 0, y: 10 },
-        visible: {
-            opacity: 1,
-            y: 0,
-            transition: { duration: 0.4 }
-        }
-    };
-
-    // Button animation variants
-    const buttonVariants = {
-        hover: { 
-            scale: 1.05,
-            transition: { duration: 0.2 }
-        },
-        tap: { scale: 0.95 }
-    };
-
-    // Stats card container variants
-    const statsContainerVariants = {
+    const staggerChildren = {
         hidden: { opacity: 0 },
         visible: {
             opacity: 1,
@@ -54,116 +35,127 @@ function About() {
         }
     };
 
-    // Stats card item variants
-    const statsItemVariants = {
-        hidden: { opacity: 0, scale: 0.9 },
-        visible: {
-            opacity: 1,
-            scale: 1,
-            transition: {
-                duration: 0.5,
-                ease: "easeOut"
-            }
-        }
-    };
-
     return (
-        <>
-            {/* About Me Section */}
+        <div className="max-w-4xl mx-auto px-4 ">
+            {/* Hero Section */}
             <motion.section 
-                className='mt-8 pb-2'
-                variants={sectionVariants}
+                className="mb-20"
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true }}
+                variants={staggerChildren}
             >
-                <motion.h2 
-                    className="text-3xl font-bold mb-4"
-                    variants={textVariants}
-                >
-                    About me
-                </motion.h2>
+                <motion.div variants={fadeInUp}>
+                    <Badge variant="outline" className="mb-4">About Me</Badge>
+                    <h1 className="text-4xl font-bold mb-6">Kartik</h1>
+                </motion.div>
+                
                 <motion.div 
-                    className="dark:text-white px-4 py-6 mb-16 mt-8 rounded-lg dark:bg-[#1a1a1a] border dark:border-hidden border-gray-300"
-                    variants={textVariants}
+                    className="grid md:grid-cols-2 gap-8"
+                    variants={staggerChildren}
                 >
-                    <motion.p 
-                        className="mb-2"
-                        variants={textVariants}
-                    >
-                        Hey! I&apos;m <motion.span 
-                            className="font-semibold"
-                            whileHover={{ scale: 1.1 }}
-                            transition={{ duration: 0.2 }}
-                        >Kartik</motion.span>, a proud <motion.span className="italic">IIT Patna CSE &apos;24</motion.span> graduate. I focus on full-stack development, Web3, and competitive programming.
-                    </motion.p>
-                    <motion.p 
-                        className="mb-2"
-                        variants={textVariants}
-                    >
-                        Outside of coding, you&apos;ll find me on the football field or shooting hoops. I&apos;m also a huge movie enthusiast—whether it&apos;s action-packed blockbusters or thought-provoking dramas.
-                    </motion.p>
-                    <motion.p 
-                        className='mb-2'
-                        variants={textVariants}
-                    >
-                        Originally from <motion.span className="italic">Nashik</motion.span>, I&apos;m always excited about creating new tech and exploring the world of open-source.
-                    </motion.p>
-                    <motion.p 
-                        className="mt-4"
-                        variants={textVariants}
-                    >
-                        <motion.span
-                            whileHover="hover"
-                            whileTap="tap"
-                            variants={buttonVariants}
+                    <motion.div variants={fadeInUp}>
+                        <p className="text-lg text-muted-foreground mb-4">
+                            Hey! I&apos;m a proud <span className="font-medium">IIT Patna CSE &apos;24</span> graduate. 
+                            I focus on full-stack development, Web3, and competitive programming.
+                        </p>
+                        <p className="text-lg text-muted-foreground mb-4">
+                            Outside of coding, you&apos;ll find me on the football field or shooting hoops. 
+                            I&apos;m also a huge movie enthusiast—whether it&apos;s action-packed blockbusters or 
+                            thought-provoking dramas.
+                        </p>
+                        <p className="text-lg text-muted-foreground mb-6">
+                            Originally from <span className="font-medium">Nashik</span>, I&apos;m always excited 
+                            about creating new tech and exploring the world of open-source.
+                        </p>
+                        <motion.div 
+                            className="flex gap-4"
+                            variants={fadeInUp}
                         >
-                            <Link href="/contact" className='font-semibold inline-block'>
-                                Let&apos;s connect!
+                            <Link
+                                href="https://facebook.com/kartikmouli" 
+                                target="_blank" 
+                                rel="noopener noreferrer"
+                                className="text-muted-foreground hover:text-foreground transition-colors"
+                            >
+                                <FaFacebook className="w-5 h-5" />
                             </Link>
-                        </motion.span> I&apos;m open to discussing tech, sports, or the latest movies.
-                    </motion.p>
+                            <Link
+                                href="https://instagram.com/kartikmouli" 
+                                target="_blank" 
+                                rel="noopener noreferrer"
+                                className="text-muted-foreground hover:text-foreground transition-colors"
+                            >
+                                <FaInstagram className="w-5 h-5" />
+                            </Link>
+                            <Link
+                                href="https://snapchat.com/add/kartikmouli" 
+                                target="_blank" 
+                                rel="noopener noreferrer"
+                                className="text-muted-foreground hover:text-foreground transition-colors"
+                            >
+                                <FaSnapchat className="w-5 h-5" />
+                            </Link>
+                            <Link
+                                href="https://threads.net/@kartikmouli" 
+                                target="_blank" 
+                                rel="noopener noreferrer"
+                                className="text-muted-foreground hover:text-foreground transition-colors"
+                            >
+                                <FaThreads className="w-5 h-5" />
+                            </Link>
+                        </motion.div>
+                    </motion.div>
+
+                    <motion.div variants={fadeInUp}>
+                        <Card className="border-none shadow-none">
+                            <CardHeader>
+                                <CardTitle className="text-xl">Quick Stats</CardTitle>
+                            </CardHeader>
+                            <CardContent>
+                                <div className="grid grid-cols-2 gap-4">
+                                    <div className="p-4 bg-muted/50 rounded-lg">
+                                        <p className="text-sm text-muted-foreground">Years Experience</p>
+                                        <p className="text-2xl font-semibold">fresher</p>
+                                    </div>
+                                    <div className="p-4 bg-muted/50 rounded-lg">
+                                        <p className="text-sm text-muted-foreground">Projects</p>
+                                        <p className="text-2xl font-semibold">20+</p>
+                                    </div>
+                                    <div className="p-4 bg-muted/50 rounded-lg">
+                                        <p className="text-sm text-muted-foreground">LeetCode</p>
+                                        <p className="text-2xl font-semibold">500+</p>
+                                    </div>
+                                    <div className="p-4 bg-muted/50 rounded-lg">
+                                        <p className="text-sm text-muted-foreground">GitHub Commits</p>
+                                        <p className="text-2xl font-semibold">300+</p>
+                                    </div>
+                                </div>
+                            </CardContent>
+                        </Card>
+                    </motion.div>
                 </motion.div>
             </motion.section>
 
             {/* Skills Section */}
             <motion.section 
-                className="mb-16"
-                variants={sectionVariants}
+                className="mb-20"
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true }}
+                variants={staggerChildren}
             >
-                <motion.h3 
-                    className="text-3xl font-bold mb-4 dark:text-gray-100"
-                    variants={textVariants}
-                >
-                    Skills
-                </motion.h3>
-                <motion.p 
-                    className="dark:text-gray-300 mb-4"
-                    variants={textVariants}
-                >
-                    Want to know more about the tools and technologies I work with? Click below to dive into my skillset.
-                </motion.p>
-                <motion.div
-                    whileHover="hover"
-                    whileTap="tap"
-                    variants={buttonVariants}
-                >
+                <motion.div variants={fadeInUp}>
+                    <Badge variant="outline" className="mb-4">Skills & Expertise</Badge>
+                    <h2 className="text-3xl font-bold mb-6">What I Do</h2>
+                    <p className="text-lg text-muted-foreground mb-8">
+                        Want to know more about the tools and technologies I work with? 
+                        Click below to dive into my skillset.
+                    </p>
                     <Link href="/skills">
-                        <Button variant="outline" className='p-6'>
+                        <Button variant="outline" className="hover:cursor-pointer group">
                             Explore Skills
-                            <motion.span
-                                animate={{ x: [0, 5, 0] }}
-                                transition={{ 
-                                    duration: 1.5, 
-                                    repeat: Infinity,
-                                    ease: "easeInOut" 
-                                }}
-                            >
-                                <ArrowRightIcon className="size-5" />
-                            </motion.span>
+                            <ArrowRightIcon className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
                         </Button>
                     </Link>
                 </motion.div>
@@ -171,72 +163,63 @@ function About() {
 
             {/* Education Section */}
             <motion.section 
-                className="mb-16"
-                variants={sectionVariants}
+                className="mb-20"
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true }}
+                variants={staggerChildren}
             >
-                <motion.h2 
-                    className="text-3xl font-bold mb-10 dark:text-gray-100"
-                    variants={textVariants}
-                >
-                    Learning Journey
-                </motion.h2>
-                <Education />
-            </motion.section>
-
-            {/* Stats Overview Section */}
-            <motion.section 
-                className='mb-16'
-                variants={sectionVariants}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-            >
-                <motion.h3 
-                    className="text-3xl font-bold mt-6 mb-6"
-                    variants={textVariants}
-                >
-                    Data Playground
-                </motion.h3>
-                <motion.div 
-                    className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-10 align-center items-center"
-                    variants={statsContainerVariants}
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true }}
-                >
-                    {[
-                        {
-                            src: "https://leetcard.jacoblin.cool/monchi02?ext=heatmap",
-                            alt: "LeetCode Heatmap Stats"
-                        },
-                        {
-                            src: "https://raw.githubusercontent.com/KartikMouli/cf-stats/refs/heads/main/output/light_card.svg",
-                            alt: "Codeforces Statistics Card"
-                        },
-                        {
-                            src: "https://github-readme-streak-stats.herokuapp.com/?user=kartikmouli&theme=dark",
-                            alt: "GitHub Streak Stats"
-                        },
-                        {
-                            src: "https://holopin.me/kartikmouli",
-                            alt: "Holopin Badges"
-                        }
-                    ].map((stat, index) => (
-                        <motion.div
-                            key={index}
-                            variants={statsItemVariants}
-                            whileHover={{ scale: 1.02 }}
-                            transition={{ duration: 0.2 }}
-                        >
-                            <StatsCard src={stat.src} alt={stat.alt} />
-                        </motion.div>
-                    ))}
+                <motion.div variants={fadeInUp}>
+                    <Badge variant="outline" className="mb-4">Journey</Badge>
+                    <h2 className="text-3xl font-bold mb-6">Education & Experience</h2>
+                    <Timeline />
                 </motion.div>
             </motion.section>
-        </>
+
+            {/* Stats Section */}
+            <motion.section 
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                variants={staggerChildren}
+            >
+                <motion.div variants={fadeInUp}>
+                    <Badge variant="outline" className="mb-4">Achievements</Badge>
+                    <h2 className="text-3xl font-bold mb-6">Data Playground</h2>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        {[
+                            {
+                                src: "https://leetcard.jacoblin.cool/monchi02?ext=heatmap",
+                                alt: "LeetCode Heatmap Stats"
+                            },
+                            {
+                                src: "https://raw.githubusercontent.com/KartikMouli/cf-stats/refs/heads/main/output/light_card.svg",
+                                alt: "Codeforces Statistics Card"
+                            },
+                            {
+                                src: "https://github-readme-streak-stats.herokuapp.com/?user=kartikmouli&theme=dark",
+                                alt: "GitHub Streak Stats"
+                            },
+                            {
+                                src: "https://holopin.me/kartikmouli",
+                                alt: "Holopin Badges"
+                            }
+                        ].map((stat, index) => (
+                            <motion.div
+                                key={index}
+                                variants={fadeInUp}
+                                whileHover={{ scale: 1.02 }}
+                                transition={{ duration: 0.2 }}
+                            >
+                                <Card className="border-none shadow-none">
+                                    <StatsCard src={stat.src} alt={stat.alt} />
+                                </Card>
+                            </motion.div>
+                        ))}
+                    </div>
+                </motion.div>
+            </motion.section>
+        </div>
     );
 }
 

@@ -15,15 +15,20 @@ export default function ChatToggle() {
 
   return (
     <TooltipProvider>
-      <Tooltip>
+      <Tooltip >
         <TooltipTrigger asChild>
-          <Button size="icon" variant="ghost" onClick={toggleChatbot} className="hover:cursor-pointer">
+          <Button 
+            size="icon" 
+            variant="link" 
+            onClick={toggleChatbot} 
+            className="hover:cursor-pointer relative z-[60]"
+          >
             {isVisible ? <Bot className="size-5" /> : <BotOff className="size-5" />}
             <span className="sr-only">Chat Toggle</span>
           </Button>
         </TooltipTrigger>
-        <TooltipContent className="bg-popover border p-2 text-popover-foreground">
-          <p>{isVisible ? "click to hide chatbot" : "click to show chatbot"}</p>
+        <TooltipContent className="bg-popover rounded-md border mt-1 text-popover-foreground">
+          {isVisible ? "Hide Chatbot" : "Show Chatbot"}
         </TooltipContent>
       </Tooltip>
     </TooltipProvider>

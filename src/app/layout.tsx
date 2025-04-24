@@ -53,13 +53,13 @@ export default async function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body
         suppressHydrationWarning
-        className={`${raleway.className} mx-auto flex min-h-screen max-w-3xl flex-col px-8 pb-16 antialiased`}
+        className={`${raleway.className} mx-auto flex min-h-screen max-w-3xl flex-col pt-20 px-8 pb-16 antialiased`}
       >
 
         <Providers>
           <HydrationBoundary state={dehydratedState}>
             <Header />
-            <main className="grow">
+            <main className="grow ">
               {children}
               <Analytics />
               <SpeedInsights />

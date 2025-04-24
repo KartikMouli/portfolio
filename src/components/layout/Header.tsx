@@ -1,41 +1,39 @@
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { motion } from "framer-motion";
-import { Menu } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 import ThemeToggle from "../theme/ThemeToggle";
 import ChatToggle from "../chatbot/chatbot-toggle";
-
 import { useMediaQuery } from "@/hooks/use-media-query";
-import { Button } from "../ui/button";
 import { useState } from "react";
 import SpotifyNowPlaying from "../spotify/spotify-now-playing";
+import {
+    Navbar,
+    NavBody,
+    NavItems,
+    MobileNav,
+    MobileNavHeader,
+} from "../resizable-navbar.tsx/resizable-navbar";
+import { MenuIcon, XIcon } from "lucide-react";
 
 const navLinks = [
     {
         name: "Home",
-        href: "/",
+        link: "/",
     },
     {
         name: "Projects",
-        href: "/projects",
+        link: "/projects",
     },
     {
         name: "About",
-        href: "/about",
+        link: "/about",
     },
     {
         name: "Contact",
-        href: "/contact",
+        link: "/contact",
     },
 ];
-
-const linkVariants = {
-    initial: { opacity: 0, y: -10 },
-    animate: { opacity: 1, y: 0, transition: { duration: 0.5 } },
-    hover: { scale: 1.1, transition: { duration: 0.3 } },
-    tap: { scale: 0.95 },
-};
 
 export default function Header() {
     const pathname = usePathname();
@@ -43,81 +41,82 @@ export default function Header() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     return (
-        <motion.header
-            className="sticky top-0 z-50 py-4 sm:py-6 backdrop-blur-xs"
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-        >
-            <nav className="container px-4">
-                <div className="flex items-center justify-between">
-                    
-                    {/* Right side - Navigation Links and Icons */}
-                    <div className="flex items-center justify-between w-full">
-                        {/* Navigation Links - Hidden on mobile */}
-                        {!isMobile && (
-                            <motion.ul
-                                className="flex gap-4 sm:gap-8"
-                                initial="initial"
-                                animate="animate"
-                            >
-                                {navLinks.map((nav, id) => (
-                                    <motion.li
-                                        key={id}
-                                        className={`link ${pathname === nav.href ? "dark:text-white font-bold" : ""}`}
-                                        variants={linkVariants}
-                                        whileHover="hover"
-                                        whileTap="tap"
-                                    >
-                                        <Link href={nav.href}>{nav.name}</Link>
-                                    </motion.li>
-                                ))}
-                            </motion.ul>
-                        )}
-                        {/* Icons */}
-                        <div className="flex items-center gap-3">
-                            <SpotifyNowPlaying />
+        <Navbar className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+            {!isMobile ? (
+                <NavBody className="flex items-center justify-between max-w-4xl mx-auto px-4 py-4">
+                    <div className="flex-1">
+                        <NavItems
+                            items={navLinks}
+                            onItemClick={() => setIsMenuOpen(false)}
+                            className="justify-start space-x-6"
+                        />
+                    </div>
+                    <div className="flex items-center gap-4 ml-8 relative z-[60]">
+                        <SpotifyNowPlaying />
+                        <div className="flex items-center gap-2">
                             <ChatToggle />
                             <ThemeToggle />
                         </div>
                     </div>
+                </NavBody>
+            ) : (
+                <MobileNav className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+                    <MobileNavHeader className="flex items-center justify-between w-full px-4 py-4">
+                        <div className="flex items-center gap-2 relative z-[60]">
+                            <SpotifyNowPlaying />
+                            <div className="flex items-center gap-2">
+                                <ChatToggle />
+                                <ThemeToggle />
+                            </div>
+                        </div>
+                        <button
+                            onClick={() => setIsMenuOpen(!isMenuOpen)}
+                            className="p-2 rounded-md hover:bg-muted/50"
+                        >
+                            {isMenuOpen ? (
+                                <XIcon className="size-5" />
+                            ) : (
+                                <MenuIcon className="size-5" />
+                            )}
+                        </button>
+                    </MobileNavHeader>
 
-                    {/* Mobile Menu */}
-                    {isMobile && (
-                        <div className="relative">
-                            <Button 
-                                variant="ghost" 
-                                size="icon"
-                                onClick={() => setIsMenuOpen(!isMenuOpen)}
-                                className="h-9 w-9"
+                    <AnimatePresence>
+                        {isMenuOpen && (
+                            <motion.div
+                                initial={{ opacity: 0, y: -20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                exit={{ opacity: 0, y: -20 }}
+                                transition={{ duration: 0.2 }}
+                                className="fixed top-16 left-0 right-0 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-t"
                             >
-                                <Menu className="w-5 h-5" />
-                            </Button>
-                            {isMenuOpen && (
-                                <motion.div
-                                    initial={{ opacity: 0, y: -10 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    exit={{ opacity: 0, y: -10 }}
-                                    className="absolute right-0 top-full mt-2 w-48 bg-background border rounded-lg shadow-lg p-4"
-                                >
-                                    <div className="flex flex-col gap-2">
-                                        {navLinks.map((nav, id) => (
+                                <div className="flex flex-col gap-2 p-4">
+                                    {navLinks.map((nav, id) => (
+                                        <motion.div
+                                            key={id}
+                                            initial={{ opacity: 0, x: -10 }}
+                                            animate={{ opacity: 1, x: 0 }}
+                                            transition={{ delay: id * 0.1 }}
+                                        >
                                             <Link
-                                                key={id}
-                                                href={nav.href}
-                                                className={`text-lg ${pathname === nav.href ? "font-bold" : ""}`}
+                                                href={nav.link}
+                                                className={`block px-4 py-3 text-sm rounded-md transition-colors
+                                                    ${pathname === nav.link
+                                                        ? "bg-primary/10 text-primary font-medium"
+                                                        : "text-foreground/80 hover:bg-muted/50"
+                                                    }`}
                                                 onClick={() => setIsMenuOpen(false)}
                                             >
                                                 {nav.name}
                                             </Link>
-                                        ))}
-                                    </div>
-                                </motion.div>
-                            )}
-                        </div>
-                    )}
-                </div>
-            </nav>
-        </motion.header>
+                                        </motion.div>
+                                    ))}
+                                </div>
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
+                </MobileNav>
+            )}
+        </Navbar>
     );
 }

@@ -10,6 +10,8 @@ import { motion, useAnimation } from "framer-motion";
 import Skills from "@/components/skill/Skills";
 import ResumeButton from "@/components/resume-button/ResumeButton";
 import { useSpotifyData } from "@/hooks/useSpotifyData";
+import SpotifyWidget from "@/components/spotify/SpotifyWidget";
+import { FaSpotify } from "react-icons/fa";
 
 export default function HomeClient() {
   const [isFlipped, setIsFlipped] = useState(true);
@@ -49,12 +51,12 @@ export default function HomeClient() {
       className="flex flex-col gap-16 mt-8"
     >
       {/* Hero Section */}
-      <section className="sm:pb-0 sm:min-h-0 sm:pt-10 md:pt-6 flex flex-col justify-center md:justify-start items-center text-center md:text-left md:px-0 gap-10">
+      <section className=" mt-4 flex flex-col justify-center items-center text-center md:text-left">
         <motion.div
           initial={{ opacity: 0, y: -50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.5 }}
-          className="flex flex-col md:flex-row-reverse items-center md:items-start md:justify-between gap-6 md:gap-8 w-full max-w-4xl mx-auto"
+          className="flex flex-col md:flex-row items-center md:items-start gap-8 md:gap-12 w-full max-w-4xl mx-auto px-4"
         >
           <motion.div
             className="avatar-container relative"
@@ -66,7 +68,7 @@ export default function HomeClient() {
             onClick={() => setIsFlipped((prev) => !prev)}
           >
             <motion.div
-              className="relative w-36 h-36 md:w-40 md:h-40"
+              className="relative w-32 h-32 md:w-40 md:h-40"
               animate={{
                 rotateY: isFlipped ? 180 : 0,
               }}
@@ -88,8 +90,8 @@ export default function HomeClient() {
                 }}
               >
                 <Image
-                  className="rounded-full border-2 border-gray-300"
-                  src="/img/pfp.jpg"
+                  className="rounded-full border-2 border-gray-300 dark:border-gray-700"
+                  src="/img/pfp-avatar.jpg"
                   alt="Front Profile of Kartik"
                   width={175}
                   height={175}
@@ -106,8 +108,8 @@ export default function HomeClient() {
                 }}
               >
                 <Image
-                  className="rounded-full border-2 border-gray-300"
-                  src="/img/pfp-avatar.jpg"
+                  className="rounded-full border-2 border-gray-300 dark:border-gray-700"
+                  src="/img/pfp.jpg"
                   alt="Back Profile of Kartik"
                   width={175}
                   height={175}
@@ -117,41 +119,42 @@ export default function HomeClient() {
             </motion.div>
           </motion.div>
 
-          <div className="flex flex-col items-center md:items-start">
-            <motion.h1
+          <div className="flex flex-col items-center md:items-start gap-4">
+            <motion.div
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, delay: 0.8 }}
-              className="text-3xl md:text-4xl font-extrabold text-gradient mb-2"
+              className="flex flex-col gap-2"
             >
-              Hey, I&apos;m Kartik Mouli <span className="waving-hand">👋</span>
-            </motion.h1>
-            <motion.h2
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1, delay: 1 }}
-              className="text-lg md:text-xl mb-2 dark:text-gray-300"
-            >
-              Full-Stack Web Developer
-            </motion.h2>
+              <h1 className="text-3xl md:text-4xl font-bold text-gradient">
+                Hey, I&apos;m Kartik Mouli
+              </h1>
+              <div className="mt-1 gap-2">
+                <span className="text-sm px-2 py-1 rounded-full border border-gray-300 dark:border-gray-700 text-muted-foreground">
+                  Full-Stack Developer
+                </span>
+              </div>
+            </motion.div>
 
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 1, delay: 1.2 }}
-              className="flex gap-2 items-center justify-center align-center mb-3 font-light dark:text-gray-300"
+              transition={{ duration: 1, delay: 1 }}
+              className="flex items-center gap-2 text-muted-foreground"
             >
-              <MapPinHouseIcon width={16} height={16} />{" "}
-              <h3 className="text-md">Nashik, Maharashtra, 🇮🇳</h3>
+              <MapPinHouseIcon className="size-4" />
+              <span className="text-sm">Nashik, Maharashtra, 🇮🇳</span>
             </motion.div>
+
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1, delay: 1.4 }}
-              className="md:flex dark:text-gray-200 text-sm md:text-base leading-relaxed mb-5 md:mb-6"
+              transition={{ duration: 1, delay: 1.2 }}
+              className="flex flex-col md:flex-row items-center gap-2 text-sm text-muted-foreground"
             >
-              <span className="font-mono dark:text-white mr-1">IITP CSE&apos;24</span> |{" "}
-              <div className="flex items-center ml-1">
+              <span className="font-mono">IITP CSE&apos;24</span>
+              <span className="hidden md:block">|</span>
+              <div className="flex items-center">
                 <span>Full Stack Developer Intern</span>
                 <Link
                   href="https://unizoy.com"
@@ -163,11 +166,12 @@ export default function HomeClient() {
                 </Link>
               </div>
             </motion.div>
+
             <motion.div
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 1, delay: 1.6 }}
-              className="flex flex-wrap justify-center md:justify-start gap-10 md:gap-5 mt-5"
+              transition={{ duration: 1, delay: 1.4 }}
+              className="flex flex-wrap justify-center md:justify-start gap-4 mt-2"
             >
               <ResumeButton />
               <Socials />
@@ -237,22 +241,34 @@ export default function HomeClient() {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1 }}
-            className="flex flex-col items-center gap-4"
+            className="flex flex-col md:flex-row items-center md:items-start gap-8 md:gap-12 w-full max-w-5xl mx-auto px-4"
           >
-            <h2 className="text-2xl font-bold text-center">Join the Vibe</h2>
-            <p className="text-muted-foreground text-center max-w-md">
-              Play the same song as me and let&apos;s vibe together! <Music className="size-5 inline-block" />
-            </p>
-            <div className="w-full max-w-md">
-              <iframe
-                style={{ borderRadius: "12px" }}
-                src={`https://open.spotify.com/embed/track/${spotifyData.item.id}?utm_source=generator`}
-                width="100%"
-                height="152"
-                frameBorder="0"
-                allow="clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-                loading="lazy"
-              />
+            {/* Left side - Text */}
+            <div className="flex flex-col items-center md:items-start gap-4 w-full md:w-1/2">
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.5 }}
+                className="flex flex-col gap-3"
+              >
+                <div className="flex items-center gap-2">
+                  <FaSpotify className="text-[#1DB954] text-2xl" />
+                  <h2 className="text-2xl font-bold bg-gradient-to-r from-[#1DB954] to-[#1DB954]/80 bg-clip-text text-transparent">
+                    Join the Vibe
+                  </h2>
+                </div>
+                <p className="text-muted-foreground text-lg">
+                  Play the same song as me and let&apos;s vibe together! <Music className="size-5 inline-block ml-1" />
+                </p>
+                <p className="text-sm text-muted-foreground/80">
+                  Click the card to play this song on your device !
+                </p>
+              </motion.div>
+            </div>
+
+            {/* Right side - Spotify Widget */}
+            <div className="w-full md:w-1/2">
+              <SpotifyWidget />
             </div>
           </motion.div>
         </section>
