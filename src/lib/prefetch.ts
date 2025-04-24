@@ -32,6 +32,21 @@ async function prefetchSpotify(queryClient: QueryClient) {
     }
 }
 
+async function prefetchMovies(queryClient: QueryClient) {
+    try {
+        await queryClient.prefetchQuery({
+            queryKey: ['movies'],
+            queryFn: async () => {
+                const response = await axios.get('/api/movies');
+                console.log('Movies data prefetched:', response.data.length, 'movies');
+                return response.data;
+            },
+        });
+    } catch (error) {
+        console.error('Failed to prefetch movies data:', error);
+    }
+}
+
 export async function prefetchAll() {
     const queryClient = getQueryClient();
     
@@ -41,6 +56,8 @@ export async function prefetchAll() {
     // Then prefetch Spotify data
     await prefetchSpotify(queryClient);
     
+    // Finally prefetch movies data
+    await prefetchMovies(queryClient);
     
     return queryClient;
 } 
