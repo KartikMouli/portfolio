@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from "react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
@@ -32,10 +32,13 @@ export function MovieDialog({ movie, open, onOpenChange }: MovieDialogProps) {
                             animate={{ opacity: 1 }}
                             exit={{ opacity: 0 }}
                             transition={{ duration: 0.2 }}
-                            className="fixed inset-0 bg-black/80 backdrop-blur-sm z-40"
+                            className="fixed inset-0 bg-background/80 backdrop-blur-sm z-40"
                             onClick={() => onOpenChange(false)}
                         />
-                        <DialogContent className="max-w-[90vw] sm:max-w-[800px] bg-black/95 backdrop-blur-sm border-gray-800 p-0 mb-24 sm:mb-0 overflow-hidden z-50">
+                        <DialogContent className="max-w-[90vw] sm:max-w-[800px] bg-background/95 backdrop-blur-sm border-border p-0 mb-24 sm:mb-0 overflow-hidden z-50">
+                            <DialogDescription className="sr-only">
+                                Movie details for {movie.name}{movie.year ? ` (${movie.year})` : ''}
+                            </DialogDescription>
                             <motion.div 
                                 initial={{ opacity: 0, y: 20 }}
                                 animate={{ opacity: 1, y: 0 }}
@@ -63,13 +66,13 @@ export function MovieDialog({ movie, open, onOpenChange }: MovieDialogProps) {
                                             initial={{ opacity: 0 }}
                                             animate={{ opacity: 1 }}
                                             transition={{ duration: 0.5 }}
-                                            className="w-full h-full bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 flex items-center justify-center"
+                                            className="w-full h-full bg-muted flex items-center justify-center"
                                         >
                                             <motion.div 
                                                 initial={{ scale: 0.8 }}
                                                 animate={{ scale: 1 }}
                                                 transition={{ duration: 0.5, delay: 0.2 }}
-                                                className="text-white text-2xl sm:text-6xl font-bold"
+                                                className="text-foreground text-2xl sm:text-6xl font-bold"
                                             >
                                                 {movie.name.charAt(0).toUpperCase()}
                                             </motion.div>
@@ -80,10 +83,10 @@ export function MovieDialog({ movie, open, onOpenChange }: MovieDialogProps) {
                                     initial={{ opacity: 0, x: 20 }}
                                     animate={{ opacity: 1, x: 0 }}
                                     transition={{ duration: 0.3, delay: 0.2 }}
-                                    className="p-3 sm:p-6 flex-1 space-y-2 sm:space-y-4 text-gray-300"
+                                    className="p-3 sm:p-6 flex-1 space-y-2 sm:space-y-4 text-foreground"
                                 >
                                     <DialogHeader className="p-0">
-                                        <DialogTitle className="text-base sm:text-2xl font-bold text-white">
+                                        <DialogTitle className="text-base sm:text-2xl font-bold">
                                             {movie.name}
                                             {movie.year && (
                                                 <motion.span 
@@ -135,8 +138,8 @@ export function MovieDialog({ movie, open, onOpenChange }: MovieDialogProps) {
                                     >
                                         {movie.letterboxd_uri && (
                                             <Button
+                                                className="hover:cursor-pointer"
                                                 variant="outline"
-                                                className="text-white border-gray-700 hover:bg-gray-800 flex-1 sm:flex-none text-xs h-7 sm:h-10 sm:text-sm transition-all duration-300 hover:scale-105"
                                                 onClick={() => movie.letterboxd_uri && window.open(movie.letterboxd_uri, '_blank')}
                                             >
                                                 View on Letterboxd
@@ -144,8 +147,8 @@ export function MovieDialog({ movie, open, onOpenChange }: MovieDialogProps) {
                                         )}
                                         {movie.tmdb_id && (
                                             <Button
+                                                className="hover:cursor-pointer"
                                                 variant="outline"
-                                                className="text-white border-gray-700 hover:bg-gray-800 flex-1 sm:flex-none text-xs h-7 sm:h-10 sm:text-sm transition-all duration-300 hover:scale-105"
                                                 onClick={() => window.open(`https://www.themoviedb.org/movie/${movie.tmdb_id}`, '_blank')}
                                             >
                                                 View on TMDB

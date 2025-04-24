@@ -277,13 +277,13 @@ export default function MoviesList() {
                                                     whileHover={{ 
                                                         scale: 1.02,
                                                         y: -2,
-                                                        boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.3)"
+                                                        boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.1)"
                                                     }}
                                                     transition={{ 
                                                         duration: 0.2,
                                                         ease: "easeOut"
                                                     }}
-                                                    className="h-[207px] sm:h-[231px] rounded-lg overflow-hidden cursor-pointer bg-gray-900/50 border border-transparent hover:border-gray-600/50 transition-colors duration-300"
+                                                    className="h-[207px] sm:h-[231px] rounded-lg overflow-hidden cursor-pointer bg-muted border border-border hover:border-foreground/20 transition-colors duration-300"
                                                     onClick={() => setSelectedMovie(movie)}
                                                 >
                                                     {movie.poster_path ? (
@@ -300,13 +300,13 @@ export default function MoviesList() {
                                                         <motion.div 
                                                             whileHover={{ scale: 1.02 }}
                                                             transition={{ duration: 0.2 }}
-                                                            className="w-full h-full bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 flex items-center justify-center group"
+                                                            className="w-full h-full bg-muted flex items-center justify-center group"
                                                         >
                                                             <motion.div 
                                                                 initial={{ scale: 0.8 }}
                                                                 animate={{ scale: 1 }}
                                                                 transition={{ duration: 0.5 }}
-                                                                className="text-white text-2xl font-bold group-hover:scale-105 transition-transform"
+                                                                className="text-foreground text-2xl font-bold group-hover:scale-105 transition-transform"
                                                             >
                                                                 {movie.name.charAt(0).toUpperCase()}
                                                             </motion.div>
@@ -314,7 +314,7 @@ export default function MoviesList() {
                                                     )}
                                                 </motion.div>
                                             </TooltipTrigger>
-                                            <TooltipContent className='bg-black text-white border'>
+                                            <TooltipContent>
                                                 <p>{movie.name}</p>
                                                 {movie.year && <p className="text-sm text-muted-foreground">{movie.year}</p>}
                                             </TooltipContent>
