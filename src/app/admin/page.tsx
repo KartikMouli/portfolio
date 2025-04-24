@@ -10,6 +10,7 @@ import { Label } from "@/components/ui/label";
 import { Loader2 } from "lucide-react";
 import { useSearchParams } from 'next/navigation';
 import { toast } from '@/hooks/use-toast';
+import MoviesAdmin from '@/components/MoviesAdmin';
 
 function AdminContent() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -190,6 +191,11 @@ function AdminContent() {
                     </Button>
                   </>
                 )}
+              </div>
+
+              <div className="space-y-2">
+                <h2 className="text-xl font-semibold">Movies Management</h2>
+                <MoviesAdmin />
               </div>
             </div>
           </CardContent>
