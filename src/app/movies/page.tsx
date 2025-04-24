@@ -256,9 +256,9 @@ export default function MoviesList() {
                         variants={container}
                         initial="hidden"
                         animate="show"
-                        className="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap sm:gap-4 sm:justify-center"
+                        className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-4 justify-items-center w-full"
                     >
-                        <AnimatePresence mode="wait">
+                        <AnimatePresence mode="popLayout">
                             {paginatedMovies.map((movie: Movie) => (
                                 <motion.div
                                     key={movie.tmdb_id || movie.name}
@@ -267,6 +267,8 @@ export default function MoviesList() {
                                     animate="show"
                                     exit={{ opacity: 0, scale: 0.9 }}
                                     transition={{ duration: 0.2 }}
+                                    layout
+                                    className="w-[140px] sm:w-[156px] flex-shrink-0"
                                 >
                                     <TooltipProvider>
                                         <Tooltip>
@@ -281,7 +283,7 @@ export default function MoviesList() {
                                                         duration: 0.2,
                                                         ease: "easeOut"
                                                     }}
-                                                    className="w-[140px] h-[207px] sm:w-[156px] sm:h-[231px] rounded-lg overflow-hidden cursor-pointer bg-gray-900/50 border border-transparent hover:border-gray-600/50 transition-colors duration-300"
+                                                    className="h-[207px] sm:h-[231px] rounded-lg overflow-hidden cursor-pointer bg-gray-900/50 border border-transparent hover:border-gray-600/50 transition-colors duration-300"
                                                     onClick={() => setSelectedMovie(movie)}
                                                 >
                                                     {movie.poster_path ? (
