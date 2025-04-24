@@ -74,8 +74,10 @@ export default function SpotifyNowPlaying() {
               <Avatar className="w-12 h-12 ring-2 ring-[#1DB954]/20 dark:ring-[#1DB954]/30">
                 {spotifyData.item.album.images[0] ? (
                   <AvatarImage
-                    src={spotifyData.item.album.images[0].url}
+                    src={spotifyData.item.album.images[0]?.url}
                     alt={spotifyData.item.album.name}
+                    width={48}
+                    height={48}
                     className="object-cover"
                   />
                 ) : (

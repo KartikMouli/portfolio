@@ -17,7 +17,12 @@ export default function ChatToggle() {
     <TooltipProvider>
       <Tooltip >
         <TooltipTrigger asChild>
-          <Button size="icon" variant="link" onClick={toggleChatbot} className="hover:cursor-pointer">
+          <Button 
+            size="icon" 
+            variant="link" 
+            onClick={toggleChatbot} 
+            className="hover:cursor-pointer relative z-[60]"
+          >
             {isVisible ? <Bot className="size-5" /> : <BotOff className="size-5" />}
             <span className="sr-only">Chat Toggle</span>
           </Button>

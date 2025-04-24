@@ -16,6 +16,7 @@ export function ChatProvider({ children }: Props) {
     const [isVisible, setIsVisible] = useState(true);
 
     const toggleChatbot = () => {
+        console.log('Toggling chatbot, current state:', isVisible);
         setIsVisible(!isVisible);
     };
 

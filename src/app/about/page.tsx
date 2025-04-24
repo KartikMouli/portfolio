@@ -72,38 +72,38 @@ function About() {
                             className="flex gap-4"
                             variants={fadeInUp}
                         >
-                            <a 
+                            <Link
                                 href="https://facebook.com/kartikmouli" 
                                 target="_blank" 
                                 rel="noopener noreferrer"
                                 className="text-muted-foreground hover:text-foreground transition-colors"
                             >
                                 <FaFacebook className="w-5 h-5" />
-                            </a>
-                            <a 
+                            </Link>
+                            <Link
                                 href="https://instagram.com/kartikmouli" 
                                 target="_blank" 
                                 rel="noopener noreferrer"
                                 className="text-muted-foreground hover:text-foreground transition-colors"
                             >
                                 <FaInstagram className="w-5 h-5" />
-                            </a>
-                            <a 
+                            </Link>
+                            <Link
                                 href="https://snapchat.com/add/kartikmouli" 
                                 target="_blank" 
                                 rel="noopener noreferrer"
                                 className="text-muted-foreground hover:text-foreground transition-colors"
                             >
                                 <FaSnapchat className="w-5 h-5" />
-                            </a>
-                            <a 
+                            </Link>
+                            <Link
                                 href="https://threads.net/@kartikmouli" 
                                 target="_blank" 
                                 rel="noopener noreferrer"
                                 className="text-muted-foreground hover:text-foreground transition-colors"
                             >
                                 <FaThreads className="w-5 h-5" />
-                            </a>
+                            </Link>
                         </motion.div>
                     </motion.div>
 
@@ -116,7 +116,7 @@ function About() {
                                 <div className="grid grid-cols-2 gap-4">
                                     <div className="p-4 bg-muted/50 rounded-lg">
                                         <p className="text-sm text-muted-foreground">Years Experience</p>
-                                        <p className="text-2xl font-semibold">0+</p>
+                                        <p className="text-2xl font-semibold">fresher</p>
                                     </div>
                                     <div className="p-4 bg-muted/50 rounded-lg">
                                         <p className="text-sm text-muted-foreground">Projects</p>
