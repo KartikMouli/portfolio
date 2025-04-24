@@ -4,6 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import Image from 'next/image';
 import { useState, useMemo } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
   Tooltip,
   TooltipContent,
@@ -23,6 +24,7 @@ import {
   PaginationPrevious,
   PaginationEllipsis,
 } from "@/components/ui/pagination";
+import { MovieDialog } from "@/components/MovieDialog";
 
 interface Movie {
     date: string | null;
@@ -43,9 +45,25 @@ const fetchMovies = async (): Promise<Movie[]> => {
     return response.data;
 };
 
+const container = {
+    hidden: { opacity: 0 },
+    show: {
+        opacity: 1,
+        transition: {
+            staggerChildren: 0.1
+        }
+    }
+};
+
+const item = {
+    hidden: { opacity: 0, y: 20 },
+    show: { opacity: 1, y: 0 }
+};
+
 export default function MoviesList() {
     const [searchQuery, setSearchQuery] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
+    const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
 
     const { data: movies = [], isLoading, isError, error, isFetching } = useQuery<Movie[], Error>({
         queryKey: ['movies'],
@@ -189,7 +207,12 @@ export default function MoviesList() {
 
     return (
         <div className="container mx-auto px-2 sm:px-4 py-8">
-            <div className="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4">
+            <motion.div 
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+                className="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4"
+            >
                 <div className="flex items-center gap-2">
                     <h2 className="text-2xl font-bold">Movies I've Watched</h2>
                     {isFetching && (
@@ -208,10 +231,15 @@ export default function MoviesList() {
                         className="w-full"
                     />
                 </div>
-            </div>
+            </motion.div>
 
             {filteredMovies.length === 0 ? (
-                <div className="flex flex-col items-center justify-center py-12 text-center">
+                <motion.div 
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.5 }}
+                    className="flex flex-col items-center justify-center py-12 text-center"
+                >
                     <Search className="h-12 w-12 text-muted-foreground mb-4" />
                     <h3 className="text-xl font-semibold mb-2">No movies found</h3>
                     <p className="text-muted-foreground">
@@ -221,61 +249,113 @@ export default function MoviesList() {
                             "No movies available"
                         )}
                     </p>
-                </div>
+                </motion.div>
             ) : (
                 <>
-                    <div className="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap sm:gap-4 sm:justify-center">
-                        {paginatedMovies.map((movie: Movie) => (
-                            <TooltipProvider key={movie.tmdb_id || movie.name}>
-                                <Tooltip>
-                                    <TooltipTrigger asChild>
-                                        <div className="w-[140px] h-[207px] sm:w-[156px] sm:h-[231px] rounded-lg overflow-hidden cursor-pointer hover:opacity-90 transition-opacity">
-                                            {movie.poster_path ? (
-                                                <Image
-                                                    src={movie.poster_path}
-                                                    alt={movie.name}
-                                                    width={156}
-                                                    height={231}
-                                                    className="object-cover w-full h-full"
-                                                    loading="lazy"
-                                                    quality={75}
-                                                />
-                                            ) : (
-                                                <div className="w-full h-full bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 flex items-center justify-center group">
-                                                    <div className="text-white text-2xl font-bold group-hover:scale-110 transition-transform">
-                                                        {movie.name.charAt(0).toUpperCase()}
-                                                    </div>
-                                                </div>
-                                            )}
-                                        </div>
-                                    </TooltipTrigger>
-                                    <TooltipContent className='bg-black text-white border'>
-                                        <p>{movie.name}</p>
-                                        {movie.year && <p className="text-sm text-muted-foreground">{movie.year}</p>}
-                                    </TooltipContent>
-                                </Tooltip>
-                            </TooltipProvider>
-                        ))}
-                    </div>
+                    <motion.div 
+                        variants={container}
+                        initial="hidden"
+                        animate="show"
+                        className="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap sm:gap-4 sm:justify-center"
+                    >
+                        <AnimatePresence mode="wait">
+                            {paginatedMovies.map((movie: Movie) => (
+                                <motion.div
+                                    key={movie.tmdb_id || movie.name}
+                                    variants={item}
+                                    initial="hidden"
+                                    animate="show"
+                                    exit={{ opacity: 0, scale: 0.9 }}
+                                    transition={{ duration: 0.2 }}
+                                >
+                                    <TooltipProvider>
+                                        <Tooltip>
+                                            <TooltipTrigger asChild>
+                                                <motion.div 
+                                                    whileHover={{ 
+                                                        scale: 1.02,
+                                                        y: -2,
+                                                        boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.3)"
+                                                    }}
+                                                    transition={{ 
+                                                        duration: 0.2,
+                                                        ease: "easeOut"
+                                                    }}
+                                                    className="w-[140px] h-[207px] sm:w-[156px] sm:h-[231px] rounded-lg overflow-hidden cursor-pointer bg-gray-900/50 border border-transparent hover:border-gray-600/50 transition-colors duration-300"
+                                                    onClick={() => setSelectedMovie(movie)}
+                                                >
+                                                    {movie.poster_path ? (
+                                                        <Image
+                                                            src={movie.poster_path}
+                                                            alt={movie.name}
+                                                            width={156}
+                                                            height={231}
+                                                            className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-105"
+                                                            loading="lazy"
+                                                            quality={75}
+                                                        />
+                                                    ) : (
+                                                        <motion.div 
+                                                            whileHover={{ scale: 1.02 }}
+                                                            transition={{ duration: 0.2 }}
+                                                            className="w-full h-full bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 flex items-center justify-center group"
+                                                        >
+                                                            <motion.div 
+                                                                initial={{ scale: 0.8 }}
+                                                                animate={{ scale: 1 }}
+                                                                transition={{ duration: 0.5 }}
+                                                                className="text-white text-2xl font-bold group-hover:scale-105 transition-transform"
+                                                            >
+                                                                {movie.name.charAt(0).toUpperCase()}
+                                                            </motion.div>
+                                                        </motion.div>
+                                                    )}
+                                                </motion.div>
+                                            </TooltipTrigger>
+                                            <TooltipContent className='bg-black text-white border'>
+                                                <p>{movie.name}</p>
+                                                {movie.year && <p className="text-sm text-muted-foreground">{movie.year}</p>}
+                                            </TooltipContent>
+                                        </Tooltip>
+                                    </TooltipProvider>
+                                </motion.div>
+                            ))}
+                        </AnimatePresence>
+                    </motion.div>
 
                     {totalPages > 1 && (
-                        <Pagination className="mt-8">
-                            <PaginationContent>
-                                <PaginationItem>
-                                    <PaginationPrevious
-                                        onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
-                                        className={currentPage === 1 ? "pointer-events-none opacity-50" : ""}
-                                    />
-                                </PaginationItem>
-                                {renderPaginationItems()}
-                                <PaginationItem>
-                                    <PaginationNext
-                                        onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
-                                        className={currentPage === totalPages ? "pointer-events-none opacity-50" : ""}
-                                    />
-                                </PaginationItem>
-                            </PaginationContent>
-                        </Pagination>
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.3 }}
+                            className="mt-8"
+                        >
+                            <Pagination>
+                                <PaginationContent>
+                                    <PaginationItem>
+                                        <PaginationPrevious
+                                            onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+                                            className={currentPage === 1 ? "pointer-events-none opacity-50" : ""}
+                                        />
+                                    </PaginationItem>
+                                    {renderPaginationItems()}
+                                    <PaginationItem>
+                                        <PaginationNext
+                                            onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
+                                            className={currentPage === totalPages ? "pointer-events-none opacity-50" : ""}
+                                        />
+                                    </PaginationItem>
+                                </PaginationContent>
+                            </Pagination>
+                        </motion.div>
+                    )}
+
+                    {selectedMovie && (
+                        <MovieDialog
+                            movie={selectedMovie}
+                            open={!!selectedMovie}
+                            onOpenChange={(open) => !open && setSelectedMovie(null)}
+                        />
                     )}
                 </>
             )}
