@@ -1,6 +1,19 @@
 import { NextResponse } from 'next/server';
 import axios from 'axios';
 
+interface Video {
+    iso_639_1: string;
+    iso_3166_1: string;
+    name: string;
+    key: string;
+    site: string;
+    size: number;
+    type: string;
+    official: boolean;
+    published_at: string;
+    id: string;
+}
+
 export async function GET(request: Request, props: { params: Promise<{ id: string }> }) {
     const params = await props.params;
     try {
@@ -21,7 +34,7 @@ export async function GET(request: Request, props: { params: Promise<{ id: strin
         });
 
         // Filter for YouTube trailers and teasers
-        const videos = response.data.results.filter((video: any) =>
+        const videos = response.data.results.filter((video: Video) =>
             video.site === 'YouTube' &&
             (video.type === 'Trailer' || video.type === 'Teaser')
         );
