@@ -11,6 +11,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import Timeline from '@/components/about/Timeline';
 
+
 function About() {
     const fadeInUp = {
         hidden: { opacity: 0, y: 20 },
@@ -38,7 +39,7 @@ function About() {
     return (
         <div className="max-w-4xl mx-auto px-4 ">
             {/* Hero Section */}
-            <motion.section 
+            <motion.section
                 className="mb-20"
                 initial="hidden"
                 whileInView="visible"
@@ -49,56 +50,56 @@ function About() {
                     <Badge variant="outline" className="mb-4">About Me</Badge>
                     <h1 className="text-4xl font-bold mb-6">Kartik</h1>
                 </motion.div>
-                
-                <motion.div 
+
+                <motion.div
                     className="grid md:grid-cols-2 gap-8"
                     variants={staggerChildren}
                 >
                     <motion.div variants={fadeInUp}>
                         <p className="text-lg text-muted-foreground mb-4">
-                            Hey! I&apos;m a proud <span className="font-medium">IIT Patna CSE &apos;24</span> graduate. 
+                            Hey! I&apos;m a proud <span className="font-medium">IIT Patna CSE &apos;24</span> graduate.
                             I focus on full-stack development, Web3, and competitive programming.
                         </p>
                         <p className="text-lg text-muted-foreground mb-4">
-                            Outside of coding, you&apos;ll find me on the football field or shooting hoops. 
-                            I&apos;m also a huge movie enthusiast—whether it&apos;s action-packed blockbusters or 
+                            Outside of coding, you&apos;ll find me on the football field or shooting hoops.
+                            I&apos;m also a huge movie enthusiast—whether it&apos;s action-packed blockbusters or
                             thought-provoking dramas.
                         </p>
                         <p className="text-lg text-muted-foreground mb-6">
-                            Originally from <span className="font-medium">Nashik</span>, I&apos;m always excited 
+                            Originally from <span className="font-medium">Nashik</span>, I&apos;m always excited
                             about creating new tech and exploring the world of open-source.
                         </p>
-                        <motion.div 
+                        <motion.div
                             className="flex gap-4"
                             variants={fadeInUp}
                         >
                             <Link
-                                href="https://facebook.com/kartikmouli" 
-                                target="_blank" 
+                                href="https://facebook.com/kartikmouli"
+                                target="_blank"
                                 rel="noopener noreferrer"
                                 className="text-muted-foreground hover:text-foreground transition-colors"
                             >
                                 <FaFacebook className="w-5 h-5" />
                             </Link>
                             <Link
-                                href="https://instagram.com/kartikmouli" 
-                                target="_blank" 
+                                href="https://instagram.com/kartikmouli"
+                                target="_blank"
                                 rel="noopener noreferrer"
                                 className="text-muted-foreground hover:text-foreground transition-colors"
                             >
                                 <FaInstagram className="w-5 h-5" />
                             </Link>
                             <Link
-                                href="https://snapchat.com/add/kartikmouli" 
-                                target="_blank" 
+                                href="https://snapchat.com/add/kartikmouli"
+                                target="_blank"
                                 rel="noopener noreferrer"
                                 className="text-muted-foreground hover:text-foreground transition-colors"
                             >
                                 <FaSnapchat className="w-5 h-5" />
                             </Link>
                             <Link
-                                href="https://threads.net/@kartikmouli" 
-                                target="_blank" 
+                                href="https://threads.net/@kartikmouli"
+                                target="_blank"
                                 rel="noopener noreferrer"
                                 className="text-muted-foreground hover:text-foreground transition-colors"
                             >
@@ -138,7 +139,7 @@ function About() {
             </motion.section>
 
             {/* Skills Section */}
-            <motion.section 
+            <motion.section
                 className="mb-20"
                 initial="hidden"
                 whileInView="visible"
@@ -149,7 +150,7 @@ function About() {
                     <Badge variant="outline" className="mb-4">Skills & Expertise</Badge>
                     <h2 className="text-3xl font-bold mb-6">What I Do</h2>
                     <p className="text-lg text-muted-foreground mb-8">
-                        Want to know more about the tools and technologies I work with? 
+                        Want to know more about the tools and technologies I work with?
                         Click below to dive into my skillset.
                     </p>
                     <Link href="/skills">
@@ -161,8 +162,33 @@ function About() {
                 </motion.div>
             </motion.section>
 
+            {/* Movies Section */}
+            <motion.section
+                className="mb-20"
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                variants={staggerChildren}
+            >
+                <motion.div variants={fadeInUp}>
+                    <Badge variant="outline" className="mb-4">Movies</Badge>
+                    <h2 className="text-3xl font-bold mb-6">Movies I&apos;ve Watched</h2>
+                    <p className="text-lg text-muted-foreground mb-8">
+                        Want to know more about the movies I&apos;ve watched?
+                        Click below to dive into my movie list.
+                    </p>
+                    <Link href="/movies">
+                        <Button variant="outline" className="hover:cursor-pointer group">
+                            Explore Movies
+                            <ArrowRightIcon className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                        </Button>
+                    </Link>
+                </motion.div>
+            </motion.section>
+
+
             {/* Education Section */}
-            <motion.section 
+            <motion.section
                 className="mb-20"
                 initial="hidden"
                 whileInView="visible"
@@ -177,7 +203,7 @@ function About() {
             </motion.section>
 
             {/* Stats Section */}
-            <motion.section 
+            <motion.section
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true }}

@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { db } from '@/lib/db';
 import { sql } from 'drizzle-orm';
 import { parse } from 'csv-parse/sync';
+import { searchMovie } from '@/lib/tmdb';
 
 async function ensureMoviesTable() {
   try {
@@ -11,7 +12,11 @@ async function ensureMoviesTable() {
         date DATE,
         name VARCHAR(255),
         year INTEGER,
-        letterboxd_uri VARCHAR(255)
+        letterboxd_uri VARCHAR(255),
+        tmdb_id INTEGER,
+        poster_path VARCHAR(255),
+        release_date DATE,
+        overview TEXT
       );
     `);
   } catch (error) {
@@ -32,16 +37,44 @@ function convertDateToPostgresFormat(dateStr: string): string | null {
   }
 }
 
+interface Movie {
+  date: string | null;
+  name: string;
+  year: number | null;
+  letterboxd_uri: string | null;
+  tmdb_id: number | null;
+  poster_path: string | null;
+  release_date: string | null;
+  overview: string | null;
+}
+
 export async function GET() {
   try {
     await ensureMoviesTable();
 
     const result = await db.execute(sql`
-      SELECT * FROM movies
+      SELECT 
+        date,
+        name,
+        year,
+        letterboxd_uri,
+        tmdb_id,
+        poster_path,
+        release_date,
+        overview
+      FROM movies
       ORDER BY date DESC
     `);
 
-    return NextResponse.json(result.rows);
+    // Format the dates and handle null values
+    const movies = result.rows.map(movie => ({
+      ...movie,
+      date: movie.date ? new Date(String(movie.date)).toISOString().split('T')[0] : null,
+      release_date: movie.release_date ? new Date(String(movie.release_date)).toISOString().split('T')[0] : null,
+      poster_path: movie.poster_path ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` : null
+    })) as Movie[];
+
+    return NextResponse.json(movies);
   } catch (error) {
     console.error('Error fetching movies:', error);
     return NextResponse.json(
@@ -55,6 +88,8 @@ export async function POST(request: Request) {
   let totalRecords = 0;
   let successfulRecords = 0;
   let failedRecords = 0;
+  let skippedRecords = 0;
+  let tmdbNotFoundRecords = 0;
   const failedDetails: string[] = [];
 
   try {
@@ -68,49 +103,84 @@ export async function POST(request: Request) {
       );
     }
 
-    // Ensure the table exists before processing the file
     await ensureMoviesTable();
 
     const text = await file.text();
-    
-    // Parse CSV with proper handling of quoted fields
     const records = parse(text, {
-      columns: true, // Use first line as headers
+      columns: true,
       skip_empty_lines: true,
       trim: true,
     });
 
     totalRecords = records.length;
 
-    // First, clear the existing table
     await db.execute(sql`
       TRUNCATE TABLE movies
     `);
 
-    // Insert new data using parameterized queries
     for (const record of records) {
       try {
-        // Get values with correct case
-        const date = record.Date || record.date;
-        const name = record.Name || record.name;
-        const year = record.Year || record.year;
-        const letterboxd_uri = record['Letterboxd URI'] || record.letterboxd_uri;
+        const date = record.Date;
+        const name = record.Name;
+        const year = record.Year;
+        const letterboxd_uri = record['Letterboxd URI'];
 
-        // Clean and validate data with defaults
-        const cleanName = name ? String(name).replace(/'/g, "''") : 'Unknown Movie';
+        // Skip empty records
+        if (!name && !date && !year && !letterboxd_uri) {
+          skippedRecords++;
+          continue;
+        }
+
+        if (!name) {
+          throw new Error('Movie name is required');
+        }
+
+        const cleanName = String(name).replace(/'/g, "''");
         const cleanUri = letterboxd_uri ? String(letterboxd_uri).replace(/'/g, "''") : '';
-        const cleanYear = year ? parseInt(String(year)) : 0;
+        const cleanYear = year ? parseInt(String(year)) : undefined;
         const postgresDate = convertDateToPostgresFormat(date);
 
-        await db.execute(sql`
-          INSERT INTO movies (date, name, year, letterboxd_uri)
-          VALUES (
-            ${postgresDate ? sql`${postgresDate}::date` : sql`NULL`},
-            ${cleanName},
-            ${cleanYear},
-            ${cleanUri}
-          )
-        `);
+        // Search for movie in TMDB
+        const tmdbData = await searchMovie(cleanName, cleanYear);
+        
+        if (tmdbData && tmdbData.id && tmdbData.title) {
+          // Add movie with TMDB data
+          await db.execute(sql`
+            INSERT INTO movies (
+              date, name, year, letterboxd_uri,
+              tmdb_id, poster_path, release_date, overview
+            )
+            VALUES (
+              ${postgresDate ? sql`${postgresDate}::date` : sql`NULL`},
+              ${cleanName},
+              ${cleanYear || sql`NULL`},
+              ${cleanUri},
+              ${tmdbData.id},
+              ${tmdbData.poster_path || sql`NULL`},
+              ${tmdbData.release_date || sql`NULL`},
+              ${tmdbData.overview || sql`NULL`}
+            )
+          `);
+        } else {
+          // Add movie without TMDB data
+          await db.execute(sql`
+            INSERT INTO movies (
+              date, name, year, letterboxd_uri,
+              tmdb_id, poster_path, release_date, overview
+            )
+            VALUES (
+              ${postgresDate ? sql`${postgresDate}::date` : sql`NULL`},
+              ${cleanName},
+              ${cleanYear || sql`NULL`},
+              ${cleanUri},
+              NULL,
+              NULL,
+              NULL,
+              NULL
+            )
+          `);
+          tmdbNotFoundRecords++;
+        }
         successfulRecords++;
       } catch (error) {
         failedRecords++;
@@ -124,6 +194,8 @@ export async function POST(request: Request) {
         totalRecords,
         successfulRecords,
         failedRecords,
+        skippedRecords,
+        tmdbNotFoundRecords,
         failedDetails
       }
     }, { status: 200 });
@@ -135,6 +207,8 @@ export async function POST(request: Request) {
         totalRecords,
         successfulRecords,
         failedRecords,
+        skippedRecords,
+        tmdbNotFoundRecords,
         failedDetails
       }
     }, { status: 500 });
