@@ -6,6 +6,7 @@ import { cn } from '@/lib/utils';
 import { FaSpotify } from 'react-icons/fa';
 import Image from 'next/image';
 
+
 export default function SpotifyWidget() {
   const { data: spotifyData } = useSpotifyData();
 
@@ -30,7 +31,7 @@ export default function SpotifyWidget() {
     >
       {/* Glow effect */}
       <div className="absolute inset-0 bg-gradient-to-r from-[#1DB954]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-      
+
       {/* Content */}
       <div className="relative z-10 flex flex-col gap-4">
         {/* Header */}
@@ -44,20 +45,30 @@ export default function SpotifyWidget() {
           <motion.div
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="relative w-16 h-16 rounded-lg overflow-hidden"
+            className="relative w-16 h-16 rounded-lg overflow-hidden bg-muted"
           >
-            <Image
-              src={spotifyData.item.album.images[0]?.url}
-              alt={spotifyData.item.album.name}
-              width={64}
-              height={64}
-              className="w-full h-full object-cover"
-            />
+            {spotifyData.item.album.images[0]?.url ? (
+              <Image
+                src={spotifyData.item.album.images[0].url}
+                alt={spotifyData.item.album.name}
+                width={100}
+                height={100}
+                className="w-full h-full object-cover"
+                onError={(e) => {
+                  const target = e.target as HTMLImageElement;
+                  target.style.display = 'none';
+                }}
+              />
+            ) : (
+              <div className="w-full h-full flex items-center justify-center">
+                <FaSpotify className="text-[#1DB954] text-2xl" />
+              </div>
+            )}
             <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
           </motion.div>
 
           <div className="flex-1 min-w-0">
-            <motion.h3 
+            <motion.h3
               className="font-semibold truncate text-foreground"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -65,7 +76,7 @@ export default function SpotifyWidget() {
             >
               {spotifyData.item.name}
             </motion.h3>
-            <motion.p 
+            <motion.p
               className="text-sm text-muted-foreground truncate"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -82,8 +93,8 @@ export default function SpotifyWidget() {
             <motion.div
               className="h-full bg-[#1DB954] rounded-full"
               initial={{ width: 0 }}
-              animate={{ 
-                width: `${((spotifyData.progress_ms || 0) / spotifyData.item.duration_ms) * 100}%` 
+              animate={{
+                width: `${((spotifyData.progress_ms || 0) / spotifyData.item.duration_ms) * 100}%`
               }}
               transition={{ duration: 1, ease: "linear" }}
             />
