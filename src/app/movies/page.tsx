@@ -39,21 +39,21 @@ export default function MoviesList() {
     }
 
     return (
-        <div className="container mx-auto px-4 py-8">
+        <div className="container mx-auto px-2 sm:px-4 py-8">
             <h2 className="text-2xl font-bold mb-6">Movies I've Watched</h2>
-            <div className="flex flex-wrap gap-4 justify-center">
+            <div className="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap sm:gap-4 sm:justify-center">
                 {movies?.map((movie) => (
                     <TooltipProvider key={movie.tmdb_id || movie.name}>
                         <Tooltip>
                             <TooltipTrigger asChild>
-                                <div className="w-[156px] h-[231px] rounded-lg overflow-hidden cursor-pointer hover:opacity-90 transition-opacity">
+                                <div className="w-[140px] h-[207px] sm:w-[156px] sm:h-[231px] rounded-lg overflow-hidden cursor-pointer hover:opacity-90 transition-opacity">
                                     {movie.poster_path ? (
                                         <Image
                                             src={movie.poster_path}
                                             alt={movie.name}
                                             width={156}
                                             height={231}
-                                            className="object-cover"
+                                            className="object-cover w-full h-full"
                                         />
                                     ) : (
                                         <div className="w-full h-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
