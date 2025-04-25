@@ -13,7 +13,7 @@ import {
     NavItems,
     MobileNav,
     MobileNavHeader,
-} from "../resizable-navbar.tsx/resizable-navbar";
+} from "../resizable-navbar/resizable-navbar";
 import { MenuIcon, XIcon } from "lucide-react";
 
 const navLinks = [

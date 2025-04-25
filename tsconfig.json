@@ -33,7 +33,7 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts"
-  ],
+, "src/components/resizable-navbar"  ],
   "exclude": [
     "node_modules"
   ]
