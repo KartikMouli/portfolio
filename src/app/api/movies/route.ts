@@ -9,6 +9,7 @@ async function ensureMoviesTable() {
     // Check if table exists
     await db.execute(sql`
       CREATE TABLE IF NOT EXISTS movies (
+        id SERIAL PRIMARY KEY,
         date DATE,
         name VARCHAR(255),
         year INTEGER,
@@ -143,7 +144,7 @@ export async function POST(request: Request) {
         // Search for movie in TMDB
         const tmdbData = await searchMovie(cleanName, cleanYear);
         
-        if (tmdbData && tmdbData.id && tmdbData.title) {
+        if (tmdbData && tmdbData.id && (tmdbData.title || tmdbData.name)) {
           // Add movie with TMDB data
           await db.execute(sql`
             INSERT INTO movies (
@@ -157,7 +158,7 @@ export async function POST(request: Request) {
               ${cleanUri},
               ${tmdbData.id},
               ${tmdbData.poster_path || sql`NULL`},
-              ${tmdbData.release_date || sql`NULL`},
+              ${tmdbData.release_date || tmdbData.first_air_date || sql`NULL`},
               ${tmdbData.overview || sql`NULL`}
             )
           `);
