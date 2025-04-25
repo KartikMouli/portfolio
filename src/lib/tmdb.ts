@@ -26,37 +26,67 @@ interface TMDBResult {
 
 export async function searchMovie(title: string, year?: number): Promise<TMDBResult | null> {
   try {
-    const response = await axios.get(`${TMDB_BASE_URL}/search/multi`, {
-      params: {
-        api_key: TMDB_API_KEY,
-        query: title,
-        include_adult: true,
-      },
-    });
+    let page = 1;
+    let totalPages = 1;
+    let totalResults = 0;
 
-    const results = response.data.results as TMDBResult[];
-    if (!results || results.length === 0) {
-      return null;
-    }
-
-    // Filter out person results and get only movies and TV shows
-    const mediaResults = results.filter(result => result.media_type !== 'person');
-
-    // If year is provided, try to find exact match first
-    if (year) {
-      const exactMatch = mediaResults.find(item => {
-        const releaseYear = item.release_date ? new Date(item.release_date).getFullYear() : 
-                          item.first_air_date ? new Date(item.first_air_date).getFullYear() : null;
-        return releaseYear === year;
+    while (page <= totalPages) {
+      const response = await axios.get(`${TMDB_BASE_URL}/search/multi`, {
+        params: {
+          api_key: TMDB_API_KEY,
+          query: title,
+          include_adult: true,
+          page: page,
+        },
       });
-      if (exactMatch) {
-        return exactMatch;
+
+      // Update total pages and results on first page
+      if (page === 1) {
+        totalPages = response.data.total_pages;
+        totalResults = response.data.total_results;
       }
+
+      const results = response.data.results as TMDBResult[];
+      if (!results || results.length === 0) {
+        return null;
+      }
+
+      // Filter out person results and get only movies and TV shows
+      const mediaResults = results.filter(result => result.media_type !== 'person');
+
+      // If year is provided, try to find exact match first
+      if (year) {
+        const exactMatch = mediaResults.find(item => {
+          // Get the correct title/name based on media type
+          const itemTitle = item.media_type === 'movie' ? item.title : item.name;
+          
+          // Get the correct release date based on media type
+          const releaseDate = item.media_type === 'movie' 
+            ? item.release_date 
+            : item.first_air_date;
+            
+          const releaseYear = releaseDate ? new Date(releaseDate).getFullYear() : null;
+          
+          // Check for exact name match and year match
+          const nameMatch = itemTitle?.toLowerCase() === title.toLowerCase();
+          
+          return nameMatch && releaseYear === year;
+        });
+
+        if (exactMatch) {
+          return exactMatch;
+        }
+      }
+
+      // If no exact match found and we've checked all pages, return the first result
+      if (page === totalPages) {
+        return mediaResults[0] || null;
+      }
+
+      page++;
     }
 
-
-    // Return the first result (usually the most popular/relevant)
-    return mediaResults[0];
+    return null;
   } catch (error) {
     console.error('Error searching TMDB:', error);
     return null;
