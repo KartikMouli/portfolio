@@ -46,7 +46,7 @@ interface MoviesListProps {
     searchQuery: string;
 }
 
-export function MoviesList({ sortBy, searchQuery }: MoviesListProps) {
+function MoviesList({ sortBy, searchQuery }: MoviesListProps) {
     const [currentPage, setCurrentPage] = useState(1);
     const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
 
@@ -332,3 +332,5 @@ export function MoviesList({ sortBy, searchQuery }: MoviesListProps) {
         </>
     );
 } 
+
+export default MoviesList;

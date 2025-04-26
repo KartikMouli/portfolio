@@ -1,5 +1,5 @@
 'use client';
-;
+
 import { Button } from '@/components/ui/button';
 import { ArrowRightIcon } from 'lucide-react';
 import { FaFacebook, FaInstagram, FaSnapchat, FaThreads } from "react-icons/fa6";
@@ -48,7 +48,7 @@ function About() {
             >
                 <motion.div variants={fadeInUp}>
                     <Badge variant="outline" className="mb-4">About Me</Badge>
-                    <h1 className="text-4xl font-bold mb-6">Kartik</h1>
+                    <h1 className="text-4xl font-bold mb-6">kartik</h1>
                 </motion.div>
 
                 <motion.div
@@ -125,7 +125,7 @@ function About() {
                                     </div>
                                     <div className="p-4 bg-muted/50 rounded-lg">
                                         <p className="text-sm text-muted-foreground">LeetCode</p>
-                                        <p className="text-2xl font-semibold">500+</p>
+                                        <p className="text-2xl font-semibold">600+</p>
                                     </div>
                                     <div className="p-4 bg-muted/50 rounded-lg">
                                         <p className="text-sm text-muted-foreground">GitHub Commits</p>
