@@ -1,11 +1,12 @@
 'use client';
 
-import { Suspense } from 'react';
-import { MoviesList } from '@/components/movie/MoviesList';
+import React, { Suspense } from 'react';
 import { SortFilter, type SortOption } from '@/components/movie/SortFilter';
 import { Input } from "@/components/ui/input";
 import { Search } from 'lucide-react';
 import { useState } from 'react';
+import MoviesList from '@/components/movie/MoviesList';
+
 
 const sortOptions: SortOption[] = [
     { label: 'Added Date (Newest)', value: 'date-desc', direction: 'desc' },

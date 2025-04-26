@@ -48,7 +48,7 @@ export default function HomeClient() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 1 }}
-      className="flex flex-col gap-16 mt-8"
+      className="flex flex-col gap-10 mt-8"
     >
       {/* Hero Section */}
       <section className=" mt-4 flex flex-col justify-center items-center text-center md:text-left">
@@ -181,7 +181,7 @@ export default function HomeClient() {
       </section>
 
       {/* Current Tech Section */}
-      <section className="mb-4">
+      <section>
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
