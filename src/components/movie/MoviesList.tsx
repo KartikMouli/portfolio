@@ -19,6 +19,7 @@ import {
   PaginationPrevious,
   PaginationEllipsis,
 } from "@/components/ui/pagination";
+import { Skeleton } from "@/components/ui/skeleton";
 import { MovieDialog } from "./MovieDialog";
 import { Movie } from '@/lib/db';
 import axios from 'axios';
@@ -44,6 +45,19 @@ interface MoviesListProps {
     sortBy: string;
     searchQuery: string;
 }
+
+const SkeletonLoader = () => {
+    return (
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-4 justify-items-center w-full">
+            {Array.from({ length: ITEMS_PER_PAGE }).map((_, index) => (
+                <Skeleton
+                    key={index}
+                    className="w-[140px] sm:w-[156px] h-[210px] sm:h-[234px] rounded-lg"
+                />
+            ))}
+        </div>
+    );
+};
 
 function MoviesList({ sortBy, searchQuery }: MoviesListProps) {
     const [currentPage, setCurrentPage] = useState(1);
@@ -200,7 +214,14 @@ function MoviesList({ sortBy, searchQuery }: MoviesListProps) {
     };
 
     if (isLoading) {
-        return <div>Loading movies...</div>;
+        return (
+            <div className="w-full">
+                <div className="flex items-center justify-center mb-8">
+                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+                </div>
+                <SkeletonLoader />
+            </div>
+        );
     }
 
     if (filteredMovies.length === 0) {
