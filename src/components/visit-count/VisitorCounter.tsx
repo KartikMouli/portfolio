@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion';
 import { EyeIcon } from 'lucide-react';
 import { useVisitorCount } from '@/hooks/useVisitorCount';
+import { Skeleton } from '@/components/ui/skeleton';
 
 export default function VisitorCounter() {
   const { count, isLoading, error } = useVisitorCount();
@@ -28,7 +29,10 @@ export default function VisitorCounter() {
       <EyeIcon className="size-4" />
       <span>
         {isLoading ? (
-          'Loading...'
+          <div className="flex items-center gap-2">
+            <Skeleton className="h-4 w-12" />
+            <Skeleton className="h-4 w-8" />
+          </div>
         ) : (
           <>
             <span className="font-serif text-primary">{count?.toLocaleString()}</span> views
