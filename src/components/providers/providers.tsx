@@ -4,13 +4,22 @@ import { ThemeProvider } from "@/context/theme/theme-provider"
 import { ChatProvider } from "../../context/chatbot/chat-context"
 
 import Chatbot from "../chatbot/Chatbot"
-import { QueryClientProvider } from '@tanstack/react-query'
+import { QueryClientProvider, hydrate } from '@tanstack/react-query'
 import getQueryClient from "@/lib/getQueryClient"
 import { Toaster } from "../ui/sonner"
 
-export function Providers({ children }: { children: React.ReactNode }) {
+interface ProvidersProps {
+    children: React.ReactNode;
+    dehydratedState?: unknown;
+}
+
+export function Providers({ children, dehydratedState }: ProvidersProps) {
     const queryClient = getQueryClient()
 
+    // Hydrate the query client with the dehydrated state
+    if (dehydratedState) {
+        hydrate(queryClient, dehydratedState);
+    }
     
     return (
         <ThemeProvider

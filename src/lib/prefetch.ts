@@ -1,7 +1,6 @@
-import { QueryClient } from '@tanstack/react-query';
+import { QueryClient, dehydrate } from '@tanstack/react-query';
 import axios from 'axios';
 import getQueryClient from './getQueryClient';
-
 
 async function prefetchMovies(queryClient: QueryClient) {
     try {
@@ -11,8 +10,6 @@ async function prefetchMovies(queryClient: QueryClient) {
                 const response = await axios.get('/api/movies');
                 return response.data;
             },
-            staleTime: 1000 * 60 * 60 * 24, // 24 hours
-            gcTime: 1000 * 60 * 60 * 48, // 48 hours
         });
         console.log('[Server] Movies data prefetched successfully');
     } catch (error) {
@@ -20,7 +17,7 @@ async function prefetchMovies(queryClient: QueryClient) {
     }
 }
 
-export async function prefetchAll() {
+export async function getStaticProps() {
     const queryClient = getQueryClient();
 
     console.log('[Server] Starting prefetch operations...');
@@ -30,5 +27,9 @@ export async function prefetchAll() {
 
     console.log('[Server] All prefetch operations completed');
 
-    return queryClient;
+    return {
+        props: {
+            dehydratedState: dehydrate(queryClient),
+        },
+    };
 } 

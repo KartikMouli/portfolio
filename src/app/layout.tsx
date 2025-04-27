@@ -7,9 +7,7 @@ import Footer from "@/components/layout/Footer";
 import { SpeedInsights } from "@vercel/speed-insights/next"
 import { Analytics } from '@vercel/analytics/react';
 import { Providers } from "@/components/providers/providers";
-import { HydrationBoundary, dehydrate } from '@tanstack/react-query';
-import { prefetchAll } from '@/lib/prefetch';
-import getQueryClient from '@/lib/getQueryClient';
+import { getStaticProps } from '@/lib/prefetch';
 
 const raleway = Raleway({
   subsets: ["latin"],
@@ -36,7 +34,7 @@ export const metadata: Metadata = {
     description: "Showcasing Kartik's projects and skills.",
   },
   verification: {
-    google: "AY_tNfWVLsBZCnrbEeAyG93iDeRouDolzW8EonaejmQ",
+    google: process.env.GOOGLE_VERIFICATION_CODE,
   },
 };
 
@@ -45,9 +43,7 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const queryClient = getQueryClient();
-  await prefetchAll();
-  const dehydratedState = dehydrate(queryClient);
+  const { props } = await getStaticProps();
 
   return (
     <html lang="en" suppressHydrationWarning>
@@ -55,18 +51,14 @@ export default async function RootLayout({
         suppressHydrationWarning
         className={`${raleway.className} mx-auto flex min-h-screen max-w-3xl flex-col pt-20 px-8 pb-16 antialiased`}
       >
-
-        <Providers>
-          <HydrationBoundary state={dehydratedState}>
-            <Header />
-            <main className="grow ">
-              {children}
-              <Analytics />
-              <SpeedInsights />
-            </main>
-            <Footer />
-          </HydrationBoundary>
-
+        <Providers dehydratedState={props.dehydratedState}>
+          <Header />
+          <main className="grow">
+            {children}
+            <Analytics />
+            <SpeedInsights />
+          </main>
+          <Footer />
         </Providers>
       </body>
     </html>
