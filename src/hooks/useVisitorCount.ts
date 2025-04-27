@@ -1,33 +1,38 @@
+'use client';
+
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 
 export function useVisitorCount() {
-    const [shouldIncrement, setShouldIncrement] = useState(false);
-
+    const [hasCounted, setHasCounted] = useState<boolean | null>(null);
+    
+    // Check localStorage only on client side
     useEffect(() => {
-        // Check if this is the first visit
-        const hasVisited = localStorage.getItem('hasVisited');
-        if (!hasVisited) {
-            setShouldIncrement(true);
-            localStorage.setItem('hasVisited', 'true');
-        }
+        const counted = localStorage.getItem('hasCounted');
+        setHasCounted(!!counted);
     }, []);
 
+    // Increment count only once per session
+    useEffect(() => {
+        if (hasCounted === false) {
+            axios.post('/api/visitors')
+                .then(() => {
+                    localStorage.setItem('hasCounted', 'true');
+                    setHasCounted(true);
+                })
+                .catch(console.error);
+        }
+    }, [hasCounted]);
+
+    // Get current count
     const { data: count, isLoading, error } = useQuery({
         queryKey: ['visitorCount'],
         queryFn: async () => {
-            if (shouldIncrement) {
-                const response = await axios.post('/api/visitors');
-                return response.data.count;
-            } else {
-                const response = await axios.get('/api/visitors');
-                return response.data.count;
-            }
+            const response = await axios.get('/api/visitors');
+            return response.data.count;
         },
-        staleTime: Infinity, // Never refetch
-        retry: false,
-        enabled: shouldIncrement !== null, // Only run query after we've checked localStorage
+        enabled: hasCounted !== null // Only run query after we've checked localStorage
     });
 
     return { count, isLoading, error };
