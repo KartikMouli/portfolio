@@ -11,7 +11,7 @@ import {
     FormMessage,
     FormControl
 } from "../ui/form";
-import { useToast } from "@/hooks/use-toast";
+
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -20,9 +20,10 @@ import axios from "axios";
 import { formSchema } from "@/lib/schemas";
 import { motion, AnimatePresence } from "framer-motion";
 import { useMutation } from "@tanstack/react-query";
+import { toast } from "sonner";
 
 export default function ContactForm() {
-    const { toast } = useToast();
+   
 
     const form = useForm({
         resolver: zodResolver(formSchema),
@@ -39,18 +40,14 @@ export default function ContactForm() {
             return response.data;
         },
         onSuccess: () => {
-            toast({
-                title: "Success",
-                description: "Thanks for reaching out! Your form has been submitted.",
-                variant: "success",
+            toast.success("Successfully submitted form",{
+                description: "Thanks for reaching out! I will get back to you as soon as possible.",
             });
             form.reset();
         },
         onError: () => {
-            toast({
-                title: "Error",
-                description: "Error submitting the form. Please check your connection.",
-                variant: "destructive",
+            toast.error("Error submitting the form",{
+                description: "Please check your connection.",
             });
         },
     });
