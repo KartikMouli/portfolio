@@ -1,11 +1,11 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { useVisitorCount } from '@/hooks/useVisitorCount';
 import { EyeIcon } from 'lucide-react';
+import { useVisitorCount } from '@/hooks/useVisitorCount';
 
 export default function VisitorCounter() {
-  const { count, error, isLoading } = useVisitorCount();
+  const { count, isLoading, error } = useVisitorCount();
 
   if (error) {
     return (
@@ -25,9 +25,7 @@ export default function VisitorCounter() {
       animate={{ opacity: 1 }}
       className="flex items-center gap-2 text-sm text-muted-foreground"
     >
-
-        <EyeIcon className="size-4" />
-      
+      <EyeIcon className="size-4" />
       <span>
         {isLoading ? (
           'Loading...'
