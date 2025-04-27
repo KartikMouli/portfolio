@@ -6,9 +6,9 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Loader2 } from "lucide-react";
-import { toast } from '@/hooks/use-toast';
 import axios from 'axios';
 import { useMutation } from '@tanstack/react-query';
+import { toast } from 'sonner';
 
 
 
@@ -21,17 +21,12 @@ export default function MoviesAdmin() {
             return response.data;
         },
         onSuccess: () => {
-            toast({
-                title: "Success",
-                description: "Movies updated successfully",
-            });
+            toast.success("Movies updated successfully");
             setFile(null);
         },
         onError: (error: Error) => {
-            toast({
-                title: "Error",
+            toast.error("Error updating movies",{
                 description: error.message || 'Failed to update movies',
-                variant: "destructive",
             });
         }
     });
@@ -45,11 +40,7 @@ export default function MoviesAdmin() {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!file) {
-            toast({
-                title: "Error",
-                description: "Please select a file",
-                variant: "destructive",
-            });
+            toast.error("Please select a file");
             return;
         }
 

@@ -1,6 +1,7 @@
 import { generateRandomString } from "@/lib/utils";
 import { getSpotifyModel } from "@/models/spotify";
 import connectDB from "@/lib/mongodb";
+import axios from "axios";
 
 // Use server-side environment variables
 const client_id = process.env.SPOTIFY_CLIENT_ID as string;
@@ -37,24 +38,25 @@ export const getAccessToken = async (code?: string) => {
   
   if (code) {
     // Handle initial authorization code flow
-    const response = await fetch('https://accounts.spotify.com/api/token', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        'Authorization': `Basic ${Buffer.from(`${client_id}:${client_secret}`).toString('base64')}`,
-      },
-      body: new URLSearchParams({
+    const response = await axios.post('https://accounts.spotify.com/api/token',
+      new URLSearchParams({
         grant_type: 'authorization_code',
         code: code,
         redirect_uri: redirect_uri,
-      }),
-    });
+      }).toString(),
+      {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Authorization': `Basic ${Buffer.from(`${client_id}:${client_secret}`).toString('base64')}`,
+        },
+      }
+    );
 
-    if (!response.ok) {
+    if (response.status !== 200) {
       throw new Error('Failed to get access token');
     }
 
-    const data = await response.json();
+    const data = response.data;
     return {
       access_token: data.access_token,
       refresh_token: data.refresh_token,
@@ -76,23 +78,24 @@ export const getAccessToken = async (code?: string) => {
 
   if (now.getTime() + fiveMinutes >= expiresAt.getTime()) {
     // Token needs refresh
-    const response = await fetch('https://accounts.spotify.com/api/token', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        'Authorization': `Basic ${Buffer.from(`${client_id}:${client_secret}`).toString('base64')}`,
-      },
-      body: new URLSearchParams({
+    const response = await axios.post('https://accounts.spotify.com/api/token', 
+      new URLSearchParams({
         grant_type: 'refresh_token',
         refresh_token: spotifyData.refresh_token,
-      }),
-    });
+      }).toString(),
+      {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Authorization': `Basic ${Buffer.from(`${client_id}:${client_secret}`).toString('base64')}`,
+        },
+      }
+    );
 
-    if (!response.ok) {
+    if (response.status !== 200) {
       throw new Error('Failed to refresh access token');
     }
 
-    const data = await response.json();
+    const data = response.data;
     const newExpiresAt = new Date(Date.now() + data.expires_in * 1000);
 
     // Update the token in database
@@ -112,24 +115,25 @@ export const getAccessToken = async (code?: string) => {
 };
 
 export const saveTokens = async (code: string) => {
-  const response = await fetch('https://accounts.spotify.com/api/token', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded',
-      'Authorization': `Basic ${Buffer.from(`${client_id}:${client_secret}`).toString('base64')}`,
-    },
-    body: new URLSearchParams({
+  const response = await axios.post('https://accounts.spotify.com/api/token',
+    new URLSearchParams({
       grant_type: 'authorization_code',
       code: code,
       redirect_uri: redirect_uri,
-    }),
-  });
+    }).toString(),
+    {
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Authorization': `Basic ${Buffer.from(`${client_id}:${client_secret}`).toString('base64')}`,
+      },
+    }
+  );
 
-  if (!response.ok) {
+  if (response.status !== 200) {
     throw new Error('Failed to get access token');
   }
 
-  const data = await response.json();
+  const data = response.data;
   const expires_at = new Date(Date.now() + data.expires_in * 1000);
 
   await connectDB();

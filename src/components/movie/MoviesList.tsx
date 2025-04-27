@@ -19,12 +19,12 @@ import {
   PaginationPrevious,
   PaginationEllipsis,
 } from "@/components/ui/pagination";
+import { Skeleton } from "@/components/ui/skeleton";
 import { MovieDialog } from "./MovieDialog";
 import { Movie } from '@/lib/db';
 import axios from 'axios';
 
 const ITEMS_PER_PAGE = 24;
-const STALE_TIME = 5 * 60 * 1000; // 5 minutes
 
 const container = {
     hidden: { opacity: 0 },
@@ -46,6 +46,19 @@ interface MoviesListProps {
     searchQuery: string;
 }
 
+const SkeletonLoader = () => {
+    return (
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-4 justify-items-center w-full">
+            {Array.from({ length: ITEMS_PER_PAGE }).map((_, index) => (
+                <Skeleton
+                    key={index}
+                    className="w-[140px] sm:w-[156px] h-[210px] sm:h-[234px] rounded-lg"
+                />
+            ))}
+        </div>
+    );
+};
+
 function MoviesList({ sortBy, searchQuery }: MoviesListProps) {
     const [currentPage, setCurrentPage] = useState(1);
     const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
@@ -56,10 +69,10 @@ function MoviesList({ sortBy, searchQuery }: MoviesListProps) {
             const response = await axios.get('/api/movies');
             return response.data;
         },
-        staleTime: STALE_TIME,
         refetchOnWindowFocus: false,
         refetchOnMount: false,
-        gcTime: 30 * 60 * 1000, // 30 minutes
+        staleTime: 1000 * 60 * 60 * 24, // 24 hours
+        gcTime: 1000 * 60 * 60 * 48, // 48 hours
     });
 
     const filteredMovies = useMemo(() => {
@@ -201,7 +214,14 @@ function MoviesList({ sortBy, searchQuery }: MoviesListProps) {
     };
 
     if (isLoading) {
-        return <div>Loading movies...</div>;
+        return (
+            <div className="w-full">
+                <div className="flex items-center justify-center mb-8">
+                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+                </div>
+                <SkeletonLoader />
+            </div>
+        );
     }
 
     if (filteredMovies.length === 0) {
