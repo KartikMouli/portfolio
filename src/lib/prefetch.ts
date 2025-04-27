@@ -11,6 +11,8 @@ async function prefetchMovies(queryClient: QueryClient) {
                 const response = await axios.get('/api/movies');
                 return response.data;
             },
+            staleTime: 1000 * 60 * 60 * 24, // 24 hours
+            gcTime: 1000 * 60 * 60 * 48, // 48 hours
         });
         console.log('[Server] Movies data prefetched successfully');
     } catch (error) {

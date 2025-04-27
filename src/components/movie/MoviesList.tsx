@@ -24,7 +24,6 @@ import { Movie } from '@/lib/db';
 import axios from 'axios';
 
 const ITEMS_PER_PAGE = 24;
-const STALE_TIME = 5 * 60 * 1000; // 5 minutes
 
 const container = {
     hidden: { opacity: 0 },
@@ -56,10 +55,10 @@ function MoviesList({ sortBy, searchQuery }: MoviesListProps) {
             const response = await axios.get('/api/movies');
             return response.data;
         },
-        staleTime: STALE_TIME,
         refetchOnWindowFocus: false,
         refetchOnMount: false,
-        gcTime: 30 * 60 * 1000, // 30 minutes
+        staleTime: 1000 * 60 * 60 * 24, // 24 hours
+        gcTime: 1000 * 60 * 60 * 48, // 48 hours
     });
 
     const filteredMovies = useMemo(() => {
