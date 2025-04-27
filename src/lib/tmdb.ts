@@ -28,7 +28,6 @@ export async function searchMovie(title: string, year?: number): Promise<TMDBRes
   try {
     let page = 1;
     let totalPages = 1;
-    let totalResults = 0;
 
     while (page <= totalPages) {
       const response = await axios.get(`${TMDB_BASE_URL}/search/multi`, {
@@ -43,7 +42,6 @@ export async function searchMovie(title: string, year?: number): Promise<TMDBRes
       // Update total pages and results on first page
       if (page === 1) {
         totalPages = response.data.total_pages;
-        totalResults = response.data.total_results;
       }
 
       const results = response.data.results as TMDBResult[];

@@ -2,20 +2,6 @@ import { QueryClient } from '@tanstack/react-query';
 import axios from 'axios';
 import getQueryClient from './getQueryClient';
 
-async function prefetchSpotify(queryClient: QueryClient) {
-    try {
-        await queryClient.prefetchQuery({
-            queryKey: ['spotify', 'now-playing'],
-            queryFn: async () => {
-                const response = await axios.get('/api/spotify/now-playing');
-                return response.data;
-            },
-        });
-        console.log('[Server] Spotify data prefetched successfully');
-    } catch (error) {
-        console.error('[Server] Failed to prefetch Spotify data:', error);
-    }
-}
 
 async function prefetchMovies(queryClient: QueryClient) {
     try {
@@ -36,9 +22,6 @@ export async function prefetchAll() {
     const queryClient = getQueryClient();
 
     console.log('[Server] Starting prefetch operations...');
-
-    // Prefetch Spotify data
-    await prefetchSpotify(queryClient);
 
     // Prefetch movies data
     await prefetchMovies(queryClient);
