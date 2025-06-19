@@ -9,7 +9,6 @@ import { motion } from 'framer-motion';
 import StatsCard from '@/components/about/StatsCard';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import Timeline from '@/components/about/Timeline';
 
 
 function About() {
@@ -183,22 +182,6 @@ function About() {
                             <ArrowRightIcon className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
                         </Button>
                     </Link>
-                </motion.div>
-            </motion.section>
-
-
-            {/* Education Section */}
-            <motion.section
-                className="mb-20"
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                variants={staggerChildren}
-            >
-                <motion.div variants={fadeInUp}>
-                    <Badge variant="outline" className="mb-4">Journey</Badge>
-                    <h2 className="text-3xl font-bold mb-6">Education & Experience</h2>
-                    <Timeline />
                 </motion.div>
             </motion.section>
 
