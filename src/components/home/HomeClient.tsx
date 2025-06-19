@@ -12,10 +12,11 @@ import ResumeButton from "@/components/resume-button/ResumeButton";
 import { useSpotifyData } from "@/hooks/useSpotifyData";
 import SpotifyWidget from "@/components/spotify/SpotifyWidget";
 import { FaSpotify } from "react-icons/fa";
+import Timeline from "../about/Timeline";
 
 export default function HomeClient() {
   const [isFlipped, setIsFlipped] = useState(true);
-  const [isVisible, setIsVisible] = useState(false);
+  const [_, setIsVisible] = useState(false);
   const { data: spotifyData } = useSpotifyData();
   const controls = useAnimation();
 
@@ -42,6 +43,29 @@ export default function HomeClient() {
       if (currentElement) observer.unobserve(currentElement);
     };
   }, [controls]);
+
+  const staggerChildren = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2,
+        delayChildren: 0.3
+      }
+    }
+  };
+
+  const fadeInUp = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.6,
+        ease: "easeOut"
+      }
+    }
+  };
 
   return (
     <motion.div
@@ -186,7 +210,7 @@ export default function HomeClient() {
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1 }}
-          className="flex justify-between items-center border-b-2 dark:border-gray-700 pb-2 mb-8"
+          className="flex justify-between items-center border-b-2 pb-2 mb-8"
         >
           <h2 className="text-2xl font-bold">Current technologies</h2>
           <Link href="/skills" className="link flex items-center gap-2 ">
@@ -217,13 +241,31 @@ export default function HomeClient() {
         </motion.section>
       </section>
 
+
+      {/* Education Section */}
+      <section>
+        <motion.section
+          className="mb-8"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={staggerChildren}
+        >
+          <motion.div variants={fadeInUp}>
+            <h2 className="text-2xl font-bold mb-6 border-b-2 pb-2">Education & Experience</h2>
+            <Timeline />
+          </motion.div>
+        </motion.section>
+      </section>
+
+
       {/* Project Section */}
       <section className="flex flex-col gap-8">
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1 }}
-          className="flex justify-between items-center border-b-2 dark:border-gray-700 pb-3"
+          className="flex justify-between items-center border-b-2 pb-3"
         >
           <h2 className="text-2xl font-bold">Featured projects</h2>
           <Link href="/projects" className="link flex items-center gap-2">
