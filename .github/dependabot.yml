@@ -8,7 +8,7 @@ updates:
   - package-ecosystem: "npm" # Specify the package manager
     directory: "/" # Location of the `package.json` file
     schedule:
-      interval: "weekly" # Frequency of update checks
+      interval: "monthly" # Frequency of update checks
     commit-message:
       prefix: "chore(deps)" # Prefix for Dependabot commit messages
     labels:
