@@ -17,7 +17,7 @@ export async function POST(request: Request) {
     }
 
     // Get the generative model
-    const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
+    const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
     // Start a chat session with markdown formatting instruction
     const markdownInstructions = `Please format your responses using markdown for better readability. Use:
