@@ -216,9 +216,6 @@ function MoviesList({ sortBy, searchQuery }: MoviesListProps) {
     if (isLoading) {
         return (
             <div className="w-full">
-                <div className="flex items-center justify-center mb-8">
-                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
-                </div>
                 <SkeletonLoader />
             </div>
         );
