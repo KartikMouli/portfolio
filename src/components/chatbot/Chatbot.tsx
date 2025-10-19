@@ -8,12 +8,10 @@ import { Send, MessageSquare, X, Bot, Sparkles, ChevronDown, User, ChevronRight 
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
 import { Badge } from '../ui/badge';
 import { Avatar, AvatarFallback } from '../ui/avatar';
-import { Message, FAQ, SUGGESTED_QUESTIONS, CHATBOT_TEXT } from '../../data/chatbot';
+import { FAQ, SUGGESTED_QUESTIONS, CHATBOT_TEXT } from '../../data/chatbot';
 import ReactMarkdown from 'react-markdown';
-import axios from 'axios';
 import { useChatbot } from '../../context/chatbot/chat-context';
-import { useMutation, useQuery } from '@tanstack/react-query';
-import getQueryClient from '@/lib/getQueryClient';
+import { useChatMessages } from '../../hooks/useChatMessage';
 
 export default function Chatbot() {
     const [input, setInput] = useState('');
@@ -21,51 +19,9 @@ export default function Chatbot() {
     const [showScrollButton, setShowScrollButton] = useState(false);
     const messagesEndRef = useRef<HTMLDivElement>(null);
     const scrollAreaRef = useRef<HTMLDivElement>(null);
-    const queryClient = getQueryClient();
 
     const { isVisible } = useChatbot();
-
-    // Query for messages
-    const { data: messages = [] } = useQuery<Message[]>({
-        queryKey: ['chatMessages'],
-        queryFn: async () => [],
-        initialData: [],
-    });
-
-    // Mutation for sending messages
-    const { mutate: sendMessage, isPending: isSending } = useMutation({
-        mutationFn: async (message: string) => {
-            try {
-                const response = await axios.post("/api/chat", { message });
-                return response.data.response;
-            } catch (error) {
-                console.error('Chat API Error:', error);
-                throw error;
-            }
-        },
-        onMutate: (newMessage) => {
-            const currentMessages = queryClient.getQueryData(['chatMessages']) as Message[] || [];
-            queryClient.setQueryData(['chatMessages'], [
-                ...currentMessages,
-                { role: "user", content: newMessage },
-            ]);
-        },
-        onSuccess: (response) => {
-            const currentMessages = queryClient.getQueryData(['chatMessages']) as Message[] || [];
-            queryClient.setQueryData(['chatMessages'], [
-                ...currentMessages,
-                { role: "assistant", content: response },
-            ]);
-        },
-        onError: (error) => {
-            console.error('Chat Error:', error);
-            const currentMessages = queryClient.getQueryData(['chatMessages']) as Message[] || [];
-            queryClient.setQueryData(['chatMessages'], [
-                ...currentMessages,
-                { role: "assistant", content: "Sorry, I encountered an error. Please try again." },
-            ]);
-        },
-    });
+    const { messages, sendMessage, isSending } = useChatMessages();
 
     // Auto-scroll to bottom when new messages arrive
     useEffect(() => {

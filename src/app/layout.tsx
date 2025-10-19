@@ -6,7 +6,6 @@ import Footer from "@/components/layout-content/footer";
 import { SpeedInsights } from "@vercel/speed-insights/next"
 import { Analytics } from '@vercel/analytics/react';
 import { Providers } from "@/components/providers/providers";
-import { getStaticProps } from '@/lib/prefetch';
 
 const raleway = Raleway({
   subsets: ["latin"],
@@ -42,15 +41,13 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const { props } = await getStaticProps();
-
   return (
     <html lang="en" suppressHydrationWarning>
       <body
         suppressHydrationWarning
         className={`${raleway.className} mx-auto flex min-h-screen max-w-3xl flex-col pt-20 px-8 pb-16 antialiased`}
       >
-        <Providers dehydratedState={props.dehydratedState}>
+        <Providers >
           <Header />
           <main className="grow">
             {children}
