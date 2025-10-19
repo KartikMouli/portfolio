@@ -36,7 +36,6 @@ export const SUGGESTED_QUESTIONS = [
 ];
 
 export const CHATBOT_TEXT = {
-    hint: "Chat with me",
     title: "Kartik Mouli",
     badge: "AI Assistant",
     placeholder: "Ask me anything...",

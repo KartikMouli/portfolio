@@ -10,7 +10,6 @@ import {
     TooltipProvider,
     TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { motion, AnimatePresence } from "framer-motion";
 
 export default function ThemeToggle() {
     const { setTheme, resolvedTheme } = useTheme();
@@ -36,13 +35,8 @@ export default function ThemeToggle() {
                         }}
                         className="hover:cursor-pointer relative overflow-hidden"
                     >
-                        <AnimatePresence mode="wait">
-                            <motion.div
+                            <div
                                 key={resolvedTheme}
-                                initial={{ rotate: -180, scale: 0 }}
-                                animate={{ rotate: 0, scale: 1 }}
-                                exit={{ rotate: 180, scale: 0 }}
-                                transition={{ duration: 0.3, type: "spring" }}
                                 className="absolute inset-0 flex items-center justify-center"
                             >
                                 {resolvedTheme === "dark" ? (
@@ -50,8 +44,7 @@ export default function ThemeToggle() {
                                 ) : (
                                     <MoonIcon className="size-5" />
                                 )}
-                            </motion.div>
-                        </AnimatePresence>
+                            </div>
                     </Button>
                 </TooltipTrigger>
                 <TooltipContent className="bg-popover border mt-1 text-popover-foreground">

@@ -5,56 +5,28 @@ import { ArrowRightIcon } from 'lucide-react';
 import { FaFacebook, FaInstagram, FaSnapchat, FaThreads } from "react-icons/fa6";
 import Link from 'next/link';
 import React from 'react';
-import { motion } from 'framer-motion';
 import StatsCard from '@/components/about/StatsCard';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 
 
 function About() {
-    const fadeInUp = {
-        hidden: { opacity: 0, y: 20 },
-        visible: {
-            opacity: 1,
-            y: 0,
-            transition: {
-                duration: 0.6,
-                ease: "easeOut"
-            }
-        }
-    };
-
-    const staggerChildren = {
-        hidden: { opacity: 0 },
-        visible: {
-            opacity: 1,
-            transition: {
-                staggerChildren: 0.2,
-                delayChildren: 0.3
-            }
-        }
-    };
 
     return (
         <div className="max-w-4xl mx-auto px-4 ">
             {/* Hero Section */}
-            <motion.section
+            <section
                 className="mb-20"
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                variants={staggerChildren}
             >
-                <motion.div variants={fadeInUp}>
+                <div>
                     <Badge variant="outline" className="mb-4">About Me</Badge>
                     <h1 className="text-4xl font-bold mb-6">kartik</h1>
-                </motion.div>
+                </div>
 
-                <motion.div
+                <div
                     className="grid md:grid-cols-2 gap-8"
-                    variants={staggerChildren}
                 >
-                    <motion.div variants={fadeInUp}>
+                    <div>
                         <p className="text-lg text-muted-foreground mb-4">
                             Hey! I&apos;m a proud <span className="font-medium">IIT Patna CSE &apos;24</span> graduate.
                             I focus on full-stack development, Web3, and competitive programming.
@@ -68,9 +40,8 @@ function About() {
                             Originally from <span className="font-medium">Nashik</span>, I&apos;m always excited
                             about creating new tech and exploring the world of open-source.
                         </p>
-                        <motion.div
+                        <div
                             className="flex gap-4"
-                            variants={fadeInUp}
                         >
                             <Link
                                 href="https://facebook.com/kartikmouli"
@@ -104,10 +75,10 @@ function About() {
                             >
                                 <FaThreads className="w-5 h-5" />
                             </Link>
-                        </motion.div>
-                    </motion.div>
+                        </div>
+                    </div>
 
-                    <motion.div variants={fadeInUp}>
+                    <div>
                         <Card className="border-none shadow-none">
                             <CardHeader>
                                 <CardTitle className="text-xl">Quick Stats</CardTitle>
@@ -133,19 +104,15 @@ function About() {
                                 </div>
                             </CardContent>
                         </Card>
-                    </motion.div>
-                </motion.div>
-            </motion.section>
+                    </div>
+                </div>
+            </section>
 
             {/* Skills Section */}
-            <motion.section
+            <section
                 className="mb-20"
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                variants={staggerChildren}
             >
-                <motion.div variants={fadeInUp}>
+                <div>
                     <Badge variant="outline" className="mb-4">Skills & Expertise</Badge>
                     <h2 className="text-3xl font-bold mb-6">What I Do</h2>
                     <p className="text-lg text-muted-foreground mb-8">
@@ -158,17 +125,12 @@ function About() {
                             <ArrowRightIcon className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
                         </Button>
                     </Link>
-                </motion.div>
-            </motion.section>
+                </div>
+            </section>
 
             {/* Stats Section */}
-            <motion.section
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                variants={staggerChildren}
-            >
-                <motion.div variants={fadeInUp}>
+            <section>
+                <div>
                     <Badge variant="outline" className="mb-4">Achievements</Badge>
                     <h2 className="text-3xl font-bold mb-6">Data Playground</h2>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -190,20 +152,17 @@ function About() {
                                 alt: "Holopin Badges"
                             }
                         ].map((stat, index) => (
-                            <motion.div
+                            <div
                                 key={index}
-                                variants={fadeInUp}
-                                whileHover={{ scale: 1.02 }}
-                                transition={{ duration: 0.2 }}
                             >
                                 <Card className="border-none shadow-none">
                                     <StatsCard src={stat.src} alt={stat.alt} />
                                 </Card>
-                            </motion.div>
+                            </div>
                         ))}
                     </div>
-                </motion.div>
-            </motion.section>
+                </div>
+            </section>
         </div>
     );
 }

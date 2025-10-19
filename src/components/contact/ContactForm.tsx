@@ -18,7 +18,6 @@ import { useForm } from "react-hook-form";
 import { Send, Loader2 } from "lucide-react";
 import axios from "axios";
 import { formSchema } from "@/lib/schemas";
-import { motion, AnimatePresence } from "framer-motion";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
 
@@ -52,62 +51,19 @@ export default function ContactForm() {
         },
     });
 
-    // Form container animation variants
-    const formVariants = {
-        hidden: { opacity: 0, y: 20 },
-        visible: {
-            opacity: 1,
-            y: 0,
-            transition: {
-                duration: 0.6,
-                ease: "easeOut"
-            }
-        }
-    };
-
-    // Form field animation variants
-    const fieldVariants = {
-        hidden: { opacity: 0, x: -20 },
-        visible: {
-            opacity: 1,
-            x: 0,
-            transition: {
-                duration: 0.5,
-                ease: "easeOut"
-            }
-        }
-    };
-
-    // Button animation variants
-    const buttonVariants = {
-        idle: { scale: 1 },
-        hover: { 
-            scale: 1.02,
-            transition: {
-                duration: 0.2,
-                ease: "easeInOut"
-            }
-        },
-        tap: { scale: 0.98 }
-    };
-
     const onSubmit = (data: z.infer<typeof formSchema>) => {
         submitForm(data);
     };
 
     return (
-        <motion.div
-            variants={formVariants}
-            initial="hidden"
-            animate="visible"
+        <div
             className="w-full max-w-2xl mx-auto p-6 rounded-lg border border-border/50 bg-card/50 backdrop-blur-sm"
         >
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
                     {/* Name and Email Fields */}
-                    <motion.div 
+                    <div 
                         className="grid grid-cols-1 gap-4 sm:grid-cols-2"
-                        variants={fieldVariants}
                     >
                         <FormField
                             control={form.control}
@@ -116,29 +72,21 @@ export default function ContactForm() {
                                 <FormItem>
                                     <FormLabel className="text-sm font-medium">Name</FormLabel>
                                     <FormControl>
-                                        <motion.div
-                                            whileHover={{ scale: 1.01 }}
-                                            whileTap={{ scale: 0.99 }}
+                                        <div
                                         >
                                             <Input 
                                                 placeholder="Your name" 
                                                 {...field}
                                                 className="transition-all duration-200 focus:ring-2 focus:ring-primary/20" 
                                             />
-                                        </motion.div>
+                                        </div>
                                     </FormControl>
-                                    <AnimatePresence mode="wait">
                                         {form.formState.errors.name && (
-                                            <motion.div
-                                                initial={{ opacity: 0, y: -10 }}
-                                                animate={{ opacity: 1, y: 0 }}
-                                                exit={{ opacity: 0, y: -10 }}
-                                                transition={{ duration: 0.2 }}
+                                            <div
                                             >
                                                 <FormMessage />
-                                            </motion.div>
+                                            </div>
                                         )}
-                                    </AnimatePresence>
                                 </FormItem>
                             )}
                         />
@@ -150,37 +98,26 @@ export default function ContactForm() {
                                 <FormItem>
                                     <FormLabel className="text-sm font-medium">Email</FormLabel>
                                     <FormControl>
-                                        <motion.div
-                                            whileHover={{ scale: 1.01 }}
-                                            whileTap={{ scale: 0.99 }}
+                                        <div
                                         >
                                             <Input 
                                                 placeholder="Your email" 
                                                 {...field}
                                                 className="transition-all duration-200 focus:ring-2 focus:ring-primary/20" 
                                             />
-                                        </motion.div>
+                                        </div>
                                     </FormControl>
-                                    <AnimatePresence mode="wait">
                                         {form.formState.errors.email && (
-                                            <motion.div
-                                                initial={{ opacity: 0, y: -10 }}
-                                                animate={{ opacity: 1, y: 0 }}
-                                                exit={{ opacity: 0, y: -10 }}
-                                                transition={{ duration: 0.2 }}
-                                            >
                                                 <FormMessage />
-                                            </motion.div>
+
                                         )}
-                                    </AnimatePresence>
                                 </FormItem>
                             )}
                         />
-                    </motion.div>
+                    </div>
 
                     {/* Message Field */}
-                    <motion.div
-                        variants={fieldVariants}
+                    <div
                     >
                         <FormField
                             control={form.control}
@@ -189,9 +126,7 @@ export default function ContactForm() {
                                 <FormItem>
                                     <FormLabel className="text-sm font-medium">Message</FormLabel>
                                     <FormControl>
-                                        <motion.div
-                                            whileHover={{ scale: 1.01 }}
-                                            whileTap={{ scale: 0.99 }}
+                                        <div
                                         >
                                             <Textarea
                                                 placeholder="Leave feedback about the site, career opportunities, or just to say hello."
@@ -199,66 +134,37 @@ export default function ContactForm() {
                                                 rows={4}
                                                 className="transition-all duration-200 focus:ring-2 focus:ring-primary/20"
                                             />
-                                        </motion.div>
+                                        </div>
                                     </FormControl>
-                                    <AnimatePresence mode="wait">
                                         {form.formState.errors.message && (
-                                            <motion.div
-                                                initial={{ opacity: 0, y: -10 }}
-                                                animate={{ opacity: 1, y: 0 }}
-                                                exit={{ opacity: 0, y: -10 }}
-                                                transition={{ duration: 0.2 }}
-                                            >
                                                 <FormMessage />
-                                            </motion.div>
                                         )}
-                                    </AnimatePresence>
                                 </FormItem>
                             )}
                         />
-                    </motion.div>
+                    </div>
 
                     {/* Submit Button */}
-                    <motion.div
-                        variants={buttonVariants}
-                        initial="idle"
-                        whileHover="hover"
-                        whileTap="tap"
+                    <div
                     >
                         <Button 
                             type="submit" 
-                            className="w-full relative overflow-hidden group"
+                            className="w-full relative overflow-hidden group hover:cursor-pointer"
                             disabled={isPending}
                         >
-                            <motion.span
-                                animate={isPending ? {
-                                    opacity: [1, 0.5, 1],
-                                    transition: {
-                                        duration: 1.5,
-                                        repeat: Infinity,
-                                        ease: "easeInOut"
-                                    }
-                                } : {}}
+                            <span
                             >
                                 {isPending ? "Sending..." : "Send Message"}
-                            </motion.span>
-                            <motion.span
+                            </span>
+                            <span
                                 className="ml-2 inline-flex"
-                                animate={isPending ? {
-                                    rotate: 360,
-                                    transition: {
-                                        duration: 1,
-                                        repeat: Infinity,
-                                        ease: "linear"
-                                    }
-                                } : {}}
                             >
                                 {isPending ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
-                            </motion.span>
+                            </span>
                         </Button>
-                    </motion.div>
+                    </div>
                 </form>
             </Form>
-        </motion.div>
+        </div>
     );
 }

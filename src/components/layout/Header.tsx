@@ -1,7 +1,6 @@
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { motion, AnimatePresence } from "framer-motion";
 import ThemeToggle from "../theme/ThemeToggle";
 import ChatToggle from "../chatbot/chatbot-toggle";
 import { useMediaQuery } from "@/hooks/use-media-query";
@@ -81,40 +80,31 @@ export default function Header() {
                         </button>
                     </MobileNavHeader>
 
-                    <AnimatePresence>
-                        {isMenuOpen && (
-                            <motion.div
-                                initial={{ opacity: 0, y: -20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                exit={{ opacity: 0, y: -20 }}
-                                transition={{ duration: 0.2 }}
-                                className="fixed top-16 left-0 right-0 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-t"
-                            >
-                                <div className="flex flex-col gap-2 p-4">
-                                    {navLinks.map((nav, id) => (
-                                        <motion.div
-                                            key={id}
-                                            initial={{ opacity: 0, x: -10 }}
-                                            animate={{ opacity: 1, x: 0 }}
-                                            transition={{ delay: id * 0.1 }}
-                                        >
-                                            <Link
-                                                href={nav.link}
-                                                className={`block px-4 py-3 text-sm rounded-md transition-colors
+                    {isMenuOpen && (
+                        <div
+                            className="fixed top-16 left-0 right-0 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-t"
+                        >
+                            <div className="flex flex-col gap-2 p-4">
+                                {navLinks.map((nav, id) => (
+                                    <div
+                                        key={id}
+                                    >
+                                        <Link
+                                            href={nav.link}
+                                            className={`block px-4 py-3 text-sm rounded-md transition-colors
                                                     ${pathname === nav.link
-                                                        ? "bg-primary/10 text-primary font-medium"
-                                                        : "text-foreground/80 hover:bg-muted/50"
-                                                    }`}
-                                                onClick={() => setIsMenuOpen(false)}
-                                            >
-                                                {nav.name}
-                                            </Link>
-                                        </motion.div>
-                                    ))}
-                                </div>
-                            </motion.div>
-                        )}
-                    </AnimatePresence>
+                                                    ? "bg-primary/10 text-primary font-medium"
+                                                    : "text-foreground/80 hover:bg-muted/50"
+                                                }`}
+                                            onClick={() => setIsMenuOpen(false)}
+                                        >
+                                            {nav.name}
+                                        </Link>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    )}
                 </MobileNav>
             )}
         </Navbar>

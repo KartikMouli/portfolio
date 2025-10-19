@@ -1,9 +1,7 @@
 "use client";
 
-import { motion} from "framer-motion";
 import { FaSpotify } from "react-icons/fa";
 import { Music } from "lucide-react";
-
 import {
   HoverCard,
   HoverCardContent,
@@ -41,11 +39,8 @@ export default function SpotifyNowPlaying() {
   const renderSpotifyContent = () => {
     if (isLoading) {
       return (
-        <motion.div 
+        <div 
           className="space-y-3"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.3 }}
         >
           <div className="flex items-start gap-3">
             <Skeleton className="w-12 h-12 rounded-full" />
@@ -54,22 +49,17 @@ export default function SpotifyNowPlaying() {
               <Skeleton className="h-4 w-[100px]" />
             </div>
           </div>
-        </motion.div>
+        </div>
       );
     }
 
     if (spotifyData?.is_playing && spotifyData?.item) {
       return (
-        <motion.div 
+        <div 
           className="space-y-4"
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3 }}
         >
           <div className="flex items-start gap-3">
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+            <div
             >
               <Avatar className="w-12 h-12 ring-2 ring-[#1DB954]/20 dark:ring-[#1DB954]/30">
                 {spotifyData.item.album.images[0] ? (
@@ -86,32 +76,23 @@ export default function SpotifyNowPlaying() {
                   </AvatarFallback>
                 )}
               </Avatar>
-            </motion.div>
+            </div>
             <div className="flex-1 min-w-0">
-              <motion.p 
+              <p 
                 className="font-semibold truncate text-foreground"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.1 }}
               >
                 {spotifyData.item.name}
-              </motion.p>
-              <motion.p 
+              </p>
+              <p 
                 className="text-sm text-muted-foreground truncate"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.2 }}
               >
                 {spotifyData.item.artists[0].name}
-              </motion.p>
+              </p>
             </div>
           </div>
 
-          <motion.div 
+          <div 
             className="space-y-2"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.3 }}
           >
             <Progress 
               value={getProgressPercentage()} 
@@ -121,14 +102,11 @@ export default function SpotifyNowPlaying() {
               <span>{formatTime(spotifyData.progress_ms || 0)}</span>
               <span>{formatTime(spotifyData.item.duration_ms)}</span>
             </div>
-          </motion.div>
+          </div>
 
           {spotifyData.device && (
-            <motion.div 
+            <div 
               className="flex items-center gap-2"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.4 }}
             >
               <Badge variant="outline" className="text-xs bg-background/50">
                 <span className="flex items-center gap-1">
@@ -136,18 +114,15 @@ export default function SpotifyNowPlaying() {
                   <span className="font-medium">{spotifyData.device.name}</span>
                 </span>
               </Badge>
-            </motion.div>
+            </div>
           )}
-        </motion.div>
+        </div>
       );
     }
 
     return (
-      <motion.div 
+      <div 
         className="flex flex-col items-center justify-center p-4 space-y-3"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.3 }}
       >
         <div className="flex items-center gap-2">
           <Music className="w-6 h-6 text-muted-foreground" />
@@ -156,7 +131,7 @@ export default function SpotifyNowPlaying() {
         <p className="text-xs text-muted-foreground text-center">
           Probably coding something awesome or taking a well-deserved break!
         </p>
-      </motion.div>
+      </div>
     );
   };
 
@@ -164,10 +139,8 @@ export default function SpotifyNowPlaying() {
     return (
       <Popover>
         <PopoverTrigger asChild>
-          <motion.div
+          <div
             className="flex items-center gap-2 cursor-pointer"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
           >
             <FaSpotify className="text-[#1DB954] text-xl" />
             {spotifyData?.is_playing && spotifyData?.item && (
@@ -179,7 +152,7 @@ export default function SpotifyNowPlaying() {
                 </Marquee>
               </div>
             )}
-          </motion.div>
+          </div>
         </PopoverTrigger>
         <PopoverContent 
           className="w-[300px] mt-2 p-0 border-none shadow-lg" 
@@ -202,10 +175,8 @@ export default function SpotifyNowPlaying() {
   return (
     <HoverCard>
       <HoverCardTrigger asChild>
-        <motion.div
+        <div
           className="flex items-center gap-2 cursor-pointer"
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
         >
           <FaSpotify className="text-[#1DB954] text-xl" />
           {spotifyData?.is_playing && spotifyData?.item && (
@@ -221,7 +192,7 @@ export default function SpotifyNowPlaying() {
               </Marquee>
             </div>
           )}
-        </motion.div>
+        </div>
       </HoverCardTrigger>
       <HoverCardContent 
         className="p-0 rounded-2xl mt-3 border-none shadow-lg" 
