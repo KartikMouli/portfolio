@@ -1,262 +1,235 @@
 {
-    "projects": [
+  "projects": [
+    {
+      "name": "Valoarena",
+      "description": "A tournament booking platform for Valorant, allowing users to seamlessly create, manage, and join tournaments, driving community engagement and competitive interaction.",
+      "href": "https://valoarena.vercel.app/",
+      "image": "/img/project/valoarena.png",
+      "tags": ["NextJS", "TailwindCSS", "Supabase", "Prisma", "Docker"],
+      "links": [
         {
-            "name": "Valoarena",
-            "description": "A tournament booking platform for Valorant, allowing users to seamlessly create, manage, and join tournaments, driving community engagement and competitive interaction.",
-            "href": "https://valoarena.vercel.app/",
-            "image": "/img/project/valoarena.png",
-            "tags": [
-                "NextJS",
-                "TailwindCSS",
-                "Supabase",
-                "Prisma",
-                "Docker"
-            ],
-            "links": [
-                {
-                    "name": "Live Demo",
-                    "href": "https://valoarena.vercel.app/",
-                    "icon": "external-link"
-                },
-                {
-                    "name": "Source Code",
-                    "href": "https://github.com/KartikMouli/valoarena",
-                    "icon": "github"
-                }
-            ]
+          "name": "Live Demo",
+          "href": "https://valoarena.vercel.app/",
+          "icon": "external-link"
         },
         {
-            "name": "Clinic360",
-            "description": "A Doctor Search & Appointment Booking System enabling patients to find doctors, book/cancel appointments, and manage consultation schedules with advanced features like JWT authentication and automated notifications.",
-            "href": "https://clinic360.vercel.app/",
-            "image": "/img/project/clinic360.png",
-            "tags": [
-                "MongoDB",
-                "Express.js",
-                "React.js",
-                "Node.js",
-                "TailwindCSS",
-                "Redux",
-                "JWT",
-                "Nodemailer"
-            ],
-            "links": [
-                {
-                    "name": "Live Demo",
-                    "href": "https://clinic360.vercel.app/",
-                    "icon": "external-link"
-                },
-                {
-                    "name": "Source Code",
-                    "href": "https://github.com/KartikMouli/Clinic360",
-                    "icon": "github"
-                }
-            ]
-        },
-        {
-            "name": "Trustcall",
-            "description": "A Spam Detection and Contact Search API, featuring advanced search capabilities, role-based access control, and optimized performance with Django ORM and Redis.",
-            "href": "https://trustcall-api.onrender.com",
-            "image": "/img/project/trustcall.jpg",
-            "tags": [
-                "Django",
-                "Python",
-                "PostgreSQL",
-                "Django ORM",
-                "Redis",
-                "JWT"
-            ],
-            "links": [
-                {
-                    "name": "Live Demo",
-                    "href": "https://trustcall-api.onrender.com",
-                    "icon": "external-link"
-                },
-                {
-                    "name": "Source Code",
-                    "href": "https://github.com/KartikMouli/Trustcall_API"
-                }
-            ]
-        },
-        {
-            "name": "Linkhub",
-            "description": "LinkHub is a sleek, Linktree-style page built with Next.js, TypeScript, and Tailwind CSS. It offers an easy-to-use admin dashboard for managing and analyzing links stats.",
-            "href": "https://kartiklinks.vercel.app/",
-            "image": "/img/project/linktree.png",
-            "tags": [
-                "NextJS",
-                "TailwindCSS",
-                "Supabase",
-                "Zustand"
-            ],
-            "links": [
-                {
-                    "name": "Live Demo",
-                    "href": "https://kartiklinks.vercel.app/",
-                    "icon": "external-link"
-                },
-                {
-                    "name": "Source Code",
-                    "href": "https://github.com/KartikMouli/linktree",
-                    "icon": "github"
-                }
-            ]
-        },
-        {
-            "name": "Dexapp",
-            "description": "Mini version of cryptocurrency exchange with a liquidity provider interface and features like token transfer and swapping of tokens.",
-            "href": "https://dexapp-bc.vercel.app/",
-            "image": "/img/project/dexapp.webp",
-            "tags": [
-                "Blockchain",
-                "ReactJS",
-                "TailwindCSS",
-                "Sepolia Testnet",
-                "Ethereum",
-                "Solidity"
-            ],
-            "links": [
-                {
-                    "name": "Live Demo",
-                    "href": "https://dexapp-bc.vercel.app/",
-                    "icon": "external-link"
-                },
-                {
-                    "name": "Source Code",
-                    "href": "https://github.com/KartikMouli/DexApp",
-                    "icon": "github"
-                }
-            ]
-        },
-        {
-            "name": "ChatAI",
-            "description": "Developed an AI-driven chat platform with seamless user authentication using Clerk, providing real-time ChatGPT-like capabilities within a user-friendly dashboard.",
-            "href": "https://github.com/KartikMouli/ChatApp",
-            "image": "/img/project/chatAI.jpeg",
-            "tags": [
-                "MERN Stack",
-                "Google Gemini API",
-                "Clerk",
-                "ImageKit.io",
-                "React-Query"
-            ],
-            "links": [
-                {
-                    "name": "Live Demo",
-                    "href": "https://chat-ai-mu-dun.vercel.app/",
-                    "icon": "external-link"
-                },
-                {
-                    "name": "Source Code",
-                    "href": "https://github.com/KartikMouli/ChatAI",
-                    "icon": "github"
-                }
-            ]
-        },
-        {
-            "name": "AI NFT generator",
-            "description": "An AI-powered platform that creates unique, one-of-a-kind NFTs by generating custom art pieces based on user inputs, utilizing machine learning algorithms to craft digital collectibles.",
-            "href": "https://github.com/KartikMouli/AI-NFT-Generator",
-            "image": "/img/project/ainft.png",
-            "tags": [
-                "ReactJS",
-                "NFT",
-                "Hugging Face Model",
-                "Blockchain",
-                "Generative Art",
-                "Web3"
-            ],
-            "links": [
-                {
-                    "name": "Source Code",
-                    "href": "https://github.com/KartikMouli/AI-NFT-Generator",
-                    "icon": "github"
-                }
-            ]
-        },
-        {
-            "name": "Chatapp",
-            "description": "A real-time chat application that connects users through seamless messaging and interactive features. With a sleek interface and advanced functionalities, it enhances communication for individuals and groups alike.",
-            "href": "https://github.com/KartikMouli/ChatApp",
-            "image": "/img/project/chatapp.png",
-            "tags": [
-                "ReactJS",
-                "ChatEngine",
-                "Javascript",
-                "Firebase"
-            ],
-            "links": [
-                {
-                    "name": "Source Code",
-                    "href": "https://github.com/KartikMouli/ChatApp",
-                    "icon": "github"
-                }
-            ]
-        },
-        {
-            "name": "Portfolio",
-            "description": "A portfolio website that showcases my projects, skills, and achievements in a clear layout. Built with Tailwind CSS for a responsive design, it highlights my work in software development.",
-            "href": "https://github.com/KartikMouli/Portfolio",
-            "image": "/img/project/portfolio.jpg",
-            "tags": [
-                "NextJS",
-                "TypeScript",
-                "TailwindCSS"
-            ],
-            "links": [
-                {
-                    "name": "Source Code",
-                    "href": "https://github.com/KartikMouli/Portfolio",
-                    "icon": "github"
-                }
-            ]
+          "name": "Source Code",
+          "href": "https://github.com/KartikMouli/valoarena",
+          "icon": "github"
         }
-    ],
-    "extras": [
+      ]
+    },
+    {
+      "name": "Clinic360",
+      "description": "A Doctor Search & Appointment Booking System enabling patients to find doctors, book/cancel appointments, and manage consultation schedules with advanced features like JWT authentication and automated notifications.",
+      "href": "https://clinic360.vercel.app/",
+      "image": "/img/project/clinic360.png",
+      "tags": [
+        "MongoDB",
+        "Express.js",
+        "React.js",
+        "Node.js",
+        "TailwindCSS",
+        "Redux",
+        "JWT",
+        "Nodemailer"
+      ],
+      "links": [
         {
-            "name": "Blogapp",
-            "description": "A dynamic blogging platform that enables users to publish and explore a diverse range of articles. With intuitive navigation and customizable features, it fosters a vibrant community of writers and readers.",
-            "href": "https://github.com/KartikMouli/blog_app",
-            "image": "/img/project/blogapp.png",
-            "tags": [
-                "NextJS",
-                "MongoDB",
-                "Prisma ORM",
-                "Google OAuth 2.0",
-                "Javascript"
-            ],
-            "links": [
-                {
-                    "name": "Source Code",
-                    "href": "https://github.com/KartikMouli/blog_app",
-                    "icon": "github"
-                }
-            ]
+          "name": "Live Demo",
+          "href": "https://clinic360.vercel.app/",
+          "icon": "external-link"
         },
         {
-            "name": "Motion classification on ESP32",
-            "description": "The aim of the project was to implent a Neural Network on ESP32.",
-            "href": "https://github.com/KartikMouli/Portfolio",
-            "image": "/img/project/motion_classification.jpg",
-            "tags": [
-                "ESP32",
-                "MPU6050",
-                "Deep Learning",
-                "Edge Impulse Studio",
-                "Arduino IDE"
-            ],
-            "links": [
-                {
-                    "name": "Live Demo",
-                    "href": "https://youtu.be/LtaKCfnE5EM",
-                    "icon": "external-link"
-                },
-                {
-                    "name": "Source Code",
-                    "href": "https://github.com/KartikMouli/Motion_Cassification_using_Deep_Learning_On_ESP32",
-                    "icon": "github"
-                }
-            ]
+          "name": "Source Code",
+          "href": "https://github.com/KartikMouli/Clinic360",
+          "icon": "github"
         }
-    ]
+      ]
+    },
+    {
+      "name": "Trustcall",
+      "description": "A Spam Detection and Contact Search API, featuring advanced search capabilities, role-based access control, and optimized performance with Django ORM and Redis.",
+      "href": "https://trustcall-api.onrender.com",
+      "image": "/img/project/trustcall.jpg",
+      "tags": ["Django", "Python", "PostgreSQL", "Django ORM", "Redis", "JWT"],
+      "links": [
+        {
+          "name": "Live Demo",
+          "href": "https://trustcall-api.onrender.com",
+          "icon": "external-link"
+        },
+        {
+          "name": "Source Code",
+          "href": "https://github.com/KartikMouli/Trustcall_API"
+        }
+      ]
+    },
+    {
+      "name": "Linkhub",
+      "description": "LinkHub is a sleek, Linktree-style page built with Next.js, TypeScript, and Tailwind CSS. It offers an easy-to-use admin dashboard for managing and analyzing links stats.",
+      "href": "https://kartiklinks.vercel.app/",
+      "image": "/img/project/linktree.png",
+      "tags": ["NextJS", "TailwindCSS", "Supabase", "Zustand"],
+      "links": [
+        {
+          "name": "Live Demo",
+          "href": "https://kartiklinks.vercel.app/",
+          "icon": "external-link"
+        },
+        {
+          "name": "Source Code",
+          "href": "https://github.com/KartikMouli/linktree",
+          "icon": "github"
+        }
+      ]
+    },
+    {
+      "name": "Dexapp",
+      "description": "Mini version of cryptocurrency exchange with a liquidity provider interface and features like token transfer and swapping of tokens.",
+      "href": "https://dexapp-bc.vercel.app/",
+      "image": "/img/project/dexapp.webp",
+      "tags": [
+        "Blockchain",
+        "ReactJS",
+        "TailwindCSS",
+        "Sepolia Testnet",
+        "Ethereum",
+        "Solidity"
+      ],
+      "links": [
+        {
+          "name": "Live Demo",
+          "href": "https://dexapp-bc.vercel.app/",
+          "icon": "external-link"
+        },
+        {
+          "name": "Source Code",
+          "href": "https://github.com/KartikMouli/DexApp",
+          "icon": "github"
+        }
+      ]
+    },
+    {
+      "name": "ChatAI",
+      "description": "Developed an AI-driven chat platform with seamless user authentication using Clerk, providing real-time ChatGPT-like capabilities within a user-friendly dashboard.",
+      "href": "https://github.com/KartikMouli/ChatApp",
+      "image": "/img/project/chatAI.jpeg",
+      "tags": [
+        "MERN Stack",
+        "Google Gemini API",
+        "Clerk",
+        "ImageKit.io",
+        "React-Query"
+      ],
+      "links": [
+        {
+          "name": "Live Demo",
+          "href": "https://chat-ai-mu-dun.vercel.app/",
+          "icon": "external-link"
+        },
+        {
+          "name": "Source Code",
+          "href": "https://github.com/KartikMouli/ChatAI",
+          "icon": "github"
+        }
+      ]
+    },
+    {
+      "name": "AI NFT generator",
+      "description": "An AI-powered platform that creates unique, one-of-a-kind NFTs by generating custom art pieces based on user inputs, utilizing machine learning algorithms to craft digital collectibles.",
+      "href": "https://github.com/KartikMouli/AI-NFT-Generator",
+      "image": "/img/project/ainft.png",
+      "tags": [
+        "ReactJS",
+        "NFT",
+        "Hugging Face Model",
+        "Blockchain",
+        "Generative Art",
+        "Web3"
+      ],
+      "links": [
+        {
+          "name": "Source Code",
+          "href": "https://github.com/KartikMouli/AI-NFT-Generator",
+          "icon": "github"
+        }
+      ]
+    },
+    {
+      "name": "Chatapp",
+      "description": "A real-time chat application that connects users through seamless messaging and interactive features. With a sleek interface and advanced functionalities, it enhances communication for individuals and groups alike.",
+      "href": "https://github.com/KartikMouli/ChatApp",
+      "image": "/img/project/chatapp.png",
+      "tags": ["ReactJS", "ChatEngine", "Javascript", "Firebase"],
+      "links": [
+        {
+          "name": "Source Code",
+          "href": "https://github.com/KartikMouli/ChatApp",
+          "icon": "github"
+        }
+      ]
+    },
+    {
+      "name": "Portfolio",
+      "description": "A portfolio website that showcases my projects, skills, and achievements in a clear layout. Built with Tailwind CSS for a responsive design, it highlights my work in software development.",
+      "href": "https://github.com/KartikMouli/Portfolio",
+      "image": "/img/project/portfolio.jpg",
+      "tags": ["NextJS", "TypeScript", "TailwindCSS"],
+      "links": [
+        {
+          "name": "Source Code",
+          "href": "https://github.com/KartikMouli/Portfolio",
+          "icon": "github"
+        }
+      ]
+    }
+  ],
+  "extras": [
+    {
+      "name": "Blogapp",
+      "description": "A dynamic blogging platform that enables users to publish and explore a diverse range of articles. With intuitive navigation and customizable features, it fosters a vibrant community of writers and readers.",
+      "href": "https://github.com/KartikMouli/blog_app",
+      "image": "/img/project/blogapp.png",
+      "tags": [
+        "NextJS",
+        "MongoDB",
+        "Prisma ORM",
+        "Google OAuth 2.0",
+        "Javascript"
+      ],
+      "links": [
+        {
+          "name": "Source Code",
+          "href": "https://github.com/KartikMouli/blog_app",
+          "icon": "github"
+        }
+      ]
+    },
+    {
+      "name": "Motion classification on ESP32",
+      "description": "The aim of the project was to implent a Neural Network on ESP32.",
+      "href": "https://github.com/KartikMouli/Portfolio",
+      "image": "/img/project/motion_classification.jpg",
+      "tags": [
+        "ESP32",
+        "MPU6050",
+        "Deep Learning",
+        "Edge Impulse Studio",
+        "Arduino IDE"
+      ],
+      "links": [
+        {
+          "name": "Live Demo",
+          "href": "https://youtu.be/LtaKCfnE5EM",
+          "icon": "external-link"
+        },
+        {
+          "name": "Source Code",
+          "href": "https://github.com/KartikMouli/Motion_Cassification_using_Deep_Learning_On_ESP32",
+          "icon": "github"
+        }
+      ]
+    }
+  ]
 }

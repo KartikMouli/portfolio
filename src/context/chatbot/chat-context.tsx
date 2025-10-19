@@ -1,28 +1,28 @@
-"use client";
-import { createContext, ReactNode, useContext, useState } from "react";
+'use client';
+import { createContext, ReactNode, useContext, useState } from 'react';
 
 const ChatContext = createContext({
-    isVisible: true,
-    toggleChatbot: () => { },
+  isVisible: true,
+  toggleChatbot: () => {},
 });
 
 export const useChatbot = () => useContext(ChatContext);
 
 interface Props {
-    children: ReactNode;
+  children: ReactNode;
 }
 
 export function ChatProvider({ children }: Props) {
-    const [isVisible, setIsVisible] = useState(true);
+  const [isVisible, setIsVisible] = useState(true);
 
-    const toggleChatbot = () => {
-        console.log('Toggling chatbot, current state:', isVisible);
-        setIsVisible(!isVisible);
-    };
+  const toggleChatbot = () => {
+    console.log('Toggling chatbot, current state:', isVisible);
+    setIsVisible(!isVisible);
+  };
 
-    return (
-        <ChatContext.Provider value={{ isVisible, toggleChatbot }}>
-            {children}
-        </ChatContext.Provider>
-    );
+  return (
+    <ChatContext.Provider value={{ isVisible, toggleChatbot }}>
+      {children}
+    </ChatContext.Provider>
+  );
 }

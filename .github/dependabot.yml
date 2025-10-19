@@ -5,14 +5,14 @@
 
 version: 2
 updates:
-  - package-ecosystem: "npm" # Specify the package manager
-    directory: "/" # Location of the `package.json` file
+  - package-ecosystem: 'npm' # Specify the package manager
+    directory: '/' # Location of the `package.json` file
     schedule:
-      interval: "monthly" # Frequency of update checks
+      interval: 'monthly' # Frequency of update checks
     commit-message:
-      prefix: "chore(deps)" # Prefix for Dependabot commit messages
+      prefix: 'chore(deps)' # Prefix for Dependabot commit messages
     labels:
-      - "dependencies" # Label to categorize pull requests
+      - 'dependencies' # Label to categorize pull requests
     open-pull-requests-limit: 10 # Increased limit for open Dependabot PRs
-    versioning-strategy: "auto" # Options: auto, widen, lockfile-only
-    rebase-strategy: "auto" # Rebase only when necessary
+    versioning-strategy: 'auto' # Options: auto, widen, lockfile-only
+    rebase-strategy: 'auto' # Rebase only when necessary

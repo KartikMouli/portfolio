@@ -1,180 +1,180 @@
 {
-    "currentTech": [
-        {
-            "name": "TypeScript",
-            "description": "Enhanced JavaScript",
-            "imageUrl": "/logo/programming-languages/typescript.svg",
-            "bgColor": "#007ACC"
-        },
-        {
-            "name": "ReactJS",
-            "description": "UI Library",
-            "imageUrl": "/logo/webdev/react.svg",
-            "bgColor": "#61DAFB"
-        },
-        {
-            "name": "NextJS",
-            "description": "Server-Side Rendering",
-            "imageUrl": "/logo/webdev/nextjs.svg",
-            "bgColor": "white"
-        },
-        {
-            "name": "TailwindCSS",
-            "description": "Utility-First CSS",
-            "imageUrl": "/logo/webdev/tailwindcss.svg",
-            "bgColor": "#0EA5E9"
-        },
-        {
-            "name": "Git",
-            "description": "Version Control",
-            "imageUrl": "/logo/webdev/git.svg",
-            "bgColor": "#F1502F"
-        },
-        {
-            "name": "Supabase",
-            "description": "Open Source Backend",
-            "imageUrl": "/logo/webdev/supabase.svg",
-            "bgColor": "#3ECF8E"
-        }
-    ],
-    "Programming_Languages": [
-        {
-            "name": "C",
-            "description": "General Purpose",
-            "imageUrl": "/logo/programming-languages/c.svg",
-            "bgColor": "#004482"
-        },
-        {
-            "name": "C++",
-            "description": "Object-Oriented",
-            "imageUrl": "/logo/programming-languages/c++.svg",
-            "bgColor": "#004482"
-        },
-        {
-            "name": "Python",
-            "description": "Versatile Language",
-            "imageUrl": "/logo/programming-languages/python.svg",
-            "bgColor": "#3771A1"
-        },
-        {
-            "name": "JavaScript",
-            "description": "Web Scripting",
-            "imageUrl": "/logo/programming-languages/javascript.svg",
-            "bgColor": "#F0DB4F"
-        },
-        {
-            "name": "TypeScript",
-            "description": "Typed JavaScript",
-            "imageUrl": "/logo/programming-languages/typescript.svg",
-            "bgColor": "#007ACC"
-        },
-        {
-            "name": "SQL",
-            "description": "Database Language",
-            "imageUrl": "/logo/programming-languages/sql.svg",
-            "bgColor": "#00BCF2"
-        }
-    ],
-    "WebDevelopment_Tech": [
-        {
-            "name": "HTML",
-            "description": "Markup Language",
-            "imageUrl": "/logo/webdev/html.svg",
-            "bgColor": "#E34F26"
-        },
-        {
-            "name": "CSS",
-            "description": "Styling Language",
-            "imageUrl": "/logo/webdev/css.svg",
-            "bgColor": "#1B73BA"
-        },
-        {
-            "name": "TailwindCSS",
-            "description": "Utility-First CSS",
-            "imageUrl": "/logo/webdev/tailwindcss.svg",
-            "bgColor": "#0EA5E9"
-        },
-        {
-            "name": "ReactJS",
-            "description": "UI Library",
-            "imageUrl": "/logo/webdev/react.svg",
-            "bgColor": "#61DAFB"
-        },
-        {
-            "name": "NextJS",
-            "description": "Server-Side Framework",
-            "imageUrl": "/logo/webdev/nextjs.svg",
-            "bgColor": "white"
-        },
-        {
-            "name": "NodeJS",
-            "description": "JavaScript Runtime",
-            "imageUrl": "/logo/webdev/nodejs.svg",
-            "bgColor": "white"
-        },
-        {
-            "name": "ExpressJS",
-            "description": "Web Framework",
-            "imageUrl": "/logo/webdev/expressjs.svg",
-            "bgColor": "white"
-        },
-        {
-            "name": "Django",
-            "description": "Python Framework",
-            "imageUrl": "/logo/webdev/django.svg",
-            "bgColor": "#2BA977"
-        },
-        {
-            "name": "JWT",
-            "description": "Secure Authentication",
-            "imageUrl": "/logo/webdev/jwt.svg",
-            "bgColor": "black"
-        }
-    ],
-    "DevOps_Deployment_Tools": [
-        {
-            "name": "Docker",
-            "description": "Container Technology",
-            "imageUrl": "/logo/webdev/docker.svg",
-            "bgColor": "#0091E2"
-        },
-        {
-            "name": "Git",
-            "description": "Version Control",
-            "imageUrl": "/logo/webdev/git.svg",
-            "bgColor": "#F1502F"
-        },
-        {
-            "name": "Vercel",
-            "description": "Deployment Service",
-            "imageUrl": "/logo/webdev/vercel.svg",
-            "bgColor": "white"
-        }
-    ],
-    "Database_Technologies": [
-        {
-            "name": "MySQL",
-            "description": "Relational Database",
-            "imageUrl": "/logo/webdev/mysql.svg",
-            "bgColor": "black"
-        },
-        {
-            "name": "MongoDB",
-            "description": "NoSQL Database",
-            "imageUrl": "/logo/webdev/mongodb.svg",
-            "bgColor": "black"
-        },
-        {
-            "name": "Supabase",
-            "description": "Postgres Database",
-            "imageUrl": "/logo/webdev/supabase.svg",
-            "bgColor": "#3ECF8E"
-        },
-        {
-            "name": "Prisma",
-            "description": "ORM Client",
-            "imageUrl": "/logo/webdev/prisma.svg",
-            "bgColor": "white"
-        }
-    ]
+  "currentTech": [
+    {
+      "name": "TypeScript",
+      "description": "Enhanced JavaScript",
+      "imageUrl": "/logo/programming-languages/typescript.svg",
+      "bgColor": "#007ACC"
+    },
+    {
+      "name": "ReactJS",
+      "description": "UI Library",
+      "imageUrl": "/logo/webdev/react.svg",
+      "bgColor": "#61DAFB"
+    },
+    {
+      "name": "NextJS",
+      "description": "Server-Side Rendering",
+      "imageUrl": "/logo/webdev/nextjs.svg",
+      "bgColor": "white"
+    },
+    {
+      "name": "TailwindCSS",
+      "description": "Utility-First CSS",
+      "imageUrl": "/logo/webdev/tailwindcss.svg",
+      "bgColor": "#0EA5E9"
+    },
+    {
+      "name": "Git",
+      "description": "Version Control",
+      "imageUrl": "/logo/webdev/git.svg",
+      "bgColor": "#F1502F"
+    },
+    {
+      "name": "Supabase",
+      "description": "Open Source Backend",
+      "imageUrl": "/logo/webdev/supabase.svg",
+      "bgColor": "#3ECF8E"
+    }
+  ],
+  "Programming_Languages": [
+    {
+      "name": "C",
+      "description": "General Purpose",
+      "imageUrl": "/logo/programming-languages/c.svg",
+      "bgColor": "#004482"
+    },
+    {
+      "name": "C++",
+      "description": "Object-Oriented",
+      "imageUrl": "/logo/programming-languages/c++.svg",
+      "bgColor": "#004482"
+    },
+    {
+      "name": "Python",
+      "description": "Versatile Language",
+      "imageUrl": "/logo/programming-languages/python.svg",
+      "bgColor": "#3771A1"
+    },
+    {
+      "name": "JavaScript",
+      "description": "Web Scripting",
+      "imageUrl": "/logo/programming-languages/javascript.svg",
+      "bgColor": "#F0DB4F"
+    },
+    {
+      "name": "TypeScript",
+      "description": "Typed JavaScript",
+      "imageUrl": "/logo/programming-languages/typescript.svg",
+      "bgColor": "#007ACC"
+    },
+    {
+      "name": "SQL",
+      "description": "Database Language",
+      "imageUrl": "/logo/programming-languages/sql.svg",
+      "bgColor": "#00BCF2"
+    }
+  ],
+  "WebDevelopment_Tech": [
+    {
+      "name": "HTML",
+      "description": "Markup Language",
+      "imageUrl": "/logo/webdev/html.svg",
+      "bgColor": "#E34F26"
+    },
+    {
+      "name": "CSS",
+      "description": "Styling Language",
+      "imageUrl": "/logo/webdev/css.svg",
+      "bgColor": "#1B73BA"
+    },
+    {
+      "name": "TailwindCSS",
+      "description": "Utility-First CSS",
+      "imageUrl": "/logo/webdev/tailwindcss.svg",
+      "bgColor": "#0EA5E9"
+    },
+    {
+      "name": "ReactJS",
+      "description": "UI Library",
+      "imageUrl": "/logo/webdev/react.svg",
+      "bgColor": "#61DAFB"
+    },
+    {
+      "name": "NextJS",
+      "description": "Server-Side Framework",
+      "imageUrl": "/logo/webdev/nextjs.svg",
+      "bgColor": "white"
+    },
+    {
+      "name": "NodeJS",
+      "description": "JavaScript Runtime",
+      "imageUrl": "/logo/webdev/nodejs.svg",
+      "bgColor": "white"
+    },
+    {
+      "name": "ExpressJS",
+      "description": "Web Framework",
+      "imageUrl": "/logo/webdev/expressjs.svg",
+      "bgColor": "white"
+    },
+    {
+      "name": "Django",
+      "description": "Python Framework",
+      "imageUrl": "/logo/webdev/django.svg",
+      "bgColor": "#2BA977"
+    },
+    {
+      "name": "JWT",
+      "description": "Secure Authentication",
+      "imageUrl": "/logo/webdev/jwt.svg",
+      "bgColor": "black"
+    }
+  ],
+  "DevOps_Deployment_Tools": [
+    {
+      "name": "Docker",
+      "description": "Container Technology",
+      "imageUrl": "/logo/webdev/docker.svg",
+      "bgColor": "#0091E2"
+    },
+    {
+      "name": "Git",
+      "description": "Version Control",
+      "imageUrl": "/logo/webdev/git.svg",
+      "bgColor": "#F1502F"
+    },
+    {
+      "name": "Vercel",
+      "description": "Deployment Service",
+      "imageUrl": "/logo/webdev/vercel.svg",
+      "bgColor": "white"
+    }
+  ],
+  "Database_Technologies": [
+    {
+      "name": "MySQL",
+      "description": "Relational Database",
+      "imageUrl": "/logo/webdev/mysql.svg",
+      "bgColor": "black"
+    },
+    {
+      "name": "MongoDB",
+      "description": "NoSQL Database",
+      "imageUrl": "/logo/webdev/mongodb.svg",
+      "bgColor": "black"
+    },
+    {
+      "name": "Supabase",
+      "description": "Postgres Database",
+      "imageUrl": "/logo/webdev/supabase.svg",
+      "bgColor": "#3ECF8E"
+    },
+    {
+      "name": "Prisma",
+      "description": "ORM Client",
+      "imageUrl": "/logo/webdev/prisma.svg",
+      "bgColor": "white"
+    }
+  ]
 }
