@@ -3,7 +3,6 @@
 import Link from "next/link";
 import Socials from "../socials/Socials";
 import { motion } from "framer-motion";
-import VisitorCounter from "../visit-count/VisitorCounter";
 import { Separator } from "@/components/ui/separator";
 
 export default function Footer() {
@@ -102,24 +101,6 @@ export default function Footer() {
                         </Link>
                     </motion.span>
                 </motion.div>
-
-                <div className="flex items-center gap-2">
-                    <motion.div
-                        className="flex items-center gap-2"
-                        variants={elementVariants}
-                    >
-                        <span>Made with</span>
-                        <motion.span
-                            animate={{ scale: [1, 1.1, 1] }}
-                            transition={{ duration: 1, repeat: Infinity }}
-                        >
-                            ❤️
-                        </motion.span>
-                        <span>by kartikmouli</span>
-                    </motion.div>
-                    <Separator orientation="vertical" className="h-4" />
-                    <VisitorCounter />
-                </div>
             </motion.section>
         </motion.footer>
     );

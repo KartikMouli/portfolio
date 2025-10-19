@@ -161,30 +161,6 @@ function About() {
                 </motion.div>
             </motion.section>
 
-            {/* Movies Section */}
-            <motion.section
-                className="mb-20"
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                variants={staggerChildren}
-            >
-                <motion.div variants={fadeInUp}>
-                    <Badge variant="outline" className="mb-4">Movies</Badge>
-                    <h2 className="text-3xl font-bold mb-6">Movies I&apos;ve Watched</h2>
-                    <p className="text-lg text-muted-foreground mb-8">
-                        Want to know more about the movies I&apos;ve watched?
-                        Click below to dive into my movie list.
-                    </p>
-                    <Link href="/movies">
-                        <Button variant="outline" className="hover:cursor-pointer group">
-                            Explore Movies
-                            <ArrowRightIcon className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-                        </Button>
-                    </Link>
-                </motion.div>
-            </motion.section>
-
             {/* Stats Section */}
             <motion.section
                 initial="hidden"
