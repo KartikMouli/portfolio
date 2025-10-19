@@ -2,12 +2,12 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import Socials from "@/components/socials/Socials";
-import Projects from "@/components/project/Projects";
+import Socials from "@/components/socials";
+import Projects from "@/components/project/projects";
 import { ArrowRightIcon, AtSign, MapPinHouseIcon } from "lucide-react";
-import Skills from "@/components/skill/Skills";
-import ResumeButton from "@/components/resume-button/ResumeButton";
-import Timeline from "../about/Timeline";
+import Skills from "@/components/skill";
+import ResumeButton from "@/components/resume-button/resume-button";
+import Timeline from "../about/timeline";
 
 export default function HomeClient() {
 

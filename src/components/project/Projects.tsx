@@ -1,7 +1,7 @@
 'use client';
 
 import data from "@/data/projects.json";
-import { ProjectCard } from "./ProjectCard";
+import { ProjectCard } from "./project-card";
 
 interface Props {
     limit?: number;

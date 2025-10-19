@@ -2,7 +2,7 @@
 
 import React from 'react';
 import data from "@/data/skills.json";
-import TechCard from '@/components/tech-card/TechCard';
+import TechCard from '@/components/tech-card';
 
 // Define the type for each tech item
 interface TechItem {

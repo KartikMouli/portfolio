@@ -1,4 +1,4 @@
-import TechCard from "../tech-card/TechCard";
+import TechCard from "../tech-card";
 import data from "@/data/skills.json";
 
 const Skills = () => {

@@ -1,9 +1,9 @@
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import ThemeToggle from "../theme/ThemeToggle";
+import ThemeToggle from "../theme/theme-toggle";
 import ChatToggle from "../chatbot/chatbot-toggle";
-import { useMediaQuery } from "@/hooks/use-media-query";
+import { useMediaQuery } from "@/hooks/useMediaQuery";
 import { useState } from "react";
 import SpotifyNowPlaying from "../spotify/spotify-now-playing";
 import {

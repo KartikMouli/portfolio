@@ -10,7 +10,7 @@ import {
 import { Skeleton } from "../ui/skeleton";
 import { Card, CardContent, CardHeader } from "../ui/card";
 import { Progress } from "../ui/progress";
-import { useMediaQuery } from "@/hooks/use-media-query";
+import { useMediaQuery } from "@/hooks/useMediaQuery";
 import {
   Popover,
   PopoverContent,

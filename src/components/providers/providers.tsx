@@ -3,7 +3,7 @@
 import { ThemeProvider } from "@/context/theme/theme-provider"
 import { ChatProvider } from "../../context/chatbot/chat-context"
 
-import Chatbot from "../chatbot/Chatbot"
+import Chatbot from "../chatbot/chatbot"
 import { QueryClientProvider, hydrate } from '@tanstack/react-query'
 import getQueryClient from "@/lib/getQueryClient"
 import { Toaster } from "../ui/sonner"
