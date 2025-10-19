@@ -7,7 +7,7 @@ import Projects from "@/components/project/projects";
 import { ArrowRightIcon, AtSign, MapPinHouseIcon } from "lucide-react";
 import Skills from "@/components/skill";
 import ResumeButton from "@/components/resume-button/resume-button";
-import Timeline from "../about/timeline";
+import Timeline from "../timeline";
 
 export default function HomeClient() {
 
@@ -51,7 +51,7 @@ export default function HomeClient() {
               </h1>
               <div className="mt-1 gap-2">
                 <span className="text-sm px-2 py-1 rounded-full border border-gray-300 dark:border-gray-700 text-muted-foreground">
-                  Full-Stack Developer
+                  Software Developer
                 </span>
               </div>
             </div>
@@ -69,7 +69,7 @@ export default function HomeClient() {
               <span className="font-mono">IITP CSE&apos;24</span>
               <span className="hidden md:block">|</span>
               <div className="flex items-center">
-                <span>Full Stack Developer Intern</span>
+                <span>Software Developer</span>
                 <Link
                   href="https://unizoy.com"
                   target="_blank"

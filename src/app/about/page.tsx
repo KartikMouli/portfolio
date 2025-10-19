@@ -5,7 +5,7 @@ import { ArrowRightIcon } from 'lucide-react';
 import { FaFacebook, FaInstagram, FaSnapchat, FaThreads } from "react-icons/fa6";
 import Link from 'next/link';
 import React from 'react';
-import StatsCard from '@/components/about/stats-card';
+import StatsCard from '@/components/stats-card';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 
