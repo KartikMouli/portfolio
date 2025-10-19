@@ -1,9 +1,9 @@
-import { GoogleGenerativeAI } from "@google/generative-ai";
-import { NextResponse } from "next/server";
-import { PROMPT_CONTEXT } from "@/data/chatbot";
+import { GoogleGenerativeAI } from '@google/generative-ai';
+import { NextResponse } from 'next/server';
+import { PROMPT_CONTEXT } from '@/data/chatbot';
 
 // Initialize the Gemini API
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
 
 export async function POST(request: Request) {
   try {
@@ -11,13 +11,13 @@ export async function POST(request: Request) {
 
     if (!message) {
       return NextResponse.json(
-        { error: "Message is required" },
+        { error: 'Message is required' },
         { status: 400 }
       );
     }
 
     // Get the generative model
-    const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
+    const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
 
     // Start a chat session with markdown formatting instruction
     const markdownInstructions = `Please format your responses using markdown for better readability. Use:
@@ -31,12 +31,16 @@ export async function POST(request: Request) {
     const chat = model.startChat({
       history: [
         {
-          role: "user",
+          role: 'user',
           parts: [{ text: `${PROMPT_CONTEXT}\n\n${markdownInstructions}` }],
         },
         {
-          role: "model",
-          parts: [{ text: "I understand. I'll help answer questions about Kartik's portfolio, projects, and career while maintaining a professional and friendly tone. I'll format my responses using markdown for better readability." }],
+          role: 'model',
+          parts: [
+            {
+              text: "I understand. I'll help answer questions about Kartik's portfolio, projects, and career while maintaining a professional and friendly tone. I'll format my responses using markdown for better readability.",
+            },
+          ],
         },
       ],
     });
@@ -48,10 +52,10 @@ export async function POST(request: Request) {
 
     return NextResponse.json({ response: text });
   } catch (error) {
-    console.error("Chatbot API Error:", error);
+    console.error('Chatbot API Error:', error);
     return NextResponse.json(
-      { error: "Failed to process chat message" },
+      { error: 'Failed to process chat message' },
       { status: 500 }
     );
   }
-} 
+}

@@ -1,7 +1,7 @@
-import { generateRandomString } from "@/lib/utils";
-import { getSpotifyModel } from "@/models/spotify";
-import connectDB from "@/lib/mongodb";
-import axios from "axios";
+import { generateRandomString } from '@/lib/utils';
+import { getSpotifyModel } from '@/models/spotify';
+import connectDB from '@/lib/mongodb';
+import axios from 'axios';
 
 // Use server-side environment variables
 const client_id = process.env.SPOTIFY_CLIENT_ID as string;
@@ -35,10 +35,11 @@ export const getAuthorizationUrl = () => {
 export const getAccessToken = async (code?: string) => {
   await connectDB();
   const Spotify = await getSpotifyModel();
-  
+
   if (code) {
     // Handle initial authorization code flow
-    const response = await axios.post('https://accounts.spotify.com/api/token',
+    const response = await axios.post(
+      'https://accounts.spotify.com/api/token',
       new URLSearchParams({
         grant_type: 'authorization_code',
         code: code,
@@ -47,7 +48,7 @@ export const getAccessToken = async (code?: string) => {
       {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
-          'Authorization': `Basic ${Buffer.from(`${client_id}:${client_secret}`).toString('base64')}`,
+          Authorization: `Basic ${Buffer.from(`${client_id}:${client_secret}`).toString('base64')}`,
         },
       }
     );
@@ -66,9 +67,11 @@ export const getAccessToken = async (code?: string) => {
 
   // Handle refresh token flow
   const spotifyData = await Spotify.findOne();
-  
+
   if (!spotifyData) {
-    throw new Error('No Spotify tokens found. Please connect your Spotify account first.');
+    throw new Error(
+      'No Spotify tokens found. Please connect your Spotify account first.'
+    );
   }
 
   // Check if token needs refresh (refresh 5 minutes before expiry)
@@ -78,7 +81,8 @@ export const getAccessToken = async (code?: string) => {
 
   if (now.getTime() + fiveMinutes >= expiresAt.getTime()) {
     // Token needs refresh
-    const response = await axios.post('https://accounts.spotify.com/api/token', 
+    const response = await axios.post(
+      'https://accounts.spotify.com/api/token',
       new URLSearchParams({
         grant_type: 'refresh_token',
         refresh_token: spotifyData.refresh_token,
@@ -86,7 +90,7 @@ export const getAccessToken = async (code?: string) => {
       {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
-          'Authorization': `Basic ${Buffer.from(`${client_id}:${client_secret}`).toString('base64')}`,
+          Authorization: `Basic ${Buffer.from(`${client_id}:${client_secret}`).toString('base64')}`,
         },
       }
     );
@@ -101,7 +105,7 @@ export const getAccessToken = async (code?: string) => {
     // Update the token in database
     await Spotify.findOneAndUpdate(
       {},
-      { 
+      {
         access_token: data.access_token,
         expires_at: newExpiresAt,
       },
@@ -115,7 +119,8 @@ export const getAccessToken = async (code?: string) => {
 };
 
 export const saveTokens = async (code: string) => {
-  const response = await axios.post('https://accounts.spotify.com/api/token',
+  const response = await axios.post(
+    'https://accounts.spotify.com/api/token',
     new URLSearchParams({
       grant_type: 'authorization_code',
       code: code,
@@ -124,7 +129,7 @@ export const saveTokens = async (code: string) => {
     {
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
-        'Authorization': `Basic ${Buffer.from(`${client_id}:${client_secret}`).toString('base64')}`,
+        Authorization: `Basic ${Buffer.from(`${client_id}:${client_secret}`).toString('base64')}`,
       },
     }
   );
@@ -140,7 +145,7 @@ export const saveTokens = async (code: string) => {
   const Spotify = await getSpotifyModel();
   await Spotify.findOneAndUpdate(
     {},
-    { 
+    {
       access_token: data.access_token,
       refresh_token: data.refresh_token,
       expires_at,
@@ -153,4 +158,4 @@ export const saveTokens = async (code: string) => {
     refresh_token: data.refresh_token,
     expires_in: data.expires_in,
   };
-}; 
+};

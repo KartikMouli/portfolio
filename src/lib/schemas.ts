@@ -19,7 +19,6 @@ export const ProjectSchema = z.object({
 // Define the schema for an array of Project objects
 export const ProjectsSchema = z.array(ProjectSchema);
 
-
 // Define Zod schema for education data
 export const EducationItemSchema = z.object({
   image: z.string(),
@@ -33,26 +32,24 @@ export const EducationItemSchema = z.object({
 export const EducationDataSchema = z.array(EducationItemSchema);
 
 export const formSchema = z.object({
-  name: z.string().min(1, "Name must be at least 1 characters long."),
-  email: z.string().email("Invalid email address."),
-  message: z.string().min(1, "Message must be at least 1 characters."),
+  name: z.string().min(1, 'Name must be at least 1 characters long.'),
+  email: z.string().email('Invalid email address.'),
+  message: z.string().min(1, 'Message must be at least 1 characters.'),
 });
-
 
 // Define the schema for TechCard's cardInfo prop
 export const TechCardSchema = z.object({
-  name: z.string().min(1, "Name is required"),
-  description: z.string().min(1, "Description is required"),
+  name: z.string().min(1, 'Name is required'),
+  description: z.string().min(1, 'Description is required'),
   imageUrl: z.string(),
   bgColor: z.string(),
 });
 
-
 // Define the schema for ExperienceItem
 export const ExperienceItemSchema = z.object({
-  company: z.string().min(1, "Company is required"),
-  role: z.string().min(1, "Role is required"),
-  period: z.string().min(1, "Period is required"),
+  company: z.string().min(1, 'Company is required'),
+  role: z.string().min(1, 'Role is required'),
+  period: z.string().min(1, 'Period is required'),
   image: z.string().optional(),
 });
 

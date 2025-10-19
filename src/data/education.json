@@ -1,25 +1,25 @@
 {
-    "educationData": [
-        {
-            "degree": "BTech in Computer Science and Engineering",
-            "web":"https://www.iitp.ac.in/",
-            "university": "Indian Institute of Technology (IIT) Patna",
-            "period": "Patna, Bihar | 2020 - 2024",
-            "image": "/logo/edu/iit_patna_logo.png"
-        },
-        {
-            "degree": "HSC Exam conducted by Maharashtra State Board",
-            "web":"https://www.globalinternationalschool.in/",
-            "university": "Global Public School & Jr. College",
-            "period": "Nashik, Maharashtra | 2020",
-            "image": "/logo/edu/global_logo.jpg"
-        },
-        {
-            "degree": "SSC Exam conducted by Maharashtra State Board",
-            "web":"https://mvp.edu.in/mvpsite/",
-            "university": "New Maratha Highschool",
-            "period": "Nashik, Maharashtra | 2018",
-            "image": "/logo/edu/mvp_logo.jpg"
-        }
-    ]
+  "educationData": [
+    {
+      "degree": "BTech in Computer Science and Engineering",
+      "web": "https://www.iitp.ac.in/",
+      "university": "Indian Institute of Technology (IIT) Patna",
+      "period": "Patna, Bihar | 2020 - 2024",
+      "image": "/logo/edu/iit_patna_logo.png"
+    },
+    {
+      "degree": "HSC Exam conducted by Maharashtra State Board",
+      "web": "https://www.globalinternationalschool.in/",
+      "university": "Global Public School & Jr. College",
+      "period": "Nashik, Maharashtra | 2020",
+      "image": "/logo/edu/global_logo.jpg"
+    },
+    {
+      "degree": "SSC Exam conducted by Maharashtra State Board",
+      "web": "https://mvp.edu.in/mvpsite/",
+      "university": "New Maratha Highschool",
+      "period": "Nashik, Maharashtra | 2018",
+      "image": "/logo/edu/mvp_logo.jpg"
+    }
+  ]
 }

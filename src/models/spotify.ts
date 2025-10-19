@@ -18,7 +18,8 @@ let Spotify: mongoose.Model<{
 async function getSpotifyModel() {
   if (!Spotify) {
     await connectDB();
-    Spotify = mongoose.models.Spotify || mongoose.model('Spotify', spotifySchema);
+    Spotify =
+      mongoose.models.Spotify || mongoose.model('Spotify', spotifySchema);
   }
   return Spotify;
 }
@@ -121,4 +122,4 @@ export interface SpotifyData {
   };
 }
 
-export { getSpotifyModel }; 
+export { getSpotifyModel };

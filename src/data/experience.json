@@ -1,16 +1,16 @@
 {
-    "experienceData": [
-        {
-            "company": "Unizoy",
-            "role": "Full Stack Developer Intern",
-            "period": "Apr 2024 - Sept 2024",
-            "image": "https://avatars.githubusercontent.com/u/142896542?s=200&v=4"
-        },
-        {
-            "company": "Unizoy",
-            "role": "Software Developer",
-            "period": "Sept 2024 - Present",
-            "image": "https://avatars.githubusercontent.com/u/142896542?s=200&v=4"
-        }
-    ]
+  "experienceData": [
+    {
+      "company": "Unizoy",
+      "role": "Full Stack Developer Intern",
+      "period": "Apr 2024 - Sept 2024",
+      "image": "https://avatars.githubusercontent.com/u/142896542?s=200&v=4"
+    },
+    {
+      "company": "Unizoy",
+      "role": "Software Developer",
+      "period": "Sept 2024 - Present",
+      "image": "https://avatars.githubusercontent.com/u/142896542?s=200&v=4"
+    }
+  ]
 }
