@@ -1,7 +1,6 @@
 import Image from "next/image";
 import { Card, CardContent } from "@/components/ui/card";
 import { TechCardSchema } from "@/lib/schemas";
-import { motion } from "framer-motion";
 
 const TechCard = ({
     cardInfo,
@@ -28,12 +27,6 @@ const TechCard = ({
     const opacity = bgColor === "white" ? 0.9 : 0.2;
 
     return (
-        <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3 }}
-            whileHover={{ scale: 1.02 }}
-        >
             <Card
                 className="flex items-center whitespace-nowrap rounded-xl hover:shadow-lg transition-all duration-300 border border-zinc-200 dark:border-zinc-800 bg-white/50 dark:bg-zinc-900/50 backdrop-blur-sm"
                 aria-label={`Technology: ${name}, Description: ${description}`}
@@ -41,14 +34,12 @@ const TechCard = ({
                 {/* Image Section */}
                 <div className="mx-2 relative shrink-0">
                     {/* Background with reduced opacity for the image */}
-                    <motion.div
+                    <div
                         className="absolute inset-0 rounded-full"
                         style={{
                             backgroundColor: bgColor,
                             opacity,
                         }}
-                        whileHover={{ scale: 1.1 }}
-                        transition={{ duration: 0.2 }}
                     />
                     <div className="relative z-10 p-2 rounded-full">
                         <Image
@@ -56,7 +47,7 @@ const TechCard = ({
                             alt={`${name} logo`}
                             width={40}
                             height={40}
-                            className="size-7 rounded-full transition-transform duration-300 hover:scale-110"
+                            className="size-7 rounded-full"
                             priority
                         />
                     </div>
@@ -64,23 +55,18 @@ const TechCard = ({
 
                 {/* Content Section */}
                 <CardContent className="p-3 relative z-10 text-ellipsis overflow-hidden">
-                    <motion.h5 
+                    <h5 
                         className="text-sm font-semibold text-ellipsis overflow-hidden text-zinc-800 dark:text-zinc-200"
-                        whileHover={{ x: 2 }}
-                        transition={{ duration: 0.2 }}
                     >
                         {name}
-                    </motion.h5>
-                    <motion.p 
+                    </h5>
+                    <p
                         className="text-xs font-extralight text-ellipsis overflow-hidden text-zinc-600 dark:text-zinc-400"
-                        whileHover={{ x: 2 }}
-                        transition={{ duration: 0.2 }}
                     >
                         {description}
-                    </motion.p>
+                    </p>
                 </CardContent>
             </Card>
-        </motion.div>
     );
 };
 

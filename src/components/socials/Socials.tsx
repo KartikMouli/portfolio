@@ -4,7 +4,6 @@ import { SiLeetcode } from "react-icons/si";
 import { FaXTwitter } from 'react-icons/fa6';
 import { FaGithub, FaEnvelope, FaLinkedin } from 'react-icons/fa';
 import Link from "next/link";
-import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 const socialLinks = [
@@ -36,71 +35,14 @@ const socialLinks = [
 ];
 
 export default function Socials() {
-    const containerVariants = {
-        hidden: { opacity: 0 },
-        visible: {
-            opacity: 1,
-            transition: {
-                delayChildren: 0.3,
-                staggerChildren: 0.1
-            }
-        }
-    };
-
-    const itemVariants = {
-        hidden: { y: 10, opacity: 0 },
-        visible: {
-            y: 0,
-            opacity: 1,
-            transition: {
-                duration: 0.4,
-                ease: "easeOut"
-            }
-        }
-    };
-
-    const hoverVariants = {
-        rest: { 
-            scale: 1,
-            y: 0
-        },
-        hover: { 
-            scale: 1.05,
-            y: -2,
-            transition: {
-                duration: 0.2,
-                ease: "easeOut"
-            }
-        },
-        tap: { 
-            scale: 0.98,
-            transition: {
-                duration: 0.1
-            }
-        }
-    };
-
     return (
-        <motion.section 
+        <section 
             className="flex justify-center gap-3"
-            variants={containerVariants}
-            initial="hidden"
-            animate="visible"
-            whileInView="visible"
-            viewport={{ once: true }}
         >
             {socialLinks.map(({ href, icon, label }) => (
-                <motion.div
+                <div
                     key={label}
-                    variants={itemVariants}
-                    whileHover="hover"
-                    whileTap="tap"
-                    initial="rest"
                 >
-                    <motion.div
-                        variants={hoverVariants}
-                        style={{ originX: 0.5, originY: 0.5 }}
-                    >
                         <Link
                             href={href}
                             target="_blank"
@@ -110,16 +52,16 @@ export default function Socials() {
                                 "bg-transparent hover:bg-accent/50",
                                 "transition-all duration-300",
                                 "border border-border/50 hover:border-border",
-                                "text-dark hover:text-foreground"
+                                "text-dark hover:text-foreground",
+                                "hover:cursor-pointer hover:scale-110 transition-all duration-300"
                             )}
                             title={label}
                         >
-                            <motion.span className="sr-only">{label}</motion.span>
+                            <span className="sr-only">{label}</span>
                             {icon}
                         </Link>
-                    </motion.div>
-                </motion.div>
+                </div>
             ))}
-        </motion.section>
+        </section>
     );
 }

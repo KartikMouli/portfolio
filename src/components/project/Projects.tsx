@@ -2,7 +2,6 @@
 
 import data from "@/data/projects.json";
 import { ProjectCard } from "./ProjectCard";
-import { motion } from "framer-motion";
 
 interface Props {
     limit?: number;
@@ -14,52 +13,18 @@ export default function Projects({ limit }: Props) {
         projects = projects.slice(0, limit);
     }
 
-    // Container animation variants
-    const containerVariants = {
-        hidden: { opacity: 0 },
-        visible: {
-            opacity: 1,
-            transition: {
-                staggerChildren: 0.2, // Delay between each project card
-                delayChildren: 0.1,   // Initial delay before starting animations
-            }
-        }
-    };
-
-    // Item animation variants
-    const itemVariants = {
-        hidden: { 
-            opacity: 0,
-            y: 20,
-        },
-        visible: {
-            opacity: 1,
-            y: 0,
-            transition: {
-                duration: 0.5,
-                ease: "easeOut"
-            }
-        }
-    };
-
     return (
-        <motion.section 
+        <section 
             className="grid grid-cols-1 gap-6 sm:grid-cols-2 px-1"
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-50px" }}
         >
             {projects.map((project, id) => (
-                <motion.div
+                <div
                     key={id}
-                    variants={itemVariants}
-                    whileHover={{ scale: 1.01 }}
-                    transition={{ duration: 0.2, ease: "easeOut" }}
+                    className="hover:cursor-pointer hover:scale-105 transition-all duration-300"
                 >
                     <ProjectCard project={project} />
-                </motion.div>
+                </div>
             ))}
-        </motion.section>
+        </section>
     );
 }

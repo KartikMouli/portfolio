@@ -2,10 +2,8 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import data from '@/data/education.json'
 import Link from 'next/link';
-import {EducationDataSchema} from '@/lib/schemas';
-import { motion, AnimatePresence } from 'framer-motion';
+import { EducationDataSchema } from '@/lib/schemas';
 import { GraduationCap, Briefcase } from 'lucide-react';
-
 
 // Validate the education data
 const educationData = EducationDataSchema.parse(data.educationData);
@@ -19,19 +17,13 @@ const Timeline: React.FC = () => {
             label: 'Education',
             icon: <GraduationCap className="w-4 h-4" />,
             content: (
-                <motion.ul 
+                <ul
                     className="space-y-4"
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -20 }}
                 >
                     {educationData.map((edu, index) => (
-                        <motion.li 
-                            key={index} 
+                        <li
+                            key={index}
                             className="relative"
-                            initial={{ opacity: 0, x: -20 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            transition={{ delay: index * 0.1 }}
                         >
                             <div className="flex items-start group">
                                 <div className="rounded-lg p-3 w-full bg-card border border-border hover:border-primary/50 transition-colors duration-300">
@@ -46,8 +38,8 @@ const Timeline: React.FC = () => {
                                             />
                                         </div>
                                         <div className="grow">
-                                            <Link 
-                                                href={edu.web} 
+                                            <Link
+                                                href={edu.web}
                                                 target="_blank"
                                                 rel="noopener noreferrer"
                                                 className="group-hover:text-primary transition-colors duration-300"
@@ -60,9 +52,9 @@ const Timeline: React.FC = () => {
                                     </div>
                                 </div>
                             </div>
-                        </motion.li>
+                        </li>
                     ))}
-                </motion.ul>
+                </ul>
             )
         },
         {
@@ -70,16 +62,11 @@ const Timeline: React.FC = () => {
             label: 'Experience',
             icon: <Briefcase className="w-4 h-4" />,
             content: (
-                <motion.div
+                <div
                     className="space-y-4"
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -20 }}
                 >
-                    <motion.div 
+                    <div
                         className="relative"
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={{ opacity: 1, x: 0 }}
                     >
                         <div className="flex items-start group">
                             <div className="rounded-lg p-3 w-full bg-card border border-border hover:border-primary/50 transition-colors duration-300">
@@ -94,8 +81,8 @@ const Timeline: React.FC = () => {
                                         />
                                     </div>
                                     <div className="grow">
-                                        <Link 
-                                            href="https://unizoy.com" 
+                                        <Link
+                                            href="https://unizoy.com"
                                             target="_blank"
                                             rel="noopener noreferrer"
                                             className="group-hover:text-primary transition-colors duration-300"
@@ -108,8 +95,8 @@ const Timeline: React.FC = () => {
                                 </div>
                             </div>
                         </div>
-                    </motion.div>
-                </motion.div>
+                    </div>
+                </div>
             )
         }
     ];
@@ -121,32 +108,25 @@ const Timeline: React.FC = () => {
                     <button
                         key={tab.id}
                         onClick={() => setActiveTab(tab.id as 'education' | 'experience')}
-                        className={`inline-flex items-center justify-center whitespace-nowrap rounded-md px-3 py-1 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 ${
-                            activeTab === tab.id
+                        className={`inline-flex items-center justify-center whitespace-nowrap rounded-md px-3 py-1 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 ${activeTab === tab.id
                                 ? 'bg-background text-foreground shadow-sm'
                                 : 'hover:text-foreground'
-                        }`}
+                            }`}
                     >
                         {tab.icon}
                         <span className="ml-2">{tab.label}</span>
                     </button>
                 ))}
             </div>
-            <AnimatePresence mode="wait">
-                {tabs.map((tab) => (
-                    activeTab === tab.id && (
-                        <motion.div
-                            key={tab.id}
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: -20 }}
-                            transition={{ duration: 0.2 }}
-                        >
-                            {tab.content}
-                        </motion.div>
-                    )
-                ))}
-            </AnimatePresence>
+            {tabs.map((tab) => (
+                activeTab === tab.id && (
+                    <div
+                        key={tab.id}
+                    >
+                        {tab.content}
+                    </div>
+                )
+            ))}
         </div>
     );
 };
