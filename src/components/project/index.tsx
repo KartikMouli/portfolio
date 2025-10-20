@@ -16,10 +16,7 @@ export default function Projects({ limit }: Props) {
   return (
     <section className="grid grid-cols-1 gap-6 sm:grid-cols-2 px-1">
       {projects.map((project, id) => (
-        <div
-          key={id}
-          className="hover:cursor-pointer hover:scale-105 transition-all duration-300"
-        >
+        <div key={id} className="hover:cursor-pointer">
           <ProjectCard project={project} />
         </div>
       ))}
