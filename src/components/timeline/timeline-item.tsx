@@ -2,7 +2,7 @@ import { TimelineItemSchema } from '@/lib/schemas';
 import Link from 'next/link';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 import { Badge } from '../ui/badge';
-import Icon from '../icon';
+import { ExternalLink } from 'lucide-react';
 
 interface Props {
   timelineItem: TimelineItemSchema;
@@ -51,9 +51,14 @@ export default function TimelineItem({ timelineItem }: Props) {
       {links && links.length > 0 && (
         <div className="mt-2 flex flex-row flex-wrap items-start gap-2">
           {links?.map((link, idx) => (
-            <Link href={link.href} key={idx}>
+            <Link
+              href={link.href}
+              key={idx}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <Badge key={idx} title={link.name} className="flex gap-2">
-                <Icon name={link.icon} aria-hidden="true" className="size-3" />
+                <ExternalLink aria-hidden="true" className="size-3" />
                 {link.name}
               </Badge>
             </Link>

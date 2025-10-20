@@ -1,4 +1,3 @@
-import dynamicIconImports from 'lucide-react/dynamicIconImports';
 import { z } from 'zod';
 
 // Define the schema for ProjectLink
@@ -37,7 +36,6 @@ export const TechCardSchema = z.object({
 const iconLink = z.object({
   name: z.string(),
   href: z.string().url(),
-  icon: z.custom<keyof typeof dynamicIconImports>(),
 });
 export type IconLink = z.infer<typeof iconLink>;
 
