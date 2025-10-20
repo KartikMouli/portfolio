@@ -1,16 +1,31 @@
 {
   "experienceData": [
     {
-      "company": "Unizoy",
-      "role": "Full Stack Developer Intern",
-      "period": "Apr 2024 - Sept 2024",
-      "image": "https://avatars.githubusercontent.com/u/142896542?s=200&v=4"
+      "name": "Unizoy",
+      "href": "https://unizoy.com",
+      "title": "Full Stack Developer (Intern)",
+      "logo": "https://avatars.githubusercontent.com/u/142896542?s=200&v=4",
+      "start": "Apr 2025",
+      "end": "Sept 2025",
+      "description": [
+        "Developed and optimized a full-stack (ReactJS + NestJS) Trader Management Software — implemented frontend UI based on Figma designs and reduced backend API latency from 900ms+ to under 200ms through query optimization and efficient data handling.",
+        "Built AI-driven chatbot solutions — designed and implemented chatbot UIs, integrated WhatsApp webhooks, and contributed to developing Retrieval-Augmented Generation (RAG) chatbots for Unizoy’s AI platform."
+      ],
+      "links": [
+        {
+          "name": "Certificate",
+          "href": "https://drive.google.com/file/d/1z-HVdAnE5Aoy1n35bKkwzsrWYmjntKkx/view?usp=sharing"
+        }
+      ]
     },
     {
-      "company": "Unizoy",
-      "role": "Software Developer",
-      "period": "Sept 2024 - Present",
-      "image": "https://avatars.githubusercontent.com/u/142896542?s=200&v=4"
+      "name": "Unizoy",
+      "href": "https://unizoy.com",
+      "title": "Software Developer",
+      "logo": "https://avatars.githubusercontent.com/u/142896542?s=200&v=4",
+      "start": "Sept 2025",
+      "end": "Present",
+      "description": ["Working on Unizoy's AI platform"]
     }
   ]
 }

@@ -19,18 +19,6 @@ export const ProjectSchema = z.object({
 // Define the schema for an array of Project objects
 export const ProjectsSchema = z.array(ProjectSchema);
 
-// Define Zod schema for education data
-export const EducationItemSchema = z.object({
-  image: z.string(),
-  university: z.string().min(1),
-  degree: z.string().min(1),
-  period: z.string().min(1),
-  web: z.string().url(),
-});
-
-// Define schema for the entire education data array
-export const EducationDataSchema = z.array(EducationItemSchema);
-
 export const formSchema = z.object({
   name: z.string().min(1, 'Name must be at least 1 characters long.'),
   email: z.string().email('Invalid email address.'),
@@ -45,13 +33,23 @@ export const TechCardSchema = z.object({
   bgColor: z.string(),
 });
 
-// Define the schema for ExperienceItem
-export const ExperienceItemSchema = z.object({
-  company: z.string().min(1, 'Company is required'),
-  role: z.string().min(1, 'Role is required'),
-  period: z.string().min(1, 'Period is required'),
-  image: z.string().optional(),
+const iconLink = z.object({
+  name: z.string(),
+  href: z.string().url(),
+});
+export type IconLink = z.infer<typeof iconLink>;
+
+const timelineItem = z.object({
+  name: z.string(),
+  href: z.string(),
+  title: z.string(),
+  logo: z.string(),
+  start: z.string(),
+  end: z.string().optional(),
+  description: z.array(z.string()).optional(),
+  links: z.array(iconLink).optional(),
 });
 
-// Define schema for the entire experience data array
-export const ExperienceDataSchema = z.array(ExperienceItemSchema);
+export type TimelineItemSchema = z.infer<typeof timelineItem>;
+export const ExperienceSchema = z.array(timelineItem);
+export const EducationSchema = z.array(timelineItem);

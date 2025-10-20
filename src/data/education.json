@@ -1,25 +1,32 @@
 {
   "educationData": [
     {
-      "degree": "BTech in Computer Science and Engineering",
-      "web": "https://www.iitp.ac.in/",
-      "university": "Indian Institute of Technology (IIT) Patna",
-      "period": "Patna, Bihar | 2020 - 2024",
-      "image": "/logo/edu/iit_patna_logo.png"
+      "name": "Indian Institute of Technology (IIT) Patna",
+      "href": "https://www.iitp.ac.in/",
+      "title": "BTech in Computer Science and Engineering",
+      "logo": "/logo/edu/iit_patna_logo.png",
+      "start": "July 2020",
+      "end": "May 2024",
+      "description": [
+        "NSS Volunteer",
+        "Won Gold in Yearbook 2024 Football tournament"
+      ]
     },
     {
-      "degree": "HSC Exam conducted by Maharashtra State Board",
-      "web": "https://www.globalinternationalschool.in/",
-      "university": "Global Public School & Jr. College",
-      "period": "Nashik, Maharashtra | 2020",
-      "image": "/logo/edu/global_logo.jpg"
+      "name": "Global Public School & Jr. College",
+      "href": "https://www.globalinternationalschool.in/",
+      "title": "HSC Exam conducted by Maharashtra State Board",
+      "logo": "/logo/edu/global_logo.jpg",
+      "start": "June 2018",
+      "end": "March 2020"
     },
     {
-      "degree": "SSC Exam conducted by Maharashtra State Board",
-      "web": "https://mvp.edu.in/mvpsite/",
-      "university": "New Maratha Highschool",
-      "period": "Nashik, Maharashtra | 2018",
-      "image": "/logo/edu/mvp_logo.jpg"
+      "name": "New Maratha Highschool",
+      "href": "https://mvp.edu.in/mvpsite/",
+      "title": "SSC Exam conducted by Maharashtra State Board",
+      "logo": "/logo/edu/mvp_logo.jpg",
+      "start": "June 2016",
+      "end": "March 2018"
     }
   ]
 }
