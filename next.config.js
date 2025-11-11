@@ -37,7 +37,8 @@ const nextConfig = {
     ],
     dangerouslyAllowSVG: true, // Allow SVG images
   },
-  transpilePackages: ['lucide-react'], // add this
+  transpilePackages: ['lucide-react'],
+  cacheComponents: true,
 };
 
 export default nextConfig;

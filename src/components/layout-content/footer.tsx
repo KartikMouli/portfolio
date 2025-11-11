@@ -3,6 +3,21 @@
 import Link from 'next/link';
 import { Separator } from '@/components/ui/separator';
 import Socials from '../socials';
+import { useEffect, useState } from 'react';
+
+function CopyrightYear() {
+  const [year, setYear] = useState<number | null>(null);
+
+  useEffect(() => {
+    setYear(new Date().getFullYear());
+  }, []);
+
+  if (year === null) {
+    return <span>&copy; </span>;
+  }
+
+  return <span>&copy; {year} </span>;
+}
 
 export default function Footer() {
   return (
@@ -13,7 +28,7 @@ export default function Footer() {
 
       <section className="flex flex-col items-center sm:items-start gap-3 text-sm text-muted-foreground/80">
         <div className="flex flex-wrap items-center justify-center gap-2">
-          <span>&copy; {new Date().getFullYear()} </span>
+          <CopyrightYear />
           <span>
             <Link className="hover:text-foreground transition-colors" href="/">
               kartik-portfolio

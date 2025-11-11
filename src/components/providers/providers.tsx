@@ -1,5 +1,6 @@
 'use client';
 
+import { Suspense } from 'react';
 import { ThemeProvider } from '@/context/theme/theme-provider';
 import { ChatProvider } from '../../context/chatbot/chat-context';
 import Chatbot from '../chatbot';
@@ -22,7 +23,9 @@ export function Providers({ children }: ProvidersProps) {
         <ChatProvider>
           {children}
           <Toaster richColors />
-          <Chatbot />
+          <Suspense fallback={null}>
+            <Chatbot />
+          </Suspense>
         </ChatProvider>
       </QueryProvider>
     </ThemeProvider>
