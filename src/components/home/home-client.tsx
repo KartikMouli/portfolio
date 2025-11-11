@@ -1,5 +1,3 @@
-'use client';
-
 import Image from 'next/image';
 import Link from 'next/link';
 import Socials from '@/components/socials';
@@ -8,6 +6,8 @@ import { ArrowRightIcon, AtSign, MapPinHouseIcon } from 'lucide-react';
 import Skills from '@/components/skill';
 import ResumeButton from '@/components/resume-button';
 import Timeline from '../timeline';
+import { Separator } from '../ui/separator';
+import { Badge } from '../ui/badge';
 
 export default function HomeClient() {
   return (
@@ -37,20 +37,21 @@ export default function HomeClient() {
                 Hey, I&apos;m Kartik Mouli
               </h1>
               <div className="mt-1 gap-2">
-                <span className="text-sm px-2 py-1 rounded-full border border-gray-300 dark:border-gray-700 text-muted-foreground">
-                  Software Developer
-                </span>
+                <Badge variant="outline">Software Developer</Badge>
               </div>
             </div>
 
             <div className="flex items-center gap-2 text-muted-foreground">
               <MapPinHouseIcon className="size-4" />
-              <span className="text-sm">Nashik, Maharashtra, 🇮🇳</span>
+              <span className="text-sm">Nashik, Maharashtra 🇮🇳</span>
             </div>
 
             <div className="flex flex-col md:flex-row items-center gap-2 text-sm text-muted-foreground">
               <span className="font-mono">IITP CSE&apos;24</span>
-              <span className="hidden md:block">|</span>
+              <Separator
+                orientation="vertical"
+                className="hidden md:block h-4"
+              />
               <div className="flex items-center">
                 <span>Software Developer</span>
                 <Link
