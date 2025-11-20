@@ -38,6 +38,7 @@ const nextConfig = {
     dangerouslyAllowSVG: true, // Allow SVG images
   },
   transpilePackages: ['lucide-react'],
+  reactCompiler: true,
   cacheComponents: true,
 };
 

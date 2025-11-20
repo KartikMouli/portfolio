@@ -1,7 +1,9 @@
 import { NextResponse } from 'next/server';
 import { getAccessToken } from '@/lib/spotify/auth';
 
-export async function GET() {
+async function getNowPlaying() {
+  'use cache';
+
   try {
     const access_token = await getAccessToken();
 
@@ -15,20 +17,26 @@ export async function GET() {
     );
 
     if (response.status === 204) {
-      return NextResponse.json({ is_playing: false });
+      return { is_playing: false };
     }
 
     if (!response.ok) {
       throw new Error('Failed to fetch currently playing track');
     }
 
-    const data = await response.json();
-    return NextResponse.json(data);
+    return await response.json();
   } catch (error) {
-    console.error('Error in now-playing route:', error);
-    return NextResponse.json(
-      { error: 'Failed to fetch currently playing track' },
-      { status: 500 }
-    );
+    console.error('Error in getNowPlaying:', error);
+    return { error: 'Failed to fetch currently playing track' };
   }
+}
+
+export async function GET() {
+  const data = await getNowPlaying();
+
+  if (data.error) {
+    return NextResponse.json(data, { status: 500 });
+  }
+
+  return NextResponse.json(data);
 }
