@@ -1,10 +1,15 @@
 import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
 import { SpotifyData } from '@/models/spotify';
+import { getNowPlaying } from '@/actions/spotify';
 
 const fetchSpotifyData = async (): Promise<SpotifyData> => {
-  const response = await axios.get('/api/spotify/now-playing');
-  return response.data;
+  const data = await getNowPlaying();
+
+  if ('error' in data) {
+    throw new Error(data.error);
+  }
+
+  return data as SpotifyData;
 };
 
 export function useSpotifyData() {

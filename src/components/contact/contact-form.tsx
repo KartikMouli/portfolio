@@ -16,10 +16,10 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { Send, Loader2 } from 'lucide-react';
-import axios from 'axios';
 import { formSchema } from '@/lib/schemas';
 import { useMutation } from '@tanstack/react-query';
 import { toast } from 'sonner';
+import { submitContactForm } from '@/actions/contact';
 
 export default function ContactForm() {
   const form = useForm({
@@ -33,8 +33,13 @@ export default function ContactForm() {
 
   const { mutate: submitForm, isPending } = useMutation({
     mutationFn: async (data: z.infer<typeof formSchema>) => {
-      const response = await axios.post('/api/contact', data);
-      return response.data;
+      const result = await submitContactForm(data);
+
+      if (!result.success) {
+        throw new Error(result.message);
+      }
+
+      return result;
     },
     onSuccess: () => {
       toast.success('Successfully submitted form', {
