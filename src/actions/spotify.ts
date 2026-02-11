@@ -1,9 +1,11 @@
-import { NextResponse } from 'next/server';
+'use server';
+
 import { getAccessToken } from '@/lib/spotify/auth';
+import { SpotifyData } from '@/models/spotify';
 
-async function getNowPlaying() {
-  'use cache';
-
+export async function getNowPlaying(): Promise<
+  SpotifyData | { is_playing: false } | { error: string }
+> {
   try {
     const access_token = await getAccessToken();
 
@@ -26,17 +28,7 @@ async function getNowPlaying() {
 
     return await response.json();
   } catch (error) {
-    console.error('Error in getNowPlaying:', error);
+    console.error('Spotify now-playing action error:', error);
     return { error: 'Failed to fetch currently playing track' };
   }
-}
-
-export async function GET() {
-  const data = await getNowPlaying();
-
-  if (data.error) {
-    return NextResponse.json(data, { status: 500 });
-  }
-
-  return NextResponse.json(data);
 }

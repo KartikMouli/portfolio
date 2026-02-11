@@ -1,25 +1,20 @@
+'use server';
+
 import { GoogleGenerativeAI } from '@google/generative-ai';
-import { NextResponse } from 'next/server';
 import { PROMPT_CONTEXT } from '@/data/chatbot';
 
-// Initialize the Gemini API
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
 
-export async function POST(request: Request) {
+export async function sendChatMessage(
+  message: string
+): Promise<{ response?: string; error?: string }> {
   try {
-    const { message } = await request.json();
-
     if (!message) {
-      return NextResponse.json(
-        { error: 'Message is required' },
-        { status: 400 }
-      );
+      return { error: 'Message is required' };
     }
 
-    // Get the generative model
     const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
 
-    // Start a chat session with markdown formatting instruction
     const markdownInstructions = `Please format your responses using markdown for better readability. Use:
 - **bold** for emphasis
 - *italics* for subtle emphasis
@@ -45,17 +40,13 @@ export async function POST(request: Request) {
       ],
     });
 
-    // Send the message and get the response
     const result = await chat.sendMessage(message);
     const response = await result.response;
     const text = response.text();
 
-    return NextResponse.json({ response: text });
+    return { response: text };
   } catch (error) {
-    console.error('Chatbot API Error:', error);
-    return NextResponse.json(
-      { error: 'Failed to process chat message' },
-      { status: 500 }
-    );
+    console.error('Chatbot Action Error:', error);
+    return { error: 'Failed to process chat message' };
   }
 }
