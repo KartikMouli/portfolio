@@ -20,6 +20,38 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
+## Production Setup
+
+This repository is ready for a standard Vercel deployment with the default Next.js build settings.
+
+### Required environment variables
+
+Set these in your Vercel project before deploying:
+
+- `NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY` for the contact form.
+- `NEXT_PUBLIC_APP_ID` for the Dify client configuration.
+- `DIFY_APP_KEY` for server-side Dify requests.
+- `NEXT_PUBLIC_API_URL` for the Dify API base URL.
+- `GOOGLE_VERIFICATION_CODE` for Google Search Console verification.
+
+The template file [`.env.example`](.env.example) lists the expected values and which ones are client-side versus server-side.
+
+### Vercel deployment
+
+1. Import the repository into Vercel.
+2. Add the required environment variables in the Vercel project settings.
+3. Leave the build command as `npm run build`; Vercel will detect the Next.js app automatically.
+4. Deploy from the main branch after confirming the production build passes.
+
+### Local verification
+
+Run the same checks locally before pushing changes:
+
+```bash
+npm run lint
+npm run build
+```
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:
