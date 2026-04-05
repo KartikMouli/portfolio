@@ -413,6 +413,7 @@ export const ssePost = (
     onNodeStarted,
     onNodeFinished,
     onError,
+    getAbortController,
   }: IOtherOptions
 ) => {
   const options = Object.assign(
@@ -431,6 +432,10 @@ export const ssePost = (
   if (body) {
     options.body = JSON.stringify(body);
   }
+
+  const abortController = new AbortController();
+  getAbortController?.(abortController);
+  options.signal = abortController.signal;
 
   globalThis
     .fetch(urlWithPrefix, options)
