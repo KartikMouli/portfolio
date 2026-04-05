@@ -90,3 +90,11 @@ export const validateRemoteUrl = (
 
   return { success: true };
 };
+
+export const chatMessageSchema = z.object({
+  inputs: z.record(z.string(), z.any()).default({}),
+  query: z.string(),
+  files: z.array(z.any()).optional().default([]),
+  conversation_id: z.string().optional().nullable(),
+  response_mode: z.enum(['streaming', 'blocking']).default('streaming'),
+});

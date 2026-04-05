@@ -36,6 +36,8 @@ const nextConfig = {
       },
     ],
     dangerouslyAllowSVG: true, // Allow SVG images
+    contentDispositionType: 'attachment',
+    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
   },
   transpilePackages: ['lucide-react'],
   reactCompiler: true,

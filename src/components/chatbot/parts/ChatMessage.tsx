@@ -85,7 +85,6 @@ export function ChatMessage({ message, index }: ChatMessageProps) {
                       key={mfIdx}
                       src={mf.url}
                       alt="attached"
-                      loading="lazy"
                       className="w-40 h-40 object-cover rounded-md border"
                     />
                   )

@@ -2,6 +2,7 @@ import type { NextRequest } from 'next/server';
 import { Readable } from 'node:stream';
 import { NextResponse } from 'next/server';
 import { client, getInfo } from '@/app/api/utils/common';
+import { chatMessageSchema } from '@/lib/validation/chatbot';
 
 const isStreamResponse = (
   response: unknown
@@ -20,20 +21,29 @@ const isStreamResponse = (
 
 export async function POST(request: NextRequest) {
   try {
-    const body = await request.json();
+    const rawBody = await request.json();
+    const result = chatMessageSchema.safeParse(rawBody);
+
+    if (!result.success) {
+      return NextResponse.json(
+        { error: 'Invalid request body', details: result.error.format() },
+        { status: 400 }
+      );
+    }
+
     const {
       inputs,
       query,
       files,
       conversation_id: conversationId,
       response_mode: responseMode,
-    } = body;
+    } = result.data;
     const { user } = getInfo(request);
     const res = await client.createChatMessage(
       inputs,
       query,
       user,
-      responseMode,
+      responseMode === 'streaming',
       conversationId,
       files
     );
