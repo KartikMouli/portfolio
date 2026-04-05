@@ -102,15 +102,7 @@ export function useChatMessages() {
         const params = appParams as unknown as AppParams;
         setAppParams(params);
         const { suggested_questions = [], opening_statement = '' } = params;
-        setSuggestedQuestions(
-          suggested_questions.length > 0
-            ? suggested_questions
-            : [
-                'What technologies do you specialize in?',
-                'Can you show me your portfolio projects?',
-                'How can I get in touch with you?',
-              ]
-        );
+        setSuggestedQuestions(suggested_questions);
         setIntroduction(opening_statement);
         setIsParamsLoaded(true);
       } catch (e) {

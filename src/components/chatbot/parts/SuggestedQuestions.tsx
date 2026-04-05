@@ -22,7 +22,7 @@ export function SuggestedQuestions() {
           key={index}
           variant="outline"
           size="sm"
-          className="text-sm h-auto py-1.5 px-3 rounded-full transition-all shadow-sm border-primary/20 cursor-pointer"
+          className="text-xs h-auto py-1.5 px-3 rounded-full transition-all shadow-sm border-primary/20 cursor-pointer"
           onClick={() => handleFaqClick(question)}
           disabled={isSending}
         >
