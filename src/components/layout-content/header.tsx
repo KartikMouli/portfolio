@@ -4,7 +4,6 @@ import { usePathname } from 'next/navigation';
 import ThemeToggle from '../theme/theme-toggle';
 import { useMediaQuery } from '@/hooks/useMediaQuery';
 import { useState } from 'react';
-import SpotifyNowPlaying from '../spotify/spotify-now-playing';
 import {
   Navbar,
   NavBody,
@@ -50,7 +49,6 @@ export default function Header() {
             />
           </div>
           <div className="flex items-center gap-4 ml-8 relative z-[60]">
-            <SpotifyNowPlaying />
             <div className="flex items-center gap-2">
               <ThemeToggle />
             </div>
@@ -60,7 +58,6 @@ export default function Header() {
         <MobileNav className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
           <MobileNavHeader className="flex items-center justify-between w-full px-4 py-4">
             <div className="flex items-center gap-2 relative z-[60]">
-              <SpotifyNowPlaying />
               <div className="flex items-center gap-2">
                 <ThemeToggle />
               </div>
