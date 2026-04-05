@@ -59,6 +59,9 @@ export function MediaPopover() {
               isMediaPopoverOpen && 'rotate-45 bg-secondary'
             )}
             disabled={isUploading || isSending}
+            aria-label={
+              isMediaPopoverOpen ? 'Close media options' : 'Attach files'
+            }
           >
             {isUploading ? (
               <Loader2 className="absolute inset-0 m-auto h-3.5 w-3.5 animate-spin text-primary" />
@@ -89,6 +92,7 @@ export function MediaPopover() {
                   variant="ghost"
                   className="h-5 w-5 rounded-md hover:bg-secondary shrink-0"
                   onClick={() => setIsMediaPopoverOpen(false)}
+                  aria-label="Close media popover"
                 >
                   <X className="h-3 w-3 text-muted-foreground" />
                 </Button>
@@ -119,6 +123,7 @@ export function MediaPopover() {
                     handleAddUrl();
                     setIsMediaPopoverOpen(false);
                   }}
+                  aria-label="Add image URL"
                 >
                   <ArrowRight className="h-3 w-3" />
                 </Button>

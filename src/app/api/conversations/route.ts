@@ -10,9 +10,10 @@ export async function GET(request: NextRequest) {
       headers: setSession(sessionId),
     });
   } catch (error: unknown) {
-    return NextResponse.json({
-      data: [],
-      error: error instanceof Error ? error.message : 'Unknown error',
-    });
+    console.error('Failed to fetch conversations:', error);
+    return NextResponse.json(
+      { error: 'Internal server error' },
+      { status: 500, headers: setSession(sessionId) }
+    );
   }
 }

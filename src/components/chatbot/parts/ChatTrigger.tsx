@@ -14,6 +14,8 @@ export function ChatTrigger() {
         size="icon"
         className="rounded-full w-11 h-11 bg-primary text-primary-foreground shadow-lg hover:bg-primary/90 hover:scale-105 hover:shadow-xl transition-all duration-200 hover:cursor-pointer"
         onClick={() => setIsOpen(!isOpen)}
+        aria-label={isOpen ? 'Close chat' : 'Open chat'}
+        aria-expanded={isOpen}
       >
         {isOpen ? <X className="h-6 w-6" /> : <Bot className="h-6 w-6" />}
       </Button>

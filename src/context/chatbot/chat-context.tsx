@@ -131,6 +131,9 @@ export function ChatProvider({ children }: Props) {
   const scrollAreaRef = useRef<HTMLDivElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const isAutoScrollEnabledRef = useRef(true);
+  const visionFilesRef = useRef<VisionFile[]>([]);
+  const mediaRecorderRef = useRef<MediaRecorder | null>(null);
+  const audioUrlRef = useRef<string | null>(null);
 
   // File Upload State
   const [visionFiles, setVisionFiles] = useState<VisionFile[]>([]);
@@ -152,6 +155,14 @@ export function ChatProvider({ children }: Props) {
 
   // Message Actions State
   const [copiedMessageId, setCopiedMessageId] = useState<string | null>(null);
+
+  useEffect(() => {
+    visionFilesRef.current = visionFiles;
+  }, [visionFiles]);
+
+  useEffect(() => {
+    mediaRecorderRef.current = mediaRecorder;
+  }, [mediaRecorder]);
 
   // Feature Flags
   // const _isFileUploadEnabled = appParams?.file_upload?.enabled;
@@ -191,6 +202,11 @@ export function ChatProvider({ children }: Props) {
     if (!input.trim() || isSending) return;
     const userMessage = input.trim();
     setInput('');
+    visionFilesRef.current.forEach((file) => {
+      if (file.transfer_method === TransferMethod.local_file) {
+        URL.revokeObjectURL(file.url);
+      }
+    });
     const filesToAttached = [...visionFiles];
     setVisionFiles([]);
     isAutoScrollEnabledRef.current = true;
@@ -263,22 +279,45 @@ export function ChatProvider({ children }: Props) {
   };
 
   const removeVisionFile = (index: number) => {
-    setVisionFiles((prev) => prev.filter((_, i) => i !== index));
+    setVisionFiles((prev) => {
+      const fileToRemove = prev[index];
+      if (fileToRemove?.transfer_method === TransferMethod.local_file) {
+        URL.revokeObjectURL(fileToRemove.url);
+      }
+
+      return prev.filter((_, i) => i !== index);
+    });
   };
 
   const startRecording = async () => {
+    let stream: MediaStream | null = null;
+    let vizRecorder: MediaRecorder | null = null;
+    const recorder = new MicRecorder({ bitRate: 128 });
+    recorderRef.current = recorder;
+
     try {
-      const recorder = new MicRecorder({ bitRate: 128 });
-      recorderRef.current = recorder;
       await recorder.start();
 
-      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      const vizRecorder = new MediaRecorder(stream);
+      stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      vizRecorder = new MediaRecorder(stream);
       vizRecorder.start();
       setMediaRecorder(vizRecorder);
 
       setIsRecording(true);
     } catch (_error) {
+      try {
+        vizRecorder?.stop();
+      } catch {}
+
+      stream?.getTracks().forEach((track) => track.stop());
+      setMediaRecorder(null);
+      setIsRecording(false);
+
+      try {
+        recorder.stop();
+      } catch {}
+
+      recorderRef.current = null;
       toast.error('Microphone access denied or unavailable.');
     }
   };
@@ -287,9 +326,9 @@ export function ChatProvider({ children }: Props) {
     const recorder = recorderRef.current;
     if (!recorder) return;
 
-    if (mediaRecorder) {
-      mediaRecorder.stop();
-      mediaRecorder.stream.getTracks().forEach((t) => t.stop());
+    if (mediaRecorderRef.current) {
+      mediaRecorderRef.current.stop();
+      mediaRecorderRef.current.stream.getTracks().forEach((t) => t.stop());
       setMediaRecorder(null);
     }
 
@@ -315,6 +354,10 @@ export function ChatProvider({ children }: Props) {
   const playTTS = async (id: string, text: string) => {
     if (playingMessageId === id && audioPlayerRef.current) {
       audioPlayerRef.current.pause();
+      if (audioUrlRef.current) {
+        URL.revokeObjectURL(audioUrlRef.current);
+        audioUrlRef.current = null;
+      }
       setPlayingMessageId(null);
       return;
     }
@@ -325,19 +368,38 @@ export function ChatProvider({ children }: Props) {
       const audioBlob = await textToAudio(text, id, voice);
       const audioUrl = URL.createObjectURL(audioBlob);
 
+      if (audioUrlRef.current) {
+        URL.revokeObjectURL(audioUrlRef.current);
+      }
+      audioUrlRef.current = audioUrl;
+
       if (audioPlayerRef.current) {
         audioPlayerRef.current.pause();
       }
 
       const audio = new Audio(audioUrl);
       audioPlayerRef.current = audio;
-      audio.onended = () => setPlayingMessageId(null);
+      audio.onended = () => {
+        if (audioUrlRef.current) {
+          URL.revokeObjectURL(audioUrlRef.current);
+          audioUrlRef.current = null;
+        }
+        setPlayingMessageId(null);
+      };
       audio.onerror = () => {
+        if (audioUrlRef.current) {
+          URL.revokeObjectURL(audioUrlRef.current);
+          audioUrlRef.current = null;
+        }
         toast.error('Failed to play audio.');
         setPlayingMessageId(null);
       };
       await audio.play();
     } catch (_e) {
+      if (audioUrlRef.current) {
+        URL.revokeObjectURL(audioUrlRef.current);
+        audioUrlRef.current = null;
+      }
       toast.error('Failed to fetch audio.');
       setPlayingMessageId(null);
     }
@@ -386,6 +448,40 @@ export function ChatProvider({ children }: Props) {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [messages.length, isSending, isTtsEnabled, appParams]);
+
+  useEffect(() => {
+    return () => {
+      visionFilesRef.current.forEach((file) => {
+        if (file.transfer_method === TransferMethod.local_file) {
+          URL.revokeObjectURL(file.url);
+        }
+      });
+
+      if (audioUrlRef.current) {
+        URL.revokeObjectURL(audioUrlRef.current);
+        audioUrlRef.current = null;
+      }
+
+      audioPlayerRef.current?.pause();
+
+      if (recorderRef.current) {
+        try {
+          recorderRef.current.stop();
+        } catch {}
+        recorderRef.current = null;
+      }
+
+      if (mediaRecorderRef.current) {
+        try {
+          mediaRecorderRef.current.stop();
+        } catch {}
+        mediaRecorderRef.current.stream
+          .getTracks()
+          .forEach((track) => track.stop());
+        mediaRecorderRef.current = null;
+      }
+    };
+  }, []);
 
   const value: ChatContextType = {
     isVisible,

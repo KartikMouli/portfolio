@@ -1,6 +1,6 @@
 import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
-import { client, getInfo } from '@/app/api/utils/common';
+import { client, getInfo, setSession } from '@/app/api/utils/common';
 
 export async function GET(
   request: NextRequest,
@@ -11,15 +11,18 @@ export async function GET(
   }
 ) {
   const { messageId } = await params;
-  const { user } = getInfo(request);
+  const { sessionId, user } = getInfo(request);
+  const sessionHeaders = setSession(sessionId);
 
   try {
     const { data } = await client.getSuggested(messageId, user);
-    return NextResponse.json(data);
+    return NextResponse.json(data, {
+      headers: sessionHeaders,
+    });
   } catch (_error) {
     return NextResponse.json(
       { error: 'Failed to fetch suggested questions' },
-      { status: 500 }
+      { status: 500, headers: sessionHeaders }
     );
   }
 }

@@ -76,6 +76,22 @@ export function useChatMessages() {
   const [isMessagesLoading, setIsMessagesLoading] = useState(false);
   const [apiError, setApiError] = useState(false);
   const currentTaskIdRef = useRef<string>('');
+  const connectionTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(
+    null
+  );
+  const localAbortControllerRef = useRef<AbortController | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (connectionTimeoutRef.current) {
+        clearTimeout(connectionTimeoutRef.current);
+        connectionTimeoutRef.current = null;
+      }
+
+      localAbortControllerRef.current?.abort();
+      localAbortControllerRef.current = null;
+    };
+  }, []);
 
   useEffect(() => {
     // Initialize
@@ -179,6 +195,7 @@ export function useChatMessages() {
   }, [
     currConversationId,
     isNewConversation,
+    conversationList,
     suggestedQuestions,
     introduction,
     isParamsLoaded,
@@ -273,14 +290,21 @@ export function useChatMessages() {
     let hasSetResponseId = false;
     let tempNewConversationId = '';
     const prevTempNewConversationId = getCurrConversationId() || '-1';
-    let localAbortController: AbortController | null = null;
 
     setRespondingTrue();
 
-    const connectionTimeout = setTimeout(() => {
+    if (connectionTimeoutRef.current) {
+      clearTimeout(connectionTimeoutRef.current);
+    }
+
+    connectionTimeoutRef.current = setTimeout(() => {
       if (!hasSetResponseId) {
-        if (localAbortController) {
-          localAbortController.abort();
+        if (localAbortControllerRef.current) {
+          localAbortControllerRef.current.abort();
+        }
+        if (connectionTimeoutRef.current) {
+          clearTimeout(connectionTimeoutRef.current);
+          connectionTimeoutRef.current = null;
         }
         setRespondingFalse();
         toast.error('The server took too long to respond. Please try again.');
@@ -298,7 +322,7 @@ export function useChatMessages() {
     sendChatMessage(data, {
       getAbortController: (ac) => {
         setAbortController(ac);
-        localAbortController = ac;
+        localAbortControllerRef.current = ac;
       },
       onData: (
         msg: string,
@@ -309,7 +333,10 @@ export function useChatMessages() {
         if (taskId) {
           currentTaskIdRef.current = taskId;
         }
-        if (connectionTimeout) clearTimeout(connectionTimeout);
+        if (connectionTimeoutRef.current) {
+          clearTimeout(connectionTimeoutRef.current);
+          connectionTimeoutRef.current = null;
+        }
         responseItem.content += msg;
         if (messageId && !hasSetResponseId) {
           responseItem.id = messageId;
@@ -332,36 +359,45 @@ export function useChatMessages() {
         });
       },
       onCompleted: async (hasError?: boolean) => {
-        clearTimeout(connectionTimeout);
-        if (hasError) return;
-        if (getConversationIdChangeBecauseOfNew()) {
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          const { data: allConversations }: any = await fetchConversations();
-          if (allConversations?.length > 0) {
+        if (connectionTimeoutRef.current) {
+          clearTimeout(connectionTimeoutRef.current);
+          connectionTimeoutRef.current = null;
+        }
+        try {
+          if (hasError) return;
+          if (getConversationIdChangeBecauseOfNew()) {
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            const newItem: any = await generationConversationName(
-              allConversations[0].id
-            );
-            const newAllConversations = produce(
-              allConversations,
+            const { data: allConversations }: any = await fetchConversations();
+            if (allConversations?.length > 0) {
               // eslint-disable-next-line @typescript-eslint/no-explicit-any
-              (draft: any) => {
-                draft[0].name = newItem.name;
-              }
-            );
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            setConversationList(newAllConversations as any);
+              const newItem: any = await generationConversationName(
+                allConversations[0].id
+              );
+              const newAllConversations = produce(
+                allConversations,
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                (draft: any) => {
+                  draft[0].name = newItem.name;
+                }
+              );
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              setConversationList(newAllConversations as any);
+            }
           }
+          setConversationIdChangeBecauseOfNew(false);
+          resetNewConversationInputs();
+          if (tempNewConversationId) {
+            setCurrConversationId(tempNewConversationId, APP_ID, true);
+          }
+        } finally {
+          setRespondingFalse();
         }
-        setConversationIdChangeBecauseOfNew(false);
-        resetNewConversationInputs();
-        if (tempNewConversationId) {
-          setCurrConversationId(tempNewConversationId, APP_ID, true);
-        }
-        setRespondingFalse();
       },
       onError: () => {
-        clearTimeout(connectionTimeout);
+        if (connectionTimeoutRef.current) {
+          clearTimeout(connectionTimeoutRef.current);
+          connectionTimeoutRef.current = null;
+        }
         setRespondingFalse();
         setChatList(
           produce(getChatList(), (draft) => {

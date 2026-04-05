@@ -8,7 +8,7 @@ export enum MediaType {
 }
 
 const useBreakpoints = () => {
-  const [width, setWidth] = React.useState(globalThis.innerWidth);
+  const [width, setWidth] = React.useState(0);
   const media = (() => {
     if (width <= 640) {
       return MediaType.mobile;
@@ -18,6 +18,11 @@ const useBreakpoints = () => {
     }
     return MediaType.pc;
   })();
+
+  React.useEffect(() => {
+    // Set initial width on mount
+    setWidth(window.innerWidth);
+  }, []);
 
   React.useEffect(() => {
     const handleWindowResize = () => setWidth(window.innerWidth);

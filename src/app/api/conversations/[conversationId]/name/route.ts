@@ -10,17 +10,25 @@ export async function POST(
     params: Promise<{ conversationId: string }>;
   }
 ) {
-  const body = await request.json();
-  const { auto_generate, name } = body;
-  const { conversationId } = await params;
-  const { user } = getInfo(request);
+  try {
+    const body = await request.json();
+    const { auto_generate, name } = body;
+    const { conversationId } = await params;
+    const { user } = getInfo(request);
 
-  // auto generate name
-  const { data } = await client.renameConversation(
-    conversationId,
-    name,
-    user,
-    auto_generate
-  );
-  return NextResponse.json(data);
+    // auto generate name
+    const { data } = await client.renameConversation(
+      conversationId,
+      name,
+      user,
+      auto_generate
+    );
+    return NextResponse.json(data);
+  } catch (error: unknown) {
+    console.error('Failed to rename conversation:', error);
+    return NextResponse.json(
+      { error: 'Internal server error' },
+      { status: 500 }
+    );
+  }
 }

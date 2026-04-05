@@ -7,13 +7,8 @@ export async function POST(request: NextRequest) {
     const formData = await request.formData();
     const { user } = getInfo(request);
     formData.append('user', user);
-    // Next.js sets boundary itself usually, but diffy-client wants user
-    const res = await (
-      client.audioToText as unknown as (
-        form: FormData,
-        user: string
-      ) => Promise<{ data: unknown }>
-    )(formData, user);
+    // Next.js sets the boundary itself usually, but dify-client wants user
+    const res = await client.audioToText(formData, user);
     return NextResponse.json(res.data);
   } catch (e: unknown) {
     return NextResponse.json(

@@ -10,10 +10,22 @@ export async function POST(
     params: Promise<{ messageId: string }>;
   }
 ) {
-  const body = await request.json();
-  const { rating } = body;
-  const { messageId } = await params;
-  const { user } = getInfo(request);
-  const { data } = await client.messageFeedback(messageId, rating, user);
-  return NextResponse.json(data);
+  try {
+    const body = await request.json();
+    const { rating } = body;
+    const { messageId } = await params;
+    const { user } = getInfo(request);
+    const { data } = await client.messageFeedback(messageId, rating, user);
+    return NextResponse.json(data);
+  } catch (error: unknown) {
+    return NextResponse.json(
+      {
+        error:
+          error instanceof Error && error.message
+            ? error.message
+            : 'Failed to submit feedback',
+      },
+      { status: 500 }
+    );
+  }
 }
