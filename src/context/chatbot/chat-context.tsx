@@ -413,17 +413,26 @@ export function ChatProvider({ children }: Props) {
     handleFeedback(id, { rating });
   };
 
-  // Auto-scroll logic refined
+  // Reset auto-scroll state whenever chat opens.
   useEffect(() => {
-    if (messagesEndRef.current && isOpen) {
-      // If sending, only auto-scroll if enabled (user didn't override by scrolling up)
-      if (isSending && isAutoScrollEnabledRef.current) {
-        // Use scrollIntoView on the element itself rather than finding the viewport here
-        // as it's the standard way and usually works within Radix scroll area
-        messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
-      }
-    }
-  }, [messages, isSending, isOpen]);
+    if (!isOpen) return;
+
+    isAutoScrollEnabledRef.current = true;
+    setShowScrollButton(false);
+  }, [isOpen]);
+
+  // Keep view pinned to bottom on open/history load/new messages unless user scrolled up.
+  useEffect(() => {
+    if (!isOpen || !isAutoScrollEnabledRef.current) return;
+
+    const frameId = window.requestAnimationFrame(() => {
+      messagesEndRef.current?.scrollIntoView({
+        behavior: isSending ? 'smooth' : 'auto',
+      });
+    });
+
+    return () => window.cancelAnimationFrame(frameId);
+  }, [isOpen, messages.length, isMessagesLoading, isSending]);
 
   // TTS Auto-play logic moved here
   useEffect(() => {
