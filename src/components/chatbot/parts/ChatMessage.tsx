@@ -16,7 +16,6 @@ import { cn } from '@/lib/utils';
 import StreamdownMarkdown from '../../streamdown-markdown/streamdown-markdown';
 import { useChatbot } from '../../../context/chatbot/chat-context';
 import { TypingIndicator } from './TypingIndicator';
-import Image from 'next/image';
 
 interface ChatMessageProps {
   message: {
@@ -104,10 +103,12 @@ export function ChatMessage({ message, index }: ChatMessageProps) {
               <div className="flex flex-wrap gap-2 mb-2">
                 {message.message_files.map(
                   (mf: { url: string }, mfIdx: number) => (
-                    <Image
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
                       key={mfIdx}
                       src={mf.url}
                       alt="attached"
+                      loading="lazy"
                       className="w-40 h-40 object-cover rounded-md border"
                     />
                   )

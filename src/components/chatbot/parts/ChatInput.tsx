@@ -6,7 +6,6 @@ import { useChatbot } from '../../../context/chatbot/chat-context';
 import { cn } from '@/lib/utils';
 import AudioVisualizer from '../../audio-visualizer/audio-visualizer';
 import { MediaPopover } from './MediaPopover';
-import Image from 'next/image';
 
 export function ChatInput() {
   const {
@@ -33,9 +32,11 @@ export function ChatInput() {
         <div className="flex gap-2 flex-wrap pb-1">
           {visionFiles.map((vf, idx) => (
             <div key={idx} className="relative group">
-              <Image
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
                 src={vf.url}
                 alt="upload preview"
+                loading="lazy"
                 className="h-12 w-12 object-cover rounded-md border"
               />
               <button
