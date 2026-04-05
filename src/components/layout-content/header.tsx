@@ -2,7 +2,6 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import ThemeToggle from '../theme/theme-toggle';
-import ChatToggle from '../chatbot/chatbot-toggle';
 import { useMediaQuery } from '@/hooks/useMediaQuery';
 import { useState } from 'react';
 import SpotifyNowPlaying from '../spotify/spotify-now-playing';
@@ -53,7 +52,6 @@ export default function Header() {
           <div className="flex items-center gap-4 ml-8 relative z-[60]">
             <SpotifyNowPlaying />
             <div className="flex items-center gap-2">
-              <ChatToggle />
               <ThemeToggle />
             </div>
           </div>
@@ -64,7 +62,6 @@ export default function Header() {
             <div className="flex items-center gap-2 relative z-[60]">
               <SpotifyNowPlaying />
               <div className="flex items-center gap-2">
-                <ChatToggle />
                 <ThemeToggle />
               </div>
             </div>

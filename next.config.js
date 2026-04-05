@@ -34,6 +34,11 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'avatars.githubusercontent.com',
       },
+      {
+        protocol: 'https',
+        hostname: 'upload.dify.ai',
+        pathname: '/files/**',
+      },
     ],
     dangerouslyAllowSVG: true, // Allow SVG images
   },

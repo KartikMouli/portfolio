@@ -22,7 +22,7 @@ export function Providers({ children }: ProvidersProps) {
       <QueryProvider>
         <ChatProvider>
           {children}
-          <Toaster richColors />
+          <Toaster richColors position="bottom-left" />
           <Suspense fallback={null}>
             <Chatbot />
           </Suspense>
