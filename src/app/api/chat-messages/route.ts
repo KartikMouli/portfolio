@@ -49,13 +49,10 @@ export async function POST(request: NextRequest) {
     );
 
     if (isStreamResponse(res)) {
-      return new Response(
-        Readable.toWeb(res.toReadable()) as unknown as BodyInit,
-        {
-          status: res.status,
-          headers: new Headers(res.headers),
-        }
-      );
+      return new Response(Readable.toWeb(res.toReadable()) as BodyInit, {
+        status: res.status,
+        headers: new Headers(res.headers),
+      });
     }
 
     return new Response(JSON.stringify(res.data), {
