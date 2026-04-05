@@ -68,29 +68,6 @@ export function ChatMessage({ message, index }: ChatMessageProps) {
         )}
       >
         <div className="flex flex-col relative">
-          {!message.isAnswer && (
-            <div className="absolute -left-12 top-0 flex flex-col gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className="h-6 w-6 rounded-md hover:bg-secondary"
-                    onClick={() => handleCopy(message.id, message.content)}
-                  >
-                    {copiedMessageId === message.id ? (
-                      <Check className="h-3 w-3 text-green-500" />
-                    ) : (
-                      <Copy className="h-3 w-3" />
-                    )}
-                  </Button>
-                </TooltipTrigger>
-                <TooltipContent side="left" className="z-110">
-                  <p className="text-sm">Copy message</p>
-                </TooltipContent>
-              </Tooltip>
-            </div>
-          )}
           <div
             className={cn(
               'rounded-2xl px-3 py-2 text-sm font-sans shadow-sm transition-all',
@@ -125,6 +102,30 @@ export function ChatMessage({ message, index }: ChatMessageProps) {
             )}
           </div>
         </div>
+
+        {!message.isAnswer && message.content && (
+          <div className="flex items-center justify-end gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="h-6 w-6"
+                  onClick={() => handleCopy(message.id, message.content)}
+                >
+                  {copiedMessageId === message.id ? (
+                    <Check className="h-3 w-3 text-green-500" />
+                  ) : (
+                    <Copy className="h-3 w-3" />
+                  )}
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent side="top" className="z-110">
+                <p className="text-sm">Copy message</p>
+              </TooltipContent>
+            </Tooltip>
+          </div>
+        )}
 
         {/* Feedback Actions for Assistant */}
         {message.isAnswer && message.content && (
