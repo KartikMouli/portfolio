@@ -5,7 +5,6 @@ import { ThemeProvider } from '@/context/theme/theme-provider';
 import { ChatProvider } from '../../context/chatbot/chat-context';
 import Chatbot from '../chatbot';
 import { Toaster } from '../ui/sonner';
-import { QueryProvider } from '../../context/query-provider';
 
 interface ProvidersProps {
   children: React.ReactNode;
@@ -19,15 +18,13 @@ export function Providers({ children }: ProvidersProps) {
       enableSystem
       disableTransitionOnChange
     >
-      <QueryProvider>
-        <ChatProvider>
-          {children}
-          <Toaster richColors position="bottom-left" />
-          <Suspense fallback={null}>
-            <Chatbot />
-          </Suspense>
-        </ChatProvider>
-      </QueryProvider>
+      <ChatProvider>
+        {children}
+        <Toaster richColors position="bottom-left" />
+        <Suspense fallback={null}>
+          <Chatbot />
+        </Suspense>
+      </ChatProvider>
     </ThemeProvider>
   );
 }
