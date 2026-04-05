@@ -18,12 +18,9 @@ export async function getNowPlaying(): Promise<
       }
     );
 
-    if (response.status === 204) {
+    if (response.status === 204 || response.status > 400) {
+      // Return not playing gracefully for 204 or any errors (like 403 Premium required)
       return { is_playing: false };
-    }
-
-    if (!response.ok) {
-      throw new Error('Failed to fetch currently playing track');
     }
 
     return await response.json();

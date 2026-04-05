@@ -4,12 +4,14 @@ import { getSpotifyModel } from '@/models/spotify';
 import connectDB from '@/lib/mongodb';
 
 export async function GET(request: Request) {
-  try {
-    const { searchParams } = new URL(request.url);
-    const code = searchParams.get('code');
-    const error = searchParams.get('error');
+  // Accessing request.url outside try-catch allows Next.js to properly
+  // interrupt prerendering and mark the route as dynamic automatically.
+  const { searchParams } = new URL(request.url);
+  const code = searchParams.get('code');
+  const errorParam = searchParams.get('error');
 
-    if (error) {
+  try {
+    if (errorParam) {
       return NextResponse.redirect(
         new URL('/admin?error=access_denied', request.url)
       );
