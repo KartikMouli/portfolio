@@ -147,7 +147,7 @@ interface IOtherOptions {
 }
 
 function unicodeToChar(text: string) {
-  return text.replace(/\\u[0-9a-f]{4}/g, (_match, p1) => {
+  return text.replace(/\\u([0-9a-f]{4})/gi, (_match, p1) => {
     return String.fromCharCode(parseInt(p1, 16));
   });
 }
