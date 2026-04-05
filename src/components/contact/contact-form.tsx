@@ -11,17 +11,20 @@ import {
   FormMessage,
   FormControl,
 } from '../ui/form';
-
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Send, Loader2 } from 'lucide-react';
 import { formSchema } from '@/lib/schemas';
-import { useMutation } from '@tanstack/react-query';
 import { toast } from 'sonner';
-import { submitContactForm } from '@/actions/contact';
 
 export default function ContactForm() {
+  type Web3FormsResponse = {
+    success?: boolean;
+    message?: string;
+  };
+
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -31,32 +34,57 @@ export default function ContactForm() {
     },
   });
 
-  const { mutate: submitForm, isPending } = useMutation({
-    mutationFn: async (data: z.infer<typeof formSchema>) => {
-      const result = await submitContactForm(data);
+  const [isPending, setIsPending] = useState(false);
+  const accessKey = process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY?.trim();
 
-      if (!result.success) {
-        throw new Error(result.message);
+  const onSubmit = async (data: z.infer<typeof formSchema>) => {
+    if (!accessKey) {
+      toast.error('Configuration error', {
+        description: 'Missing NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY',
+      });
+      return;
+    }
+
+    setIsPending(true);
+
+    try {
+      const payload = {
+        access_key: accessKey,
+        name: data.name,
+        email: data.email,
+        message: data.message,
+      };
+
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify(payload, null, 2),
+      });
+
+      const result = (await response.json()) as Web3FormsResponse;
+
+      if (response.ok && result.success) {
+        toast.success('Successfully submitted form', {
+          description:
+            'Thanks for reaching out! I will get back to you as soon as possible.',
+        });
+        form.reset();
+        return;
       }
 
-      return result;
-    },
-    onSuccess: () => {
-      toast.success('Successfully submitted form', {
-        description:
-          'Thanks for reaching out! I will get back to you as soon as possible.',
+      toast.error('Error submitting the form', {
+        description: result.message || 'Please check your connection.',
       });
-      form.reset();
-    },
-    onError: () => {
+    } catch {
       toast.error('Error submitting the form', {
         description: 'Please check your connection.',
       });
-    },
-  });
-
-  const onSubmit = (data: z.infer<typeof formSchema>) => {
-    submitForm(data);
+    } finally {
+      setIsPending(false);
+    }
   };
 
   return (
