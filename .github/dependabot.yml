@@ -16,3 +16,14 @@ updates:
     open-pull-requests-limit: 10 # Increased limit for open Dependabot PRs
     versioning-strategy: 'auto' # Options: auto, widen, lockfile-only
     rebase-strategy: 'auto' # Rebase only when necessary
+
+  - package-ecosystem: 'github-actions'
+    directory: '/'
+    schedule:
+      interval: 'monthly'
+    commit-message:
+      prefix: 'chore(deps)'
+    labels:
+      - 'dependencies'
+      - 'ci'
+    open-pull-requests-limit: 5
