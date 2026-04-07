@@ -54,7 +54,7 @@
     "embla-carousel-react": "^8.6.0",
     "eventsource-parser": "^3.0.6",
     "immer": "^11.1.4",
-    "katex": "^0.16.44",
+    "katex": "^0.16.45",
     "lucide-react": "^0.555.0",
     "mic-recorder-to-mp3": "^2.2.2",
     "motion": "^12.23.24",
