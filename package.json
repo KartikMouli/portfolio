@@ -84,7 +84,7 @@
     "@typescript-eslint/parser": "^8.51.0",
     "baseline-browser-mapping": "^2.9.19",
     "eslint": "^9.39.1",
-    "eslint-config-next": "16.0.6",
+    "eslint-config-next": "16.2.2",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.5",
     "husky": "^9.1.7",
