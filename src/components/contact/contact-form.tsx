@@ -16,8 +16,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { Send } from 'lucide-react';
 import { formSchema } from '@/lib/schemas';
-
-const CONTACT_EMAIL = 'kartikmouli156@gmail.com';
+import { siteConfig } from '@/config/site';
 
 export default function ContactForm() {
   const form = useForm({
@@ -32,7 +31,7 @@ export default function ContactForm() {
   const onSubmit = (data: z.infer<typeof formSchema>) => {
     const subject = `Portfolio contact from ${data.name}`;
     const body = `${data.message}\n\n— ${data.name} (${data.email})`;
-    const href = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    const href = `mailto:${siteConfig.author.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     window.location.assign(href);
   };
 

@@ -7,8 +7,9 @@ import ResumeButton from '@/components/resume-button';
 import Timeline from '../timeline';
 import { Separator } from '../ui/separator';
 import { Badge } from '../ui/badge';
+import { siteConfig } from '@/config/site';
 
-export default function HomeClient() {
+export default function Home() {
   return (
     <div className="flex flex-col gap-10 mt-8">
       {/* Hero Section */}
@@ -33,34 +34,34 @@ export default function HomeClient() {
           <div className="flex flex-col items-center md:items-start gap-4">
             <div className="flex flex-col gap-2">
               <h1 className="text-3xl md:text-4xl font-bold text-gradient">
-                Hey, I&apos;m Kartik Mouli
+                Hey, I&apos;m {siteConfig.author.name}
               </h1>
               <div className="mt-1 gap-2">
-                <Badge variant="outline">Software Developer</Badge>
+                <Badge variant="outline">{siteConfig.author.role}</Badge>
               </div>
             </div>
 
             <div className="flex items-center gap-2 text-muted-foreground">
               <MapPinHouseIcon className="size-4" />
-              <span className="text-sm">Nashik, Maharashtra 🇮🇳</span>
+              <span className="text-sm">{siteConfig.author.location}</span>
             </div>
 
             <div className="flex flex-col md:flex-row items-center gap-2 text-sm text-muted-foreground">
-              <span className="font-mono">IITP CSE&apos;24</span>
+              <span className="font-mono">{siteConfig.author.education}</span>
               <Separator
                 orientation="vertical"
                 className="hidden md:block h-4"
               />
               <div className="flex items-center">
-                <span>Software Developer</span>
+                <span>{siteConfig.currentRole.title}</span>
                 <Link
-                  href="https://unizoy.com"
+                  href={siteConfig.currentRole.companyUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center text-muted-foreground hover:text-foreground transition-colors duration-200"
                 >
                   <AtSign className="size-4 ml-1" />
-                  Unizoy
+                  {siteConfig.currentRole.company}
                 </Link>
               </div>
             </div>

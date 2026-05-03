@@ -1,33 +1,26 @@
+import { siteConfig } from '@/config/site';
+
 export function JsonLd() {
   const personSchema = {
     '@context': 'https://schema.org',
     '@type': 'Person',
-    name: 'Kartik Mouli',
-    jobTitle: 'Software Developer',
-    url: 'https://kartikmouli.in',
+    name: siteConfig.author.name,
+    jobTitle: siteConfig.author.role,
+    url: siteConfig.url,
     sameAs: [
-      'https://github.com/KartikMouli',
-      'https://linkedin.com/in/kartik-mouli',
-      'https://x.com/kartikmouli',
+      siteConfig.links.github,
+      siteConfig.links.linkedin,
+      siteConfig.links.twitter,
     ],
-    knowsAbout: [
-      'React',
-      'Next.js',
-      'TypeScript',
-      'JavaScript',
-      'Node.js',
-      'Web Development',
-      'Full Stack Development',
-    ],
+    knowsAbout: [...siteConfig.knowsAbout],
   };
 
   const websiteSchema = {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
-    name: "Kartik Mouli's Portfolio",
-    url: 'https://kartikmouli.in',
-    description:
-      'Personal portfolio of Kartik Mouli, a Software Developer showcasing projects, skills, and experience.',
+    name: `${siteConfig.author.name}'s Portfolio`,
+    url: siteConfig.url,
+    description: `Personal portfolio of ${siteConfig.author.name}, a ${siteConfig.author.role} showcasing projects, skills, and experience.`,
   };
 
   const profilePageSchema = {
@@ -35,8 +28,8 @@ export function JsonLd() {
     '@type': 'ProfilePage',
     mainEntity: {
       '@type': 'Person',
-      name: 'Kartik Mouli',
-      jobTitle: 'Software Developer',
+      name: siteConfig.author.name,
+      jobTitle: siteConfig.author.role,
     },
   };
 

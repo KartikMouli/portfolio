@@ -1,9 +1,10 @@
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
+import { siteConfig } from '@/config/site';
 
 const lastUpdated = 'Oct 2024';
 
-export default function page() {
+export default function PrivacyPage() {
   return (
     <section className="mt-8 pb-16 max-w-3xl mx-auto px-4 sm:px-8">
       {/* Header Section */}
@@ -117,10 +118,10 @@ export default function page() {
           Got any questions, concerns, or just feel like saying hello? You can
           email me at{' '}
           <Link
-            href="mailto:kartikmouli156@gmail.com"
+            href={`mailto:${siteConfig.author.email}`}
             className="font-semibold text-blue-500 underline hover:text-blue-300"
           >
-            kartikmouli156@gmail.com
+            {siteConfig.author.email}
           </Link>{' '}
           or use the{' '}
           <Link

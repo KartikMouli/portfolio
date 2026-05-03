@@ -1,5 +1,3 @@
-'use client';
-
 import {
   FaFacebook,
   FaInstagram,
@@ -7,21 +5,48 @@ import {
   FaThreads,
 } from 'react-icons/fa6';
 import Link from 'next/link';
-import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { siteConfig } from '@/config/site';
 
-function About() {
+const personalSocials = [
+  {
+    href: siteConfig.links.facebook,
+    icon: <FaFacebook className="w-5 h-5" />,
+    label: 'Facebook',
+  },
+  {
+    href: siteConfig.links.instagram,
+    icon: <FaInstagram className="w-5 h-5" />,
+    label: 'Instagram',
+  },
+  {
+    href: siteConfig.links.snapchat,
+    icon: <FaSnapchat className="w-5 h-5" />,
+    label: 'Snapchat',
+  },
+  {
+    href: siteConfig.links.threads,
+    icon: <FaThreads className="w-5 h-5" />,
+    label: 'Threads',
+  },
+];
+
+const quickStats = [
+  { label: 'Years Experience', value: 'fresher' },
+  { label: 'Projects', value: '20+' },
+  { label: 'LeetCode', value: '600+' },
+  { label: 'GitHub Commits', value: '300+' },
+];
+
+export default function About() {
   return (
-    <div className="max-w-4xl mx-auto px-4 ">
-      {/* Hero Section */}
+    <div className="max-w-4xl mx-auto px-4">
       <section className="mb-20">
-        <div>
-          <Badge variant="outline" className="mb-4">
-            About Me
-          </Badge>
-          <h1 className="text-4xl font-bold mb-6">kartik</h1>
-        </div>
+        <Badge variant="outline" className="mb-4">
+          About Me
+        </Badge>
+        <h1 className="text-4xl font-bold mb-6">{siteConfig.author.name}</h1>
 
         <div className="grid md:grid-cols-2 gap-8">
           <div>
@@ -42,38 +67,18 @@ function About() {
               world of open-source.
             </p>
             <div className="flex gap-4">
-              <Link
-                href="https://facebook.com/kartikmouli"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-muted-foreground hover:text-foreground transition-colors"
-              >
-                <FaFacebook className="w-5 h-5" />
-              </Link>
-              <Link
-                href="https://instagram.com/kartikmouli"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-muted-foreground hover:text-foreground transition-colors"
-              >
-                <FaInstagram className="w-5 h-5" />
-              </Link>
-              <Link
-                href="https://snapchat.com/add/kartikmouli"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-muted-foreground hover:text-foreground transition-colors"
-              >
-                <FaSnapchat className="w-5 h-5" />
-              </Link>
-              <Link
-                href="https://threads.net/@kartikmouli"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-muted-foreground hover:text-foreground transition-colors"
-              >
-                <FaThreads className="w-5 h-5" />
-              </Link>
+              {personalSocials.map(({ href, icon, label }) => (
+                <Link
+                  key={label}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-muted-foreground hover:text-foreground transition-colors"
+                  aria-label={label}
+                >
+                  {icon}
+                </Link>
+              ))}
             </div>
           </div>
 
@@ -84,26 +89,17 @@ function About() {
               </CardHeader>
               <CardContent>
                 <div className="grid grid-cols-2 gap-4">
-                  <div className="p-4 bg-muted/50 rounded-lg">
-                    <p className="text-sm text-muted-foreground">
-                      Years Experience
-                    </p>
-                    <p className="text-2xl font-semibold">fresher</p>
-                  </div>
-                  <div className="p-4 bg-muted/50 rounded-lg">
-                    <p className="text-sm text-muted-foreground">Projects</p>
-                    <p className="text-2xl font-semibold">20+</p>
-                  </div>
-                  <div className="p-4 bg-muted/50 rounded-lg">
-                    <p className="text-sm text-muted-foreground">LeetCode</p>
-                    <p className="text-2xl font-semibold">600+</p>
-                  </div>
-                  <div className="p-4 bg-muted/50 rounded-lg">
-                    <p className="text-sm text-muted-foreground">
-                      GitHub Commits
-                    </p>
-                    <p className="text-2xl font-semibold">300+</p>
-                  </div>
+                  {quickStats.map((stat) => (
+                    <div
+                      key={stat.label}
+                      className="p-4 bg-muted/50 rounded-lg"
+                    >
+                      <p className="text-sm text-muted-foreground">
+                        {stat.label}
+                      </p>
+                      <p className="text-2xl font-semibold">{stat.value}</p>
+                    </div>
+                  ))}
                 </div>
               </CardContent>
             </Card>
@@ -113,5 +109,3 @@ function About() {
     </div>
   );
 }
-
-export default About;

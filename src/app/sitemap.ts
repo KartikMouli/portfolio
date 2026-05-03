@@ -1,41 +1,39 @@
 import { MetadataRoute } from 'next';
+import { siteConfig } from '@/config/site';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://kartikmouli.in';
+  const baseUrl = siteConfig.url;
 
-  // Define all routes with their properties
-  const routes = [
+  return [
     {
       url: baseUrl,
       lastModified: new Date(),
-      changeFrequency: 'monthly' as const,
+      changeFrequency: 'monthly',
       priority: 1,
     },
     {
       url: `${baseUrl}/about`,
       lastModified: new Date(),
-      changeFrequency: 'monthly' as const,
+      changeFrequency: 'monthly',
       priority: 0.9,
     },
     {
       url: `${baseUrl}/projects`,
       lastModified: new Date(),
-      changeFrequency: 'weekly' as const,
+      changeFrequency: 'weekly',
       priority: 0.9,
     },
     {
       url: `${baseUrl}/contact`,
       lastModified: new Date(),
-      changeFrequency: 'yearly' as const,
+      changeFrequency: 'yearly',
       priority: 0.7,
     },
     {
       url: `${baseUrl}/privacy`,
       lastModified: new Date(),
-      changeFrequency: 'yearly' as const,
+      changeFrequency: 'yearly',
       priority: 0.3,
     },
   ];
-
-  return routes;
 }
