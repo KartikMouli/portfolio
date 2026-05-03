@@ -1,25 +1,20 @@
-'use client';
-
 import Link from 'next/link';
 import { Separator } from '@/components/ui/separator';
 import Socials from '../socials';
-import { useEffect, useState } from 'react';
+import { siteConfig } from '@/config/site';
 
-function CopyrightYear() {
-  const [year, setYear] = useState<number | null>(null);
-
-  useEffect(() => {
-    setYear(new Date().getFullYear());
-  }, []);
-
-  if (year === null) {
-    return <span>&copy; </span>;
-  }
-
-  return <span>&copy; {year} </span>;
+// Cacheable use case for `cacheComponents` — year is read once when the
+// cache entry is created (build / revalidate) instead of being recomputed
+// on every render. Pattern from
+// https://nextjs.org/docs/messages/next-prerender-current-time
+async function getCopyrightYear() {
+  'use cache';
+  return new Date().getFullYear();
 }
 
-export default function Footer() {
+export default async function Footer() {
+  const year = await getCopyrightYear();
+
   return (
     <footer className="flex flex-col items-center justify-center sm:flex-row-reverse sm:justify-between px-6 py-8 border-t border-border/40 mt-12">
       <div className="mb-6 sm:mb-0">
@@ -28,10 +23,10 @@ export default function Footer() {
 
       <section className="flex flex-col items-center sm:items-start gap-3 text-sm text-muted-foreground/80">
         <div className="flex flex-wrap items-center justify-center gap-2">
-          <CopyrightYear />
+          <span>&copy; {year} </span>
           <span>
             <Link className="hover:text-foreground transition-colors" href="/">
-              kartik-portfolio
+              {siteConfig.shortName}
             </Link>
           </span>
           <Separator orientation="vertical" className="h-4" />
