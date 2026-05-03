@@ -1,5 +1,3 @@
-'use client';
-
 import ContactForm from '@/components/contact/contact-form';
 
 function Contact() {
