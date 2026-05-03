@@ -1,15 +1,13 @@
-import React from 'react';
-import educationData from '@/data/education.json';
-import experienceData from '@/data/experience.json';
 import { GraduationCap, Briefcase } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { EducationSchema, ExperienceSchema } from '@/lib/schemas';
+import { getExperience } from '@/lib/data/experience';
+import { getEducation } from '@/lib/data/education';
 import TimelineItem from './timeline-item';
 import { Card, CardContent } from '../ui/card';
 
-const Timeline: React.FC = () => {
-  const experience = ExperienceSchema.parse(experienceData.experienceData);
-  const education = EducationSchema.parse(educationData.educationData);
+export default function Timeline() {
+  const experience = getExperience();
+  const education = getEducation();
 
   return (
     <div className="w-full">
@@ -28,8 +26,11 @@ const Timeline: React.FC = () => {
           <Card>
             <CardContent className="p-0">
               <ul className="ml-10 border-l">
-                {experience.map((item, index) => (
-                  <TimelineItem key={index} timelineItem={item} />
+                {experience.map((item) => (
+                  <TimelineItem
+                    key={item.name + item.start}
+                    timelineItem={item}
+                  />
                 ))}
               </ul>
             </CardContent>
@@ -39,8 +40,11 @@ const Timeline: React.FC = () => {
           <Card>
             <CardContent className="p-0">
               <ul className="ml-10 border-l">
-                {education.map((item, index) => (
-                  <TimelineItem key={index} timelineItem={item} />
+                {education.map((item) => (
+                  <TimelineItem
+                    key={item.name + item.start}
+                    timelineItem={item}
+                  />
                 ))}
               </ul>
             </CardContent>
@@ -49,6 +53,4 @@ const Timeline: React.FC = () => {
       </Tabs>
     </div>
   );
-};
-
-export default Timeline;
+}
