@@ -3,7 +3,6 @@ import Link from 'next/link';
 import Socials from '@/components/socials';
 import Projects from '@/components/project';
 import { ArrowRightIcon, AtSign, MapPinHouseIcon } from 'lucide-react';
-import Skills from '@/components/skill';
 import ResumeButton from '@/components/resume-button';
 import Timeline from '../timeline';
 import { Separator } from '../ui/separator';
@@ -72,20 +71,6 @@ export default function HomeClient() {
             </div>
           </div>
         </div>
-      </section>
-
-      {/* Current Tech Section */}
-      <section>
-        <div className="flex justify-between items-center border-b-2 pb-2 mb-8">
-          <h2 className="text-2xl font-bold">Current technologies</h2>
-          <Link href="/skills" className="link flex items-center gap-2 ">
-            <span>Full skill overview</span>
-            <ArrowRightIcon className="size-5 cursor-pointer animate-pulse" />
-          </Link>
-        </div>
-        <section className="skills-section">
-          <Skills />
-        </section>
       </section>
 
       {/* Education Section */}

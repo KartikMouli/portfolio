@@ -25,14 +25,6 @@ export const formSchema = z.object({
   message: z.string().min(1, 'Message must be at least 1 characters.'),
 });
 
-// Define the schema for TechCard's cardInfo prop
-export const TechCardSchema = z.object({
-  name: z.string().min(1, 'Name is required'),
-  description: z.string().min(1, 'Description is required'),
-  imageUrl: z.string(),
-  bgColor: z.string(),
-});
-
 const iconLink = z.object({
   name: z.string(),
   href: z.string().url(),

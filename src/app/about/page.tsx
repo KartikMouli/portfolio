@@ -1,7 +1,5 @@
 'use client';
 
-import { Button } from '@/components/ui/button';
-import { ArrowRightIcon } from 'lucide-react';
 import {
   FaFacebook,
   FaInstagram,
@@ -10,7 +8,6 @@ import {
 } from 'react-icons/fa6';
 import Link from 'next/link';
 import React from 'react';
-import StatsCard from '@/components/stats-card';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 
@@ -110,62 +107,6 @@ function About() {
                 </div>
               </CardContent>
             </Card>
-          </div>
-        </div>
-      </section>
-
-      {/* Skills Section */}
-      <section className="mb-20">
-        <div>
-          <Badge variant="outline" className="mb-4">
-            Skills & Expertise
-          </Badge>
-          <h2 className="text-3xl font-bold mb-6">What I Do</h2>
-          <p className="text-lg text-muted-foreground mb-8">
-            Want to know more about the tools and technologies I work with?
-            Click below to dive into my skillset.
-          </p>
-          <Link href="/skills">
-            <Button variant="outline" className="hover:cursor-pointer group">
-              Explore Skills
-              <ArrowRightIcon className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-            </Button>
-          </Link>
-        </div>
-      </section>
-
-      {/* Stats Section */}
-      <section>
-        <div>
-          <Badge variant="outline" className="mb-4">
-            Achievements
-          </Badge>
-          <h2 className="text-3xl font-bold mb-6">Data Playground</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {[
-              {
-                src: 'https://leetcard.jacoblin.cool/monchi02?ext=heatmap',
-                alt: 'LeetCode Heatmap Stats',
-              },
-              {
-                src: 'https://raw.githubusercontent.com/KartikMouli/cf-stats/refs/heads/main/output/light_card.svg',
-                alt: 'Codeforces Statistics Card',
-              },
-              {
-                src: 'https://github-readme-streak-stats.herokuapp.com/?user=kartikmouli&theme=dark',
-                alt: 'GitHub Streak Stats',
-              },
-              {
-                src: 'https://holopin.me/kartikmouli',
-                alt: 'Holopin Badges',
-              },
-            ].map((stat, index) => (
-              <div key={index}>
-                <Card className="border-none shadow-none">
-                  <StatsCard src={stat.src} alt={stat.alt} />
-                </Card>
-              </div>
-            ))}
           </div>
         </div>
       </section>
