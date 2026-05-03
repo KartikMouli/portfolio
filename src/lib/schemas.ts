@@ -1,12 +1,10 @@
 import { z } from 'zod';
 
-// Define the schema for ProjectLink
 export const ProjectLinkSchema = z.object({
-  href: z.string().optional(),
-  name: z.string().optional(),
+  name: z.string().min(1),
+  href: z.string().min(1),
 });
 
-// Define the schema for the Project
 export const ProjectSchema = z.object({
   name: z.string().min(1),
   href: z.string().url().optional(),
@@ -16,7 +14,6 @@ export const ProjectSchema = z.object({
   links: z.array(ProjectLinkSchema).optional(),
 });
 
-// Define the schema for an array of Project objects
 export const ProjectsSchema = z.array(ProjectSchema);
 
 export const formSchema = z.object({
@@ -25,13 +22,12 @@ export const formSchema = z.object({
   message: z.string().min(1, 'Message must be at least 1 characters.'),
 });
 
-const iconLink = z.object({
+const iconLinkSchema = z.object({
   name: z.string(),
   href: z.string().url(),
 });
-export type IconLink = z.infer<typeof iconLink>;
 
-const timelineItem = z.object({
+const timelineItemSchema = z.object({
   name: z.string(),
   href: z.string(),
   title: z.string(),
@@ -39,9 +35,9 @@ const timelineItem = z.object({
   start: z.string(),
   end: z.string().optional(),
   description: z.array(z.string()).optional(),
-  links: z.array(iconLink).optional(),
+  links: z.array(iconLinkSchema).optional(),
 });
 
-export type TimelineItemSchema = z.infer<typeof timelineItem>;
-export const ExperienceSchema = z.array(timelineItem);
-export const EducationSchema = z.array(timelineItem);
+export type TimelineItem = z.infer<typeof timelineItemSchema>;
+export const ExperienceSchema = z.array(timelineItemSchema);
+export const EducationSchema = z.array(timelineItemSchema);
