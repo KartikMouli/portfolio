@@ -6,8 +6,6 @@ frontend:
           - 'src/hooks/**'
           - 'src/context/**'
           - 'src/lib/**'
-          - 'src/services/**'
-          - 'src/types/**'
 
 ui:
   - changed-files:
@@ -22,7 +20,6 @@ data:
 config:
   - changed-files:
       - any-glob-to-any-file:
-          - 'src/config/**'
           - 'next.config.js'
           - 'tsconfig.json'
           - 'eslint.config.mjs'
@@ -52,8 +49,3 @@ assets:
   - changed-files:
       - any-glob-to-any-file:
           - 'public/**'
-
-api:
-  - changed-files:
-      - any-glob-to-any-file:
-          - 'src/app/api/**'
