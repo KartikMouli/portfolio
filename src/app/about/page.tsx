@@ -1,36 +1,7 @@
-import {
-  FaFacebook,
-  FaInstagram,
-  FaSnapchat,
-  FaThreads,
-} from 'react-icons/fa6';
-import Link from 'next/link';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import Socials from '@/components/socials';
 import { siteConfig } from '@/config/site';
-
-const personalSocials = [
-  {
-    href: siteConfig.links.facebook,
-    icon: <FaFacebook className="w-5 h-5" />,
-    label: 'Facebook',
-  },
-  {
-    href: siteConfig.links.instagram,
-    icon: <FaInstagram className="w-5 h-5" />,
-    label: 'Instagram',
-  },
-  {
-    href: siteConfig.links.snapchat,
-    icon: <FaSnapchat className="w-5 h-5" />,
-    label: 'Snapchat',
-  },
-  {
-    href: siteConfig.links.threads,
-    icon: <FaThreads className="w-5 h-5" />,
-    label: 'Threads',
-  },
-];
 
 const quickStats = [
   { label: 'Years Experience', value: 'fresher' },
@@ -66,20 +37,7 @@ export default function About() {
               I&apos;m always excited about creating new tech and exploring the
               world of open-source.
             </p>
-            <div className="flex gap-4">
-              {personalSocials.map(({ href, icon, label }) => (
-                <Link
-                  key={label}
-                  href={href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-muted-foreground hover:text-foreground transition-colors"
-                  aria-label={label}
-                >
-                  {icon}
-                </Link>
-              ))}
-            </div>
+            <Socials />
           </div>
 
           <div>

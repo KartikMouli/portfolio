@@ -40,7 +40,7 @@ export const siteConfig = {
     companyUrl: 'https://unizoy.com',
   },
 
-  // ---- external links ----
+  // ---- external links (professional only) ----
   links: {
     resume:
       'https://drive.google.com/file/d/16ebey3K6tIWcpgVi0Gc7zI3mYVpgdHxR/view?usp=drive_link',
@@ -48,10 +48,6 @@ export const siteConfig = {
     linkedin: 'https://linkedin.com/in/kartik-mouli',
     twitter: 'https://x.com/kartikmouli',
     leetcode: 'https://leetcode.com/u/monchi02/',
-    facebook: 'https://facebook.com/kartikmouli',
-    instagram: 'https://instagram.com/kartikmouli',
-    snapchat: 'https://snapchat.com/add/kartikmouli',
-    threads: 'https://threads.net/@kartikmouli',
   },
 
   // ---- SEO keywords ----
