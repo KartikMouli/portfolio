@@ -17,7 +17,7 @@ export default function TimelineItem({ timelineItem }: Props) {
       <Link
         href={href}
         target="_blank"
-        className="absolute -left-16 top-4 flex items-center justify-center rounded-full bg-white"
+        className="absolute -left-16 top-4 flex items-center justify-center rounded-full bg-muted"
       >
         <Avatar className="size-12 border">
           <AvatarImage

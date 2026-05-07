@@ -98,14 +98,14 @@ export default function PrivacyPage() {
           email me at{' '}
           <Link
             href={`mailto:${siteConfig.author.email}`}
-            className="font-semibold underline underline-offset-4 hover:text-muted-foreground transition-colors"
+            className="font-semibold underline underline-offset-4 hover:text-muted-foreground"
           >
             {siteConfig.author.email}
           </Link>{' '}
           or use the{' '}
           <Link
             href="/contact"
-            className="font-semibold underline underline-offset-4 hover:text-muted-foreground transition-colors"
+            className="font-semibold underline underline-offset-4 hover:text-muted-foreground"
           >
             contact form
           </Link>
