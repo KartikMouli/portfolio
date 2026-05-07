@@ -113,7 +113,7 @@
     {
       "name": "ChatAI",
       "description": "Developed an AI-driven chat platform with seamless user authentication using Clerk, providing real-time ChatGPT-like capabilities within a user-friendly dashboard.",
-      "href": "https://github.com/KartikMouli/ChatApp",
+      "href": "https://github.com/KartikMouli/ChatAI",
       "image": "/img/project/chatAI.jpeg",
       "tags": [
         "MERN Stack",
