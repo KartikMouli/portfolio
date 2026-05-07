@@ -7,59 +7,45 @@ import { SpeedInsights } from '@vercel/speed-insights/next';
 import { Analytics } from '@vercel/analytics/react';
 import { Providers } from '@/components/providers/providers';
 import { JsonLd } from '@/components/seo/json-ld';
+import { siteConfig } from '@/config/site';
 
 const raleway = Raleway({
   subsets: ['latin'],
-  display: 'swap', // Ensures a fallback font is displayed until the font loads
+  display: 'swap',
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://kartikmouli.in'),
+  metadataBase: new URL(siteConfig.url),
   title: {
-    default: 'Kartik Mouli | Software Developer Portfolio',
-    template: '%s | Kartik Mouli',
+    default: siteConfig.title,
+    template: siteConfig.titleTemplate,
   },
-  description:
-    'Software Developer portfolio of Kartik Mouli. Explore projects built with React, Next.js, TypeScript, and modern web technologies. Available for freelance and full-time opportunities.',
-  keywords: [
-    'Kartik Mouli',
-    'Software Developer',
-    'React Developer',
-    'Next.js Developer',
-    'TypeScript',
-    'JavaScript',
-    'Web Developer',
-    'Frontend Developer',
-    'Backend Developer',
-    'Portfolio',
-    'Software Engineer',
-  ],
-  authors: [{ name: 'Kartik Mouli', url: 'https://kartikmouli.in' }],
-  creator: 'Kartik Mouli',
+  description: siteConfig.description,
+  keywords: [...siteConfig.keywords],
+  authors: [{ name: siteConfig.author.name, url: siteConfig.url }],
+  creator: siteConfig.author.name,
   openGraph: {
     type: 'website',
-    locale: 'en_US',
-    url: 'https://kartikmouli.in',
-    siteName: "Kartik Mouli's Portfolio",
-    title: 'Kartik Mouli | Software Developer Portfolio',
-    description:
-      'Software Developer portfolio showcasing projects built with React, Next.js, TypeScript, and modern web technologies.',
+    locale: siteConfig.locale,
+    url: siteConfig.url,
+    siteName: `${siteConfig.author.name}'s Portfolio`,
+    title: siteConfig.title,
+    description: siteConfig.shortDescription,
     images: [
       {
-        url: '/img/pfp-avatar.jpg',
+        url: siteConfig.ogImage,
         width: 1200,
         height: 630,
-        alt: "Kartik Mouli's Portfolio",
+        alt: `${siteConfig.author.name}'s Portfolio`,
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Kartik Mouli | Software Developer Portfolio',
-    description:
-      'Software Developer portfolio showcasing projects built with React, Next.js, and TypeScript.',
-    images: ['/img/pfp-avatar.jpg'],
-    creator: '@KartikMouli',
+    title: siteConfig.title,
+    description: siteConfig.shortDescription,
+    images: [siteConfig.ogImage],
+    creator: siteConfig.author.twitterHandle,
   },
   robots: {
     index: true,
@@ -76,7 +62,7 @@ export const metadata: Metadata = {
     google: process.env.GOOGLE_VERIFICATION_CODE,
   },
   alternates: {
-    canonical: 'https://kartikmouli.in',
+    canonical: siteConfig.url,
   },
 };
 
@@ -86,7 +72,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang={siteConfig.language} suppressHydrationWarning>
       <head>
         <JsonLd />
       </head>

@@ -9,22 +9,12 @@ import {
 import Image from 'next/image';
 import Link from 'next/link';
 import Markdown from 'react-markdown';
-import { FaGithub, FaExternalLinkAlt } from 'react-icons/fa';
+import { ExternalLink } from 'lucide-react';
+import { FaGithub } from 'react-icons/fa';
+import type { z } from 'zod';
+import type { ProjectSchema } from '@/lib/schemas';
 
-interface ProjectLink {
-  href: string;
-  name: string;
-  icon?: string;
-}
-
-interface Project {
-  name: string;
-  href?: string;
-  description: string;
-  image?: string;
-  tags?: string[];
-  links?: ProjectLink[];
-}
+type Project = z.infer<typeof ProjectSchema>;
 
 interface Props {
   project: Project;
@@ -58,7 +48,7 @@ export function ProjectCard({ project }: Props) {
       <CardFooter className="flex flex-col items-start gap-4 mt-auto">
         {tags && tags.length > 0 && (
           <div className="mt-2 flex flex-wrap gap-1">
-            {tags.toSorted().map((tag: string) => (
+            {tags.toSorted().map((tag) => (
               <Badge
                 key={tag}
                 className="px-1 py-0 text-[10px]"
@@ -71,11 +61,16 @@ export function ProjectCard({ project }: Props) {
         )}
         {links && links.length > 0 && (
           <div className="flex w-full flex-row flex-wrap items-center gap-2">
-            {links.toSorted().map((link: ProjectLink, idx: number) => (
-              <Link href={link.href} key={idx} target="_blank">
+            {links.map((link) => (
+              <Link
+                href={link.href ?? '#'}
+                key={link.name ?? link.href}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <Badge className="flex gap-2 px-2 py-1 text-[10px]">
                   {link.name === 'Live Demo' ? (
-                    <FaExternalLinkAlt className="size-3" />
+                    <ExternalLink className="size-3" />
                   ) : (
                     <FaGithub className="size-3" />
                   )}

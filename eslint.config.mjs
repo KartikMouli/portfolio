@@ -1,28 +1,19 @@
-import { defineConfig } from 'eslint/config';
-import nextCoreWebVitals from 'eslint-config-next/core-web-vitals';
-import nextTypescript from 'eslint-config-next/typescript';
-import path from 'node:path';
-import { fileURLToPath } from 'node:url';
-import js from '@eslint/js';
-import { FlatCompat } from '@eslint/eslintrc';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-const compat = new FlatCompat({
-  baseDirectory: __dirname,
-  recommendedConfig: js.configs.recommended,
-  allConfig: js.configs.all,
-});
+import { defineConfig, globalIgnores } from 'eslint/config';
+import nextVitals from 'eslint-config-next/core-web-vitals';
+import nextTs from 'eslint-config-next/typescript';
+import prettier from 'eslint-config-prettier/flat';
 
 export default defineConfig([
+  ...nextVitals,
+  ...nextTs,
+  prettier,
   {
-    extends: [
-      ...nextCoreWebVitals,
-      ...nextTypescript,
-      ...compat.extends('plugin:prettier/recommended'),
-    ],
     rules: {
+      // React Compiler ships this rule via eslint-plugin-react-hooks 7+;
+      // it flags any setState in an effect, including legitimate cases.
+      // See https://github.com/facebook/react/issues/34743
       'react-hooks/set-state-in-effect': 'off',
     },
   },
+  globalIgnores(['.next/**', 'out/**', 'build/**', 'next-env.d.ts']),
 ]);

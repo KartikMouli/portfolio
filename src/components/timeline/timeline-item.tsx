@@ -1,11 +1,11 @@
-import { TimelineItemSchema } from '@/lib/schemas';
+import type { TimelineItem } from '@/lib/schemas';
 import Link from 'next/link';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 import { Badge } from '../ui/badge';
 import { ExternalLink } from 'lucide-react';
 
 interface Props {
-  timelineItem: TimelineItemSchema;
+  timelineItem: TimelineItem;
 }
 
 export default function TimelineItem({ timelineItem }: Props) {

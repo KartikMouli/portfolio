@@ -1,8 +1,7 @@
 import { MetadataRoute } from 'next';
+import { siteConfig } from '@/config/site';
 
 export default function robots(): MetadataRoute.Robots {
-  const baseUrl = 'https://kartikmouli.in';
-
   return {
     rules: [
       {
@@ -11,6 +10,6 @@ export default function robots(): MetadataRoute.Robots {
         disallow: ['/api/', '/private/'],
       },
     ],
-    sitemap: `${baseUrl}/sitemap.xml`,
+    sitemap: `${siteConfig.url}/sitemap.xml`,
   };
 }
