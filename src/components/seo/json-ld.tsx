@@ -20,7 +20,7 @@ export function JsonLd() {
     '@type': 'WebSite',
     name: `${siteConfig.author.name}'s Portfolio`,
     url: siteConfig.url,
-    description: `Personal portfolio of ${siteConfig.author.name}, a ${siteConfig.author.role} showcasing projects and experience.`,
+    description: `Personal portfolio of ${siteConfig.author.name} — ${siteConfig.author.role}, showcasing projects and experience.`,
   };
 
   const profilePageSchema = {

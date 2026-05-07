@@ -28,7 +28,7 @@ export const siteConfig = {
   // ---- author ----
   author: {
     name: 'Kartik Mouli',
-    role: 'Software Developer',
+    role: 'SDE',
     email: 'kartikmouli156@gmail.com',
     location: 'Nashik, Maharashtra 🇮🇳',
     education: "IITP CSE'24",
@@ -37,7 +37,7 @@ export const siteConfig = {
 
   // ---- current role (rendered on home) ----
   currentRole: {
-    title: 'Software Developer',
+    title: 'SDE',
     company: 'Unizoy',
     companyUrl: 'https://unizoy.com',
   },
