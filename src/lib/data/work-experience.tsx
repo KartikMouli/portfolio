@@ -3,15 +3,18 @@ import experienceJson from '@/data/experience.json';
 import educationJson from '@/data/education.json';
 import { ExperienceSchema, EducationSchema } from '@/lib/schemas';
 import { sortTimelineDesc } from './sort-timeline';
+import { CodeXml, GraduationCap, BookOpen } from 'lucide-react';
 
 /**
  * Adapters converting our timeline JSON (`experience.json`, `education.json`)
  * into the shape expected by `<WorkExperience />` from `@ncdai/work-experience`.
  *
- * Two notable transforms:
+ * Transforms:
  *   1. Date format `"Sept 2025"` → `"09.2025"` (component parses with date-fns).
  *   2. `description: string[]` (our bullet array) → markdown bullet string.
  *   3. Multiple positions at the same company are grouped into one item.
+ *   4. Per-position icon: `<CodeXml />` for engineering roles,
+ *      `<GraduationCap />` for higher education, `<BookOpen />` for school.
  */
 
 const MONTH_MAP: Record<string, string> = {
@@ -105,6 +108,7 @@ export function getWorkExperienceForComponent(): ExperienceItemType[] {
       positions: positions.map((p, idx) => ({
         id: `${slug}-${idx}`,
         title: p.title,
+        icon: <CodeXml />,
         employmentPeriod: {
           start: toMonthYear(p.start) ?? p.start,
           end: p.end ? toMonthYear(p.end) : undefined,
@@ -129,6 +133,10 @@ export function getEducationForComponent(): ExperienceItemType[] {
 
   return items.map((item, idx) => {
     const slug = slugify(`${item.name}-${idx}`);
+    // GraduationCap for university-level degrees (BTech / MTech / Bachelor / etc.),
+    // BookOpen for school-level entries (HSC / SSC).
+    const isHigherEd = !/\b(SSC|HSC|Exam)\b/i.test(item.title);
+    const icon = isHigherEd ? <GraduationCap /> : <BookOpen />;
     return {
       id: slug,
       companyName: item.name,
@@ -139,6 +147,7 @@ export function getEducationForComponent(): ExperienceItemType[] {
         {
           id: `${slug}-pos`,
           title: item.title,
+          icon,
           employmentPeriod: {
             start: toMonthYear(item.start) ?? item.start,
             end: item.end ? toMonthYear(item.end) : undefined,
