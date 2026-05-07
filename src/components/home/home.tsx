@@ -7,6 +7,7 @@ import ResumeButton from '@/components/resume-button';
 import Timeline from '../timeline';
 import { Separator } from '../ui/separator';
 import { Badge } from '../ui/badge';
+import { H1, H2 } from '@/components/typography';
 import { siteConfig } from '@/config/site';
 
 export default function Home() {
@@ -33,9 +34,9 @@ export default function Home() {
 
           <div className="flex flex-col items-center md:items-start gap-4">
             <div className="flex flex-col gap-2">
-              <h1 className="text-3xl md:text-4xl font-bold text-gradient">
+              <H1 className="text-3xl md:text-4xl text-gradient">
                 Hey, I&apos;m {siteConfig.author.name}
-              </h1>
+              </H1>
               <div className="mt-1 gap-2">
                 <Badge variant="outline">{siteConfig.author.role}</Badge>
               </div>
@@ -78,9 +79,7 @@ export default function Home() {
       <section>
         <section className="mb-8">
           <div>
-            <h2 className="text-2xl font-bold mb-6 border-b-2 pb-2">
-              Education & Experience
-            </h2>
+            <H2 className="mb-6">Education & Experience</H2>
             <Timeline />
           </div>
         </section>
@@ -89,7 +88,7 @@ export default function Home() {
       {/* Project Section */}
       <section className="flex flex-col gap-8">
         <div className="flex justify-between items-center border-b-2 pb-3">
-          <h2 className="text-2xl font-bold">Featured projects</h2>
+          <H2 className="border-b-0 pb-0">Featured projects</H2>
           <Link href="/projects" className="link flex items-center gap-2">
             <span>view more</span>
             <ArrowRightIcon className="size-5 cursor-pointer animate-pulse" />
