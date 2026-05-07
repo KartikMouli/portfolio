@@ -16,30 +16,32 @@ export default async function Footer() {
   const year = await getCopyrightYear();
 
   return (
-    <footer className="flex flex-col items-center justify-center sm:flex-row-reverse sm:justify-between px-6 py-8 border-t border-border/40 mt-12">
-      <div className="mb-6 sm:mb-0">
-        <Socials />
-      </div>
-
-      <section className="flex flex-col items-center sm:items-start gap-3 text-sm text-muted-foreground/80">
-        <div className="flex flex-wrap items-center justify-center gap-2">
-          <span>&copy; {year} </span>
-          <span>
-            <Link className="hover:text-foreground transition-colors" href="/">
-              {siteConfig.name}
-            </Link>
-          </span>
-          <Separator orientation="vertical" className="h-4" />
-          <span>
-            <Link
-              className="hover:text-foreground hover:cursor-pointer transition-colors"
-              href="/privacy"
-            >
-              Privacy Policy
-            </Link>
-          </span>
+    <footer className="border-t border-border/40 mt-12">
+      <div className="mx-auto flex max-w-3xl flex-col items-center justify-center px-8 py-8 sm:flex-row-reverse sm:justify-between">
+        <div className="mb-6 sm:mb-0">
+          <Socials />
         </div>
-      </section>
+
+        <section className="flex flex-col items-center sm:items-start gap-3 text-sm text-muted-foreground/80">
+          <div className="flex flex-wrap items-center justify-center gap-2">
+            <span>&copy; {year} </span>
+            <span>
+              <Link className="hover:text-foreground" href="/">
+                {siteConfig.name}
+              </Link>
+            </span>
+            <Separator orientation="vertical" className="h-4" />
+            <span>
+              <Link
+                className="hover:text-foreground hover:cursor-pointer"
+                href="/privacy"
+              >
+                Privacy Policy
+              </Link>
+            </span>
+          </div>
+        </section>
+      </div>
     </footer>
   );
 }

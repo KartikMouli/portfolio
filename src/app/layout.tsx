@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Raleway } from 'next/font/google';
+import { Inter, Playfair_Display, JetBrains_Mono } from 'next/font/google';
 import './globals.css';
 import Header from '@/components/layout-content/header';
 import Footer from '@/components/layout-content/footer';
@@ -9,8 +9,21 @@ import { Providers } from '@/components/providers/providers';
 import { JsonLd } from '@/components/seo/json-ld';
 import { siteConfig } from '@/config/site';
 
-const raleway = Raleway({
+const fontSans = Inter({
   subsets: ['latin'],
+  variable: '--font-sans',
+  display: 'swap',
+});
+
+const fontSerif = Playfair_Display({
+  subsets: ['latin'],
+  variable: '--font-serif',
+  display: 'swap',
+});
+
+const fontMono = JetBrains_Mono({
+  subsets: ['latin'],
+  variable: '--font-mono',
   display: 'swap',
 });
 
@@ -78,11 +91,11 @@ export default async function RootLayout({
       </head>
       <body
         suppressHydrationWarning
-        className={`${raleway.className} mx-auto flex min-h-screen max-w-3xl flex-col pt-20 px-8 pb-16 antialiased`}
+        className={`${fontSans.variable} ${fontSerif.variable} ${fontMono.variable} flex min-h-screen flex-col font-sans antialiased`}
       >
         <Providers>
           <Header />
-          <main className="grow">
+          <main className="grow mx-auto w-full max-w-3xl px-8 pt-8 pb-16">
             {children}
             <Analytics />
             <SpeedInsights />
