@@ -3,6 +3,15 @@
     {
       "name": "Unizoy",
       "href": "https://unizoy.com",
+      "title": "Software Developer",
+      "logo": "/logo/work/unizoy.png",
+      "start": "Sept 2025",
+      "end": "Present",
+      "description": ["Working on Unizoy's AI platform"]
+    },
+    {
+      "name": "Unizoy",
+      "href": "https://unizoy.com",
       "title": "Full Stack Developer (Intern)",
       "logo": "/logo/work/unizoy.png",
       "start": "Apr 2025",
@@ -17,15 +26,6 @@
           "href": "https://drive.google.com/file/d/1z-HVdAnE5Aoy1n35bKkwzsrWYmjntKkx/view?usp=sharing"
         }
       ]
-    },
-    {
-      "name": "Unizoy",
-      "href": "https://unizoy.com",
-      "title": "Software Developer",
-      "logo": "/logo/work/unizoy.png",
-      "start": "Sept 2025",
-      "end": "Present",
-      "description": ["Working on Unizoy's AI platform"]
     }
   ]
 }
