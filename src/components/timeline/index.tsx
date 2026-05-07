@@ -28,7 +28,7 @@ export default function Timeline() {
               <ul className="ml-10 border-l">
                 {experience.map((item) => (
                   <TimelineItem
-                    key={item.name + item.start}
+                    key={`${item.name}::${item.start}`}
                     timelineItem={item}
                   />
                 ))}
@@ -42,7 +42,7 @@ export default function Timeline() {
               <ul className="ml-10 border-l">
                 {education.map((item) => (
                   <TimelineItem
-                    key={item.name + item.start}
+                    key={`${item.name}::${item.start}`}
                     timelineItem={item}
                   />
                 ))}

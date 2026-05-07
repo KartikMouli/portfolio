@@ -66,6 +66,8 @@ export default function ContactForm() {
                   <FormLabel className="text-sm font-medium">Email</FormLabel>
                   <FormControl>
                     <Input
+                      type="email"
+                      autoComplete="email"
                       placeholder="Your email"
                       {...field}
                       className="transition-all duration-200 focus:ring-2 focus:ring-primary/20"
@@ -103,6 +105,17 @@ export default function ContactForm() {
             <span>Open in Email</span>
             <Send className="ml-2 w-4 h-4" />
           </Button>
+
+          <p className="text-xs text-muted-foreground text-center">
+            No mail app configured? Email me directly at{' '}
+            <a
+              href={`mailto:${siteConfig.author.email}`}
+              className="font-medium text-foreground hover:underline"
+            >
+              {siteConfig.author.email}
+            </a>
+            .
+          </p>
         </form>
       </Form>
     </div>

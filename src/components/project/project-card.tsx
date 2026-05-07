@@ -66,6 +66,7 @@ export function ProjectCard({ project }: Props) {
                 href={link.href ?? '#'}
                 key={link.name ?? link.href}
                 target="_blank"
+                rel="noopener noreferrer"
               >
                 <Badge className="flex gap-2 px-2 py-1 text-[10px]">
                   {link.name === 'Live Demo' ? (

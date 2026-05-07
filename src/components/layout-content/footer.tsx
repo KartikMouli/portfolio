@@ -26,7 +26,7 @@ export default async function Footer() {
           <span>&copy; {year} </span>
           <span>
             <Link className="hover:text-foreground transition-colors" href="/">
-              {siteConfig.shortName}
+              {siteConfig.name}
             </Link>
           </span>
           <Separator orientation="vertical" className="h-4" />

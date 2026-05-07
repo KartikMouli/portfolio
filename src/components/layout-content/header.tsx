@@ -31,6 +31,7 @@ export default function Header() {
         <div className="flex-1">
           <NavItems
             items={navLinks}
+            activeHref={pathname}
             onItemClick={() => setIsMenuOpen(false)}
             className="justify-start space-x-6"
           />

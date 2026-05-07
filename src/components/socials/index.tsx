@@ -37,26 +37,33 @@ const socialLinks = [
 export default function Socials() {
   return (
     <section className="flex justify-center gap-3">
-      {socialLinks.map(({ href, icon, label }) => (
-        <Link
-          key={label}
-          href={href}
-          target="_blank"
-          rel="noopener noreferrer"
-          className={cn(
-            'flex items-center justify-center w-8 h-8 rounded-full',
-            'bg-transparent hover:bg-accent/50',
-            'transition-all duration-300',
-            'border border-border/50 hover:border-border',
-            'text-dark hover:text-foreground',
-            'hover:cursor-pointer hover:scale-110'
-          )}
-          title={label}
-          aria-label={label}
-        >
-          {icon}
-        </Link>
-      ))}
+      {socialLinks.map(({ href, icon, label }) => {
+        const isExternal = !href.startsWith('mailto:');
+        return (
+          <Link
+            key={label}
+            href={href}
+            // mailto: should hand off to the OS mail client in the same
+            // tab; only force a new tab for external profiles.
+            {...(isExternal && {
+              target: '_blank',
+              rel: 'noopener noreferrer',
+            })}
+            className={cn(
+              'flex items-center justify-center w-8 h-8 rounded-full',
+              'bg-transparent hover:bg-accent/50',
+              'transition-all duration-300',
+              'border border-border/50 hover:border-border',
+              'text-dark hover:text-foreground',
+              'hover:cursor-pointer hover:scale-110'
+            )}
+            title={label}
+            aria-label={label}
+          >
+            {icon}
+          </Link>
+        );
+      })}
     </section>
   );
 }
