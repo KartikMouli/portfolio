@@ -8,7 +8,6 @@ import { useThemeToggle } from '@/components/ui/skiper-ui/skiper26';
 import {
   Tooltip,
   TooltipContent,
-  TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip';
 
@@ -38,28 +37,26 @@ export default function ThemeToggle() {
   }
 
   return (
-    <TooltipProvider>
-      <Tooltip>
-        <TooltipTrigger asChild>
-          <Button
-            type="button"
-            size="icon"
-            variant="ghost"
-            onClick={toggleTheme}
-            aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
-            className="hover:cursor-pointer"
-          >
-            {isDark ? (
-              <SunIcon className="size-5 text-orange-300" />
-            ) : (
-              <MoonIcon className="size-5" />
-            )}
-          </Button>
-        </TooltipTrigger>
-        <TooltipContent className="bg-popover border mt-1 text-popover-foreground">
-          <p>{isDark ? 'Light Mode' : 'Dark Mode'}</p>
-        </TooltipContent>
-      </Tooltip>
-    </TooltipProvider>
+    <Tooltip>
+      <TooltipTrigger asChild>
+        <Button
+          type="button"
+          size="icon"
+          variant="ghost"
+          onClick={toggleTheme}
+          aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+          className="hover:cursor-pointer"
+        >
+          {isDark ? (
+            <SunIcon className="size-5 text-orange-300" />
+          ) : (
+            <MoonIcon className="size-5" />
+          )}
+        </Button>
+      </TooltipTrigger>
+      <TooltipContent className="bg-popover border mt-1 text-popover-foreground">
+        <p>{isDark ? 'Light Mode' : 'Dark Mode'}</p>
+      </TooltipContent>
+    </Tooltip>
   );
 }

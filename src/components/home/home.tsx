@@ -1,3 +1,4 @@
+import { Suspense } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import Socials from '@/components/socials';
@@ -5,10 +6,21 @@ import Projects from '@/components/project';
 import { ArrowRightIcon, AtSign, MapPinHouseIcon } from 'lucide-react';
 import ResumeButton from '@/components/resume-button';
 import Timeline from '../timeline';
+import {
+  GitHubContributions,
+  GitHubContributionsFallback,
+} from '@/components/github-contributions';
+import { getCachedContributions } from '@/lib/get-cached-contributions';
 import { Separator } from '../ui/separator';
 import { Badge } from '../ui/badge';
 import { H1, H2 } from '@/components/typography';
 import { siteConfig } from '@/config/site';
+
+// Pull GitHub username from siteConfig.links.github (last path segment).
+const GITHUB_USERNAME = siteConfig.links.github
+  .replace(/\/+$/, '')
+  .split('/')
+  .pop()!;
 
 export default function Home() {
   return (
@@ -98,6 +110,17 @@ export default function Home() {
           </Link>
         </div>
         <Projects limit={2} />
+      </section>
+
+      {/* GitHub Contributions */}
+      <section className="flex flex-col gap-4">
+        <H2 className="border-b-2 pb-3">GitHub Contributions</H2>
+        <Suspense fallback={<GitHubContributionsFallback />}>
+          <GitHubContributions
+            contributions={getCachedContributions(GITHUB_USERNAME)}
+            githubProfileUrl={siteConfig.links.github}
+          />
+        </Suspense>
       </section>
     </div>
   );
