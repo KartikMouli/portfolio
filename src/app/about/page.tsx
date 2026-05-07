@@ -1,5 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { H1, Lead } from '@/components/typography';
 import Socials from '@/components/socials';
 import { siteConfig } from '@/config/site';
 
@@ -17,26 +18,26 @@ export default function About() {
         <Badge variant="outline" className="mb-4">
           About Me
         </Badge>
-        <h1 className="text-4xl font-bold mb-6">{siteConfig.author.name}</h1>
+        <H1 className="mb-6">{siteConfig.author.name}</H1>
 
         <div className="grid md:grid-cols-2 gap-8">
           <div>
-            <p className="text-lg text-muted-foreground mb-4">
+            <Lead className="mb-4">
               Hey! I&apos;m a proud{' '}
               <span className="font-medium">IIT Patna CSE &apos;24</span>{' '}
               graduate. I focus on full-stack development, Web3, and competitive
               programming.
-            </p>
-            <p className="text-lg text-muted-foreground mb-4">
+            </Lead>
+            <Lead className="mb-4">
               Outside of coding, you&apos;ll find me on the football field or
               shooting hoops. I&apos;m also a huge movie enthusiast—whether
               it&apos;s action-packed blockbusters or thought-provoking dramas.
-            </p>
-            <p className="text-lg text-muted-foreground mb-6">
+            </Lead>
+            <Lead className="mb-6">
               Originally from <span className="font-medium">Nashik</span>,
               I&apos;m always excited about creating new tech and exploring the
               world of open-source.
-            </p>
+            </Lead>
             <Socials />
           </div>
 
