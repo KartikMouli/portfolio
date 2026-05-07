@@ -114,6 +114,7 @@ export function getWorkExperienceForComponent(): ExperienceItemType[] {
           end: p.end ? toMonthYear(p.end) : undefined,
         },
         description: bulletsToMarkdown(p.description),
+        skills: p.skills,
         // Auto-expand the most recent position so the latest detail
         // is visible without a click.
         isExpanded: idx === 0,
@@ -153,6 +154,7 @@ export function getEducationForComponent(): ExperienceItemType[] {
             end: item.end ? toMonthYear(item.end) : undefined,
           },
           description: bulletsToMarkdown(item.description),
+          skills: item.skills,
           isExpanded: idx === 0,
         },
       ],

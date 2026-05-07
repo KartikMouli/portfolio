@@ -22,11 +22,6 @@ export const formSchema = z.object({
   message: z.string().min(1, 'Message must be at least 1 characters.'),
 });
 
-const iconLinkSchema = z.object({
-  name: z.string(),
-  href: z.string().url(),
-});
-
 const timelineItemSchema = z.object({
   name: z.string(),
   href: z.string(),
@@ -35,7 +30,7 @@ const timelineItemSchema = z.object({
   start: z.string(),
   end: z.string().optional(),
   description: z.array(z.string()).optional(),
-  links: z.array(iconLinkSchema).optional(),
+  skills: z.array(z.string()).optional(),
 });
 
 export type TimelineItem = z.infer<typeof timelineItemSchema>;
