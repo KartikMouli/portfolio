@@ -29,6 +29,7 @@ export const siteConfig = {
   author: {
     name: 'Kartik Mouli',
     role: 'SDE',
+    tagline: 'Engineering software that ships.',
     email: 'kartikmouli156@gmail.com',
     location: 'Nashik, Maharashtra 🇮🇳',
     education: "IITP CSE'24",
