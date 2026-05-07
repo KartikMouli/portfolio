@@ -19,6 +19,7 @@ import {
   SheetTrigger,
 } from '@/components/ui/sheet';
 import ThemeToggle from '@/components/theme/theme-toggle';
+import { BrandMark } from '@/components/brand-mark';
 import { cn } from '@/lib/utils';
 import { siteConfig } from '@/config/site';
 
@@ -57,8 +58,13 @@ const Navbar1 = ({ className, menu = DEFAULT_MENU }: Navbar1Props) => {
       <div className="mx-auto flex max-w-3xl items-center justify-between px-8 py-3">
         {/* Desktop Menu */}
         <nav className="hidden w-full items-center justify-between lg:flex">
-          {/* Logo */}
-          <Link href="/" className="flex items-center gap-2">
+          {/* Logo: icon + wordmark on desktop */}
+          <Link
+            href="/"
+            className="flex items-center gap-2"
+            aria-label={`${siteConfig.author.name} — Home`}
+          >
+            <BrandMark size={22} aria-hidden />
             <span className="text-base font-semibold tracking-tight">
               {siteConfig.author.name}
             </span>
@@ -93,10 +99,13 @@ const Navbar1 = ({ className, menu = DEFAULT_MENU }: Navbar1Props) => {
 
         {/* Mobile Menu */}
         <div className="flex w-full items-center justify-between lg:hidden">
-          <Link href="/" className="flex items-center gap-2">
-            <span className="text-base font-semibold tracking-tight">
-              {siteConfig.author.name}
-            </span>
+          {/* Logo: icon-only on mobile to save space */}
+          <Link
+            href="/"
+            className="flex items-center"
+            aria-label={`${siteConfig.author.name} — Home`}
+          >
+            <BrandMark size={28} />
           </Link>
           <div className="flex items-center gap-1">
             <ThemeToggle />

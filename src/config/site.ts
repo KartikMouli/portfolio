@@ -19,7 +19,9 @@ export const siteConfig = {
   shortDescription:
     'Software Developer portfolio showcasing projects built with React, Next.js, TypeScript, and modern web technologies.',
   url: 'https://kartikmouli.in',
-  ogImage: '/img/pfp-avatar.jpg',
+  // Note: OG / Twitter share images are generated dynamically at
+  // `src/app/opengraph-image.tsx` and `src/app/twitter-image.tsx`.
+  // The favicon is `src/app/icon.svg` + `src/app/apple-icon.tsx`.
   locale: 'en_US',
   language: 'en',
 
