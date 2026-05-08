@@ -173,7 +173,7 @@ export default function Home() {
             >
               Nashik
             </Link>
-            ; always exploring the open-source world.
+            <Twemoji>{' 🇮🇳'}</Twemoji>; always exploring the open-source world.
           </li>
         </ul>
       </section>
@@ -185,7 +185,7 @@ export default function Home() {
       </section>
 
       {/* ───── Featured Projects ───── */}
-      <section className="flex flex-col gap-8">
+      <section className="flex flex-col gap-6">
         <div className="flex items-center justify-between border-b-2 pb-3">
           <H2 className="border-b-0 pb-0">Featured projects</H2>
           <Link
@@ -196,6 +196,10 @@ export default function Home() {
             <ArrowRightIcon className="size-5 cursor-pointer" />
           </Link>
         </div>
+        <p className="text-sm text-muted-foreground">
+          A selection of work I&apos;m proud of — full-stack across product and
+          infra, from production AI tooling to side projects worth shipping.
+        </p>
         <Projects limit={2} />
       </section>
 
