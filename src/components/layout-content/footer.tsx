@@ -39,6 +39,16 @@ export default async function Footer() {
                 Privacy Policy
               </Link>
             </span>
+            <Separator orientation="vertical" className="h-4" />
+            <span>
+              <Link
+                className="font-mono hover:text-foreground hover:cursor-pointer"
+                href="/llms.txt"
+                title="Markdown index for LLM crawlers (llmstxt.org spec)"
+              >
+                llms.txt
+              </Link>
+            </span>
           </div>
         </section>
       </div>
