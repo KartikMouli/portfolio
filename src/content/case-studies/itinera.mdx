@@ -1,0 +1,57 @@
+---
+slug: itinera
+title: 'Itinera — AI travel itineraries you can actually edit'
+summary: 'A trip planner that turns short prompts into structured day-by-day itineraries via Gemini, persists them as editable trips, and stays out of your way.'
+projectName: Itinera
+publishedAt: '2026-05-08'
+---
+
+## Why I built it
+
+I travel a lot, and writing day-by-day itineraries by hand is tedious. So I built one for myself: punch in `from`, `to`, dates, budget, and how I'm getting there — Gemini drafts the plan, and I save it as a trip I can edit later.
+
+The eventual scope is bigger than the current build — nearby stay suggestions, restaurants, and commute availability per day — but the goal of this first cut was to get the core planning flow right: **search → AI plan → editable trip**.
+
+## How it works
+
+{/* TODO: switch to Mermaid (rehype-mermaid + mermaid) for proper SVG
+    diagrams once a second case study lands. Plain ASCII renders
+    consistently in any monospace font but doesn't scale visually
+    once diagrams get more complex than a 3-box flow. */}
+
+```text
++----------+   /api/trips/search   +------------+
+|   Form   | --------------------> |   Gemini   |
++----------+   few-shot prompt     |            |
+     |                             +------+-----+
+     |                                    |  structured
+     | save                               v  day-by-day
+     |                             +------------+
+     +---------------------------->|  Postgres  |
+                                   |   Prisma   |
+                                   +------------+
+```
+
+1. **Auth.** Better Auth handles email/password + Google OAuth. The username plugin gives each user a clean profile slug.
+2. **Search.** The `/api/trips/search` route shapes the form input, calls Gemini with a few-shot prompt, and validates the response shape before persisting.
+3. **Persist.** Each search is stored as a `SavedSearch`. Promote one to a `Trip` and you get day-by-day editable rows (`ItineraryDay`), a trip-status state machine (`PLANNED → UPCOMING → IN_PROGRESS → COMPLETED`), and post-trip review + rating.
+
+## Choices worth calling out
+
+**Better Auth.** I picked it because it was new and I wanted to try it — a straightforward learning-driven choice rather than a deep tool comparison. The Prisma adapter and the `username` plugin saved me a chunk of model code I'd otherwise have written by hand.
+
+**Few-shot prompting for Gemini.** Instead of trusting a "please return JSON" instruction alone, I include 1–2 example outputs in the prompt. The model picks up the shape from the examples and returns far more consistent day-by-day structure than instruction-only prompts do. The response is then schema-validated before it ever touches the database.
+
+## What broke
+
+The hardest part wasn't the AI — it was the **Prisma ↔ Better Auth integration**. Better Auth ships a Prisma adapter, but the docs largely assume you're starting from a clean slate. Retrofitting onto an evolving schema meant working through field-name expectations, migration ordering, and session-handling quirks more carefully than I'd planned for. None of it was one-line.
+
+## Status
+
+A **proof of concept**, built over 2–3 weeks of after-work evenings. The core flow works end-to-end on the [live demo](https://travelitinera.vercel.app), but it's not production-ready yet. Next up: the nearby-stay / restaurant / commute layer the original scope called for, and tightening the Gemini prompt so the occasional surreal day suggestion stops slipping through.
+
+## Stack
+
+`Next.js 15 · React 19 · TypeScript · Prisma 6 + Postgres · Better Auth · Google Gemini · shadcn/ui · Tailwind v4 · Vercel Blob`
+
+[Live demo](https://travelitinera.vercel.app) · [Source](https://github.com/KartikMouli/itinera)

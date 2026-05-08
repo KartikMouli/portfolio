@@ -1,55 +1,11 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useMemo } from 'react';
 
+import { useActiveSection } from '@/lib/hooks/use-active-section';
 import { cn } from '@/lib/utils';
 
 type Item = { id: string; label: string };
-
-/**
- * Returns the id of whichever of the given sections is most-active in
- * the viewport. Single IntersectionObserver watches every target;
- * `rootMargin` shifts the activation line up by 40% from the top and
- * 55% from the bottom so a section becomes active once its top has
- * crossed roughly the top-third of the viewport — the standard
- * docs-site behaviour (Tailwind, Stripe).
- *
- * Returns `null` until something has intersected. Caller must keep the
- * `items` array reference stable (e.g. module-level const) — the
- * effect re-runs whenever it changes.
- */
-function useActiveSection(items: Item[]): string | null {
-  const [active, setActive] = useState<string | null>(null);
-
-  useEffect(() => {
-    const elements = items
-      .map(({ id }) => document.getElementById(id))
-      .filter((el): el is HTMLElement => el !== null);
-
-    if (elements.length === 0) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        // Of the currently-intersecting entries, pick the one nearest
-        // the top of the viewport — that's the section the reader is
-        // visually anchored on.
-        const visible = entries
-          .filter((e) => e.isIntersecting)
-          .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
-        if (visible.length > 0) {
-          const id = visible[0]!.target.id;
-          if (id) setActive(id);
-        }
-      },
-      { rootMargin: '-40% 0% -55% 0%', threshold: 0 }
-    );
-
-    for (const el of elements) observer.observe(el);
-    return () => observer.disconnect();
-  }, [items]);
-
-  return active;
-}
 
 /**
  * Sticky right-edge section nav for long pages. Hidden under `lg:`
@@ -62,7 +18,10 @@ function useActiveSection(items: Item[]): string | null {
  * screen-readers.
  */
 export function SectionRail({ items }: { items: Item[] }) {
-  const active = useActiveSection(items);
+  // `useMemo` keeps the ids array reference stable across renders so
+  // the hook's effect doesn't re-subscribe on every parent render.
+  const ids = useMemo(() => items.map((i) => i.id), [items]);
+  const active = useActiveSection(ids);
 
   return (
     <aside

@@ -12,6 +12,9 @@ export const ProjectSchema = z.object({
   image: z.string().optional(),
   tags: z.array(z.string()).optional(),
   links: z.array(ProjectLinkSchema).optional(),
+  /** Slug into `src/content/case-studies/<slug>.mdx`. When set, the
+   *  project card shows a "Case study →" link to the rendered page. */
+  caseStudy: z.string().optional(),
 });
 
 export const ProjectsSchema = z.array(ProjectSchema);
@@ -32,6 +35,35 @@ export const ContributionSchema = z.object({
 });
 
 export const ContributionsSchema = z.array(ContributionSchema);
+
+/**
+ * Case-study frontmatter schema.
+ *
+ * Each MDX file in `src/content/case-studies/*.mdx` declares this
+ * block at the top. The body of the file is free-form MDX rendered
+ * via `next-mdx-remote/rsc` at request time.
+ *
+ * `slug` is conventionally the filename (sans `.mdx`) — but storing
+ * it explicitly lets us validate it doesn't drift, and supports
+ * future rename-without-breaking-link cases.
+ */
+export const CaseStudyFrontmatterSchema = z.object({
+  slug: z.string().min(1),
+  /** Headline shown on the case-study page + browser tab. */
+  title: z.string().min(1),
+  /** One-line summary used for OG/meta description + project-card hint. */
+  summary: z.string().min(1),
+  /** Project this case study belongs to — must match `name` in
+   *  `projects.json` so we can backlink to the project entry. */
+  projectName: z.string().min(1),
+  /** Optional hero image at the top of the case-study page. */
+  heroImage: z.string().optional(),
+  /** ISO yyyy-mm-dd. Used for metadata + sorting if we ever list
+   *  case studies on their own. */
+  publishedAt: z.string().min(1),
+});
+
+export type CaseStudyFrontmatter = z.infer<typeof CaseStudyFrontmatterSchema>;
 
 /**
  * Contact form schema — shared between the client (RHF + zodResolver) and

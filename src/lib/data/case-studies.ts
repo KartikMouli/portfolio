@@ -1,0 +1,84 @@
+import 'server-only';
+
+import { readFileSync, readdirSync } from 'node:fs';
+import { join } from 'node:path';
+
+import GithubSlugger from 'github-slugger';
+
+/**
+ * Filesystem layout: `src/content/case-studies/<slug>.mdx`. Slugs are
+ * the filename without extension. With `@next/mdx` doing the actual
+ * compilation via `await import(...)` in the page route, this file's
+ * job is to:
+ *   - enumerate the available slugs (`generateStaticParams`)
+ *   - parse headings out of the MDX source for the table-of-contents
+ *
+ * Frontmatter parsing happens at the page level via
+ * `CaseStudyFrontmatterSchema` against the `frontmatter` export
+ * surfaced by `remark-mdx-frontmatter`.
+ */
+const CONTENT_DIR = join(process.cwd(), 'src', 'content', 'case-studies');
+
+/** All available slugs — used by `generateStaticParams`. */
+export function getAllCaseStudySlugs(): string[] {
+  try {
+    return readdirSync(CONTENT_DIR)
+      .filter((f) => f.endsWith('.mdx'))
+      .map((f) => f.replace(/\.mdx$/, ''));
+  } catch {
+    // Directory missing (e.g. no case studies written yet) — empty list.
+    return [];
+  }
+}
+
+export interface CaseStudyHeading {
+  /** 2 for `<h2>`, 3 for `<h3>`. We deliberately skip h4+ for the TOC. */
+  depth: 2 | 3;
+  /** Visible heading text. */
+  text: string;
+  /** Slugified id, must match what `rehype-slug` produces in the
+   *  rendered HTML (same algorithm — both use `github-slugger`). */
+  slug: string;
+}
+
+/**
+ * Parse `<h2>` and `<h3>` headings out of a case-study MDX source.
+ *
+ * Why parse the source instead of the rendered output: there's no
+ * runtime hook into MDX compilation to introspect headings, and
+ * shipping a remark plugin just to expose them is more setup. The
+ * source-side regex handles the cases that matter (frontmatter
+ * stripped, fenced code blocks ignored so `## comment` inside a code
+ * block doesn't leak in).
+ *
+ * `github-slugger` is the same library `rehype-slug` uses internally,
+ * so the ids it produces match the heading anchors in the rendered
+ * HTML — TOC links jump to the right place.
+ */
+export function getCaseStudyHeadings(slug: string): CaseStudyHeading[] {
+  const path = join(CONTENT_DIR, `${slug}.mdx`);
+  let raw: string;
+  try {
+    raw = readFileSync(path, 'utf8');
+  } catch {
+    return [];
+  }
+
+  // Strip the YAML frontmatter block (between `---` markers at the top).
+  const body = raw.replace(/^---\n[\s\S]*?\n---\n/, '');
+  // Strip fenced code blocks so headings inside them aren't picked up.
+  const withoutCode = body.replace(/```[\s\S]*?```/g, '');
+
+  const slugger = new GithubSlugger();
+  const headings: CaseStudyHeading[] = [];
+
+  for (const line of withoutCode.split('\n')) {
+    const m = /^(##|###)\s+(.+)$/.exec(line);
+    if (!m) continue;
+    const depth = m[1]!.length === 2 ? 2 : 3;
+    const text = m[2]!.trim();
+    headings.push({ depth, text, slug: slugger.slug(text) });
+  }
+
+  return headings;
+}

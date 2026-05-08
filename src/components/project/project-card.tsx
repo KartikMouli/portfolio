@@ -9,7 +9,7 @@ import {
 import Image from 'next/image';
 import Link from 'next/link';
 import Markdown from 'react-markdown';
-import { Globe } from 'lucide-react';
+import { ArrowRight, Globe } from 'lucide-react';
 import { FaGithub } from 'react-icons/fa';
 import type { z } from 'zod';
 import type { ProjectSchema } from '@/lib/schemas';
@@ -44,7 +44,7 @@ function NoImageFallback({ name }: { name: string }) {
 }
 
 export function ProjectCard({ project }: Props) {
-  const { name, href, description, image, tags, links } = project;
+  const { name, href, description, image, tags, links, caseStudy } = project;
 
   return (
     <Card className="flex flex-col h-full">
@@ -108,6 +108,18 @@ export function ProjectCard({ project }: Props) {
               </Link>
             ))}
           </div>
+        )}
+        {/* Case-study link — internal navigation, rendered as a small
+            typed text link rather than another badge to differentiate
+            it from the external-link pills above. */}
+        {caseStudy && (
+          <Link
+            href={`/projects/${caseStudy}`}
+            className="group inline-flex items-center gap-1 text-xs font-medium text-muted-foreground transition-colors hover:text-foreground"
+          >
+            Read the case study
+            <ArrowRight className="size-3 transition-transform group-hover:translate-x-0.5" />
+          </Link>
         )}
       </CardFooter>
     </Card>

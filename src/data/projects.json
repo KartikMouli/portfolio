@@ -140,6 +140,7 @@
       "description": "An AI-powered travel itinerary planner. Tell it where you are, where you want to go, your budget, and how long you've got — Gemini generates a day-by-day plan and you save it as a trip you can edit later. Next.js 15 + React 19 with Better Auth (email + Google OAuth), Prisma + PostgreSQL.",
       "href": "https://travelitinera.vercel.app",
       "image": "/img/project/itinera.png",
+      "caseStudy": "itinera",
       "tags": [
         "NextJS",
         "TypeScript",
