@@ -1,7 +1,7 @@
 'use client';
 
 import type { HTMLMotionProps, Variants } from 'motion/react';
-import { AnimatePresence, motion } from 'motion/react';
+import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import type { ComponentProps } from 'react';
 import { Button } from '@/components/ui/button';
 import type { CopyState } from '@/hooks/use-copy-to-clipboard';
@@ -38,18 +38,32 @@ export function CopyStateIcon({
   doneIcon,
   errorIcon,
 }: CopyStateIconProps) {
+  // Honour OS-level reduce-motion: motion/react animations are
+  // requestAnimationFrame-driven JS and bypass the global CSS
+  // `animation-duration: 0.01ms` rule in `globals.css`. This zeroes
+  // the duration explicitly so reduce-motion users get an instant
+  // icon swap instead of a 150ms scale + blur.
+  const reduce = useReducedMotion();
+  const props: HTMLMotionProps<'span'> = reduce
+    ? {
+        ...motionIconProps,
+        transition: { duration: 0 },
+        initial: 'animate',
+      }
+    : motionIconProps;
+
   return (
     <AnimatePresence mode="popLayout" initial={false}>
       {state === 'idle' ? (
-        <motion.span key="idle" {...motionIconProps}>
+        <motion.span key="idle" {...props}>
           {idleIcon ?? <Copy data-slot="idle-icon" />}
         </motion.span>
       ) : state === 'done' ? (
-        <motion.span key="done" {...motionIconProps}>
+        <motion.span key="done" {...props}>
           {doneIcon ?? <Check data-slot="done-icon" />}
         </motion.span>
       ) : state === 'error' ? (
-        <motion.span key="error" {...motionIconProps}>
+        <motion.span key="error" {...props}>
           {errorIcon ?? <CircleX data-slot="error-icon" />}
         </motion.span>
       ) : null}
