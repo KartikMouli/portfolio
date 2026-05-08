@@ -1,5 +1,7 @@
 import type { Metadata } from 'next';
-import { Construction } from 'lucide-react';
+import { ArrowUpRight, Construction, Github } from 'lucide-react';
+
+import { Button } from '@/components/ui/button';
 import { H1 } from '@/components/typography';
 import { siteConfig } from '@/config/site';
 
@@ -24,6 +26,18 @@ export default function BlogPage() {
         The blog is being built. Notes on the things I&apos;m learning, the
         tools I love, and the systems I&apos;m shipping will land here soon.
       </p>
+      {/* Sends visitors somewhere alive in the meantime — the GitHub
+          profile README is the closest thing to a "what I'm doing now"
+          surface until the blog ships. `asChild` lets the anchor inherit
+          Button styling without breaking the right-click / open-in-tab
+          affordance. */}
+      <Button asChild className="mt-2">
+        <a href={siteConfig.links.github} target="_blank" rel="noopener">
+          <Github className="size-4" />
+          Read my GitHub
+          <ArrowUpRight className="size-4" />
+        </a>
+      </Button>
     </section>
   );
 }
