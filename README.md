@@ -1,68 +1,85 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Portfolio — kartikmouli.me
 
-## Getting Started
+A personal site. Showcases projects, work history, certifications, GitHub contributions, open-source patches, and a Gemini-powered chatbot grounded on my bio + FAQ.
 
-First, run the development server:
+Live: <https://kartikmouli.me>
+
+## Tech stack
+
+- **Framework**: Next.js 16 (App Router, React Compiler, `cacheComponents`)
+- **UI**: Tailwind CSS 4, shadcn/ui (Radix primitives), tw-shimmer, framer-motion
+- **Fonts**: Inter, Playfair Display, JetBrains Mono (via `next/font`)
+- **AI**: Vercel AI SDK 6 + `@ai-sdk/google` (Gemini 2.5 Flash), surfaced via `assistant-ui`
+- **Email**: Resend (contact form via Server Action)
+- **Validation**: zod 4 (typed env, form schemas, request guards)
+- **Deploy**: Vercel
+
+## Local dev
+
+Prereqs: Node 22+, pnpm.
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
+pnpm install
+cp .env.example .env.local        # then fill in the keys you need
 pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open <http://localhost:3000>.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Environment variables
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+All env vars are validated at module load via [`src/env.ts`](src/env.ts). The full list lives in [`.env.example`](.env.example):
 
-## Production Setup
+| Variable                       | What it powers                           | Optional? |
+| ------------------------------ | ---------------------------------------- | --------- |
+| `RESEND_API_KEY`               | Contact form sending                     | Yes\*     |
+| `GOOGLE_GENERATIVE_AI_API_KEY` | `/api/chat` (Gemini)                     | Yes\*     |
+| `GOOGLE_VERIFICATION_CODE`     | Google Search Console verification       | Yes       |
+| `NEXT_DEV_ALLOWED_ORIGINS`     | LAN testing on a phone (`<LAN_IP>:3000`) | Dev-only  |
 
-This repository is ready for a standard Vercel deployment with the default Next.js build settings.
+\* Optional in the schema so `pnpm build` works in CI without secrets, but **production must set them** — the contact form throws at send-time and `/api/chat` returns 500 without the corresponding key.
 
-### Required environment variables
-
-Set these in your Vercel project before deploying:
-
-- `NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY` for the contact form.
-- `NEXT_PUBLIC_APP_ID` for the Dify client configuration.
-- `DIFY_APP_KEY` for server-side Dify requests.
-- `NEXT_PUBLIC_API_URL` for the Dify API base URL.
-- `GOOGLE_VERIFICATION_CODE` for Google Search Console verification.
-
-The template file [`.env.example`](.env.example) lists the expected values and which ones are client-side versus server-side.
-
-### Vercel deployment
-
-1. Import the repository into Vercel.
-2. Add the required environment variables in the Vercel project settings.
-3. Leave the build command as `npm run build`; Vercel will detect the Next.js app automatically.
-4. Deploy from the main branch after confirming the production build passes.
-
-### Local verification
-
-Run the same checks locally before pushing changes:
+### Other commands
 
 ```bash
-npm run lint
-npm run build
+pnpm lint                # eslint
+pnpm format              # prettier
+pnpm build               # production build
+pnpm exec tsc --noEmit   # type-check
 ```
 
-## Learn More
+CI runs lint + tsc + build on every push (see [`.github/workflows/ci.yml`](.github/workflows/ci.yml)).
 
-To learn more about Next.js, take a look at the following resources:
+## Deploy
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. Import the repo into Vercel.
+2. Add env vars in Vercel project settings — at minimum `RESEND_API_KEY` and `GOOGLE_GENERATIVE_AI_API_KEY` for production.
+3. Default Next.js build settings; the `main` branch deploys to production, PRs get preview URLs automatically.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Project structure
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```text
+.
+├── public/                # static assets, OG images, project screenshots
+├── src/
+│   ├── app/
+│   │   ├── (routes)/      # home, projects, blog, contact, privacy, …
+│   │   ├── api/chat/      # Gemini streaming endpoint
+│   │   ├── llms.txt/      # AI-readable site overview
+│   │   ├── robots.ts
+│   │   └── sitemap.ts
+│   ├── components/
+│   │   ├── assistant-ui/  # registry-based chat modal (Gemini-backed)
+│   │   ├── chat/          # runtime provider for the chatbot
+│   │   ├── home/          # hero + tagline animation
+│   │   ├── contributions/ # OSS contributions section
+│   │   ├── project/       # project cards
+│   │   ├── timeline/      # work + education
+│   │   └── ui/            # shadcn primitives
+│   ├── content/           # MD: bio, faq, tech-philosophy (chatbot context)
+│   ├── data/              # JSON: projects, contributions, certs, …
+│   ├── lib/               # utils, schemas, data loaders, same-origin guard
+│   └── env.ts             # zod-validated env boundary
+├── .env.example
+└── next.config.js
+```
