@@ -284,6 +284,28 @@ const AssistantMessage: FC = () => {
             }
           }}
         </MessagePrimitive.GroupedParts>
+        {/* Pre-first-token "Thinking…" indicator. Gated on three states
+            so it's correct in every exit path:
+              - `last` + `hasContent={false}` → only on the in-flight
+                empty assistant message, never on older empty bubbles
+              - `isRunning` → vanishes when the stream settles, whether
+                that's a clean finish (next render brings hasContent
+                true), an error (sets isRunning false), or a user
+                abort. Without this gate, an erroring stream would
+                leave "Thinking…" stuck forever.
+            `tw-shimmer` (@import in globals.css) animates the sweep —
+            see src/components/assistant-ui/reasoning.tsx for the same
+            idiom on the reasoning-trigger label.
+            `text-foreground/40` is per tw-shimmer's docs: the plugin
+            reads `currentColor`, so a semi-transparent base makes the
+            highlight sweep visible. */}
+        <MessagePrimitive.If last hasContent={false}>
+          <AuiIf condition={(s) => s.thread.isRunning}>
+            <span className="shimmer text-foreground/40 text-sm motion-reduce:animate-none">
+              Thinking…
+            </span>
+          </AuiIf>
+        </MessagePrimitive.If>
         <MessageError />
       </div>
 
