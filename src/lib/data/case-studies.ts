@@ -31,6 +31,58 @@ export function getAllCaseStudySlugs(): string[] {
   }
 }
 
+export interface CaseStudyMeta {
+  slug: string;
+  /** ISO yyyy-mm-dd from frontmatter. */
+  publishedAt: string;
+  title: string;
+  summary: string;
+  projectName: string;
+}
+
+/**
+ * Cheap frontmatter scan — pulls just the fields the sitemap, OG card,
+ * and JSON-LD generator need without paying the cost of full MDX
+ * compilation. Same regex strategy as `getCaseStudyHeadings`.
+ *
+ * Validation against `CaseStudyFrontmatterSchema` still runs at the
+ * page level (`loadCaseStudy` in the route), so a malformed frontmatter
+ * here surfaces with a clear error when the page is requested rather
+ * than silently producing empty sitemap rows.
+ */
+export function getCaseStudyMetas(): CaseStudyMeta[] {
+  return getAllCaseStudySlugs().map((slug) => {
+    const path = join(CONTENT_DIR, `${slug}.mdx`);
+    let raw: string;
+    try {
+      raw = readFileSync(path, 'utf8');
+    } catch {
+      return {
+        slug,
+        publishedAt: '',
+        title: slug,
+        summary: '',
+        projectName: '',
+      };
+    }
+    const fm = /^---\n([\s\S]*?)\n---/.exec(raw);
+    const block = fm?.[1] ?? '';
+    const pull = (key: string) => {
+      // Frontmatter values may be unquoted, single-quoted, or
+      // double-quoted — match whichever the MDX file used.
+      const m = new RegExp(`^${key}:\\s*['"]?(.+?)['"]?\\s*$`, 'm').exec(block);
+      return m?.[1]?.trim() ?? '';
+    };
+    return {
+      slug,
+      publishedAt: pull('publishedAt'),
+      title: pull('title'),
+      summary: pull('summary'),
+      projectName: pull('projectName'),
+    };
+  });
+}
+
 export interface CaseStudyHeading {
   /** 2 for `<h2>`, 3 for `<h3>`. We deliberately skip h4+ for the TOC. */
   depth: 2 | 3;
