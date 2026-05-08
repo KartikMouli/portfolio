@@ -1,0 +1,44 @@
+{
+  "contributions": [
+    {
+      "repo": "Unizoy/unizoy-ui",
+      "prNumber": 48,
+      "title": "fix(ui): tabs reset to manual when changing package manager",
+      "url": "https://github.com/Unizoy/unizoy-ui/pull/48",
+      "state": "open",
+      "date": "2025-08-10"
+    },
+    {
+      "repo": "EuclidStellar/elcostra",
+      "prNumber": 49,
+      "title": "add dark mode toggle (closes #44)",
+      "url": "https://github.com/EuclidStellar/elcostra/pull/49",
+      "state": "merged",
+      "date": "2024-10-11"
+    },
+    {
+      "repo": "vignesh1507/Curse_Cloak",
+      "prNumber": 6,
+      "title": "added 'washyourmouthoutwithsoap' module to blur cuss words",
+      "url": "https://github.com/vignesh1507/Curse_Cloak/pull/6",
+      "state": "merged",
+      "date": "2024-10-09"
+    },
+    {
+      "repo": "vignesh1507/Curse_Cloak",
+      "prNumber": 4,
+      "title": "Added the Togglebutton feature",
+      "url": "https://github.com/vignesh1507/Curse_Cloak/pull/4",
+      "state": "merged",
+      "date": "2024-10-08"
+    },
+    {
+      "repo": "vignesh1507/Curse_Cloak",
+      "prNumber": 3,
+      "title": "fixed logo issue",
+      "url": "https://github.com/vignesh1507/Curse_Cloak/pull/3",
+      "state": "merged",
+      "date": "2024-10-08"
+    }
+  ]
+}

@@ -17,6 +17,23 @@ export const ProjectSchema = z.object({
 export const ProjectsSchema = z.array(ProjectSchema);
 
 /**
+ * Open-source contributions shown on the home page. Hand-curated list
+ * of pull requests across third-party repos — see
+ * `src/data/contributions.json`. Date stored as ISO yyyy-mm-dd so we
+ * can format consistently per locale at render time.
+ */
+export const ContributionSchema = z.object({
+  repo: z.string().min(1),
+  prNumber: z.number().int().positive(),
+  title: z.string().min(1),
+  url: z.string().url(),
+  state: z.enum(['open', 'merged', 'closed']),
+  date: z.string().min(1),
+});
+
+export const ContributionsSchema = z.array(ContributionSchema);
+
+/**
  * Contact form schema — shared between the client (RHF + zodResolver) and
  * the Server Action (re-validates server-side; never trust the client).
  *
