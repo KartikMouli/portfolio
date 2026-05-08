@@ -1,14 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import {
-  CheckCircle2,
-  Clock,
-  Linkedin,
-  Mail,
-  MapPin,
-  MessageSquare,
-} from 'lucide-react';
-import { FaGithub } from 'react-icons/fa';
+import { CheckCircle2, Clock, Mail, MapPin } from 'lucide-react';
+import { FaGithub, FaLinkedin } from 'react-icons/fa';
 import { FaXTwitter } from 'react-icons/fa6';
 
 import ContactForm from '@/components/contact/contact-form';
@@ -33,7 +26,7 @@ const ALT_CHANNELS = [
   },
   {
     label: 'LinkedIn',
-    icon: <Linkedin className="size-4" />,
+    icon: <FaLinkedin className="size-4" />,
     value: 'in/kartik-mouli',
     href: siteConfig.links.linkedin,
     external: true,
@@ -166,19 +159,6 @@ function Contact() {
 
         {/* Right column — form */}
         <div className="flex flex-col gap-6">
-          <section className="flex flex-col gap-3">
-            <div className="flex items-center gap-2">
-              <MessageSquare className="size-4 text-muted-foreground" />
-              <H2 className="border-b-0 pb-0 text-base font-medium">
-                Send a message
-              </H2>
-            </div>
-            <Muted className="text-xs">
-              The form opens your mail client with a pre-filled draft — your
-              message never touches my server.
-            </Muted>
-          </section>
-
           <ContactForm />
 
           {/* What to include */}
