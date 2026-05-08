@@ -199,6 +199,16 @@
     @apply bg-background text-foreground;
     letter-spacing: var(--tracking-normal);
   }
+
+  /* Brand-tinted text selection. Uses `--primary` / `--primary-foreground`
+     so the highlight inverts cleanly in both light (dark-on-cream) and
+     dark (cream-on-dark) modes — the same token pair that drives the
+     site's primary buttons, so highlighted text reads as deliberate
+     rather than browser-default blue. */
+  ::selection {
+    background-color: var(--primary);
+    color: var(--primary-foreground);
+  }
   .twemoji {
     display: inline-block;
     height: 1em;
