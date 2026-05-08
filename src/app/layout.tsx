@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from 'next';
+import { Suspense } from 'react';
 import { Inter, Playfair_Display, JetBrains_Mono } from 'next/font/google';
 import './globals.css';
 import Header from '@/components/layout-content/header';
@@ -9,6 +10,8 @@ import { Providers } from '@/components/providers/providers';
 import { JsonLd } from '@/components/seo/json-ld';
 import { ScrollToTop } from '@/components/scroll-to-top';
 import { CommandMenu } from '@/components/command-menu';
+import { AssistantModal } from '@/components/assistant-ui/assistant-modal';
+import { ChatRuntimeProvider } from '@/components/chat/chat-runtime-provider';
 import { siteConfig } from '@/config/site';
 import { env } from '@/env';
 
@@ -124,6 +127,18 @@ export default async function RootLayout({
           <Footer />
           <ScrollToTop />
           <CommandMenu />
+          {/* Suspense + ChatRuntimeProvider together: assistant-ui's
+              `useChatRuntime` calls `Math.random()` at hook-init time,
+              which Next 16's `cacheComponents` mode flags during
+              prerender. Deferring this subtree to client hydration with
+              a null fallback removes the warning at zero LCP cost — the
+              floating modal isn't LCP content. Documented Next 16
+              pattern, not a workaround. */}
+          <Suspense fallback={null}>
+            <ChatRuntimeProvider>
+              <AssistantModal />
+            </ChatRuntimeProvider>
+          </Suspense>
         </Providers>
       </body>
     </html>

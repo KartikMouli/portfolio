@@ -34,6 +34,14 @@ const envSchema = z.object({
 
   // SEO — Google Search Console verification token.
   GOOGLE_VERIFICATION_CODE: z.string().optional(),
+
+  // Gemini API key for the portfolio chatbot. The variable name is the
+  // exact one `@ai-sdk/google` reads transparently — don't rename, the
+  // SDK won't pick it up under a different name. Required so a missing
+  // key crashes module load instead of failing silently at first chat.
+  GOOGLE_GENERATIVE_AI_API_KEY: z
+    .string()
+    .min(1, 'GOOGLE_GENERATIVE_AI_API_KEY is required'),
 });
 
 const parsed = envSchema.safeParse(process.env);
