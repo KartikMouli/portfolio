@@ -9,7 +9,7 @@ import {
 import Image from 'next/image';
 import Link from 'next/link';
 import Markdown from 'react-markdown';
-import { ExternalLink } from 'lucide-react';
+import { Globe } from 'lucide-react';
 import { FaGithub } from 'react-icons/fa';
 import type { z } from 'zod';
 import type { ProjectSchema } from '@/lib/schemas';
@@ -70,7 +70,7 @@ export function ProjectCard({ project }: Props) {
               >
                 <Badge className="flex gap-2 px-2 py-1 text-[10px]">
                   {link.name === 'Live Demo' ? (
-                    <ExternalLink className="size-3" />
+                    <Globe className="size-3" />
                   ) : (
                     <FaGithub className="size-3" />
                   )}
