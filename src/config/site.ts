@@ -15,7 +15,7 @@ export const siteConfig = {
   title: 'Kartik Mouli | Software Developer Portfolio',
   titleTemplate: '%s | Kartik Mouli',
   description:
-    'Software Developer portfolio of Kartik Mouli. Explore projects built with React, Next.js, TypeScript, and modern web technologies. Available for freelance and full-time opportunities.',
+    'Software Developer portfolio of Kartik Mouli. Explore projects built with React, Next.js, TypeScript, and modern web technologies. Available for full-time opportunities.',
   shortDescription:
     'Software Developer portfolio showcasing projects built with React, Next.js, TypeScript, and modern web technologies.',
   url: 'https://kartikmouli.me',
