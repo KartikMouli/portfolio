@@ -32,7 +32,7 @@ export default async function Footer() {
       <div className="mx-auto flex max-w-3xl flex-col items-center justify-center gap-6 px-8 py-8 sm:flex-row-reverse sm:justify-between">
         <Socials />
 
-        <section className="flex flex-col items-center gap-2 text-sm text-muted-foreground/80 sm:items-start">
+        <section className="flex flex-col items-center gap-2 text-sm text-muted-foreground sm:items-start">
           {/* Row 1: copyright + privacy */}
           <div className="flex flex-wrap items-center justify-center gap-2">
             <span>&copy; {year}</span>
