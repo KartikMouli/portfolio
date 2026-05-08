@@ -1,8 +1,3 @@
-import {
-  ComposerAddAttachment,
-  ComposerAttachments,
-  UserMessageAttachments,
-} from '@/components/assistant-ui/attachment';
 import { MarkdownText } from '@/components/assistant-ui/markdown-text';
 import {
   Reasoning,
@@ -153,33 +148,50 @@ const ThreadSuggestionItem: FC = () => {
   );
 };
 
+/**
+ * Single-row composer: textarea + send button, no attachments.
+ *
+ * Attachments are disabled the canonical way per the assistant-ui docs
+ * (https://www.assistant-ui.com/docs/guides/attachments) — there's no
+ * `allowAttachments: false` runtime flag, you simply omit the
+ * attachment-related primitives:
+ *   - <ComposerPrimitive.AttachmentDropzone>  (drag/drop wrapper)
+ *   - <ComposerPrimitive.Attachments>          (thumbnail row)
+ *   - <ComposerPrimitive.AddAttachment>        (plus button)
+ * That's it — no other plumbing to clean up.
+ */
 const Composer: FC = () => {
   return (
     <ComposerPrimitive.Root className="aui-composer-root relative flex w-full flex-col">
-      <ComposerPrimitive.AttachmentDropzone asChild>
-        <div
-          data-slot="aui_composer-shell"
-          className="flex w-full flex-col gap-2 rounded-(--composer-radius) border bg-background p-(--composer-padding) transition-shadow focus-within:border-ring/75 focus-within:ring-2 focus-within:ring-ring/20 data-[dragging=true]:border-ring data-[dragging=true]:border-dashed data-[dragging=true]:bg-accent/50"
-        >
-          <ComposerAttachments />
-          <ComposerPrimitive.Input
-            placeholder="Send a message..."
-            className="aui-composer-input max-h-32 min-h-10 w-full resize-none bg-transparent px-1.75 py-1 text-sm outline-none placeholder:text-muted-foreground/80"
-            rows={1}
-            autoFocus
-            aria-label="Message input"
-          />
-          <ComposerAction />
-        </div>
-      </ComposerPrimitive.AttachmentDropzone>
+      {/* `items-end` so the send button hugs the bottom of the
+          textarea when it grows multi-line — the conventional chat
+          composer alignment (ChatGPT / Claude.ai both do this). At
+          the default `min-h-8` single-line state the textarea and
+          send button are the same height, so this also reads as
+          centered. */}
+      <div
+        data-slot="aui_composer-shell"
+        className="flex w-full items-end gap-2 rounded-(--composer-radius) border bg-background p-(--composer-padding) transition-shadow focus-within:border-ring/75 focus-within:ring-2 focus-within:ring-ring/20"
+      >
+        <ComposerPrimitive.Input
+          placeholder="Send a message..."
+          className="aui-composer-input max-h-24 min-h-8 flex-1 resize-none bg-transparent px-1.75 py-1 text-sm outline-none placeholder:text-muted-foreground/80"
+          rows={1}
+          autoFocus
+          aria-label="Message input"
+        />
+        <ComposerAction />
+      </div>
     </ComposerPrimitive.Root>
   );
 };
 
+// Returns a fragment, not a wrapper — the parent shell already provides
+// the flex row, and inserting another wrapper here would break the
+// `items-end` alignment between the input and the button.
 const ComposerAction: FC = () => {
   return (
-    <div className="aui-composer-action-wrapper relative flex items-center justify-between">
-      <ComposerAddAttachment />
+    <>
       <AuiIf condition={(s) => !s.thread.isRunning}>
         <ComposerPrimitive.Send asChild>
           <TooltipIconButton
@@ -188,7 +200,7 @@ const ComposerAction: FC = () => {
             type="button"
             variant="default"
             size="icon"
-            className="aui-composer-send size-8 rounded-full"
+            className="aui-composer-send size-8 shrink-0 rounded-full"
             aria-label="Send message"
           >
             <ArrowUpIcon className="aui-composer-send-icon size-4" />
@@ -201,14 +213,14 @@ const ComposerAction: FC = () => {
             type="button"
             variant="default"
             size="icon"
-            className="aui-composer-cancel size-8 rounded-full"
+            className="aui-composer-cancel size-8 shrink-0 rounded-full"
             aria-label="Stop generating"
           >
             <SquareIcon className="aui-composer-cancel-icon size-3 fill-current" />
           </Button>
         </ComposerPrimitive.Cancel>
       </AuiIf>
-    </div>
+    </>
   );
 };
 
@@ -375,8 +387,6 @@ const UserMessage: FC = () => {
       className="fade-in slide-in-from-bottom-1 grid animate-in auto-rows-auto grid-cols-[minmax(72px,1fr)_auto] content-start gap-y-2 px-2 duration-150 [contain-intrinsic-size:auto_60px] [content-visibility:auto] [&:where(>*)]:col-start-2"
       data-role="user"
     >
-      <UserMessageAttachments />
-
       <div className="aui-user-message-content-wrapper relative col-start-2 min-w-0">
         <div className="aui-user-message-content wrap-break-word peer rounded-2xl bg-muted px-4 py-2.5 text-foreground empty:hidden">
           <MessagePrimitive.Parts />
