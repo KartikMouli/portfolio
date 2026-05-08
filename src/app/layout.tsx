@@ -99,9 +99,21 @@ export default async function RootLayout({
         suppressHydrationWarning
         className={`${fontSans.variable} ${fontSerif.variable} ${fontMono.variable} flex min-h-screen flex-col font-sans antialiased`}
       >
+        {/* A11y: bypasses nav for keyboard / screen-reader users.
+            Hidden visually until focused — at which point it animates
+            into the top-left corner with a focus ring. */}
+        <a
+          href="#main"
+          className="sr-only focus-visible:not-sr-only focus-visible:fixed focus-visible:left-4 focus-visible:top-4 focus-visible:z-100 focus-visible:rounded-md focus-visible:border focus-visible:bg-background focus-visible:px-4 focus-visible:py-2 focus-visible:text-sm focus-visible:font-medium focus-visible:text-foreground focus-visible:shadow-md focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+        >
+          Skip to content
+        </a>
         <Providers>
           <Header />
-          <main className="grow mx-auto w-full max-w-3xl px-8 pt-8 pb-16">
+          <main
+            id="main"
+            className="grow mx-auto w-full max-w-3xl px-8 pt-8 pb-16"
+          >
             {children}
             <Analytics />
             <SpeedInsights />

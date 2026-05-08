@@ -205,6 +205,31 @@
     margin: 0 0.05em 0 0.1em;
     vertical-align: -0.1em;
   }
+
+  /* A11y: every focusable anchor in body content gets a visible 2px ring
+     on keyboard focus. Components that opt out (e.g. shadcn buttons that
+     ship their own focus styles) override `outline-none` locally. The
+     `*` rule above only sets the *color* of `outline-ring/50`; this
+     actually makes the outline visible on `:focus-visible`. */
+  a:focus-visible,
+  [role='button']:focus-visible {
+    @apply rounded-sm outline-2 outline-offset-2 outline-ring;
+  }
+}
+
+/* A11y: respect the OS-level "reduce motion" preference. Compresses
+   animations / transitions to ~0 and disables smooth-scroll. Runs
+   *outside* @layer base so it has higher specificity than utility
+   transitions like `transition-colors`. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 @custom-variant retina {
