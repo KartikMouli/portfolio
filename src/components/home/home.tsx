@@ -19,6 +19,7 @@ import {
 } from '@/components/github-contributions';
 import { getCachedContributions } from '@/lib/get-cached-contributions';
 import SocialCards from '@/components/socials/social-cards';
+import Certifications from '@/components/certifications';
 import { CopyButton } from '@/components/copy-button';
 import { Twemoji } from '@/components/twemoji';
 import { InfoRow } from '@/components/info-row';
@@ -197,6 +198,9 @@ export default function Home() {
         </div>
         <Projects limit={2} />
       </section>
+
+      {/* ───── Certifications ───── */}
+      <Certifications />
 
       {/* ───── GitHub Contributions ───── */}
       <section className="flex flex-col gap-4">

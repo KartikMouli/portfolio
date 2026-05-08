@@ -36,3 +36,16 @@ const timelineItemSchema = z.object({
 export type TimelineItem = z.infer<typeof timelineItemSchema>;
 export const ExperienceSchema = z.array(timelineItemSchema);
 export const EducationSchema = z.array(timelineItemSchema);
+
+const certificationSchema = z.object({
+  name: z.string(),
+  issuer: z.string(),
+  /** Free-form date string. "MM.YYYY" preferred (matches WorkExperience); "YYYY" also accepted. */
+  issuedAt: z.string(),
+  href: z.string().url(),
+  /** Identifier matched against the icon map in the Certifications component. */
+  icon: z.string().optional(),
+});
+
+export type Certification = z.infer<typeof certificationSchema>;
+export const CertificationsSchema = z.array(certificationSchema);
