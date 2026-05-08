@@ -20,13 +20,36 @@ interface Props {
   project: Project;
 }
 
+/**
+ * Fallback rendered in the card header when a project has no `image`.
+ * Renders the full project name in serif (Playfair Display) on a
+ * `bg-muted` block, same height as image cards so the grid stays
+ * aligned. Long names clamp to two lines with an ellipsis.
+ *
+ * `aria-hidden` is correct here: the same name is rendered as the
+ * `<CardTitle>` below, so exposing it twice to assistive tech adds
+ * no information.
+ */
+function NoImageFallback({ name }: { name: string }) {
+  return (
+    <div className="flex h-40 w-full items-center justify-center bg-muted px-6 text-muted-foreground select-none">
+      <span
+        className="line-clamp-2 text-center font-serif text-2xl tracking-tight"
+        aria-hidden
+      >
+        {name}
+      </span>
+    </div>
+  );
+}
+
 export function ProjectCard({ project }: Props) {
   const { name, href, description, image, tags, links } = project;
 
   return (
     <Card className="flex flex-col h-full">
       <CardHeader className="p-4">
-        {image && (
+        {image ? (
           <Link href={href || image}>
             <Image
               src={image}
@@ -37,6 +60,12 @@ export function ProjectCard({ project }: Props) {
               priority
             />
           </Link>
+        ) : href ? (
+          <Link href={href} target="_blank" rel="noopener noreferrer">
+            <NoImageFallback name={name} />
+          </Link>
+        ) : (
+          <NoImageFallback name={name} />
         )}
       </CardHeader>
       <CardContent className="flex flex-col gap-2 flex-1">
