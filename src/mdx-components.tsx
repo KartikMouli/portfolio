@@ -1,6 +1,7 @@
 import type { MDXComponents } from 'mdx/types';
 import Link from 'next/link';
 
+import { Mermaid } from '@/components/case-study/mermaid';
 import { H1, H2, H3, H4, List, P } from '@/components/typography';
 import { cn } from '@/lib/utils';
 
@@ -27,6 +28,15 @@ const components: MDXComponents = {
   p: P,
   ul: List,
   code: ({ children, className, ...rest }) => {
+    // Fenced ```mermaid blocks are diagrams, not code listings —
+    // intercept them and render through the lazy-loaded <Mermaid>
+    // component instead of a <code> element. The `<pre>` wrapper
+    // around this would still apply, so we have to also handle that
+    // case below; the `pre` mapping forwards through unchanged when
+    // the only child is the Mermaid output.
+    if (className === 'language-mermaid') {
+      return <Mermaid chart={String(children).trim()} />;
+    }
     if (className?.startsWith('language-')) {
       return (
         <code className={cn('font-mono text-sm', className)} {...rest}>

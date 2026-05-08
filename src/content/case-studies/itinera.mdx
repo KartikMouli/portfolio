@@ -14,22 +14,14 @@ The eventual scope is bigger than the current build — nearby stay suggestions,
 
 ## How it works
 
-{/* TODO: switch to Mermaid (rehype-mermaid + mermaid) for proper SVG
-    diagrams once a second case study lands. Plain ASCII renders
-    consistently in any monospace font but doesn't scale visually
-    once diagrams get more complex than a 3-box flow. */}
-
-```text
-+----------+   /api/trips/search   +------------+
-|   Form   | --------------------> |   Gemini   |
-+----------+   few-shot prompt     |            |
-     |                             +------+-----+
-     |                                    |  structured
-     | save                               v  day-by-day
-     |                             +------------+
-     +---------------------------->|  Postgres  |
-                                   |   Prisma   |
-                                   +------------+
+```mermaid
+flowchart LR
+    Form[Form]
+    Gemini[Gemini]
+    DB[("Postgres + Prisma")]
+    Form -->|"/api/trips/search<br/>few-shot prompt"| Gemini
+    Gemini -->|"structured<br/>day-by-day"| DB
+    Form -.->|save| DB
 ```
 
 1. **Auth.** Better Auth handles email/password + Google OAuth. The username plugin gives each user a clean profile slug.
