@@ -12,43 +12,78 @@ async function getCopyrightYear() {
   return new Date().getFullYear();
 }
 
+/**
+ * Short build SHA, surfaced in the footer for transparency / debugging.
+ * Reads `VERCEL_GIT_COMMIT_SHA` (set automatically on Vercel deploys); on
+ * local dev it returns `null` and the chip simply doesn't render.
+ */
+async function getBuildSha(): Promise<string | null> {
+  'use cache';
+  const sha = process.env.VERCEL_GIT_COMMIT_SHA;
+  return sha ? sha.slice(0, 7) : null;
+}
+
 export default async function Footer() {
-  const year = await getCopyrightYear();
+  const [year, sha] = await Promise.all([getCopyrightYear(), getBuildSha()]);
+  const repoUrl = `${siteConfig.links.github}/portfolio`;
 
   return (
     <footer className="border-t border-border/40 mt-12">
-      <div className="mx-auto flex max-w-3xl flex-col items-center justify-center px-8 py-8 sm:flex-row-reverse sm:justify-between">
-        <div className="mb-6 sm:mb-0">
-          <Socials />
-        </div>
+      <div className="mx-auto flex max-w-3xl flex-col items-center justify-center gap-6 px-8 py-8 sm:flex-row-reverse sm:justify-between">
+        <Socials />
 
-        <section className="flex flex-col items-center sm:items-start gap-3 text-sm text-muted-foreground/80">
+        <section className="flex flex-col items-center gap-2 text-sm text-muted-foreground/80 sm:items-start">
+          {/* Row 1: copyright + privacy */}
           <div className="flex flex-wrap items-center justify-center gap-2">
-            <span>&copy; {year} </span>
-            <span>
-              <Link className="hover:text-foreground" href="/">
-                {siteConfig.name}
-              </Link>
-            </span>
+            <span>&copy; {year}</span>
+            <Link className="hover:text-foreground" href="/">
+              {siteConfig.name}
+            </Link>
             <Separator orientation="vertical" className="h-4" />
-            <span>
-              <Link
-                className="hover:text-foreground hover:cursor-pointer"
-                href="/privacy"
-              >
-                Privacy Policy
-              </Link>
-            </span>
-            <Separator orientation="vertical" className="h-4" />
-            <span>
-              <Link
-                className="font-mono hover:text-foreground hover:cursor-pointer"
-                href="/llms.txt"
-                title="Markdown index for LLM crawlers (llmstxt.org spec)"
-              >
-                llms.txt
-              </Link>
-            </span>
+            <Link className="hover:text-foreground" href="/privacy">
+              Privacy Policy
+            </Link>
+          </div>
+
+          {/* Row 2: machine-readable resources for crawlers */}
+          <div className="flex flex-wrap items-center justify-center gap-2 font-mono text-xs">
+            <Link
+              className="hover:text-foreground"
+              href="/sitemap.xml"
+              title="XML sitemap for search engines"
+            >
+              sitemap.xml
+            </Link>
+            <Separator orientation="vertical" className="h-3" />
+            <Link
+              className="hover:text-foreground"
+              href="/robots.txt"
+              title="Crawler directives"
+            >
+              robots.txt
+            </Link>
+            <Separator orientation="vertical" className="h-3" />
+            <Link
+              className="hover:text-foreground"
+              href="/llms.txt"
+              title="Markdown index for LLM crawlers (llmstxt.org spec)"
+            >
+              llms.txt
+            </Link>
+            {sha && (
+              <>
+                <Separator orientation="vertical" className="h-3" />
+                <Link
+                  className="hover:text-foreground"
+                  href={`${repoUrl}/commit/${sha}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  title="Currently deployed commit"
+                >
+                  build {sha}
+                </Link>
+              </>
+            )}
           </div>
         </section>
       </div>
