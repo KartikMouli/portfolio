@@ -40,8 +40,10 @@ export const ContributionsSchema = z.array(ContributionSchema);
  * Case-study frontmatter schema.
  *
  * Each MDX file in `src/content/case-studies/*.mdx` declares this
- * block at the top. The body of the file is free-form MDX rendered
- * via `next-mdx-remote/rsc` at request time.
+ * block at the top. The body is compiled by `@next/mdx` and rendered
+ * via dynamic `await import(...)` in the page route; this schema
+ * validates the `frontmatter` export surfaced by
+ * `remark-mdx-frontmatter`.
  *
  * `slug` is conventionally the filename (sans `.mdx`) — but storing
  * it explicitly lets us validate it doesn't drift, and supports
