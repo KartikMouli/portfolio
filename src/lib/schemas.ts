@@ -16,11 +16,39 @@ export const ProjectSchema = z.object({
 
 export const ProjectsSchema = z.array(ProjectSchema);
 
-export const formSchema = z.object({
-  name: z.string().min(1, 'Name must be at least 1 characters long.'),
-  email: z.string().email('Invalid email address.'),
-  message: z.string().min(1, 'Message must be at least 1 characters.'),
+/**
+ * Contact form schema — shared between the client (RHF + zodResolver) and
+ * the Server Action (re-validates server-side; never trust the client).
+ *
+ * Bounds (`max`) are intentional: protect against 50 KB pastes / payloads
+ * meant to blow up the SES recipient. `.trim()` runs on both sides so a
+ * message of "  hi  " on either submission path is treated identically.
+ *
+ * `hp_field` is the honeypot — `max(0)` means any non-empty value is a bot.
+ * The action checks this *after* validation passes (silent success so the
+ * bot doesn't learn it was caught).
+ */
+export const contactFormSchema = z.object({
+  name: z.string().trim().min(1, 'Please enter your name.').max(100),
+  email: z.email('Please enter a valid email address.').trim().max(254),
+  message: z
+    .string()
+    .trim()
+    .min(10, 'A few more words please — at least 10 characters.')
+    .max(5000, 'Please keep messages under 5000 characters.'),
+  // Honeypot — must be empty. Optional so missing-field POSTs don't 400;
+  // any non-empty value is treated as a bot by the action.
+  //
+  // Field name is intentionally non-semantic: browsers autofill semantic
+  // names like "website" / "url" / "email" even with autocomplete="off"
+  // (https://bugs.chromium.org/p/chromium/issues/detail?id=587466), which
+  // turns honest humans into false-positive spam.
+  hp_field: z.string().max(0, 'Spam detected.').optional(),
 });
+export type ContactFormValues = z.infer<typeof contactFormSchema>;
+
+// Back-compat alias — keep the old import name working.
+export const formSchema = contactFormSchema;
 
 const timelineItemSchema = z.object({
   name: z.string(),
