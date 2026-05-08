@@ -1,16 +1,17 @@
 import Link from 'next/link';
 import { ArrowUpRight, FileDown } from 'lucide-react';
-import { FaGithub, FaLinkedin } from 'react-icons/fa';
-import { FaXTwitter } from 'react-icons/fa6';
-import { SiGmail, SiLeetcode } from 'react-icons/si';
 import { siteConfig } from '@/config/site';
 
 /**
  * Card-style social grid used in the home hero. Each card is icon + label
  * with an arrow that animates on hover. Compared to `<Socials />` (the bare
- * icon row still used by /about and the footer), these are bigger, easier
- * to scan, and visually echo chanhdai.com's hero — without copying its
- * dark zinc palette: borders + bg here come from our theme tokens.
+ * icon row still used by the footer), these are bigger, easier to scan,
+ * and visually echo chanhdai.com's hero — without copying its dark zinc
+ * palette: borders + bg here come from our theme tokens.
+ *
+ * Icons are real brand SVGs from `/public/logos/` so they render in their
+ * full-color marks (richer than monochrome simple-icons glyphs). Resume is
+ * the lone exception: it has no brand, so it stays a tinted lucide icon.
  */
 
 type SocialCard = {
@@ -19,42 +20,54 @@ type SocialCard = {
   label: string;
 };
 
-// Brand colors:
-// - GitHub + X are intentionally neutral (currentColor) so they invert
-//   correctly with light/dark mode — that matches their actual brand
-//   guidance, which doesn't bake in a single hue.
-// - LinkedIn / LeetCode use their official brand hues (visible in both
-//   light and dark themes without contrast issues).
-// - Email / Resume use our copper accent so the action-y items share
-//   the brand mark color.
+/**
+ * Helper: render a brand logo from `/public/logos/{file}` at 20×20.
+ * Plain <img> on purpose — Next/Image blocks SVG sources by default
+ * (CSP / dangerouslyAllowSVG) and offers no optimization upside for
+ * vector files, so we'd just be eating config noise for nothing.
+ */
+function Logo({ file, alt }: { file: string; alt: string }) {
+   
+  return (
+    <img
+      src={`/logos/${file}`}
+      alt={alt}
+      width={20}
+      height={20}
+      className="size-5"
+    />
+  );
+}
+
 const cards: SocialCard[] = [
   {
     href: siteConfig.links.github,
-    icon: <FaGithub className="size-5" />,
+    icon: <Logo file="github.svg" alt="GitHub" />,
     label: 'GitHub',
   },
   {
     href: siteConfig.links.linkedin,
-    icon: <FaLinkedin className="size-5 text-[#0A66C2]" />,
+    icon: <Logo file="linkedin.svg" alt="LinkedIn" />,
     label: 'LinkedIn',
   },
   {
     href: siteConfig.links.twitter,
-    icon: <FaXTwitter className="size-5" />,
+    icon: <Logo file="x.svg" alt="X" />,
     label: 'X',
   },
   {
     href: siteConfig.links.leetcode,
-    icon: <SiLeetcode className="size-5 text-[#FFA116]" />,
+    icon: <Logo file="leetcode.svg" alt="LeetCode" />,
     label: 'LeetCode',
   },
   {
     href: `mailto:${siteConfig.author.email}`,
-    icon: <SiGmail className="size-5 text-[#EA4335]" />,
+    icon: <Logo file="gmail.svg" alt="Gmail" />,
     label: 'Email',
   },
   {
     href: siteConfig.links.resume,
+    // No public brand for "Resume" — keep a tinted lucide glyph.
     icon: <FileDown className="size-5 text-[#A65A2E]" />,
     label: 'Resume',
   },

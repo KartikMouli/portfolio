@@ -1,7 +1,6 @@
 import Link from 'next/link';
 import type { ReactElement } from 'react';
 import { ArrowUpRight, Award } from 'lucide-react';
-import { SiMeta, SiGooglecloud } from 'react-icons/si';
 import { H2 } from '@/components/typography';
 import { getCertifications } from '@/lib/data/certifications';
 
@@ -10,18 +9,31 @@ import { getCertifications } from '@/lib/data/certifications';
  * card layout: small icon box, title, "@issuer | date" subtitle, and
  * an arrow indicator on the right.
  *
- * Data lives in `src/data/certifications.json`. Add new entries by
- * picking an icon name from `ICON_MAP` below (or registering a new one);
- * keys map directly to react-icons identifiers, no new deps required.
+ * Data lives in `src/data/certifications.json`. Each entry's `icon`
+ * field maps to an entry in ICON_MAP below; entries point at brand
+ * SVGs in `/public/logos/` so they render as their full-color marks
+ * (richer than the simple-icons monochrome glyphs we used before).
  */
 
-// Each entry is a pre-styled ReactElement so brand color travels with
-// the icon (no per-call className wrangling). Falls back to a neutral
-// <Award /> for any cert that omits `icon` or maps to nothing here.
-// Tree-shaking is honest because only icons we register get imported.
+// Pre-styled ReactElements keyed by the `icon` string in the data.
+// Falls back to a neutral <Award /> for any cert that omits `icon`
+// or maps to nothing here.
+//
+// Plain <img> on purpose — Next/Image blocks SVG sources by default
+// (CSP / `dangerouslyAllowSVG`) and offers no optimization upside for
+// vector files, so we'd just be eating config noise for nothing.
 const ICON_MAP: Record<string, ReactElement> = {
-  SiMeta: <SiMeta className="text-[#0866FF]" />,
-  SiGooglecloud: <SiGooglecloud className="text-[#4285F4]" />,
+  /* eslint-disable @next/next/no-img-element */
+  SiMeta: <img src="/logos/meta.svg" alt="Meta" width={20} height={20} />,
+  SiGooglecloud: (
+    <img
+      src="/logos/google-cloud.svg"
+      alt="Google Cloud"
+      width={20}
+      height={20}
+    />
+  ),
+  /* eslint-enable @next/next/no-img-element */
 };
 
 export default function Certifications() {
