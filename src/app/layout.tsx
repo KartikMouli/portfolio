@@ -10,6 +10,7 @@ import { JsonLd } from '@/components/seo/json-ld';
 import { ScrollToTop } from '@/components/scroll-to-top';
 import { CommandMenu } from '@/components/command-menu';
 import { siteConfig } from '@/config/site';
+import { env } from '@/env';
 
 const fontSans = Inter({
   subsets: ['latin'],
@@ -72,7 +73,7 @@ export const metadata: Metadata = {
     },
   },
   verification: {
-    google: process.env.GOOGLE_VERIFICATION_CODE,
+    google: env.GOOGLE_VERIFICATION_CODE,
   },
   alternates: {
     canonical: siteConfig.url,
