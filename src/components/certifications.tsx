@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import type { ReactElement } from 'react';
 import { ArrowUpRight, Award } from 'lucide-react';
 import { H2 } from '@/components/typography';
@@ -19,21 +20,29 @@ import { getCertifications } from '@/lib/data/certifications';
 // Falls back to a neutral <Award /> for any cert that omits `icon`
 // or maps to nothing here.
 //
-// Plain <img> on purpose — Next/Image blocks SVG sources by default
-// (CSP / `dangerouslyAllowSVG`) and offers no optimization upside for
-// vector files, so we'd just be eating config noise for nothing.
+// `unoptimized` because Next.js Image's optimizer rejects SVGs by default
+// (CSP / `dangerouslyAllowSVG`); with that flag the file is served
+// straight from `/public/logos/...` without `/_next/image`, so SVGs
+// render as expected and the no-img-element lint rule stays satisfied.
 const ICON_MAP: Record<string, ReactElement> = {
-  /* eslint-disable @next/next/no-img-element */
-  SiMeta: <img src="/logos/meta.svg" alt="Meta" width={20} height={20} />,
+  SiMeta: (
+    <Image
+      src="/logos/meta.svg"
+      alt="Meta"
+      width={20}
+      height={20}
+      unoptimized
+    />
+  ),
   SiGooglecloud: (
-    <img
+    <Image
       src="/logos/google-cloud.svg"
       alt="Google Cloud"
       width={20}
       height={20}
+      unoptimized
     />
   ),
-  /* eslint-enable @next/next/no-img-element */
 };
 
 export default function Certifications() {

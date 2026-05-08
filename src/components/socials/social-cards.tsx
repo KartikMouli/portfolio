@@ -1,5 +1,8 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { ArrowUpRight, FileDown } from 'lucide-react';
+import { FaGithub } from 'react-icons/fa';
+import { FaXTwitter } from 'react-icons/fa6';
 import { siteConfig } from '@/config/site';
 
 /**
@@ -21,19 +24,27 @@ type SocialCard = {
 };
 
 /**
- * Helper: render a brand logo from `/public/logos/{file}` at 20×20.
- * Plain <img> on purpose — Next/Image blocks SVG sources by default
- * (CSP / dangerouslyAllowSVG) and offers no optimization upside for
- * vector files, so we'd just be eating config noise for nothing.
+ * Helper: render a multi-color brand logo from `/public/logos/{file}`.
+ *
+ * `unoptimized` because Next.js Image's optimizer rejects SVGs by default
+ * (CSP / `dangerouslyAllowSVG`); with this flag the file is served straight
+ * from `/public/logos/...` without going through `/_next/image`, so SVGs
+ * render as expected and the lint rule against raw <img> stays satisfied.
+ *
+ * ONLY use this for multi-color brand SVGs (Gmail, Google Cloud, LinkedIn,
+ * Meta, LeetCode); for monochrome marks (GitHub, X) use an inline react-
+ * icons component instead, because when an SVG loads via <Image> / <img>
+ * the page's CSS `currentColor` doesn't reach inside it and pure-black
+ * icons disappear in dark mode.
  */
 function Logo({ file, alt }: { file: string; alt: string }) {
-   
   return (
-    <img
+    <Image
       src={`/logos/${file}`}
       alt={alt}
       width={20}
       height={20}
+      unoptimized
       className="size-5"
     />
   );
@@ -42,7 +53,9 @@ function Logo({ file, alt }: { file: string; alt: string }) {
 const cards: SocialCard[] = [
   {
     href: siteConfig.links.github,
-    icon: <Logo file="github.svg" alt="GitHub" />,
+    // Inline SVG via react-icons — inherits text-foreground so the
+    // octocat stays visible in both light + dark themes.
+    icon: <FaGithub className="size-5" />,
     label: 'GitHub',
   },
   {
@@ -52,7 +65,8 @@ const cards: SocialCard[] = [
   },
   {
     href: siteConfig.links.twitter,
-    icon: <Logo file="x.svg" alt="X" />,
+    // Inline SVG (currentColor) — same dark-mode reason as GitHub.
+    icon: <FaXTwitter className="size-5" />,
     label: 'X',
   },
   {
