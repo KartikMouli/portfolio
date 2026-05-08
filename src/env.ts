@@ -13,27 +13,32 @@ import { z } from 'zod';
  * (silent fallbacks hide config drift).
  */
 const envSchema = z.object({
-  // Resend — required. Get one at https://resend.com/api-keys (send-only scope).
-  RESEND_API_KEY: z.string().min(1, 'RESEND_API_KEY is required'),
+  // Resend — for the contact-form Server Action.
+  // Optional so `pnpm build` works in CI without secrets; the contact
+  // form will fail at send-time (`getResend().emails.send()` throws)
+  // if the key is missing in a deployed environment that needs it.
+  RESEND_API_KEY: z.string().optional(),
 
   // SEO — Google Search Console verification token.
   GOOGLE_VERIFICATION_CODE: z.string().optional(),
 
   // Gemini API key for the portfolio chatbot. The variable name is the
-  // exact one `@ai-sdk/google` reads transparently — don't rename, the
-  // SDK won't pick it up under a different name. Required so a missing
-  // key crashes module load instead of failing silently at first chat.
-  GOOGLE_GENERATIVE_AI_API_KEY: z
-    .string()
-    .min(1, 'GOOGLE_GENERATIVE_AI_API_KEY is required'),
+  // exact one `@ai-sdk/google` reads transparently from `process.env`
+  // — don't rename, the SDK won't pick it up under a different name.
+  // Optional so `pnpm build` works in CI without secrets; the
+  // `/api/chat` route will 500 if the key is missing in production.
+  GOOGLE_GENERATIVE_AI_API_KEY: z.string().optional(),
 });
 
 const parsed = envSchema.safeParse(process.env);
 
 if (!parsed.success) {
+  // `z.flattenError` is the zod 4 replacement for the deprecated
+  // `error.flatten()` instance method; same shape (`{ formErrors,
+  // fieldErrors }`), supported API.
   console.error(
     'Invalid environment variables:',
-    parsed.error.flatten().fieldErrors
+    z.flattenError(parsed.error).fieldErrors
   );
   throw new Error('Invalid environment variables — see logs above.');
 }
