@@ -1,8 +1,8 @@
 import Link from 'next/link';
-import { ArrowUpRight, FileDown, Mail } from 'lucide-react';
+import { ArrowUpRight, FileDown } from 'lucide-react';
 import { FaGithub, FaLinkedin } from 'react-icons/fa';
 import { FaXTwitter } from 'react-icons/fa6';
-import { SiLeetcode } from 'react-icons/si';
+import { SiGmail, SiLeetcode } from 'react-icons/si';
 import { siteConfig } from '@/config/site';
 
 /**
@@ -19,6 +19,14 @@ type SocialCard = {
   label: string;
 };
 
+// Brand colors:
+// - GitHub + X are intentionally neutral (currentColor) so they invert
+//   correctly with light/dark mode — that matches their actual brand
+//   guidance, which doesn't bake in a single hue.
+// - LinkedIn / LeetCode use their official brand hues (visible in both
+//   light and dark themes without contrast issues).
+// - Email / Resume use our copper accent so the action-y items share
+//   the brand mark color.
 const cards: SocialCard[] = [
   {
     href: siteConfig.links.github,
@@ -27,7 +35,7 @@ const cards: SocialCard[] = [
   },
   {
     href: siteConfig.links.linkedin,
-    icon: <FaLinkedin className="size-5" />,
+    icon: <FaLinkedin className="size-5 text-[#0A66C2]" />,
     label: 'LinkedIn',
   },
   {
@@ -37,17 +45,17 @@ const cards: SocialCard[] = [
   },
   {
     href: siteConfig.links.leetcode,
-    icon: <SiLeetcode className="size-5" />,
+    icon: <SiLeetcode className="size-5 text-[#FFA116]" />,
     label: 'LeetCode',
   },
   {
     href: `mailto:${siteConfig.author.email}`,
-    icon: <Mail className="size-5" />,
+    icon: <SiGmail className="size-5 text-[#EA4335]" />,
     label: 'Email',
   },
   {
     href: siteConfig.links.resume,
-    icon: <FileDown className="size-5" />,
+    icon: <FileDown className="size-5 text-[#A65A2E]" />,
     label: 'Resume',
   },
 ];

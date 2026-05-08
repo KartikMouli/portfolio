@@ -3,9 +3,10 @@ import { cn } from '@/lib/utils';
 
 /**
  * A single icon + value row used in the home hero info grid.
- * Extracted from `home.tsx` so the hero file stays focused on layout
- * rather than primitive components, and so the row can be reused
- * (e.g. on a future About page).
+ *
+ * The icon sits in a small rounded-lg muted box that mirrors the
+ * position-icon container used by `<WorkExperience />` further down
+ * the page, so the hero and the timeline visually echo each other.
  */
 interface InfoRowProps {
   icon: ReactNode;
@@ -21,7 +22,9 @@ export function InfoRow({ icon, children, className }: InfoRowProps) {
         className
       )}
     >
-      <span className="text-muted-foreground/70 [&_svg]:size-4">{icon}</span>
+      <span className="flex size-6 shrink-0 items-center justify-center rounded-lg border border-muted-foreground/15 bg-muted text-muted-foreground [&_svg]:size-3.5">
+        {icon}
+      </span>
       <span className="min-w-0 truncate">{children}</span>
     </div>
   );

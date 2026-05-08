@@ -10,7 +10,7 @@ import {
   Globe,
   Mail,
   MapPin,
-  BadgeCheck,
+  Phone,
 } from 'lucide-react';
 import Timeline from '../timeline';
 import {
@@ -19,6 +19,8 @@ import {
 } from '@/components/github-contributions';
 import { getCachedContributions } from '@/lib/get-cached-contributions';
 import SocialCards from '@/components/socials/social-cards';
+import { CopyButton } from '@/components/copy-button';
+import { Twemoji } from '@/components/twemoji';
 import { InfoRow } from '@/components/info-row';
 import { Separator } from '../ui/separator';
 import { H1, H2 } from '@/components/typography';
@@ -33,21 +35,15 @@ export default function Home() {
         {/* Avatar + name + tagline */}
         <div className="flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:gap-6">
           <Image
-            className="size-24 shrink-0 rounded-full border-2 border-border md:size-28"
+            className="size-32 shrink-0 rounded-full border-2 border-border md:size-40"
             src="/img/pfp-avatar.jpg"
             alt={siteConfig.author.name}
-            width={112}
-            height={112}
+            width={160}
+            height={160}
             priority
           />
           <div className="flex flex-col gap-1">
-            <H1 className="flex items-center gap-2 text-3xl md:text-4xl">
-              {siteConfig.author.name}
-              <BadgeCheck
-                aria-label="Verified"
-                className="size-5 text-sky-500 md:size-6"
-              />
-            </H1>
+            <H1 className="text-3xl md:text-4xl">{siteConfig.author.name}</H1>
             <p className="font-mono text-sm text-muted-foreground">
               {siteConfig.author.tagline}
             </p>
@@ -60,30 +56,74 @@ export default function Home() {
         <div className="grid grid-cols-1 gap-x-12 gap-y-2.5 sm:grid-cols-2">
           <div className="flex flex-col gap-2.5">
             <InfoRow icon={<CodeXml />}>
-              {siteConfig.currentRole.title}{' '}
-              <Link
-                href={siteConfig.currentRole.companyUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center text-foreground hover:underline"
-              >
-                <AtSign className="size-3.5" />
-                {siteConfig.currentRole.company}
-              </Link>
+              <span className="flex items-center gap-1.5">
+                {siteConfig.currentRole.title}
+                <Link
+                  href={siteConfig.currentRole.companyUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-0.5 text-foreground hover:underline"
+                >
+                  <AtSign className="size-3.5" />
+                  {siteConfig.currentRole.company}
+                </Link>
+              </span>
             </InfoRow>
             <InfoRow icon={<GraduationCap />}>
-              <span className="font-mono">{siteConfig.author.education}</span>
-            </InfoRow>
-            <InfoRow icon={<MapPin />}>{siteConfig.author.location}</InfoRow>
-          </div>
-          <div className="flex flex-col gap-2.5">
-            <InfoRow icon={<Mail />}>
               <Link
-                href={`mailto:${siteConfig.author.email}`}
+                href="https://www.iitp.ac.in/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-mono text-foreground hover:underline"
+              >
+                {siteConfig.author.education}
+              </Link>
+            </InfoRow>
+            <InfoRow icon={<MapPin />}>
+              <Link
+                href="https://www.google.com/maps/search/?api=1&query=Nashik,+Maharashtra,+India"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="text-foreground hover:underline"
               >
-                {siteConfig.author.email}
+                <Twemoji>{siteConfig.author.location}</Twemoji>
               </Link>
+            </InfoRow>
+          </div>
+          <div className="flex flex-col gap-2.5">
+            <InfoRow icon={<Mail />} className="group">
+              <span className="flex items-center gap-1">
+                <Link
+                  href={`mailto:${siteConfig.author.email}`}
+                  className="text-foreground hover:underline"
+                >
+                  {siteConfig.author.email}
+                </Link>
+                <CopyButton
+                  text={siteConfig.author.email}
+                  variant="ghost"
+                  size="icon"
+                  className="size-6 opacity-0 transition-opacity group-hover:opacity-100 group-focus-within:opacity-100 [&_svg]:size-3.5"
+                  aria-label="Copy email address"
+                />
+              </span>
+            </InfoRow>
+            <InfoRow icon={<Phone />} className="group">
+              <span className="flex items-center gap-1">
+                <Link
+                  href={`tel:${siteConfig.author.phone.replace(/\s+/g, '')}`}
+                  className="text-foreground hover:underline"
+                >
+                  {siteConfig.author.phone}
+                </Link>
+                <CopyButton
+                  text={siteConfig.author.phone}
+                  variant="ghost"
+                  size="icon"
+                  className="size-6 opacity-0 transition-opacity group-hover:opacity-100 group-focus-within:opacity-100 [&_svg]:size-3.5"
+                  aria-label="Copy phone number"
+                />
+              </span>
             </InfoRow>
             <InfoRow icon={<Globe />}>
               <Link
