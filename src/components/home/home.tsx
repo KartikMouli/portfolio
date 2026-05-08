@@ -25,7 +25,8 @@ import { CopyButton } from '@/components/copy-button';
 import { Twemoji } from '@/components/twemoji';
 import { InfoRow } from '@/components/info-row';
 import { Separator } from '../ui/separator';
-import { H1, H2 } from '@/components/typography';
+import { H1 } from '@/components/typography';
+import { SectionHeading } from '@/components/home/section-heading';
 import { SectionRail } from '@/components/home/section-rail';
 import { TaglineWordFade } from '@/components/home/tagline-word-fade';
 import { siteConfig } from '@/config/site';
@@ -167,7 +168,7 @@ export default function Home() {
 
       {/* ───── About ───── */}
       <section id="about" className="flex flex-col gap-4 scroll-mt-20">
-        <H2 className="border-b-2 pb-3">About</H2>
+        <SectionHeading>About</SectionHeading>
         <ul className="ml-5 list-disc space-y-2 text-sm text-muted-foreground marker:text-muted-foreground/60">
           <li>
             <Link
@@ -214,23 +215,26 @@ export default function Home() {
       </section>
 
       {/* ───── Education & Experience ───── */}
-      <section id="experience" className="scroll-mt-20">
-        <H2 className="mb-6">Education & Experience</H2>
+      <section id="experience" className="flex flex-col gap-6 scroll-mt-20">
+        <SectionHeading>Education & Experience</SectionHeading>
         <Timeline />
       </section>
 
       {/* ───── Featured Projects ───── */}
       <section id="projects" className="flex flex-col gap-6 scroll-mt-20">
-        <div className="flex items-center justify-between border-b-2 pb-3">
-          <H2 className="border-b-0 pb-0">Featured projects</H2>
-          <Link
-            href="/projects"
-            className="flex items-center gap-2 hover:text-foreground"
-          >
-            <span>view more</span>
-            <ArrowRightIcon className="size-5 cursor-pointer" />
-          </Link>
-        </div>
+        <SectionHeading
+          trailing={
+            <Link
+              href="/projects"
+              className="flex items-center gap-2 hover:text-foreground"
+            >
+              <span>view more</span>
+              <ArrowRightIcon className="size-5 cursor-pointer" />
+            </Link>
+          }
+        >
+          Featured projects
+        </SectionHeading>
         <p className="text-sm text-muted-foreground">
           A selection of work I&apos;m proud of — full-stack across product and
           infra, from production AI tooling to side projects worth shipping.
@@ -254,7 +258,7 @@ export default function Home() {
 
       {/* ───── GitHub Contributions ───── */}
       <section id="github" className="flex flex-col gap-4 scroll-mt-20">
-        <H2 className="border-b-2 pb-3">GitHub Contributions</H2>
+        <SectionHeading>GitHub Contributions</SectionHeading>
         <Suspense fallback={<GitHubContributionsFallback />}>
           <GitHubContributions
             contributions={getCachedContributions(GITHUB_USERNAME)}

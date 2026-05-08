@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { format, parseISO } from 'date-fns';
 import { ArrowUpRight, ChevronDown } from 'lucide-react';
 
-import { H2 } from '@/components/typography';
+import { SectionHeading } from '@/components/home/section-heading';
 import { getContributions } from '@/lib/data/contributions';
 import { cn } from '@/lib/utils';
 
@@ -58,7 +58,7 @@ export default function Contributions() {
 
   return (
     <section className="flex flex-col gap-4">
-      <H2 className="border-b-2 pb-3">Open Source</H2>
+      <SectionHeading>Open Source</SectionHeading>
       <p className="text-sm text-muted-foreground">
         Patches I&apos;ve shipped — bug fixes, small features, occasional
         drive-bys.

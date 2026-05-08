@@ -2,7 +2,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import type { ReactElement } from 'react';
 import { ArrowUpRight, Award } from 'lucide-react';
-import { H2 } from '@/components/typography';
+import { SectionHeading } from '@/components/home/section-heading';
 import { getCertifications } from '@/lib/data/certifications';
 
 /**
@@ -51,12 +51,12 @@ export default function Certifications() {
 
   return (
     <section className="flex flex-col gap-4">
-      <H2 className="flex items-center gap-2 border-b-2 pb-3">
+      <SectionHeading headingClassName="flex items-center gap-2">
         <span>Certifications</span>
         <span className="inline-flex items-center rounded-md border border-muted-foreground/20 bg-muted px-1.5 py-0.5 font-mono text-xs font-normal text-muted-foreground tabular-nums">
           {items.length}
         </span>
-      </H2>
+      </SectionHeading>
       <ul className="flex flex-col gap-2">
         {items.map((cert) => {
           const icon = cert.icon ? ICON_MAP[cert.icon] : undefined;
