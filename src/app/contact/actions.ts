@@ -2,9 +2,9 @@
 
 import { after } from 'next/server';
 import { headers } from 'next/headers';
-import { env } from '@/env';
 import { getResend } from '@/lib/resend';
 import { contactFormSchema } from '@/lib/schemas';
+import { isSameOriginRequest } from '@/lib/same-origin';
 import { siteConfig } from '@/config/site';
 import {
   renderContactEmailHtml,
@@ -40,12 +40,12 @@ export async function sendContactEmail(
   formData: FormData
 ): Promise<ContactActionState> {
   const h = await headers();
-  const host = h.get('host') ?? '';
 
-  // 1. Origin check — reject anything outside the env-driven allow-list.
-  // Cheap CSRF-ish defense; Server Actions also have framework-level origin
-  // checks, this is belt-and-suspenders against misconfigured proxies.
-  if (!env.CONTACT_ALLOWED_HOSTS.has(host)) {
+  // 1. Same-origin guard — see `src/lib/same-origin.ts`. Server Actions
+  // already get a framework-level Origin/Host comparison; this is
+  // belt-and-suspenders against misconfigured proxies and keeps the
+  // policy identical with `/api/chat`.
+  if (!isSameOriginRequest(h)) {
     return { status: 'error', message: 'Invalid request origin.' };
   }
 

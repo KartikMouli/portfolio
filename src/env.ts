@@ -16,22 +16,6 @@ const envSchema = z.object({
   // Resend — required. Get one at https://resend.com/api-keys (send-only scope).
   RESEND_API_KEY: z.string().min(1, 'RESEND_API_KEY is required'),
 
-  // Contact form anti-spam — comma-separated host allow-list, parsed into a
-  // Set<string> so the Server Action does an O(1) `.has()` lookup against
-  // the request's `Host` header. Default covers local dev + apex + www.
-  CONTACT_ALLOWED_HOSTS: z
-    .string()
-    .default('localhost:3000')
-    .transform(
-      (s) =>
-        new Set(
-          s
-            .split(',')
-            .map((x) => x.trim())
-            .filter(Boolean)
-        )
-    ),
-
   // SEO — Google Search Console verification token.
   GOOGLE_VERIFICATION_CODE: z.string().optional(),
 
