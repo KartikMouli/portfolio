@@ -18,7 +18,7 @@ export const siteConfig = {
     'Software Developer portfolio of Kartik Mouli. Explore projects built with React, Next.js, TypeScript, and modern web technologies. Available for freelance and full-time opportunities.',
   shortDescription:
     'Software Developer portfolio showcasing projects built with React, Next.js, TypeScript, and modern web technologies.',
-  url: 'https://kartikmouli.in',
+  url: 'https://kartikmouli.me',
   // Note: OG / Twitter share images are generated dynamically at
   // `src/app/opengraph-image.tsx` and `src/app/twitter-image.tsx`.
   // The favicon is `src/app/icon.svg` + `src/app/apple-icon.tsx`.
@@ -31,6 +31,7 @@ export const siteConfig = {
     role: 'SDE',
     tagline: 'Engineering software that ships.',
     email: 'kartikmouli156@gmail.com',
+    phone: '+91 9325648631',
     location: 'Nashik, Maharashtra 🇮🇳',
     education: "IITP CSE'24",
     twitterHandle: '@KartikMouli',
