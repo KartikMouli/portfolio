@@ -25,6 +25,7 @@ import { Twemoji } from '@/components/twemoji';
 import { InfoRow } from '@/components/info-row';
 import { Separator } from '../ui/separator';
 import { H1, H2 } from '@/components/typography';
+import { TaglineWordFade } from '@/components/home/tagline-word-fade';
 import { siteConfig } from '@/config/site';
 import { GITHUB_USERNAME, SITE_HOSTNAME } from '@/lib/site';
 
@@ -46,7 +47,7 @@ export default function Home() {
           <div className="flex flex-col gap-1">
             <H1 className="text-3xl md:text-4xl">{siteConfig.author.name}</H1>
             <p className="font-mono text-sm text-muted-foreground">
-              {siteConfig.author.tagline}
+              <TaglineWordFade text={siteConfig.author.tagline} />
             </p>
           </div>
         </div>
