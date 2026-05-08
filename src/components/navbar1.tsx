@@ -134,6 +134,12 @@ const Navbar1 = ({ className, menu = DEFAULT_MENU }: Navbar1Props) => {
                     <Link
                       key={item.url}
                       href={item.url}
+                      // Desktop nav gets `aria-current="page"` for free via
+                      // Radix's NavigationMenuLink `active` prop. Mobile
+                      // uses a plain Link, so we wire it manually here so
+                      // screen-reader users on mobile know which page is
+                      // current.
+                      aria-current={isActive(item.url) ? 'page' : undefined}
                       className={cn(
                         'rounded-md px-3 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground',
                         isActive(item.url) && 'bg-accent text-accent-foreground'
