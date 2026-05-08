@@ -20,6 +20,7 @@ import {
 } from '@/components/ui/sheet';
 import ThemeToggle from '@/components/theme/theme-toggle';
 import { BrandMark } from '@/components/brand-mark';
+import { CommandMenuTrigger } from '@/components/command-menu';
 import { cn } from '@/lib/utils';
 import { siteConfig } from '@/config/site';
 
@@ -93,6 +94,7 @@ const Navbar1 = ({ className, menu = DEFAULT_MENU }: Navbar1Props) => {
 
           {/* Right actions */}
           <div className="flex items-center gap-2">
+            <CommandMenuTrigger />
             <ThemeToggle />
           </div>
         </nav>
@@ -108,6 +110,7 @@ const Navbar1 = ({ className, menu = DEFAULT_MENU }: Navbar1Props) => {
             <BrandMark size={28} />
           </Link>
           <div className="flex items-center gap-1">
+            <CommandMenuTrigger className="size-9 px-0" />
             <ThemeToggle />
             <Sheet>
               <SheetTrigger asChild>

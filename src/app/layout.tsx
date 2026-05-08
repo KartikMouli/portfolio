@@ -8,6 +8,7 @@ import { Analytics } from '@vercel/analytics/react';
 import { Providers } from '@/components/providers/providers';
 import { JsonLd } from '@/components/seo/json-ld';
 import { ScrollToTop } from '@/components/scroll-to-top';
+import { CommandMenu } from '@/components/command-menu';
 import { siteConfig } from '@/config/site';
 
 const fontSans = Inter({
@@ -121,6 +122,7 @@ export default async function RootLayout({
           </main>
           <Footer />
           <ScrollToTop />
+          <CommandMenu />
         </Providers>
       </body>
     </html>
