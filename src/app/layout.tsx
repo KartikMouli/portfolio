@@ -97,7 +97,22 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang={siteConfig.language} suppressHydrationWarning>
+    <html
+      lang={siteConfig.language}
+      suppressHydrationWarning
+      // `scroll-smooth` enables CSS-driven smooth scrolling for in-page
+      // anchor jumps (e.g. the home-page section rail's `<a href="#id">`
+      // clicks). The reduced-motion media query in `globals.css` overrides
+      // back to `auto` for users who prefer reduced motion.
+      //
+      // `data-scroll-behavior="smooth"` is Next 16's opt-in signal that
+      // we *intentionally* set `scroll-behavior: smooth` — without it,
+      // the router also tries to smooth-animate route transitions on
+      // top, which feels laggy. Docs:
+      // https://nextjs.org/docs/messages/missing-data-scroll-behavior
+      className="scroll-smooth"
+      data-scroll-behavior="smooth"
+    >
       <head>
         <JsonLd />
       </head>

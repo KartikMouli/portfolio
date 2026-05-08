@@ -26,13 +26,33 @@ import { Twemoji } from '@/components/twemoji';
 import { InfoRow } from '@/components/info-row';
 import { Separator } from '../ui/separator';
 import { H1, H2 } from '@/components/typography';
+import { SectionRail } from '@/components/home/section-rail';
 import { TaglineWordFade } from '@/components/home/tagline-word-fade';
 import { siteConfig } from '@/config/site';
 import { GITHUB_USERNAME, SITE_HOSTNAME } from '@/lib/site';
 
+/**
+ * Sections wired into the right-edge `<SectionRail />`. Module-level
+ * so the array reference is stable across renders — the rail's
+ * `useActiveSection` hook re-subscribes whenever its `items` prop
+ * identity changes.
+ *
+ * `id`s match the `id` attributes set on the corresponding sections
+ * below; if you rename a section's id, update both.
+ */
+const HOME_SECTIONS = [
+  { id: 'about', label: 'About' },
+  { id: 'experience', label: 'Experience' },
+  { id: 'projects', label: 'Projects' },
+  { id: 'open-source', label: 'Open Source' },
+  { id: 'certifications', label: 'Certifications' },
+  { id: 'github', label: 'GitHub' },
+];
+
 export default function Home() {
   return (
     <div className="mt-8 flex flex-col gap-10">
+      <SectionRail items={HOME_SECTIONS} />
       {/* ───── Hero ───── */}
       <section className="flex flex-col gap-6">
         {/* Avatar + name + tagline */}
@@ -146,7 +166,7 @@ export default function Home() {
       </section>
 
       {/* ───── About ───── */}
-      <section className="flex flex-col gap-4">
+      <section id="about" className="flex flex-col gap-4 scroll-mt-20">
         <H2 className="border-b-2 pb-3">About</H2>
         <ul className="ml-5 list-disc space-y-2 text-sm text-muted-foreground marker:text-muted-foreground/60">
           <li>
@@ -194,13 +214,13 @@ export default function Home() {
       </section>
 
       {/* ───── Education & Experience ───── */}
-      <section>
+      <section id="experience" className="scroll-mt-20">
         <H2 className="mb-6">Education & Experience</H2>
         <Timeline />
       </section>
 
       {/* ───── Featured Projects ───── */}
-      <section className="flex flex-col gap-6">
+      <section id="projects" className="flex flex-col gap-6 scroll-mt-20">
         <div className="flex items-center justify-between border-b-2 pb-3">
           <H2 className="border-b-0 pb-0">Featured projects</H2>
           <Link
@@ -219,13 +239,21 @@ export default function Home() {
       </section>
 
       {/* ───── Open Source ───── */}
-      <Contributions />
+      {/* `<Contributions />` renders its own <section> internally; we
+          wrap with an `id`-bearing div so the section-rail anchor works
+          without leaking layout into the component. `scroll-mt-20`
+          offsets for the sticky navbar when jumped to via #anchor. */}
+      <div id="open-source" className="scroll-mt-20">
+        <Contributions />
+      </div>
 
       {/* ───── Certifications ───── */}
-      <Certifications />
+      <div id="certifications" className="scroll-mt-20">
+        <Certifications />
+      </div>
 
       {/* ───── GitHub Contributions ───── */}
-      <section className="flex flex-col gap-4">
+      <section id="github" className="flex flex-col gap-4 scroll-mt-20">
         <H2 className="border-b-2 pb-3">GitHub Contributions</H2>
         <Suspense fallback={<GitHubContributionsFallback />}>
           <GitHubContributions
