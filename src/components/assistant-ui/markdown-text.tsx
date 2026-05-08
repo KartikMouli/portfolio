@@ -67,10 +67,15 @@ const useCopyToClipboard = ({
 };
 
 const defaultComponents = memoizeMarkdownComponents({
+  // All heading levels carry `tracking-tight` to match the project's
+  // typography primitives (see src/components/typography/index.tsx —
+  // every H{1-4} uses tracking-tight, the design's signature). Sizes
+  // are scaled down for the modal but the weight + tracking conventions
+  // align with the rest of the site.
   h1: ({ className, ...props }) => (
     <h1
       className={cn(
-        'aui-md-h1 mb-2 scroll-m-20 font-semibold text-base first:mt-0 last:mb-0',
+        'aui-md-h1 mb-2 scroll-m-20 font-semibold tracking-tight text-base first:mt-0 last:mb-0',
         className
       )}
       {...props}
@@ -79,7 +84,7 @@ const defaultComponents = memoizeMarkdownComponents({
   h2: ({ className, ...props }) => (
     <h2
       className={cn(
-        'aui-md-h2 mt-3 mb-1.5 scroll-m-20 font-semibold text-sm first:mt-0 last:mb-0',
+        'aui-md-h2 mt-3 mb-1.5 scroll-m-20 font-semibold tracking-tight text-sm first:mt-0 last:mb-0',
         className
       )}
       {...props}
@@ -88,7 +93,7 @@ const defaultComponents = memoizeMarkdownComponents({
   h3: ({ className, ...props }) => (
     <h3
       className={cn(
-        'aui-md-h3 mt-2.5 mb-1 scroll-m-20 font-semibold text-sm first:mt-0 last:mb-0',
+        'aui-md-h3 mt-2.5 mb-1 scroll-m-20 font-semibold tracking-tight text-sm first:mt-0 last:mb-0',
         className
       )}
       {...props}
@@ -97,7 +102,7 @@ const defaultComponents = memoizeMarkdownComponents({
   h4: ({ className, ...props }) => (
     <h4
       className={cn(
-        'aui-md-h4 mt-2 mb-1 scroll-m-20 font-medium text-sm first:mt-0 last:mb-0',
+        'aui-md-h4 mt-2 mb-1 scroll-m-20 font-semibold tracking-tight text-sm first:mt-0 last:mb-0',
         className
       )}
       {...props}
@@ -232,7 +237,7 @@ const defaultComponents = memoizeMarkdownComponents({
       <code
         className={cn(
           !isCodeBlock &&
-            'aui-md-inline-code rounded-md border border-border/50 bg-muted/50 px-1.5 py-0.5 font-mono text-[0.85em]',
+            'aui-md-inline-code rounded-md border border-border/50 bg-muted/50 px-1.5 py-0.5 font-mono font-semibold text-[0.85em]',
           className
         )}
         {...props}
