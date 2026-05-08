@@ -44,7 +44,14 @@ export function ScrollToTop() {
       aria-label="Scroll to top"
       onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
       className={cn(
-        'fixed bottom-6 right-6 z-40 size-10 rounded-full shadow-md transition-all duration-200 ease-out',
+        // `bottom-20 end-4` stacks above the assistant-modal FAB
+        // (`bottom-4 size-11` → top edge at 60px from bottom). With
+        // bottom-20 (80px) + size-10 (40px) we sit cleanly above with
+        // a ~16px visual gap. `end-4` matches the FAB's right offset
+        // so both buttons share a right edge.
+        // When the chat modal opens, its `z-50` content covers this
+        // button (z-40); no manual hide logic needed.
+        'fixed bottom-20 end-5 z-40 size-10 rounded-full shadow-md transition-all duration-200 ease-out',
         visible
           ? 'pointer-events-auto translate-y-0 opacity-100'
           : 'pointer-events-none translate-y-2 opacity-0'
