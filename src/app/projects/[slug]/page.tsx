@@ -5,6 +5,7 @@ import { format, parseISO } from 'date-fns';
 import { ArrowLeft } from 'lucide-react';
 
 import { CaseStudyToc } from '@/components/case-study/toc';
+import { CaseStudyJsonLd } from '@/components/seo/case-study-jsonld';
 import { H1, Muted } from '@/components/typography';
 import {
   getAllCaseStudySlugs,
@@ -78,6 +79,7 @@ export default async function CaseStudyPage({ params }: Props) {
 
   return (
     <>
+      <CaseStudyJsonLd meta={meta} />
       {/* TOC is `position: fixed` and `lg:`-only — it sits in the right
           gutter outside the article column, so we render it as a sibling
           rather than nesting inside <article>. */}
