@@ -31,7 +31,7 @@ interface MenuItem {
 const DEFAULT_MENU: MenuItem[] = [
   { title: 'Home', url: '/' },
   { title: 'Projects', url: '/projects' },
-  { title: 'About', url: '/about' },
+  { title: 'Blog', url: '/blog' },
   { title: 'Contact', url: '/contact' },
 ];
 

@@ -142,6 +142,41 @@ export default function Home() {
         <SocialCards />
       </section>
 
+      {/* ───── About ───── */}
+      <section className="flex flex-col gap-4">
+        <H2 className="border-b-2 pb-3">About</H2>
+        <ul className="ml-5 list-disc space-y-2 text-sm text-muted-foreground marker:text-muted-foreground/60">
+          <li>
+            <Link
+              href="https://www.iitp.ac.in/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-medium text-foreground hover:underline"
+            >
+              IIT Patna CSE &apos;24
+            </Link>{' '}
+            grad — full-stack development, AI platforms, and competitive
+            programming.
+          </li>
+          <li>
+            Off-keyboard: football, basketball, and movies — from action
+            blockbusters to thought-provoking dramas.
+          </li>
+          <li>
+            Based in{' '}
+            <Link
+              href="https://www.google.com/maps/search/?api=1&query=Nashik,+Maharashtra,+India"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-medium text-foreground hover:underline"
+            >
+              Nashik
+            </Link>
+            ; always exploring the open-source world.
+          </li>
+        </ul>
+      </section>
+
       {/* ───── Education & Experience ───── */}
       <section>
         <H2 className="mb-6">Education & Experience</H2>
