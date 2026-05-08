@@ -51,10 +51,10 @@ export default function Certifications() {
 
   return (
     <section className="flex flex-col gap-4">
-      <H2 className="border-b-2 pb-3">
-        Certifications{' '}
-        <span className="text-base font-normal text-muted-foreground">
-          ({items.length})
+      <H2 className="flex items-center gap-2 border-b-2 pb-3">
+        <span>Certifications</span>
+        <span className="inline-flex items-center rounded-md border border-muted-foreground/20 bg-muted px-1.5 py-0.5 font-mono text-xs font-normal text-muted-foreground tabular-nums">
+          {items.length}
         </span>
       </H2>
       <ul className="flex flex-col gap-2">
