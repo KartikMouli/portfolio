@@ -209,6 +209,35 @@
     background-color: var(--primary);
     color: var(--primary-foreground);
   }
+
+  /* GitHub contribution graph reveal — cells fade in column-by-column
+     when the chart scrolls into view. Driver lives in
+     `src/components/github-contributions.tsx` (IntersectionObserver
+     toggles `data-revealed` on the wrapper). Each cell carries a
+     `--week-idx` custom property so the CSS can compute its delay
+     without the JS having to track every cell.
+     Reduced-motion: cells stay visible from the start with no
+     animation. */
+  .contrib-cell {
+    opacity: 0;
+  }
+  [data-revealed] .contrib-cell {
+    animation: contrib-cell-in 350ms ease-out forwards;
+    animation-delay: calc(var(--week-idx, 0) * 16ms);
+  }
+  @keyframes contrib-cell-in {
+    to {
+      opacity: 1;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .contrib-cell {
+      opacity: 1;
+    }
+    [data-revealed] .contrib-cell {
+      animation: none;
+    }
+  }
   .twemoji {
     display: inline-block;
     height: 1em;
