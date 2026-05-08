@@ -7,6 +7,7 @@ import { SpeedInsights } from '@vercel/speed-insights/next';
 import { Analytics } from '@vercel/analytics/react';
 import { Providers } from '@/components/providers/providers';
 import { JsonLd } from '@/components/seo/json-ld';
+import { ScrollToTop } from '@/components/scroll-to-top';
 import { siteConfig } from '@/config/site';
 
 const fontSans = Inter({
@@ -119,6 +120,7 @@ export default async function RootLayout({
             <SpeedInsights />
           </main>
           <Footer />
+          <ScrollToTop />
         </Providers>
       </body>
     </html>
