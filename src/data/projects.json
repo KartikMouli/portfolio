@@ -27,7 +27,7 @@
       "tags": [
         "MongoDB",
         "Express.js",
-        "React.js",
+        "React",
         "Node.js",
         "TailwindCSS",
         "Redux",
@@ -52,7 +52,7 @@
       "description": "A Spam Detection and Contact Search API, featuring advanced search capabilities, role-based access control, and optimized performance with Django ORM and Redis.",
       "href": "https://trustcall-api.onrender.com",
       "image": "/img/project/trustcall.jpg",
-      "tags": ["Django", "Python", "PostgreSQL", "Django ORM", "Redis", "JWT"],
+      "tags": ["Django", "Python", "PostgreSQL", "Redis", "JWT"],
       "links": [
         {
           "name": "Live Demo",
@@ -91,7 +91,7 @@
       "image": "/img/project/dexapp.webp",
       "tags": [
         "Blockchain",
-        "ReactJS",
+        "React",
         "TailwindCSS",
         "Sepolia Testnet",
         "Ethereum",
@@ -117,7 +117,7 @@
       "image": "/img/project/chatAI.jpeg",
       "tags": [
         "MERN Stack",
-        "Google Gemini API",
+        "Google Gemini",
         "Clerk",
         "ImageKit.io",
         "React-Query"
@@ -167,7 +167,7 @@
       "href": "https://github.com/KartikMouli/AI-NFT-Generator",
       "image": "/img/project/ainft.png",
       "tags": [
-        "ReactJS",
+        "React",
         "NFT",
         "Hugging Face Model",
         "Blockchain",
@@ -187,7 +187,7 @@
       "description": "A real-time chat application that connects users through seamless messaging and interactive features. With a sleek interface and advanced functionalities, it enhances communication for individuals and groups alike.",
       "href": "https://github.com/KartikMouli/ChatApp",
       "image": "/img/project/chatapp.png",
-      "tags": ["ReactJS", "ChatEngine", "Javascript", "Firebase"],
+      "tags": ["React", "ChatEngine", "JavaScript", "Firebase"],
       "links": [
         {
           "name": "Source Code",
