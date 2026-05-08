@@ -19,35 +19,11 @@ import {
 } from '@/components/github-contributions';
 import { getCachedContributions } from '@/lib/get-cached-contributions';
 import SocialCards from '@/components/socials/social-cards';
+import { InfoRow } from '@/components/info-row';
 import { Separator } from '../ui/separator';
 import { H1, H2 } from '@/components/typography';
 import { siteConfig } from '@/config/site';
-
-// Pull GitHub username from siteConfig.links.github (last path segment).
-const GITHUB_USERNAME = siteConfig.links.github
-  .replace(/\/+$/, '')
-  .split('/')
-  .pop()!;
-
-const SITE_HOSTNAME = siteConfig.url
-  .replace(/^https?:\/\//, '')
-  .replace(/\/$/, '');
-
-/** A single icon + value row in the hero info grid. */
-function InfoRow({
-  icon,
-  children,
-}: {
-  icon: React.ReactNode;
-  children: React.ReactNode;
-}) {
-  return (
-    <div className="flex items-center gap-2.5 text-sm text-muted-foreground">
-      <span className="text-muted-foreground/70 [&_svg]:size-4">{icon}</span>
-      <span className="min-w-0 truncate">{children}</span>
-    </div>
-  );
-}
+import { GITHUB_USERNAME, SITE_HOSTNAME } from '@/lib/site';
 
 export default function Home() {
   return (
