@@ -15,8 +15,11 @@ import {
 // frontmatter so each case study gets its own preview when shared
 // to LinkedIn / X / Slack.
 
-export const alt = (props: { params: { slug: string } }) =>
-  `${props.params.slug} — case study by ${siteConfig.author.name}`;
+// Next requires `alt` to be a static module export (it gets serialised
+// to the worker boundary at build time and cannot be a function). The
+// per-slug context lives inside the rendered card itself, so a generic
+// alt is fine here.
+export const alt = `Case study by ${siteConfig.author.name}`;
 export const size = { width: 1200, height: 630 };
 export const contentType = 'image/png';
 
