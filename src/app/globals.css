@@ -198,6 +198,13 @@
     @apply bg-background text-foreground;
     letter-spacing: var(--tracking-normal);
   }
+  .twemoji {
+    display: inline-block;
+    height: 1em;
+    width: 1em;
+    margin: 0 0.05em 0 0.1em;
+    vertical-align: -0.1em;
+  }
 }
 
 @custom-variant retina {
