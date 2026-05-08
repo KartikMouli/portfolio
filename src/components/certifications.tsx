@@ -1,7 +1,7 @@
 import Link from 'next/link';
+import type { ReactElement } from 'react';
 import { ArrowUpRight, Award } from 'lucide-react';
 import { SiMeta, SiGooglecloud } from 'react-icons/si';
-import type { IconType } from 'react-icons';
 import { H2 } from '@/components/typography';
 import { getCertifications } from '@/lib/data/certifications';
 
@@ -15,11 +15,13 @@ import { getCertifications } from '@/lib/data/certifications';
  * keys map directly to react-icons identifiers, no new deps required.
  */
 
-// Tree-shaking-friendly: only the icons we actually reference are
-// imported above and registered here.
-const ICON_MAP: Record<string, IconType> = {
-  SiMeta,
-  SiGooglecloud,
+// Each entry is a pre-styled ReactElement so brand color travels with
+// the icon (no per-call className wrangling). Falls back to a neutral
+// <Award /> for any cert that omits `icon` or maps to nothing here.
+// Tree-shaking is honest because only icons we register get imported.
+const ICON_MAP: Record<string, ReactElement> = {
+  SiMeta: <SiMeta className="text-[#0866FF]" />,
+  SiGooglecloud: <SiGooglecloud className="text-[#4285F4]" />,
 };
 
 export default function Certifications() {
@@ -36,7 +38,7 @@ export default function Certifications() {
       </H2>
       <ul className="flex flex-col gap-2">
         {items.map((cert) => {
-          const Icon = cert.icon ? ICON_MAP[cert.icon] : undefined;
+          const icon = cert.icon ? ICON_MAP[cert.icon] : undefined;
           return (
             <li key={cert.href}>
               <Link
@@ -46,7 +48,7 @@ export default function Certifications() {
                 className="group flex items-center gap-3 rounded-lg border bg-card px-3 py-3 transition-colors hover:border-foreground/40"
               >
                 <span className="flex size-10 shrink-0 items-center justify-center rounded-lg border border-muted-foreground/15 bg-muted text-muted-foreground [&_svg]:size-5">
-                  {Icon ? <Icon /> : <Award aria-hidden="true" />}
+                  {icon ?? <Award aria-hidden="true" />}
                 </span>
                 <div className="flex min-w-0 flex-1 flex-col">
                   <span className="truncate text-sm font-medium text-foreground">
