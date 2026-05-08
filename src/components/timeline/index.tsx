@@ -39,7 +39,7 @@ export default function Timeline() {
           </TabsTrigger>
         </TabsList>
         <TabsContent value="experience" className="mt-0">
-          <Card>
+          <Card className="p-0">
             <CardContent className="p-0">
               <Suspense fallback={<TimelineFallback />}>
                 <WorkExperience
@@ -51,7 +51,7 @@ export default function Timeline() {
           </Card>
         </TabsContent>
         <TabsContent value="education" className="mt-0">
-          <Card>
+          <Card className="p-0">
             <CardContent className="p-0">
               <Suspense fallback={<TimelineFallback />}>
                 <WorkExperience experiences={education} className="px-6 py-2" />
