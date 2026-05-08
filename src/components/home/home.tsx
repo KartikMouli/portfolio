@@ -178,6 +178,19 @@ export default function Home() {
             <Twemoji>{' 🇮🇳'}</Twemoji>; always exploring the open-source world.
           </li>
         </ul>
+        {/* Sivers-style inline mention of the /now page — verbatim
+            from his own home page (https://sive.rs/). Same voice as
+            the bullets above, single muted line, no extra chrome. */}
+        <p className="text-sm text-muted-foreground">
+          What am I doing now? See my{' '}
+          <Link
+            href="/now"
+            className="font-medium text-foreground hover:underline"
+          >
+            /now
+          </Link>{' '}
+          page.
+        </p>
       </section>
 
       {/* ───── Education & Experience ───── */}
