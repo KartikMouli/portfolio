@@ -24,18 +24,25 @@ export default function NotFound() {
             Don&apos;t worry, even the best explorers get lost sometimes.
           </P>
 
+          {/* Style the `<Link>` directly. A `<button>` nested inside
+              `<a>` is invalid HTML5 (interactive content can't nest
+              inside an anchor) and browsers warn about it. Moving the
+              styles to the Link keeps the same look while staying
+              semantic + accessible. */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-8">
-            <Link href="/">
-              <button className="px-6 py-3 bg-primary text-primary-foreground rounded-lg font-medium flex items-center gap-2 hover:opacity-90">
-                <Home className="w-4 h-4" />
-                Return Home
-              </button>
+            <Link
+              href="/"
+              className="px-6 py-3 bg-primary text-primary-foreground rounded-lg font-medium inline-flex items-center gap-2 hover:opacity-90"
+            >
+              <Home className="w-4 h-4" />
+              Return Home
             </Link>
 
-            <Link href="/contact">
-              <button className="px-6 py-3 border border-input rounded-lg font-medium hover:bg-accent hover:text-accent-foreground">
-                Report This Issue
-              </button>
+            <Link
+              href="/contact"
+              className="px-6 py-3 border border-input rounded-lg font-medium inline-flex items-center hover:bg-accent hover:text-accent-foreground"
+            >
+              Report This Issue
             </Link>
           </div>
         </div>
