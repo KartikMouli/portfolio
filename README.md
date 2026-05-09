@@ -9,6 +9,10 @@ Live: <https://kartikmouli.me>
 - **Framework**: Next.js 16 (App Router, React Compiler, `cacheComponents`)
 - **UI**: Tailwind CSS 4, shadcn/ui (Radix primitives), tw-shimmer, framer-motion
 - **Fonts**: Inter, Playfair Display, JetBrains Mono (via `next/font`)
+- **MDX**: `@next/mdx` + remark-gfm/frontmatter/mdx-frontmatter + rehype-slug/autolink-headings — drives case studies and blog posts
+- **Diagrams**: Mermaid (lazy-loaded client renderer, theme-synced)
+- **State**: Zustand for filter UIs (projects + blog tag chips)
+- **RSS**: hand-rolled `/feed.xml` for cross-posting to dev.to / Medium
 - **AI**: Vercel AI SDK 6 + `@ai-sdk/google` (Gemini 2.5 Flash), surfaced via `assistant-ui`
 - **Email**: Resend (contact form via Server Action)
 - **Validation**: zod 4 (typed env, form schemas, request guards)
@@ -50,6 +54,29 @@ pnpm exec tsc --noEmit   # type-check
 
 CI runs lint + tsc + build on every push (see [`.github/workflows/ci.yml`](.github/workflows/ci.yml)).
 
+## Authoring content
+
+The two MDX-driven content surfaces are case studies (`src/content/case-studies/`) and blog posts (`src/content/blog/`). Sitemap, per-page OG images, JSON-LD, and (for posts) the RSS feed are all auto-derived from frontmatter — adding a file is the whole flow.
+
+**Add a blog post** — create `src/content/blog/<slug>.mdx`:
+
+```yaml
+---
+slug: <slug>
+title: 'Headline'
+summary: 'One sentence.'
+publishedAt: '2026-05-09'
+tags: ['react', 'mdx']
+draft: true
+---
+```
+
+`pnpm dev` → drafts surface on `/blog` with a `DRAFT` pill so you can preview at `/blog/<slug>`. Flip `draft: false`, push, deploy.
+
+**Cross-posting** — posts are canonical on this site. dev.to → Settings → Extensions → "Publish from RSS" → `https://kartikmouli.me/feed.xml` to auto-import each new post (canonical URL is set automatically). Medium needs manual paste; set "originally published at" to your portfolio URL.
+
+Full reference (case-study frontmatter, complete frontmatter cheat sheet, draft semantics, what's auto-derived) lives in [AUTHORING.md](AUTHORING.md).
+
 ## Deploy
 
 1. Import the repo into Vercel.
@@ -63,23 +90,30 @@ CI runs lint + tsc + build on every push (see [`.github/workflows/ci.yml`](.gith
 ├── public/                # static assets, OG images, project screenshots
 ├── src/
 │   ├── app/
-│   │   ├── (routes)/      # home, projects, blog, contact, privacy, …
+│   │   ├── (routes)/      # home, projects (+ [slug] case studies), blog (+ [slug] posts), now, uses, keys, contact, privacy
 │   │   ├── api/chat/      # Gemini streaming endpoint
+│   │   ├── feed.xml/      # RSS feed (autodiscovered + cross-posting source for dev.to)
 │   │   ├── llms.txt/      # AI-readable site overview
 │   │   ├── robots.ts
 │   │   └── sitemap.ts
 │   ├── components/
 │   │   ├── assistant-ui/  # registry-based chat modal (Gemini-backed)
+│   │   ├── blog/          # list cards, tag chips, filter
+│   │   ├── case-study/    # sticky TOC, lazy-loaded Mermaid renderer
 │   │   ├── chat/          # runtime provider for the chatbot
-│   │   ├── home/          # hero + tagline animation
+│   │   ├── home/          # hero + section rail + tagline animation
 │   │   ├── contributions/ # OSS contributions section
-│   │   ├── project/       # project cards
+│   │   ├── project/       # project cards + filter chips
+│   │   ├── seo/           # JSON-LD components (Person, Article, ItemList, Breadcrumb)
 │   │   ├── timeline/      # work + education
 │   │   └── ui/            # shadcn primitives
-│   ├── content/           # MD: bio, faq, tech-philosophy (chatbot context)
+│   ├── content/
+│   │   ├── blog/          # MDX blog posts
+│   │   └── case-studies/  # MDX long-form project write-ups
 │   ├── data/              # JSON: projects, contributions, certs, …
-│   ├── lib/               # utils, schemas, data loaders, same-origin guard
+│   ├── lib/               # utils, schemas, data loaders, zustand stores, hooks, same-origin guard
 │   └── env.ts             # zod-validated env boundary
 ├── .env.example
+├── AUTHORING.md           # how to add projects, case studies, blog posts
 └── next.config.js
 ```
