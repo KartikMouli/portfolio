@@ -171,6 +171,24 @@ function readPostSource(slug: string): string | null {
 }
 
 /**
+ * Returns the post body (everything after the closing frontmatter
+ * fence) as raw markdown/MDX. Used by the RSS feed to populate
+ * `<content:encoded>` so dev.to / Medium / generic feed readers
+ * receive the full post text rather than just the summary.
+ *
+ * Most posts are pure markdown — dev.to renders that fine. The few
+ * MDX-only constructs (e.g. our `<Mermaid>` block) won't render on
+ * dev.to but degrade gracefully to a fenced code block (which is
+ * how the source author wrote them anyway).
+ */
+export function getPostBody(slug: string): string {
+  const raw = readPostSource(slug);
+  if (!raw) return '';
+  const fm = /^---\n[\s\S]*?\n---\n/.exec(raw);
+  return fm ? raw.slice(fm[0].length).trimStart() : raw;
+}
+
+/**
  * Every distinct tag in the published post set, sorted by frequency
  * desc then alphabetical. Used by the `/blog` tag filter.
  */

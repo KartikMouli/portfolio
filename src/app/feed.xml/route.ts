@@ -1,27 +1,41 @@
+import { marked } from 'marked';
+
 import { siteConfig } from '@/config/site';
-import { getAllPostMetas } from '@/lib/data/blog';
+import { getAllPostMetas, getPostBody } from '@/lib/data/blog';
+
+// GFM is on by default in marked v15+, but pinned explicitly so a
+// future major isn't a silent regression for posts that use tables /
+// task lists / strikethrough. `breaks: false` matches CommonMark — a
+// single newline inside a paragraph is whitespace, not <br>.
+marked.use({ gfm: true, breaks: false });
 
 /**
  * RSS 2.0 feed for the blog at `/feed.xml`.
  *
  * Cross-posting model: this is what dev.to's "publish via RSS"
- * feature subscribes to. dev.to imports each `<item>` as an unpublished
- * draft, copying the canonical URL into its `canonical_url` field
- * automatically — your portfolio stays the canonical source for
- * search engines while reaching dev.to's audience.
+ * feature subscribes to. dev.to imports each `<item>` as an
+ * unpublished draft and uses the `<link>` element as `canonical_url`
+ * (when "Mark the RSS source as canonical URL by default" is enabled
+ * in their RSS settings) — your portfolio stays the canonical source
+ * for search engines while reaching dev.to's audience.
  *
- * Medium dropped auto-RSS imports for new accounts, so cross-posts
- * there are still a manual paste; this feed remains useful for any
- * generic RSS reader.
+ * dev.to's content-element priority is documented as
+ *   1. `<content>` (Atom)
+ *   2. `<summary>` (Atom)
+ *   3. `<description>` (RSS)
+ *   ...with `<content:encoded>` recognised as a separate HTML body.
+ * They convert HTML → Markdown for storage; raw markdown shoved into
+ * `<content:encoded>` would render as a literal-text paragraph, so
+ * we compile each post's body through `marked` before emitting.
+ *
+ * Spec: https://www.rssboard.org/rss-specification · RSS Content
+ * module: http://web.resource.org/rss/1.0/modules/content/ · dev.to
+ * import guide: https://dev.to/p/publishing_from_rss_guide.
  *
  * Drafts are filtered out by `getAllPostMetas` so subscribers never
  * see in-progress writing.
- *
- * Spec: https://www.rssboard.org/rss-specification
- * Atom self-link: included via `xmlns:atom` so feed validators stop
- * complaining about missing autodiscovery.
  */
-export function GET() {
+export async function GET() {
   const url = siteConfig.url;
   const posts = getAllPostMetas();
   const lastBuildDate = new Date().toUTCString();
@@ -30,29 +44,46 @@ export function GET() {
       ? new Date(posts[0]!.publishedAt).toUTCString()
       : lastBuildDate;
 
-  const items = posts
-    .map((post) => {
-      const link = `${url}/blog/${post.slug}`;
-      const pubDate = post.publishedAt
-        ? new Date(post.publishedAt).toUTCString()
-        : lastBuildDate;
-      const categories = post.tags
-        .map((t) => `<category>${escapeXml(t)}</category>`)
-        .join('');
-      return `    <item>
+  const items = (
+    await Promise.all(
+      posts.map(async (post) => {
+        const link = `${url}/blog/${post.slug}`;
+        const pubDate = post.publishedAt
+          ? new Date(post.publishedAt).toUTCString()
+          : lastBuildDate;
+        const categories = post.tags
+          .map((t) => `<category>${escapeXml(t)}</category>`)
+          .join('');
+        // Compile the post body to HTML before emitting. dev.to's
+        // RSS importer reads `<content:encoded>` as HTML and converts
+        // it to Markdown for storage — sending raw markdown here
+        // would land as a single literal-text paragraph instead of
+        // a structured post.
+        //
+        // CDATA-wrap so HTML's `<` / `&` survive the XML parse
+        // verbatim; the `]]>` escape splits any literal close-CDATA
+        // token in user prose so the section stays valid XML.
+        const html = await marked.parse(getPostBody(post.slug));
+        const safeHtml = html.replace(/\]\]>/g, ']]]]><![CDATA[>');
+        return `    <item>
       <title>${escapeXml(post.title)}</title>
       <link>${link}</link>
       <guid isPermaLink="true">${link}</guid>
       <description>${escapeXml(post.summary)}</description>
+      <content:encoded><![CDATA[${safeHtml}]]></content:encoded>
       <pubDate>${pubDate}</pubDate>
       <author>${siteConfig.author.email} (${escapeXml(siteConfig.author.name)})</author>
       ${categories}
     </item>`;
-    })
-    .join('\n');
+      })
+    )
+  ).join('\n');
 
+  // `xmlns:content` declares the RSS Content module so we can emit
+  // `<content:encoded>` on each item. Standard module since 2002,
+  // recognised by every mature feed reader + dev.to / Medium import.
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>${escapeXml(siteConfig.author.name)} — Writing</title>
     <link>${url}/blog</link>
