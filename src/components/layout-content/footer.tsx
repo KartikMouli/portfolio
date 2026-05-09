@@ -45,8 +45,19 @@ export default async function Footer() {
             </Link>
           </div>
 
-          {/* Row 2: machine-readable resources for crawlers */}
+          {/* Row 2: machine-readable resources. `feed.xml` leads
+              because it's the most user-actionable of the four — humans
+              subscribe to RSS, no one subscribes to a sitemap. The
+              other three are crawler-facing and live further right. */}
           <div className="flex flex-wrap items-center justify-center gap-2 font-mono text-xs">
+            <Link
+              className="hover:text-foreground"
+              href="/feed.xml"
+              title="RSS feed for the blog"
+            >
+              feed.xml
+            </Link>
+            <Separator orientation="vertical" className="h-3" />
             <Link
               className="hover:text-foreground"
               href="/sitemap.xml"
