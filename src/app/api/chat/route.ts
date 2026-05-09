@@ -32,10 +32,25 @@ export async function POST(req: Request) {
 
   const { messages }: { messages: UIMessage[] } = await req.json();
 
-  const result = streamText({
-    model: google('gemini-2.5-flash'),
-    messages: await convertToModelMessages(messages),
-  });
+  // `streamText` and `convertToModelMessages` can throw on network
+  // failures, quota errors, or malformed messages. Without this guard
+  // the route returns an opaque 500; logging + a structured response
+  // gives the client something to render and surfaces the cause in
+  // Vercel runtime logs.
+  try {
+    const result = streamText({
+      model: google('gemini-2.5-flash'),
+      messages: await convertToModelMessages(messages),
+    });
 
-  return result.toUIMessageStreamResponse();
+    return result.toUIMessageStreamResponse();
+  } catch (error) {
+    console.error('[chat] streamText failed', error);
+    return new Response(
+      JSON.stringify({
+        error: 'Failed to process chat request.',
+      }),
+      { status: 500, headers: { 'Content-Type': 'application/json' } }
+    );
+  }
 }
