@@ -135,16 +135,17 @@ Manual paste only — Medium dropped auto-RSS imports for new accounts. When pub
 
 ### Blog post (`BlogFrontmatterSchema`)
 
-| Field          | Type                | Required | Notes                                                      |
-| -------------- | ------------------- | -------- | ---------------------------------------------------------- |
-| `slug`         | string              | yes      | Must match filename                                        |
-| `title`        | string              | yes      | Headline                                                   |
-| `summary`      | string              | yes      | One-line; used for OG / meta description / RSS             |
-| `publishedAt`  | string (yyyy-mm-dd) | yes      | Sort order, sitemap, RSS pubDate                           |
-| `tags`         | string[]            | no       | Default `[]`; drives the tag filter; lower-case convention |
-| `draft`        | boolean             | no       | Default `false`; see [Drafts](#drafts)                     |
-| `canonicalUrl` | URL                 | no       | Only when canonical lives elsewhere (rare)                 |
-| `coverImage`   | string              | no       | Overrides per-post OG image                                |
+| Field          | Type                | Required | Notes                                                            |
+| -------------- | ------------------- | -------- | ---------------------------------------------------------------- |
+| `slug`         | string              | yes      | Must match filename                                              |
+| `title`        | string              | yes      | Headline                                                         |
+| `summary`      | string              | yes      | One-line; used for OG / meta description / RSS                   |
+| `publishedAt`  | string (yyyy-mm-dd) | yes      | Sort order, sitemap, RSS pubDate                                 |
+| `updatedAt`    | string (yyyy-mm-dd) | no       | Bump on a meaningful rewrite; surfaces in `dateModified` JSON-LD |
+| `tags`         | string[]            | no       | Default `[]`; drives the tag filter; lower-case convention       |
+| `draft`        | boolean             | no       | Default `false`; see [Drafts](#drafts)                           |
+| `canonicalUrl` | URL                 | no       | Only when canonical lives elsewhere (rare)                       |
+| `coverImage`   | string              | no       | Overrides per-post OG image                                      |
 
 ### Case study (`CaseStudyFrontmatterSchema`)
 

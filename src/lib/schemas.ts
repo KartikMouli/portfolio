@@ -92,6 +92,12 @@ export const BlogFrontmatterSchema = z.object({
   /** ISO yyyy-mm-dd. Drives sort order, sitemap lastModified, RSS
    *  pubDate, and the visible date on the post + list. */
   publishedAt: z.string().min(1),
+  /** ISO yyyy-mm-dd. Optional — set when a post gets meaningfully
+   *  rewritten after publication. Surfaces as `dateModified` in the
+   *  `BlogPosting` JSON-LD; Google uses the gap between published
+   *  and modified to flag fresh content. Falls back to `publishedAt`
+   *  when unset. */
+  updatedAt: z.string().min(1).optional(),
   /** Free-form tag list. Used by the /blog tag filter and rendered
    *  on the post page. Lower-cased convention. */
   tags: z.array(z.string()).default([]),

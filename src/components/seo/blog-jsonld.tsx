@@ -44,7 +44,12 @@ export function BlogJsonLd({ meta, wordCount }: Props) {
     description: meta.summary,
     image: ogImage,
     datePublished: meta.publishedAt,
-    dateModified: meta.publishedAt,
+    // `dateModified` falls back to `publishedAt` when no `updatedAt`
+    // is set. Google uses the gap between the two to detect fresh
+    // content; collapsing them when nothing changed is correct, and
+    // surfacing a real later date when the post is rewritten signals
+    // that the page is worth re-crawling.
+    dateModified: meta.updatedAt ?? meta.publishedAt,
     keywords: meta.tags.join(', '),
     author: {
       '@type': 'Person',
