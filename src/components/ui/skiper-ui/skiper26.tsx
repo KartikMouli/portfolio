@@ -30,7 +30,7 @@ export const useThemeToggle = ({
   blur?: boolean;
   gifUrl?: string;
 } = {}) => {
-  const { theme, setTheme, resolvedTheme } = useTheme();
+  const { setTheme, resolvedTheme } = useTheme();
 
   const [isDark, setIsDark] = useState(false);
 
@@ -56,7 +56,14 @@ export const useThemeToggle = ({
   }, []);
 
   const toggleTheme = useCallback(() => {
-    setIsDark(!isDark);
+    // Decide based on `resolvedTheme` (the actual applied theme) not
+    // `theme` (which can be `'system'`). Comparing `'system' === 'light'`
+    // is always false, so the old logic always set `'light'` for users
+    // on the default `system` setting — a no-op for someone already in
+    // OS-light mode, and a partial mismatch with the optimistic
+    // `setIsDark(!isDark)` flip.
+    const next = resolvedTheme === 'dark' ? 'light' : 'dark';
+    setIsDark(next === 'dark');
 
     const animation = createAnimation(variant, start, blur, gifUrl);
 
@@ -65,7 +72,7 @@ export const useThemeToggle = ({
     if (typeof window === 'undefined') return;
 
     const switchTheme = () => {
-      setTheme(theme === 'light' ? 'dark' : 'light');
+      setTheme(next);
     };
 
     if (!document.startViewTransition) {
@@ -74,17 +81,7 @@ export const useThemeToggle = ({
     }
 
     document.startViewTransition(switchTheme);
-  }, [
-    theme,
-    setTheme,
-    variant,
-    start,
-    blur,
-    gifUrl,
-    updateStyles,
-    isDark,
-    setIsDark,
-  ]);
+  }, [resolvedTheme, setTheme, variant, start, blur, gifUrl, updateStyles]);
 
   const setCrazyLightTheme = useCallback(() => {
     setIsDark(false);
