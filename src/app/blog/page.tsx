@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 
 import { FilteredPosts } from '@/components/blog/filtered-posts';
 import { BlogTagChips } from '@/components/blog/tag-chips';
+import { BlogListJsonLd } from '@/components/seo/blog-list-jsonld';
 import { H1, Lead } from '@/components/typography';
 import { getAllPostMetas, getAllTags } from '@/lib/data/blog';
 import { siteConfig } from '@/config/site';
@@ -41,6 +42,7 @@ export default function BlogPage() {
 
   return (
     <section className="mx-auto mt-8 w-full max-w-3xl px-4 pb-16 sm:px-8">
+      <BlogListJsonLd />
       <header className="mb-10 space-y-3">
         <H1>Writing</H1>
         <Lead className="max-w-xl text-base">
