@@ -1,6 +1,6 @@
 'use client';
 
-import { format } from 'date-fns';
+import { format, parseISO } from 'date-fns';
 import { use, useEffect, useRef, useState, type CSSProperties } from 'react';
 
 import { Spinner } from '@/components/ui/spinner';
@@ -87,7 +87,12 @@ export function GitHubContributions({
                 <p>
                   {activity.count} contribution
                   {activity.count > 1 ? 's' : null} on{' '}
-                  {format(new Date(activity.date), 'dd.MM.yyyy')}
+                  {/* `parseISO` instead of `new Date()` — `activity.date`
+                      is a date-only ISO string (e.g. `2026-05-09`) and
+                      `new Date()` parses those as UTC midnight, which
+                      shifts to the previous day in negative-offset
+                      timezones. `parseISO` honours the local zone. */}
+                  {format(parseISO(activity.date), 'dd.MM.yyyy')}
                 </p>
               </TooltipContent>
             </Tooltip>
