@@ -20,8 +20,14 @@ export const metadata: Metadata = {
 
 /**
  * `/blog` — list of writing, newest-first. Drafts are filtered out by
- * `getAllPostMetas` by default. The empty state covers the moment
+ * `getAllPostMetas` in production. The empty state covers the moment
  * before the first published post lands.
+ *
+ * Drafts visible in `pnpm dev`: when `NODE_ENV !== 'production'` we
+ * include drafts so the author can preview them on the list without
+ * having to type the slug. The card itself flags them with a `DRAFT`
+ * pill (see `<BlogCard>`). Sitemap, RSS, and JSON-LD always exclude
+ * drafts regardless of environment so previews never leak.
  *
  * Server-side splits the data into a JSON-serialisable snapshot, then
  * hands it to client components for the tag-filter UX (`useBlogFilter`
@@ -29,7 +35,8 @@ export const metadata: Metadata = {
  * `/projects`.
  */
 export default function BlogPage() {
-  const posts = getAllPostMetas();
+  const includeDrafts = process.env.NODE_ENV !== 'production';
+  const posts = getAllPostMetas({ includeDrafts });
   const tags = getAllTags();
 
   return (

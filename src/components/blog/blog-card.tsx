@@ -23,6 +23,16 @@ export function BlogCard({ post }: { post: PostMeta }) {
         <span className="underline decoration-transparent decoration-1 underline-offset-4 group-hover:decoration-current">
           {post.title}
         </span>
+        {/* Dev-only: posts marked `draft: true` are visible on the
+            list in `pnpm dev` so authors can preview them. The pill
+            makes it impossible to forget which is which. Production
+            builds never see drafts here (`getAllPostMetas` filters
+            them out unless `includeDrafts: true`). */}
+        {post.draft && (
+          <span className="rounded-sm border border-destructive/40 bg-destructive/10 px-1.5 py-0.5 font-mono text-[10px] uppercase tracking-wider text-destructive">
+            Draft
+          </span>
+        )}
         <ArrowUpRight
           aria-hidden
           className="size-4 shrink-0 -translate-y-px text-muted-foreground transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
