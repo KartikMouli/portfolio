@@ -80,6 +80,12 @@ export const metadata: Metadata = {
   },
   alternates: {
     canonical: siteConfig.url,
+    // RSS autodiscovery — feed readers (and dev.to's "publish via RSS"
+    // setup form) look for this `<link rel="alternate">` tag to find
+    // the feed URL automatically. Live route at `src/app/feed.xml/`.
+    types: {
+      'application/rss+xml': '/feed.xml',
+    },
   },
 };
 
