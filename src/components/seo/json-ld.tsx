@@ -1,14 +1,21 @@
 import { siteConfig } from '@/config/site';
 
 /**
- * Structured data emitted in <head>. Three schemas:
- *  1. `Person`      — knowledge graph card (name, role, location, employer,
- *                     alumniOf, contact). Drives Google's right-rail panel
- *                     and rich results for `"kartik mouli"` queries.
- *  2. `WebSite`     — site identity + SearchAction so Google may surface a
- *                     sitelinks search box.
- *  3. `ProfilePage` — declares this page's `mainEntity` is the Person above,
- *                     letting search engines connect the two.
+ * Site-wide structured data emitted in <head> from the root layout. Two
+ * schemas, both safe to render on every page:
+ *
+ *  1. `Person`  — knowledge graph card (name, role, location, employer,
+ *                 alumniOf, contact). Drives Google's right-rail panel
+ *                 and rich results for `"kartik mouli"` queries.
+ *  2. `WebSite` — site identity. Lets Google surface a sitelinks search
+ *                 box and connects the brand across pages.
+ *
+ * `ProfilePage` is **deliberately not here** — it would declare every
+ * page's `mainEntity` to be the home-page Person, which is misleading
+ * on case-study and blog-post pages where the page's main entity is an
+ * Article. ProfilePage lives in `<HomeJsonLd />` and renders only on
+ * `/`. Per-page Article / BlogPosting / ItemList schemas are emitted
+ * by their own dedicated components.
  *
  * Anything sourced from `siteConfig` so updates propagate automatically.
  */
@@ -63,18 +70,6 @@ export function JsonLd() {
     },
   };
 
-  const profilePageSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'ProfilePage',
-    url: siteConfig.url,
-    mainEntity: {
-      '@type': 'Person',
-      name: siteConfig.author.name,
-      jobTitle: siteConfig.author.role,
-      url: siteConfig.url,
-    },
-  };
-
   return (
     <>
       <script
@@ -84,10 +79,6 @@ export function JsonLd() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(profilePageSchema) }}
       />
     </>
   );
