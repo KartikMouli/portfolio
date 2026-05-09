@@ -41,7 +41,11 @@ export function CaseStudyToc({ headings }: { headings: CaseStudyHeading[] }) {
           <a
             key={h.slug}
             href={`#${h.slug}`}
-            aria-current={isActive ? 'true' : undefined}
+            // `aria-current="location"` is the right token for a
+            // section-nav anchor pointing within the same page — more
+            // specific than the boolean string `"true"` and the
+            // semantically correct value per the ARIA 1.2 enumeration.
+            aria-current={isActive ? 'location' : undefined}
             // H3s indent under their parent H2. text-xs across the
             // board keeps the rail visually quiet.
             className={cn(
