@@ -5,6 +5,7 @@ import { format, parseISO } from 'date-fns';
 import { ArrowLeft } from 'lucide-react';
 
 import { CaseStudyToc } from '@/components/case-study/toc';
+import { BlogJsonLd } from '@/components/seo/blog-jsonld';
 import { H1, Muted } from '@/components/typography';
 import { getAllPostSlugs, getPostHeadings, getPostMeta } from '@/lib/data/blog';
 import { BlogFrontmatterSchema } from '@/lib/schemas';
@@ -92,6 +93,7 @@ export default async function BlogPostPage({ params }: Props) {
 
   return (
     <>
+      <BlogJsonLd meta={meta} />
       {/* TOC is `position: fixed` and `lg:`-only — sibling of <article>
           so it sits in the right gutter outside the reading column.
           The case-study TOC component is generic enough to reuse here:
