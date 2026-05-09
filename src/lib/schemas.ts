@@ -68,6 +68,46 @@ export const CaseStudyFrontmatterSchema = z.object({
 export type CaseStudyFrontmatter = z.infer<typeof CaseStudyFrontmatterSchema>;
 
 /**
+ * Blog-post frontmatter schema.
+ *
+ * Each MDX file in `src/content/blog/*.mdx` declares this block at the
+ * top. Compiled by `@next/mdx` and rendered via `await import(...)`
+ * in the route, same pipeline as case studies.
+ *
+ * Cross-posting model: posts are canonical on this site. When you
+ * also publish on dev.to / Medium, set their `canonical_url` field
+ * back to `${siteConfig.url}/blog/${slug}` so search engines treat
+ * this as the source. `canonicalUrl` here is **only** populated when
+ * a post is somehow canonical *elsewhere* (rare — e.g. a guest post
+ * on another publication that you're republishing for archive); when
+ * unset, the page emits its own URL as canonical.
+ */
+export const BlogFrontmatterSchema = z.object({
+  slug: z.string().min(1),
+  /** Headline shown on the post page + browser tab + RSS title. */
+  title: z.string().min(1),
+  /** One-line summary used for OG/meta description, RSS description,
+   *  and the list-card preview. */
+  summary: z.string().min(1),
+  /** ISO yyyy-mm-dd. Drives sort order, sitemap lastModified, RSS
+   *  pubDate, and the visible date on the post + list. */
+  publishedAt: z.string().min(1),
+  /** Free-form tag list. Used by the /blog tag filter and rendered
+   *  on the post page. Lower-cased convention. */
+  tags: z.array(z.string()).default([]),
+  /** Set only when this post is canonical *elsewhere*. Most posts
+   *  leave this unset — the page then emits its own URL as canonical. */
+  canonicalUrl: z.string().url().optional(),
+  /** When true, post is hidden from the list page, sitemap, RSS feed,
+   *  and tag chips. Direct visits 404. Use during drafting. */
+  draft: z.boolean().default(false),
+  /** Optional cover image for OG card + list card. Path or full URL. */
+  coverImage: z.string().optional(),
+});
+
+export type BlogFrontmatter = z.infer<typeof BlogFrontmatterSchema>;
+
+/**
  * Contact form schema — shared between the client (RHF + zodResolver) and
  * the Server Action (re-validates server-side; never trust the client).
  *

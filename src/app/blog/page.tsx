@@ -1,43 +1,52 @@
 import type { Metadata } from 'next';
-import { ArrowUpRight, Construction, Github } from 'lucide-react';
 
-import { Button } from '@/components/ui/button';
-import { H1 } from '@/components/typography';
+import { BlogCard } from '@/components/blog/blog-card';
+import { H1, Lead } from '@/components/typography';
+import { getAllPostMetas } from '@/lib/data/blog';
 import { siteConfig } from '@/config/site';
 
 export const metadata: Metadata = {
-  title: 'Blog',
-  description: `Writing from ${siteConfig.author.name} — coming soon.`,
-  robots: {
-    // Don't index a placeholder.
-    index: false,
-    follow: true,
+  title: 'Writing',
+  description: `Notes from ${siteConfig.author.name} — what I'm shipping, what broke, what was worth it.`,
+  alternates: { canonical: `${siteConfig.url}/blog` },
+  openGraph: {
+    title: `Writing | ${siteConfig.author.name}`,
+    description: `Notes from ${siteConfig.author.name} — what I'm shipping, what broke, what was worth it.`,
+    type: 'website',
+    url: `${siteConfig.url}/blog`,
   },
 };
 
+/**
+ * `/blog` — list of writing, newest-first. Drafts are filtered out by
+ * `getAllPostMetas` by default. The empty state covers the moment
+ * before the first published post lands.
+ */
 export default function BlogPage() {
+  const posts = getAllPostMetas();
+
   return (
-    <section className="flex flex-col items-center justify-center gap-4 py-24 text-center">
-      <span className="flex size-12 items-center justify-center rounded-xl border border-muted-foreground/15 bg-muted text-muted-foreground">
-        <Construction className="size-6" />
-      </span>
-      <H1 className="text-3xl">Work in progress</H1>
-      <p className="max-w-md text-sm text-muted-foreground">
-        The blog is being built. Notes on the things I&apos;m learning, the
-        tools I love, and the systems I&apos;m shipping will land here soon.
-      </p>
-      {/* Sends visitors somewhere alive in the meantime — the GitHub
-          profile README is the closest thing to a "what I'm doing now"
-          surface until the blog ships. `asChild` lets the anchor inherit
-          Button styling without breaking the right-click / open-in-tab
-          affordance. */}
-      <Button asChild className="mt-2">
-        <a href={siteConfig.links.github} target="_blank" rel="noopener">
-          <Github className="size-4" />
-          Read my GitHub
-          <ArrowUpRight className="size-4" />
-        </a>
-      </Button>
+    <section className="mx-auto mt-8 w-full max-w-3xl px-4 pb-16 sm:px-8">
+      <header className="mb-10 space-y-3">
+        <H1>Writing</H1>
+        <Lead className="max-w-xl text-base">
+          Short posts on what I&apos;m shipping at work and on side projects —
+          the bug that took two days, the choice between two tools, and the
+          stuff I wish I&apos;d known sooner.
+        </Lead>
+      </header>
+
+      {posts.length === 0 ? (
+        <p className="text-sm text-muted-foreground">
+          Nothing published yet — the first post is on its way.
+        </p>
+      ) : (
+        <div className="flex flex-col gap-6">
+          {posts.map((post) => (
+            <BlogCard key={post.slug} post={post} />
+          ))}
+        </div>
+      )}
     </section>
   );
 }
