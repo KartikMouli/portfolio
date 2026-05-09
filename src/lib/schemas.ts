@@ -12,20 +12,140 @@ export const ProjectSchema = z.object({
   image: z.string().optional(),
   tags: z.array(z.string()).optional(),
   links: z.array(ProjectLinkSchema).optional(),
+  /** Slug into `src/content/case-studies/<slug>.mdx`. When set, the
+   *  project card shows a "Case study →" link to the rendered page. */
+  caseStudy: z.string().optional(),
 });
 
 export const ProjectsSchema = z.array(ProjectSchema);
 
-export const formSchema = z.object({
-  name: z.string().min(1, 'Name must be at least 1 characters long.'),
-  email: z.string().email('Invalid email address.'),
-  message: z.string().min(1, 'Message must be at least 1 characters.'),
+/**
+ * Open-source contributions shown on the home page. Hand-curated list
+ * of pull requests across third-party repos — see
+ * `src/data/contributions.json`. Date stored as ISO yyyy-mm-dd so we
+ * can format consistently per locale at render time.
+ */
+export const ContributionSchema = z.object({
+  repo: z.string().min(1),
+  prNumber: z.number().int().positive(),
+  title: z.string().min(1),
+  url: z.string().url(),
+  state: z.enum(['open', 'merged', 'closed']),
+  date: z.string().min(1),
 });
 
-const iconLinkSchema = z.object({
-  name: z.string(),
-  href: z.string().url(),
+export const ContributionsSchema = z.array(ContributionSchema);
+
+/**
+ * Case-study frontmatter schema.
+ *
+ * Each MDX file in `src/content/case-studies/*.mdx` declares this
+ * block at the top. The body is compiled by `@next/mdx` and rendered
+ * via dynamic `await import(...)` in the page route; this schema
+ * validates the `frontmatter` export surfaced by
+ * `remark-mdx-frontmatter`.
+ *
+ * `slug` is conventionally the filename (sans `.mdx`) — but storing
+ * it explicitly lets us validate it doesn't drift, and supports
+ * future rename-without-breaking-link cases.
+ */
+export const CaseStudyFrontmatterSchema = z.object({
+  slug: z.string().min(1),
+  /** Headline shown on the case-study page + browser tab. */
+  title: z.string().min(1),
+  /** One-line summary used for OG/meta description + project-card hint. */
+  summary: z.string().min(1),
+  /** Project this case study belongs to — must match `name` in
+   *  `projects.json` so we can backlink to the project entry. */
+  projectName: z.string().min(1),
+  /** Optional hero image at the top of the case-study page. */
+  heroImage: z.string().optional(),
+  /** ISO yyyy-mm-dd. Used for metadata + sorting if we ever list
+   *  case studies on their own. */
+  publishedAt: z.string().min(1),
 });
+
+export type CaseStudyFrontmatter = z.infer<typeof CaseStudyFrontmatterSchema>;
+
+/**
+ * Blog-post frontmatter schema.
+ *
+ * Each MDX file in `src/content/blog/*.mdx` declares this block at the
+ * top. Compiled by `@next/mdx` and rendered via `await import(...)`
+ * in the route, same pipeline as case studies.
+ *
+ * Cross-posting model: posts are canonical on this site. When you
+ * also publish on dev.to / Medium, set their `canonical_url` field
+ * back to `${siteConfig.url}/blog/${slug}` so search engines treat
+ * this as the source. `canonicalUrl` here is **only** populated when
+ * a post is somehow canonical *elsewhere* (rare — e.g. a guest post
+ * on another publication that you're republishing for archive); when
+ * unset, the page emits its own URL as canonical.
+ */
+export const BlogFrontmatterSchema = z.object({
+  slug: z.string().min(1),
+  /** Headline shown on the post page + browser tab + RSS title. */
+  title: z.string().min(1),
+  /** One-line summary used for OG/meta description, RSS description,
+   *  and the list-card preview. */
+  summary: z.string().min(1),
+  /** ISO yyyy-mm-dd. Drives sort order, sitemap lastModified, RSS
+   *  pubDate, and the visible date on the post + list. */
+  publishedAt: z.string().min(1),
+  /** ISO yyyy-mm-dd. Optional — set when a post gets meaningfully
+   *  rewritten after publication. Surfaces as `dateModified` in the
+   *  `BlogPosting` JSON-LD; Google uses the gap between published
+   *  and modified to flag fresh content. Falls back to `publishedAt`
+   *  when unset. */
+  updatedAt: z.string().min(1).optional(),
+  /** Free-form tag list. Used by the /blog tag filter and rendered
+   *  on the post page. Lower-cased convention. */
+  tags: z.array(z.string()).default([]),
+  /** Set only when this post is canonical *elsewhere*. Most posts
+   *  leave this unset — the page then emits its own URL as canonical. */
+  canonicalUrl: z.string().url().optional(),
+  /** When true, post is hidden from the list page, sitemap, RSS feed,
+   *  and tag chips. Direct visits 404. Use during drafting. */
+  draft: z.boolean().default(false),
+  /** Optional cover image for OG card + list card. Path or full URL. */
+  coverImage: z.string().optional(),
+});
+
+export type BlogFrontmatter = z.infer<typeof BlogFrontmatterSchema>;
+
+/**
+ * Contact form schema — shared between the client (RHF + zodResolver) and
+ * the Server Action (re-validates server-side; never trust the client).
+ *
+ * Bounds (`max`) are intentional: protect against 50 KB pastes / payloads
+ * meant to blow up the SES recipient. `.trim()` runs on both sides so a
+ * message of "  hi  " on either submission path is treated identically.
+ *
+ * `hp_field` is the honeypot — `max(0)` means any non-empty value is a bot.
+ * The action checks this *after* validation passes (silent success so the
+ * bot doesn't learn it was caught).
+ */
+export const contactFormSchema = z.object({
+  name: z.string().trim().min(1, 'Please enter your name.').max(100),
+  email: z.email('Please enter a valid email address.').trim().max(254),
+  message: z
+    .string()
+    .trim()
+    .min(10, 'A few more words please — at least 10 characters.')
+    .max(5000, 'Please keep messages under 5000 characters.'),
+  // Honeypot — must be empty. Optional so missing-field POSTs don't 400;
+  // any non-empty value is treated as a bot by the action.
+  //
+  // Field name is intentionally non-semantic: browsers autofill semantic
+  // names like "website" / "url" / "email" even with autocomplete="off"
+  // (https://bugs.chromium.org/p/chromium/issues/detail?id=587466), which
+  // turns honest humans into false-positive spam.
+  hp_field: z.string().max(0, 'Spam detected.').optional(),
+});
+export type ContactFormValues = z.infer<typeof contactFormSchema>;
+
+// Back-compat alias — keep the old import name working.
+export const formSchema = contactFormSchema;
 
 const timelineItemSchema = z.object({
   name: z.string(),
@@ -35,9 +155,22 @@ const timelineItemSchema = z.object({
   start: z.string(),
   end: z.string().optional(),
   description: z.array(z.string()).optional(),
-  links: z.array(iconLinkSchema).optional(),
+  skills: z.array(z.string()).optional(),
 });
 
 export type TimelineItem = z.infer<typeof timelineItemSchema>;
 export const ExperienceSchema = z.array(timelineItemSchema);
 export const EducationSchema = z.array(timelineItemSchema);
+
+const certificationSchema = z.object({
+  name: z.string(),
+  issuer: z.string(),
+  /** Free-form date string. "MM.YYYY" preferred (matches WorkExperience); "YYYY" also accepted. */
+  issuedAt: z.string(),
+  href: z.string().url(),
+  /** Identifier matched against the icon map in the Certifications component. */
+  icon: z.string().optional(),
+});
+
+export type Certification = z.infer<typeof certificationSchema>;
+export const CertificationsSchema = z.array(certificationSchema);

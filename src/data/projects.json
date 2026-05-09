@@ -27,7 +27,7 @@
       "tags": [
         "MongoDB",
         "Express.js",
-        "React.js",
+        "React",
         "Node.js",
         "TailwindCSS",
         "Redux",
@@ -52,7 +52,7 @@
       "description": "A Spam Detection and Contact Search API, featuring advanced search capabilities, role-based access control, and optimized performance with Django ORM and Redis.",
       "href": "https://trustcall-api.onrender.com",
       "image": "/img/project/trustcall.jpg",
-      "tags": ["Django", "Python", "PostgreSQL", "Django ORM", "Redis", "JWT"],
+      "tags": ["Django", "Python", "PostgreSQL", "Redis", "JWT"],
       "links": [
         {
           "name": "Live Demo",
@@ -91,7 +91,7 @@
       "image": "/img/project/dexapp.webp",
       "tags": [
         "Blockchain",
-        "ReactJS",
+        "React",
         "TailwindCSS",
         "Sepolia Testnet",
         "Ethereum",
@@ -113,11 +113,11 @@
     {
       "name": "ChatAI",
       "description": "Developed an AI-driven chat platform with seamless user authentication using Clerk, providing real-time ChatGPT-like capabilities within a user-friendly dashboard.",
-      "href": "https://github.com/KartikMouli/ChatApp",
+      "href": "https://github.com/KartikMouli/ChatAI",
       "image": "/img/project/chatAI.jpeg",
       "tags": [
         "MERN Stack",
-        "Google Gemini API",
+        "Google Gemini",
         "Clerk",
         "ImageKit.io",
         "React-Query"
@@ -136,12 +136,39 @@
       ]
     },
     {
+      "name": "Itinera",
+      "description": "An AI-powered travel itinerary planner. Tell it where you are, where you want to go, your budget, and how long you've got — Gemini generates a day-by-day plan and you save it as a trip you can edit later. Next.js 15 + React 19 with Better Auth (email + Google OAuth), Prisma + PostgreSQL.",
+      "href": "https://travelitinera.vercel.app",
+      "image": "/img/project/itinera.png",
+      "caseStudy": "itinera",
+      "tags": [
+        "NextJS",
+        "TypeScript",
+        "Prisma",
+        "PostgreSQL",
+        "Better Auth",
+        "Google Gemini"
+      ],
+      "links": [
+        {
+          "name": "Live Demo",
+          "href": "https://travelitinera.vercel.app",
+          "icon": "external-link"
+        },
+        {
+          "name": "Source Code",
+          "href": "https://github.com/KartikMouli/itinera",
+          "icon": "github"
+        }
+      ]
+    },
+    {
       "name": "AI NFT generator",
       "description": "An AI-powered platform that creates unique, one-of-a-kind NFTs by generating custom art pieces based on user inputs, utilizing machine learning algorithms to craft digital collectibles.",
       "href": "https://github.com/KartikMouli/AI-NFT-Generator",
       "image": "/img/project/ainft.png",
       "tags": [
-        "ReactJS",
+        "React",
         "NFT",
         "Hugging Face Model",
         "Blockchain",
@@ -161,7 +188,7 @@
       "description": "A real-time chat application that connects users through seamless messaging and interactive features. With a sleek interface and advanced functionalities, it enhances communication for individuals and groups alike.",
       "href": "https://github.com/KartikMouli/ChatApp",
       "image": "/img/project/chatapp.png",
-      "tags": ["ReactJS", "ChatEngine", "Javascript", "Firebase"],
+      "tags": ["React", "ChatEngine", "JavaScript", "Firebase"],
       "links": [
         {
           "name": "Source Code",
@@ -180,6 +207,38 @@
         {
           "name": "Source Code",
           "href": "https://github.com/KartikMouli/Portfolio",
+          "icon": "github"
+        }
+      ]
+    },
+    {
+      "name": "AI Meeting Booking Assistant",
+      "description": "An intelligent chatbot that schedules meetings via Cal.com. Built with FastAPI and LangChain, powered by Google Gemini 2.0 Flash — checks availability, creates bookings, resolves conflicts, and suggests alternative times.",
+      "href": "https://github.com/KartikMouli/AI-Powered-Meeting-Booking-Assistant",
+      "tags": [
+        "FastAPI",
+        "LangChain",
+        "Google Gemini",
+        "Cal.com API",
+        "Python"
+      ],
+      "links": [
+        {
+          "name": "Source Code",
+          "href": "https://github.com/KartikMouli/AI-Powered-Meeting-Booking-Assistant",
+          "icon": "github"
+        }
+      ]
+    },
+    {
+      "name": "Rule Engine with AST",
+      "description": "A 3-tier rule engine that represents conditional rules as Abstract Syntax Trees so they can be composed, persisted, and evaluated dynamically against attribute data — without redeploying code. Django REST API, React + Vite frontend, PostgreSQL persistence, fully containerised with Docker Compose.",
+      "href": "https://github.com/KartikMouli/Rule-Engine-with-AST",
+      "tags": ["Django", "DRF", "React", "TypeScript", "PostgreSQL", "Docker"],
+      "links": [
+        {
+          "name": "Source Code",
+          "href": "https://github.com/KartikMouli/Rule-Engine-with-AST",
           "icon": "github"
         }
       ]

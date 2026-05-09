@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 256 256">
+  <!-- Terminal favicon — ">km_" in JetBrains Mono on stone-ink background -->
+  <rect width="256" height="256" rx="56" fill="#1A1714"/>
+  <text
+    x="128" y="132"
+    text-anchor="middle"
+    dominant-baseline="central"
+    font-family="'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace"
+    font-size="86"
+    font-weight="700"
+    letter-spacing="-2"
+    xml:space="preserve"><tspan fill="#A65A2E">&gt;</tspan><tspan fill="#F5EFDE">km_</tspan></text>
+</svg>

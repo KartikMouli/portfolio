@@ -15,19 +15,33 @@ export const siteConfig = {
   title: 'Kartik Mouli | Software Developer Portfolio',
   titleTemplate: '%s | Kartik Mouli',
   description:
-    'Software Developer portfolio of Kartik Mouli. Explore projects built with React, Next.js, TypeScript, and modern web technologies. Available for freelance and full-time opportunities.',
+    'Software Developer portfolio of Kartik Mouli. Explore projects built with React, Next.js, TypeScript, and modern web technologies. Available for full-time opportunities.',
   shortDescription:
     'Software Developer portfolio showcasing projects built with React, Next.js, TypeScript, and modern web technologies.',
-  url: 'https://kartikmouli.in',
-  ogImage: '/img/pfp-avatar.jpg',
+  url: 'https://kartikmouli.me',
+  // Note: OG / Twitter share images are generated dynamically at
+  // `src/app/opengraph-image.tsx` and `src/app/twitter-image.tsx`.
+  // The favicon is `src/app/icon.svg` + `src/app/apple-icon.tsx`.
   locale: 'en_US',
   language: 'en',
 
   // ---- author ----
   author: {
     name: 'Kartik Mouli',
-    role: 'Software Developer',
+    /**
+     * Personal alias / gaming handle. Surfaces in two places:
+     *   1. JSON-LD `Person.alternateName` (Google knowledge graph) —
+     *      links the alias-me to the legal-name-me.
+     *   2. Hero chip on `/` — subtle "‹monchi›" mono mark next to the
+     *      H1 so people who know the alias recognise the page.
+     * Anywhere else the alias is needed, read it from this single
+     * source instead of hard-coding.
+     */
+    alias: 'monchi',
+    role: 'SDE',
+    tagline: 'Engineering software that ships.',
     email: 'kartikmouli156@gmail.com',
+    phone: '+91 9325648631',
     location: 'Nashik, Maharashtra 🇮🇳',
     education: "IITP CSE'24",
     twitterHandle: '@KartikMouli',
@@ -35,7 +49,7 @@ export const siteConfig = {
 
   // ---- current role (rendered on home) ----
   currentRole: {
-    title: 'Software Developer',
+    title: 'SDE',
     company: 'Unizoy',
     companyUrl: 'https://unizoy.com',
   },

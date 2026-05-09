@@ -1,0 +1,18 @@
+{
+  "certificationsData": [
+    {
+      "name": "Meta Hacker Cup 2023",
+      "issuer": "Meta",
+      "issuedAt": "10.2023",
+      "href": "https://www.facebook.com/codingcompetitions/hacker-cup/2023/certificate/630261065889865",
+      "icon": "SiMeta"
+    },
+    {
+      "name": "Google Cloud Computing Foundations",
+      "issuer": "Google Cloud Skills Boost",
+      "issuedAt": "2023",
+      "href": "https://www.skills.google/public_profiles/813bb209-3c93-4630-86ba-fcbc08e92ceb/badges/4843510",
+      "icon": "SiGooglecloud"
+    }
+  ]
+}
