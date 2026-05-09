@@ -118,14 +118,14 @@ pnpm dev
 
 ## Cross-posting
 
-Posts are canonical at `kartikmouli.me/blog/<slug>`. Cross-posts on dev.to / Medium link back via canonical URL — search engines treat your portfolio as the source.
+Posts are canonical at `www.kartikmouli.me/blog/<slug>`. Cross-posts on dev.to / Medium link back via canonical URL — search engines treat your portfolio as the source.
 
 ### dev.to
 
 Two paths:
 
-- **Auto** (recommended): dev.to → Settings → Extensions → **Publish from RSS** → paste `https://kartikmouli.me/feed.xml`. Each new post imports as a draft with `canonical_url` already set. Review and publish in dev.to's editor.
-- **Manual**: paste the post body into dev.to's editor; fill the **Canonical URL** field with `https://kartikmouli.me/blog/<slug>`.
+- **Auto** (recommended): dev.to → Settings → Extensions → **Publish from RSS** → paste `https://www.kartikmouli.me/feed.xml`. Each new post imports as a draft with `canonical_url` already set. Review and publish in dev.to's editor.
+- **Manual**: paste the post body into dev.to's editor; fill the **Canonical URL** field with `https://www.kartikmouli.me/blog/<slug>`.
 
 ### Medium
 
