@@ -1,9 +1,20 @@
+import type { Metadata } from 'next';
+import Link from 'next/link';
+
 import { Button } from '@/components/ui/button';
 import { H1, H2, H3, List, Muted, P } from '@/components/typography';
-import Link from 'next/link';
 import { siteConfig } from '@/config/site';
 
-const lastUpdated = 'Oct 2024';
+export const metadata: Metadata = {
+  title: 'Privacy Policy',
+  description: `Privacy policy for ${siteConfig.author.name}'s portfolio.`,
+  alternates: { canonical: `${siteConfig.url}/privacy` },
+  // Lower-priority page — fine to index, but no need for rich previews.
+  robots: { index: true, follow: true },
+};
+
+// Bump whenever the policy text below changes.
+const lastUpdated = 'May 2026';
 
 export default function PrivacyPage() {
   return (
@@ -98,14 +109,14 @@ export default function PrivacyPage() {
           email me at{' '}
           <Link
             href={`mailto:${siteConfig.author.email}`}
-            className="font-semibold underline underline-offset-4 hover:text-muted-foreground transition-colors"
+            className="font-semibold underline underline-offset-4 hover:text-muted-foreground"
           >
             {siteConfig.author.email}
           </Link>{' '}
           or use the{' '}
           <Link
             href="/contact"
-            className="font-semibold underline underline-offset-4 hover:text-muted-foreground transition-colors"
+            className="font-semibold underline underline-offset-4 hover:text-muted-foreground"
           >
             contact form
           </Link>

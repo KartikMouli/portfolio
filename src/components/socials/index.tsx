@@ -52,10 +52,8 @@ export default function Socials() {
             className={cn(
               'flex items-center justify-center w-8 h-8 rounded-full',
               'bg-transparent hover:bg-accent/50',
-              'transition-all duration-300',
               'border border-border/50 hover:border-border',
-              'text-dark hover:text-foreground',
-              'hover:cursor-pointer hover:scale-110'
+              'hover:text-foreground hover:cursor-pointer'
             )}
             title={label}
             aria-label={label}

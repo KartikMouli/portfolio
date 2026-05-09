@@ -1,100 +1,276 @@
+import { Suspense } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import Socials from '@/components/socials';
 import Projects from '@/components/project';
-import { ArrowRightIcon, AtSign, MapPinHouseIcon } from 'lucide-react';
-import ResumeButton from '@/components/resume-button';
+import {
+  ArrowRightIcon,
+  AtSign,
+  CodeXml,
+  GraduationCap,
+  Globe,
+  Mail,
+  MapPin,
+  Phone,
+} from 'lucide-react';
 import Timeline from '../timeline';
+import {
+  GitHubContributions,
+  GitHubContributionsFallback,
+} from '@/components/github-contributions';
+import { getCachedContributions } from '@/lib/get-cached-contributions';
+import SocialCards from '@/components/socials/social-cards';
+import Certifications from '@/components/certifications';
+import Contributions from '@/components/contributions';
+import { CopyButton } from '@/components/copy-button';
+import { Twemoji } from '@/components/twemoji';
+import { InfoRow } from '@/components/info-row';
 import { Separator } from '../ui/separator';
-import { Badge } from '../ui/badge';
-import { H1, H2 } from '@/components/typography';
+import { H1 } from '@/components/typography';
+import { SectionHeading } from '@/components/home/section-heading';
+import { SectionRail } from '@/components/home/section-rail';
+import { TaglineWordFade } from '@/components/home/tagline-word-fade';
 import { siteConfig } from '@/config/site';
+import { GITHUB_USERNAME, SITE_HOSTNAME } from '@/lib/site';
+
+/**
+ * Sections wired into the right-edge `<SectionRail />`. Module-level
+ * so the array reference is stable across renders — the rail's
+ * `useActiveSection` hook re-subscribes whenever its `items` prop
+ * identity changes.
+ *
+ * `id`s match the `id` attributes set on the corresponding sections
+ * below; if you rename a section's id, update both.
+ */
+const HOME_SECTIONS = [
+  { id: 'about', label: 'About' },
+  { id: 'experience', label: 'Experience' },
+  { id: 'projects', label: 'Projects' },
+  { id: 'open-source', label: 'Open Source' },
+  { id: 'certifications', label: 'Certifications' },
+  { id: 'github', label: 'GitHub' },
+];
 
 export default function Home() {
   return (
-    <div className="flex flex-col gap-10 mt-8">
-      {/* Hero Section */}
-      <section className=" mt-4 flex flex-col justify-center items-center text-center md:text-left">
-        <div className="flex flex-col md:flex-row items-center md:items-start gap-8 md:gap-12 w-full max-w-4xl mx-auto px-4">
-          <div className="avatar-container relative">
-            <div className="relative w-32 h-32 md:w-40 md:h-40">
-              {/* Profile Image */}
-              <div className="absolute w-full h-full">
-                <Image
-                  className="rounded-full border-2 border-gray-300 dark:border-gray-700"
-                  src="/img/pfp-avatar.jpg"
-                  alt="Profile Image"
-                  width={175}
-                  height={175}
-                  priority
-                />
-              </div>
+    <div className="mt-8 flex flex-col gap-10">
+      <SectionRail items={HOME_SECTIONS} />
+      {/* ───── Hero ───── */}
+      <section className="flex flex-col gap-6">
+        {/* Avatar + name + tagline */}
+        <div className="flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:gap-6">
+          <Image
+            className="size-32 shrink-0 rounded-full border-2 border-border md:size-40"
+            src="/img/pfp-avatar.jpg"
+            alt={siteConfig.author.name}
+            width={160}
+            height={160}
+            priority
+          />
+          <div className="flex flex-col gap-1">
+            <div className="flex flex-wrap items-baseline gap-x-2.5 gap-y-0">
+              <H1 className="text-3xl md:text-4xl">{siteConfig.author.name}</H1>
+              <span className="font-mono text-sm text-muted-foreground md:text-base">
+                <span className="sr-only">also known as </span>‹
+                {siteConfig.author.alias}›
+              </span>
             </div>
+            <p className="font-mono text-sm text-muted-foreground">
+              <TaglineWordFade text={siteConfig.author.tagline} />
+            </p>
           </div>
+        </div>
 
-          <div className="flex flex-col items-center md:items-start gap-4">
-            <div className="flex flex-col gap-2">
-              <H1 className="text-3xl md:text-4xl text-gradient">
-                Hey, I&apos;m {siteConfig.author.name}
-              </H1>
-              <div className="mt-1 gap-2">
-                <Badge variant="outline">{siteConfig.author.role}</Badge>
-              </div>
-            </div>
+        <Separator />
 
-            <div className="flex items-center gap-2 text-muted-foreground">
-              <MapPinHouseIcon className="size-4" />
-              <span className="text-sm">{siteConfig.author.location}</span>
-            </div>
-
-            <div className="flex flex-col md:flex-row items-center gap-2 text-sm text-muted-foreground">
-              <span className="font-mono">{siteConfig.author.education}</span>
-              <Separator
-                orientation="vertical"
-                className="hidden md:block h-4"
-              />
-              <div className="flex items-center">
-                <span>{siteConfig.currentRole.title}</span>
+        {/* Info grid: 2 columns on desktop, stacked on mobile */}
+        <div className="grid grid-cols-1 gap-x-12 gap-y-2.5 sm:grid-cols-2">
+          <div className="flex flex-col gap-2.5">
+            <InfoRow icon={<CodeXml />}>
+              <span className="flex items-center gap-1.5">
+                {siteConfig.currentRole.title}
                 <Link
                   href={siteConfig.currentRole.companyUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center text-muted-foreground hover:text-foreground transition-colors duration-200"
+                  className="flex items-center gap-0.5 text-foreground hover:underline"
                 >
-                  <AtSign className="size-4 ml-1" />
+                  <AtSign className="size-3.5" />
                   {siteConfig.currentRole.company}
                 </Link>
-              </div>
-            </div>
-
-            <div className="flex flex-wrap justify-center md:justify-start gap-4 mt-2">
-              <ResumeButton />
-              <Socials />
-            </div>
+              </span>
+            </InfoRow>
+            <InfoRow icon={<GraduationCap />}>
+              <Link
+                href="https://www.iitp.ac.in/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-mono text-foreground hover:underline"
+              >
+                {siteConfig.author.education}
+              </Link>
+            </InfoRow>
+            <InfoRow icon={<MapPin />}>
+              <Link
+                href="https://www.google.com/maps/search/?api=1&query=Nashik,+Maharashtra,+India"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-foreground hover:underline"
+              >
+                <Twemoji>{siteConfig.author.location}</Twemoji>
+              </Link>
+            </InfoRow>
+          </div>
+          <div className="flex flex-col gap-2.5">
+            <InfoRow icon={<Mail />} className="group">
+              <span className="flex items-center gap-1">
+                <Link
+                  href={`mailto:${siteConfig.author.email}`}
+                  className="text-foreground hover:underline"
+                >
+                  {siteConfig.author.email}
+                </Link>
+                <CopyButton
+                  text={siteConfig.author.email}
+                  variant="ghost"
+                  size="icon"
+                  className="size-6 opacity-0 transition-opacity group-hover:opacity-100 group-focus-within:opacity-100 [&_svg]:size-3.5"
+                  aria-label="Copy email address"
+                />
+              </span>
+            </InfoRow>
+            <InfoRow icon={<Phone />} className="group">
+              <span className="flex items-center gap-1">
+                <Link
+                  href={`tel:${siteConfig.author.phone.replace(/\s+/g, '')}`}
+                  className="text-foreground hover:underline"
+                >
+                  {siteConfig.author.phone}
+                </Link>
+                <CopyButton
+                  text={siteConfig.author.phone}
+                  variant="ghost"
+                  size="icon"
+                  className="size-6 opacity-0 transition-opacity group-hover:opacity-100 group-focus-within:opacity-100 [&_svg]:size-3.5"
+                  aria-label="Copy phone number"
+                />
+              </span>
+            </InfoRow>
+            <InfoRow icon={<Globe />}>
+              <Link
+                href={siteConfig.url}
+                className="text-foreground hover:underline"
+              >
+                {SITE_HOSTNAME}
+              </Link>
+            </InfoRow>
           </div>
         </div>
+
+        <Separator />
+
+        {/* Social cards */}
+        <SocialCards />
       </section>
 
-      {/* Education Section */}
-      <section>
-        <section className="mb-8">
-          <div>
-            <H2 className="mb-6">Education & Experience</H2>
-            <Timeline />
-          </div>
-        </section>
+      {/* ───── About ───── */}
+      <section id="about" className="flex flex-col gap-4 scroll-mt-20">
+        <SectionHeading>About</SectionHeading>
+        <ul className="ml-5 list-disc space-y-2 text-sm text-muted-foreground marker:text-muted-foreground/60">
+          <li>
+            <Link
+              href="https://www.iitp.ac.in/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-medium text-foreground hover:underline"
+            >
+              IIT Patna CSE &apos;24
+            </Link>{' '}
+            grad — full-stack development, AI platforms, and competitive
+            programming.
+          </li>
+          <li>
+            Off-keyboard: football, basketball, and movies — from action
+            blockbusters to thought-provoking dramas.
+          </li>
+          <li>
+            Based in{' '}
+            <Link
+              href="https://www.google.com/maps/search/?api=1&query=Nashik,+Maharashtra,+India"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-medium text-foreground hover:underline"
+            >
+              Nashik
+            </Link>
+            <Twemoji>{' 🇮🇳'}</Twemoji>; always exploring the open-source world.
+          </li>
+        </ul>
+        {/* Sivers-style inline mention of the /now page — verbatim
+            from his own home page (https://sive.rs/). Same voice as
+            the bullets above, single muted line, no extra chrome. */}
+        <p className="text-sm text-muted-foreground">
+          What am I doing now? See my{' '}
+          <Link
+            href="/now"
+            className="font-medium text-foreground hover:underline"
+          >
+            /now
+          </Link>{' '}
+          page.
+        </p>
       </section>
 
-      {/* Project Section */}
-      <section className="flex flex-col gap-8">
-        <div className="flex justify-between items-center border-b-2 pb-3">
-          <H2 className="border-b-0 pb-0">Featured projects</H2>
-          <Link href="/projects" className="link flex items-center gap-2">
-            <span>view more</span>
-            <ArrowRightIcon className="size-5 cursor-pointer animate-pulse" />
-          </Link>
-        </div>
+      {/* ───── Education & Experience ───── */}
+      <section id="experience" className="flex flex-col gap-6 scroll-mt-20">
+        <SectionHeading>Education & Experience</SectionHeading>
+        <Timeline />
+      </section>
+
+      {/* ───── Featured Projects ───── */}
+      <section id="projects" className="flex flex-col gap-6 scroll-mt-20">
+        <SectionHeading
+          trailing={
+            <Link
+              href="/projects"
+              className="flex items-center gap-2 hover:text-foreground"
+            >
+              <span>view more</span>
+              <ArrowRightIcon className="size-5 cursor-pointer" />
+            </Link>
+          }
+        >
+          Featured projects
+        </SectionHeading>
+        <p className="text-sm text-muted-foreground">
+          A selection of work I&apos;m proud of — full-stack across product and
+          infra, from production AI tooling to side projects worth shipping.
+        </p>
         <Projects limit={2} />
+      </section>
+
+      {/* ───── Open Source ───── */}
+      {/* `<Contributions />` renders its own <section> internally; we
+          wrap with an `id`-bearing div so the section-rail anchor works
+          without leaking layout into the component. `scroll-mt-20`
+          offsets for the sticky navbar when jumped to via #anchor. */}
+      <div id="open-source" className="scroll-mt-20">
+        <Contributions />
+      </div>
+
+      {/* ───── Certifications ───── */}
+      <div id="certifications" className="scroll-mt-20">
+        <Certifications />
+      </div>
+
+      {/* ───── GitHub Contributions ───── */}
+      <section id="github" className="flex flex-col gap-4 scroll-mt-20">
+        <SectionHeading>GitHub Contributions</SectionHeading>
+        <Suspense fallback={<GitHubContributionsFallback />}>
+          <GitHubContributions
+            contributions={getCachedContributions(GITHUB_USERNAME)}
+            githubProfileUrl={siteConfig.links.github}
+          />
+        </Suspense>
       </section>
     </div>
   );
