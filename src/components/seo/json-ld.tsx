@@ -24,7 +24,10 @@ export function JsonLd() {
     '@context': 'https://schema.org',
     '@type': 'Person',
     name: siteConfig.author.name,
-    alternateName: siteConfig.author.twitterHandle.replace(/^@/, ''),
+    // `alternateName` is schema.org's "AKA" — perfect fit for a
+    // gaming/personal alias. Was previously the cleaned-up Twitter
+    // handle, which was a stretch (a handle isn't really an alias).
+    alternateName: siteConfig.author.alias,
     jobTitle: siteConfig.author.role,
     description: siteConfig.author.tagline,
     url: siteConfig.url,

@@ -67,7 +67,13 @@ export default function Home() {
             priority
           />
           <div className="flex flex-col gap-1">
-            <H1 className="text-3xl md:text-4xl">{siteConfig.author.name}</H1>
+            <div className="flex flex-wrap items-baseline gap-x-2.5 gap-y-0">
+              <H1 className="text-3xl md:text-4xl">{siteConfig.author.name}</H1>
+              <span className="font-mono text-sm text-muted-foreground md:text-base">
+                <span className="sr-only">also known as </span>‹
+                {siteConfig.author.alias}›
+              </span>
+            </div>
             <p className="font-mono text-sm text-muted-foreground">
               <TaglineWordFade text={siteConfig.author.tagline} />
             </p>

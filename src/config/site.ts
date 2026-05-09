@@ -28,6 +28,16 @@ export const siteConfig = {
   // ---- author ----
   author: {
     name: 'Kartik Mouli',
+    /**
+     * Personal alias / gaming handle. Surfaces in two places:
+     *   1. JSON-LD `Person.alternateName` (Google knowledge graph) —
+     *      links the alias-me to the legal-name-me.
+     *   2. Hero chip on `/` — subtle "‹monchi›" mono mark next to the
+     *      H1 so people who know the alias recognise the page.
+     * Anywhere else the alias is needed, read it from this single
+     * source instead of hard-coding.
+     */
+    alias: 'monchi',
     role: 'SDE',
     tagline: 'Engineering software that ships.',
     email: 'kartikmouli156@gmail.com',
