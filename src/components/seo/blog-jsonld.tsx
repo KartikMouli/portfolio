@@ -3,6 +3,10 @@ import type { BlogFrontmatter } from '@/lib/schemas';
 
 interface Props {
   meta: BlogFrontmatter;
+  /** Computed by `getPostMeta` from the MDX prose body — passed in
+   *  rather than recomputed here so we don't re-read the file. Used to
+   *  populate `BlogPosting.wordCount`, a quality signal Google reads. */
+  wordCount?: number;
 }
 
 /**
@@ -27,7 +31,7 @@ interface Props {
  *
  * No schema is emitted for drafts — they 404 in production anyway.
  */
-export function BlogJsonLd({ meta }: Props) {
+export function BlogJsonLd({ meta, wordCount }: Props) {
   if (meta.draft) return null;
 
   const pageUrl = `${siteConfig.url}/blog/${meta.slug}`;
@@ -56,6 +60,9 @@ export function BlogJsonLd({ meta }: Props) {
       '@type': 'WebPage',
       '@id': pageUrl,
     },
+    // Quality signal for Google's article ranking — surfaces only when
+    // available (caller can omit on lookup failure).
+    ...(typeof wordCount === 'number' && wordCount > 0 ? { wordCount } : {}),
     // For posts cross-published elsewhere (the rare guest-post case),
     // surface the canonical URL so Google understands the relationship.
     ...(meta.canonicalUrl && meta.canonicalUrl !== pageUrl

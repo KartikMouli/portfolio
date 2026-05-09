@@ -93,7 +93,7 @@ export default async function BlogPostPage({ params }: Props) {
 
   return (
     <>
-      <BlogJsonLd meta={meta} />
+      <BlogJsonLd meta={meta} wordCount={stats?.wordCount} />
       {/* TOC is `position: fixed` and `lg:`-only — sibling of <article>
           so it sits in the right gutter outside the reading column.
           The case-study TOC component is generic enough to reuse here:
