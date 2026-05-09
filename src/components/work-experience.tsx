@@ -1,6 +1,7 @@
 'use client';
 
 import { differenceInMonths, parse } from 'date-fns';
+import Image from 'next/image';
 import { type ComponentProps, useCallback, useRef } from 'react';
 import ReactMarkdown from 'react-markdown';
 import {
@@ -88,9 +89,16 @@ export function ExperienceItem({ experience }: ExperienceItemProps) {
       <div className="not-prose flex items-center gap-3">
         <div className="flex size-6 shrink-0 items-center justify-center">
           {experience.companyLogo ? (
-            <img
+            // 24×24 displayed (size-6). Logos are local static paths
+            // (`public/logo/{work,edu}/...`), so `next/image` gives us
+            // automatic webp/avif conversion at exact pixel density —
+            // strictly better than a raw <img> here, no remotePatterns
+            // config required.
+            <Image
               src={experience.companyLogo}
               alt={experience.companyName}
+              width={24}
+              height={24}
               className="size-6 rounded-full"
               aria-hidden
             />

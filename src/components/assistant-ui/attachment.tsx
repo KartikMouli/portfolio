@@ -67,6 +67,14 @@ type AttachmentPreviewProps = {
 const AttachmentPreview: FC<AttachmentPreviewProps> = ({ src }) => {
   const [isLoaded, setIsLoaded] = useState(false);
   return (
+    // `<img>` is intentional here — `src` is either a `blob:` URL
+    // produced by `URL.createObjectURL(file)` for the user's just-
+    // uploaded image, or a base64 `data:` URL pulled from the AI SDK
+    // content payload. `next/image` can't optimize either: blob URLs
+    // aren't reachable from the optimizer (server-side), and data
+    // URLs would be needlessly re-encoded. This is a chat-attachment
+    // preview, not LCP content — raw <img> is the correct primitive.
+    // eslint-disable-next-line @next/next/no-img-element
     <img
       src={src}
       alt="Attachment preview"

@@ -45,6 +45,14 @@ export function Twemoji({
 
     if (codePoint) {
       parts.push(
+        // `<img>` is intentional — twemoji renders ~1 KB SVGs straight
+        // from Twitter's CDN (`abs-0.twimg.com`). Routing through
+        // `next/image` would require both a `remotePatterns` entry for
+        // the CDN and `dangerouslyAllowSVG: true` (SVGs can carry
+        // <script>; the flag opens a real XSS surface). The optimizer
+        // also adds latency for assets this small that are already
+        // CDN-cached. Raw <img> is the correct primitive here.
+        // eslint-disable-next-line @next/next/no-img-element
         <img
           key={match.index}
           className={cn('twemoji', className)}
