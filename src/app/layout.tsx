@@ -5,7 +5,7 @@ import './globals.css';
 import Header from '@/components/layout-content/header';
 import Footer from '@/components/layout-content/footer';
 import { SpeedInsights } from '@vercel/speed-insights/next';
-import { Analytics } from '@vercel/analytics/react';
+import { Analytics } from '@vercel/analytics/next';
 import { Providers } from '@/components/providers/providers';
 import { JsonLd } from '@/components/seo/json-ld';
 import { ScrollToTop } from '@/components/scroll-to-top';
@@ -142,8 +142,6 @@ export default async function RootLayout({
             className="grow mx-auto w-full max-w-3xl px-8 pt-8 pb-16"
           >
             {children}
-            <Analytics />
-            <SpeedInsights />
           </main>
           <Footer />
           <ScrollToTop />
@@ -160,6 +158,16 @@ export default async function RootLayout({
               <AssistantModal />
             </ChatRuntimeProvider>
           </Suspense>
+          {/* `<Analytics />` and `<SpeedInsights />` are body-root
+              siblings rather than children of `<main>` — matches the
+              official Vercel quickstart placement. Both render `null`
+              and inject scripts into <head> via `useEffect`, so tree
+              position is functionally irrelevant; what matters is
+              that they're never accidentally suspended or skipped if
+              `<main>` ever gets a Suspense boundary or conditional
+              render. */}
+          <Analytics />
+          <SpeedInsights />
         </Providers>
       </body>
     </html>
