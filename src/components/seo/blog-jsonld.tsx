@@ -7,6 +7,14 @@ interface Props {
    *  rather than recomputed here so we don't re-read the file. Used to
    *  populate `BlogPosting.wordCount`, a quality signal Google reads. */
   wordCount?: number;
+  /** Plain-text article body (MDX scaffolding stripped) for
+   *  `BlogPosting.articleBody`. AI search engines (ChatGPT, Perplexity,
+   *  Gemini grounding, Bing Copilot) read JSON-LD; a populated body
+   *  field gives them grounded prose to cite instead of guessing from
+   *  headings. The caller is responsible for stripping — see
+   *  `mdxToPlainText` in `lib/data/mdx-text.ts`. Capped to keep the
+   *  emitted HTML payload reasonable on long posts. */
+  articleBody?: string;
 }
 
 /**
@@ -31,7 +39,7 @@ interface Props {
  *
  * No schema is emitted for drafts — they 404 in production anyway.
  */
-export function BlogJsonLd({ meta, wordCount }: Props) {
+export function BlogJsonLd({ meta, wordCount, articleBody }: Props) {
   if (meta.draft) return null;
 
   const pageUrl = `${siteConfig.url}/blog/${meta.slug}`;
@@ -68,6 +76,9 @@ export function BlogJsonLd({ meta, wordCount }: Props) {
     // Quality signal for Google's article ranking — surfaces only when
     // available (caller can omit on lookup failure).
     ...(typeof wordCount === 'number' && wordCount > 0 ? { wordCount } : {}),
+    // Grounded prose for AI engines. Omitted when empty so we don't
+    // ship a meaningless field on routes where extraction failed.
+    ...(articleBody ? { articleBody } : {}),
     // For posts cross-published elsewhere (the rare guest-post case),
     // surface the canonical URL so Google understands the relationship.
     ...(meta.canonicalUrl && meta.canonicalUrl !== pageUrl

@@ -9,8 +9,10 @@ import { CaseStudyJsonLd } from '@/components/seo/case-study-jsonld';
 import { H1, Muted } from '@/components/typography';
 import {
   getAllCaseStudySlugs,
+  getCaseStudyBody,
   getCaseStudyHeadings,
 } from '@/lib/data/case-studies';
+import { mdxToPlainText } from '@/lib/data/mdx-text';
 import { CaseStudyFrontmatterSchema } from '@/lib/schemas';
 import { siteConfig } from '@/config/site';
 
@@ -65,7 +67,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title: meta.title,
       description: meta.summary,
       type: 'article',
+      // `og:url` was missing here — without it the OG card shows the
+      // raw request URL (with any query params). Mirror the blog route.
+      url: `${siteConfig.url}/projects/${slug}`,
       publishedTime: meta.publishedAt,
+      // `article:author` per the OG protocol — profile URL, not name.
+      authors: [siteConfig.url],
       ...(meta.heroImage ? { images: [meta.heroImage] } : {}),
     },
   };
@@ -75,11 +82,15 @@ export default async function CaseStudyPage({ params }: Props) {
   const { slug } = await params;
   const { Post, meta } = await loadCaseStudy(slug);
   const headings = getCaseStudyHeadings(slug);
+  // Plain-text body for `Article.articleBody`. Same rationale as the
+  // blog route — `mdxToPlainText` truncates so long case studies
+  // don't bloat the HTML payload.
+  const articleBody = mdxToPlainText(getCaseStudyBody(slug));
   const published = format(parseISO(meta.publishedAt), 'MMMM d, yyyy');
 
   return (
     <>
-      <CaseStudyJsonLd meta={meta} />
+      <CaseStudyJsonLd meta={meta} articleBody={articleBody} />
       {/* TOC is `position: fixed` and `lg:`-only — it sits in the right
           gutter outside the article column, so we render it as a sibling
           rather than nesting inside <article>. */}

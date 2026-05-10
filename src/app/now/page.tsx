@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { format } from 'date-fns';
 
+import { BreadcrumbJsonLd } from '@/components/seo/breadcrumb-jsonld';
 import { H1, H2, List, Muted, P } from '@/components/typography';
 import { siteConfig } from '@/config/site';
 
@@ -16,7 +17,10 @@ const LAST_UPDATED = '2026-05-08'; // ISO yyyy-mm-dd; bump when content changes
 
 export const metadata: Metadata = {
   title: 'Now',
-  description: `What ${siteConfig.author.name} is focused on right now.`,
+  // Sharper than "what X is focused on" — names the three concrete
+  // things the page actually contains so the SERP snippet reads as a
+  // promise of value rather than a label.
+  description: `A live snapshot of what ${siteConfig.author.name} is shipping, learning, and saying no to — refreshed when focus shifts.`,
   alternates: { canonical: `${siteConfig.url}/now` },
 };
 
@@ -28,6 +32,7 @@ export default function NowPage() {
 
   return (
     <section className="mt-8 pb-16 max-w-3xl mx-auto px-4 sm:px-8">
+      <BreadcrumbJsonLd name="Now" path="/now" />
       <div className="space-y-4 mb-8">
         <H1>Now</H1>
         <Muted>Last updated: {updated}</Muted>

@@ -6,6 +6,7 @@ import { FaXTwitter } from 'react-icons/fa6';
 
 import ContactForm from '@/components/contact/contact-form';
 import { CopyButton } from '@/components/copy-button';
+import { BreadcrumbJsonLd } from '@/components/seo/breadcrumb-jsonld';
 import { Twemoji } from '@/components/twemoji';
 import { H1, H2, Lead, Muted } from '@/components/typography';
 import { siteConfig } from '@/config/site';
@@ -57,6 +58,7 @@ const CHECKLIST = [
 function Contact() {
   return (
     <div className="flex flex-col gap-10 pb-16">
+      <BreadcrumbJsonLd name="Contact" path="/contact" />
       {/* Header */}
       <header className="flex flex-col gap-3">
         <H1>Get in touch</H1>
