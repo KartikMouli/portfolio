@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { format } from 'date-fns';
 
+import { BreadcrumbJsonLd } from '@/components/seo/breadcrumb-jsonld';
 import { H1, H2, List, Muted, P } from '@/components/typography';
 import { siteConfig } from '@/config/site';
 
@@ -15,7 +16,10 @@ const LAST_UPDATED = '2026-05-08'; // ISO yyyy-mm-dd; bump when content changes
 
 export const metadata: Metadata = {
   title: 'Uses',
-  description: `The gear and software ${siteConfig.author.name} uses day-to-day.`,
+  // More concrete than "gear and software" — naming the categories
+  // (editor, terminal, laptop, shell) gives the snippet keyword density
+  // and tells the reader exactly what they'll find before they click.
+  description: `The editor, terminal, laptop, and shell setup ${siteConfig.author.name} uses to ship code every day.`,
   alternates: { canonical: `${siteConfig.url}/uses` },
 };
 
@@ -27,6 +31,7 @@ export default function UsesPage() {
 
   return (
     <section className="mt-8 pb-16 max-w-3xl mx-auto px-4 sm:px-8">
+      <BreadcrumbJsonLd name="Uses" path="/uses" />
       <div className="space-y-4 mb-8">
         <H1>Uses</H1>
         <Muted>Last updated: {updated}</Muted>

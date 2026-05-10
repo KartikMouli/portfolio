@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { format } from 'date-fns';
 
+import { BreadcrumbJsonLd } from '@/components/seo/breadcrumb-jsonld';
 import { H1, H2, List, Muted, P } from '@/components/typography';
 import { siteConfig } from '@/config/site';
 import { cn } from '@/lib/utils';
@@ -52,6 +53,7 @@ export default function KeysPage() {
 
   return (
     <section className="mt-8 pb-16 max-w-3xl mx-auto px-4 sm:px-8">
+      <BreadcrumbJsonLd name="Keys" path="/keys" />
       <div className="space-y-4 mb-8">
         <H1>Keys</H1>
         <Muted>Last updated: {updated}</Muted>

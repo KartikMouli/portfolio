@@ -7,7 +7,13 @@ import { ArrowLeft } from 'lucide-react';
 import { CaseStudyToc } from '@/components/case-study/toc';
 import { BlogJsonLd } from '@/components/seo/blog-jsonld';
 import { H1, Muted } from '@/components/typography';
-import { getAllPostSlugs, getPostHeadings, getPostMeta } from '@/lib/data/blog';
+import {
+  getAllPostSlugs,
+  getPostBody,
+  getPostHeadings,
+  getPostMeta,
+} from '@/lib/data/blog';
+import { mdxToPlainText } from '@/lib/data/mdx-text';
 import { BlogFrontmatterSchema } from '@/lib/schemas';
 import { siteConfig } from '@/config/site';
 
@@ -67,6 +73,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       type: 'article',
       url: `${siteConfig.url}/blog/${slug}`,
       publishedTime: meta.publishedAt,
+      // `article:modified_time` — only emitted when the post was
+      // actually rewritten, so Google distinguishes "fresh edit" from
+      // "untouched since publish" and re-crawls accordingly.
+      ...(meta.updatedAt ? { modifiedTime: meta.updatedAt } : {}),
+      // `article:author` per the OG protocol — should be a profile
+      // URL, not a name. Points at the homepage so it lines up with
+      // the existing Person JSON-LD.
+      authors: [siteConfig.url],
       tags: meta.tags,
       ...(meta.coverImage ? { images: [meta.coverImage] } : {}),
     },
@@ -89,11 +103,20 @@ export default async function BlogPostPage({ params }: Props) {
   // here so we don't re-read the file.
   const stats = getPostMeta(slug);
   const headings = getPostHeadings(slug);
+  // Plain-text body for `BlogPosting.articleBody` — read once at
+  // build/request time (cached with the rest of the static page) so
+  // AI engines can cite grounded prose. `mdxToPlainText` truncates,
+  // so a long post won't bloat the page payload.
+  const articleBody = mdxToPlainText(getPostBody(slug));
   const published = format(parseISO(meta.publishedAt), 'MMMM d, yyyy');
 
   return (
     <>
-      <BlogJsonLd meta={meta} wordCount={stats?.wordCount} />
+      <BlogJsonLd
+        meta={meta}
+        wordCount={stats?.wordCount}
+        articleBody={articleBody}
+      />
       {/* TOC is `position: fixed` and `lg:`-only — sibling of <article>
           so it sits in the right gutter outside the reading column.
           The case-study TOC component is generic enough to reuse here:
