@@ -13,7 +13,7 @@ import { siteConfig } from '@/config/site';
  * a single short page that reflects *current* focus, refreshed every
  * few weeks. Bump `LAST_UPDATED` whenever you edit the prose below.
  */
-const LAST_UPDATED = '2026-05-08'; // ISO yyyy-mm-dd; bump when content changes
+const LAST_UPDATED = '2026-07-19'; // ISO yyyy-mm-dd; bump when content changes
 
 export const metadata: Metadata = {
   title: 'Now',
@@ -54,7 +54,22 @@ export default function NowPage() {
 
         <H2>Work</H2>
         <P>
-          Building{' '}
+          Building <strong>iDelta MS</strong> — the investor-facing portal for{' '}
+          <Link
+            href="https://www.stellaredgebrokers.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={linkCls}
+          >
+            StellarEdge Brokers
+          </Link>
+          &apos; brokerage platform. It sits on top of the accounting and IAM
+          services already running there, so most of the work is deciding what
+          an investor should see of a system built for brokers — and shaping the
+          APIs to match.
+        </P>
+        <P>
+          Just handed off{' '}
           <Link
             href="https://digiquickai.com"
             target="_blank"
@@ -63,9 +78,8 @@ export default function NowPage() {
           >
             DigiQuick AI
           </Link>{' '}
-          — an AI-powered digital-product builder that turns simple prompts into
-          market-validated, ready-to-sell ebooks, planners, templates, and web
-          apps. Shipping it at{' '}
+          — the AI digital-product builder I&apos;d been leading — to the
+          client. Both shipped at{' '}
           <Link
             href={siteConfig.currentRole.companyUrl}
             target="_blank"
@@ -73,43 +87,41 @@ export default function NowPage() {
             className={linkCls}
           >
             {siteConfig.currentRole.company}
-          </Link>{' '}
-          for a client.
+          </Link>
+          .
         </P>
 
         <H2>This portfolio</H2>
-        <P>Just shipped a top-to-bottom revamp. Three headline pieces:</P>
+        <P>
+          Finally pulled the production work onto it. The site had been showing
+          side projects while the things I actually spend my days on stayed
+          invisible.
+        </P>
         <List>
           <li>
-            New warm-cream design system + chanhdai-style hero + terminal-themed
-            brand identity (<code>&gt;km_</code> favicon, OG card, navbar mark).
+            Added DigiQuick, iDelta and Converzoy as first-class entries, and
+            wrote a case study for each — the precompute engine I built and then
+            deleted, printing HTML the model wrote, and what it takes to survive
+            inside someone else&apos;s website.
           </li>
           <li>
-            Gemini 2.5 Flash chatbot via{' '}
-            <Link
-              href="https://www.assistant-ui.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className={linkCls}
-            >
-              assistant-ui
-            </Link>{' '}
-            — same-origin guarded, mobile-responsive, with a pre-first-token
-            shimmer.
-          </li>
-          <li>
-            New Open Source contributions section, three new projects with a
-            serif-monogram fallback for cards without screenshots, and an a11y
-            pass (skip-to-content, focus rings, reduced-motion respect).
+            Each case study ends with what I&apos;d do differently, which is the
+            part I&apos;d want to read.
           </li>
         </List>
 
-        <H2>Switched</H2>
+        <H2>Switched back</H2>
         <P>
-          Moved my main dev box from Windows to Ubuntu. Windows was lagging hard
-          on <code>pnpm dev</code> and build cycles, and the friction had become
-          unignorable. The Linux experience has been smoother out of the gate —
-          fewer surprises, faster everything.
+          Moved my main dev box to Ubuntu earlier this year, chasing faster{' '}
+          <code>pnpm dev</code> and build cycles. Builds genuinely were quicker.
+          Everything else wasn&apos;t: the laptop ran hot enough to be
+          unpleasant, the fingerprint reader never worked, and the screen froze
+          often enough that I stopped trusting it.
+        </P>
+        <P>
+          So I&apos;m back on Windows. Faster builds are worth a lot, but not a
+          machine I have to think about — the hardware doing what it&apos;s
+          supposed to turned out to be the thing I was actually optimising for.
         </P>
 
         <H2>Not now</H2>
