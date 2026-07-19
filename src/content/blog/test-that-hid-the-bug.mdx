@@ -1,0 +1,76 @@
+---
+slug: test-that-hid-the-bug
+title: 'The test was green because it asserted the wrong moment'
+summary: 'A double-grant race survived a test suite that covered it — because the test set up the exact state in which the bug cannot happen.'
+publishedAt: '2026-07-19'
+tags: ['testing', 'stripe', 'concurrency', 'postmortem']
+---
+
+A checkout could grant a subscription's credits twice. There was a test for the handler. It passed. It had always passed.
+
+The bug was real — production logs showed the grant running twice, fifty milliseconds apart, on a single successful checkout.
+
+## Two paths to the same handler
+
+Successful payments arrived through Stripe's `checkout.session.completed` webhook, which is the source of truth. But webhooks aren't instant, and a user staring at a success page after paying should not be told they have no credits. So the frontend also called a confirm endpoint on landing, which ran the same fulfilment handler eagerly.
+
+Two callers, one handler, and no ordering guarantee between them. That's fine, as long as the handler is idempotent. It had a guard for exactly that:
+
+```ts
+const alreadyOnboarded = !!subscription.defaultPaymentMethodId;
+if (alreadyOnboarded) return;
+
+await credits.resetForPlan(user, plan);
+```
+
+The reasoning: once a subscription has been synced from Stripe it carries a default payment method, so a populated field means fulfilment already ran.
+
+The flaw is that `defaultPaymentMethodId` is never written by this handler. It's written by a _separate_ sync step, which runs after a round-trip to Stripe's API. Between the first invocation entering the handler and the sync landing that field, there's a window of roughly 100–300ms in which the guard reads `false` — and the second invocation walks straight through it.
+
+The guard was checking a flag that a different, slower process was responsible for setting.
+
+## Why the test passed
+
+The test constructed a subscription, called the handler twice, and asserted the credit grant happened once.
+
+It seeded the subscription with `defaultPaymentMethodId: 'pm_old'`.
+
+That single line is the whole story. The test set up the state that exists **after** the sync has completed — which is precisely the state in which the bug cannot occur. It faithfully verified that a second call is ignored once the field is populated. That was never in doubt. The race lives entirely in the window before the field is populated, and the test had arranged for that window not to exist.
+
+It wasn't a missing test. It was a test that proved a true statement adjacent to the one that mattered.
+
+I find this more unsettling than an uncovered code path, because coverage tooling reports it as covered. The line was executed. The assertion was meaningful. The setup quietly excluded the failure mode.
+
+## The fix, and the trap inside it
+
+The durable version is to make the claim itself atomic — write a value that only one caller can win:
+
+```ts
+const claim = await repo
+  .createQueryBuilder()
+  .update(Subscription)
+  .set({ stripeSubscriptionId: sid })
+  .where('id = :id', { id })
+  .andWhere(
+    '("stripeSubscriptionId" IS NULL OR "stripeSubscriptionId" != :sid)',
+    { sid }
+  )
+  .execute();
+
+if (claim.affected === 0) return; // someone else already fulfilled this
+await credits.resetForPlan(user, plan);
+```
+
+The `!= :sid` half looks redundant. It is not, and this is the part I'd have got wrong without checking the cancellation path.
+
+When a subscription is deleted, the handler leaves `stripeSubscriptionId` populated with the old value. So a returning customer — cancelled, then resubscribed — arrives carrying a _stale_ subscription id rather than `NULL`. A guard written as `IS NULL` alone would never match for that user, the claim would always report zero rows affected, and their credits would be silently skipped.
+
+That regression is worse than the one being fixed. Granting twice is visible and recoverable. Never granting at all, only to returning customers, is a support ticket nobody connects to a deploy.
+
+## What I took from it
+
+**A passing test tells you the assertion held under the setup you wrote.** When a bug survives a test that appears to cover it, the setup is the first place to look — not the assertion.
+
+The specific tell here: the test seeded a field that the production code path populates _later_. Any time fixture setup jumps the system to a settled state, ask which transient states you just skipped. Races live in the ones you skipped.
+
+The rewritten test now starts from `defaultPaymentMethodId: null` and fails against the old implementation. That's the bar — a regression test that never failed against the bug it was written for isn't a regression test.

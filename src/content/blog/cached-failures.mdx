@@ -1,0 +1,91 @@
+---
+slug: cached-failures
+title: 'The cache that remembered a failure for 30 days'
+summary: 'A helper that caches whatever your loader returns will happily cache an empty array you only returned because the upstream timed out.'
+publishedAt: '2026-07-19'
+tags: ['caching', 'postmortem', 'nestjs']
+---
+
+A keyword lookup in a product-research pipeline had a defensive `catch` in it. Any upstream failure logged a warning and returned an empty array, so a flaky third-party API could never take a request down with it.
+
+The result was cached for thirty days.
+
+## What actually happened
+
+The shape was roughly this:
+
+```ts
+// fetch keywords for a search term, cached for 30 days
+return cacheManager.wrap(
+  key,
+  async () => {
+    try {
+      return await fetchFromUpstream(term);
+    } catch (err) {
+      logger.warn({ err }, 'keyword fetch failed');
+      return []; // degrade gracefully
+    }
+  },
+  THIRTY_DAYS
+);
+```
+
+Every part of that looks reasonable on its own. The `catch` stops one bad dependency from breaking a page. The long TTL is right — keyword volumes genuinely don't move much month to month, and the upstream bills per call.
+
+The problem is that `wrap` caches **whatever the loader returns**. It has no idea that this particular `[]` means "the request timed out" rather than "there are no keywords." So a single transient timeout wrote an empty result into the cache and pinned it there for a month. The upstream recovered minutes later. The cache did not care.
+
+Nobody noticed for a while, because the failure mode isn't an error. It's a page that renders fine and quietly says there's no keyword data for that term.
+
+## Why the obvious fix is wrong
+
+The instinct is to stop caching empty results:
+
+```ts
+if (result.length === 0) return; // don't cache
+```
+
+Don't do this. An empty result is a legitimate answer — plenty of search terms genuinely have no keyword data, and those are exactly the ones you most want cached, because otherwise every lookup for a dud term costs a paid API call. Refusing to cache empties turns your worst-case terms into a permanent hole in the cache.
+
+The two cases produce identical values and need opposite treatment:
+
+| Upstream said               | Value | Should cache?             |
+| --------------------------- | ----- | ------------------------- |
+| "no keywords for this term" | `[]`  | Yes — that's the answer   |
+| _(timed out)_               | `[]`  | No — that's not an answer |
+
+Once you write it out like that, the bug is obvious: the loader had erased the distinction before the cache ever saw it. The `catch` block was the actual defect, not the caching.
+
+## The fix
+
+Let failures propagate. `wrap` only caches what the loader returns, so a loader that throws caches nothing:
+
+```ts
+return cacheManager.wrap(
+  key,
+  async () => {
+    // Genuinely-empty results still return [] and cache normally.
+    // Failures throw — cacheManager.wrap only caches a returned value,
+    // so a throw leaves the key unset and the next call retries.
+    return await fetchFromUpstream(term);
+  },
+  THIRTY_DAYS
+);
+```
+
+Handle the failure at the layer that can make a real decision about it. In our case that meant three things:
+
+**Add a timeout.** The original call had no `AbortSignal` at all. A hung connection didn't just stall one request — it blocked a background worker running at `concurrency: 1`, so one wedged socket stopped the whole queue.
+
+**Prefer stale data over fabricated data.** If there's an expired entry, serve it. Real data that's slightly old beats zeros that look current. If there's no stale entry either, throw rather than returning a zero-filled default.
+
+**Refund the user.** This analysis cost credits, and the degraded version had been silently charging full price for a report derived from zeros. The failure now surfaces as a `502` and the credit goes back.
+
+That last one was the real cost of the bug. Not the wrong numbers — the fact that we billed for them.
+
+## The takeaway
+
+**A `catch` that returns a fallback value is a data-quality decision, not just an error-handling one.** The moment that fallback crosses a cache boundary, you've persisted your outage.
+
+If you're wrapping a fetch in a cache helper, the question to ask is: _what does my loader return when the world is broken, and would I be happy to serve that for the whole TTL?_ If the answer is no, the loader is the wrong place to be catching.
+
+The rewrite deleted about 180 lines. Most of the code I removed existed to paper over failures that should have been allowed to happen.
