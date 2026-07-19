@@ -98,10 +98,10 @@ export function ProjectCard({ project }: Props) {
                 rel="noopener noreferrer"
               >
                 <Badge className="flex gap-2 px-2 py-1 text-[10px]">
-                  {link.name === 'Live Demo' ? (
-                    <Globe className="size-3" />
-                  ) : (
+                  {link.name === 'Source Code' ? (
                     <FaGithub className="size-3" />
+                  ) : (
+                    <Globe className="size-3" />
                   )}
                   {link.name}
                 </Badge>

@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useId, useState } from 'react';
+import { useEffect, useId, useLayoutEffect, useRef, useState } from 'react';
 import { useTheme } from 'next-themes';
 
 interface MermaidProps {
@@ -28,6 +28,7 @@ export function Mermaid({ chart }: MermaidProps) {
   const [svg, setSvg] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const id = useId();
+  const containerRef = useRef<HTMLDivElement>(null);
   const { resolvedTheme } = useTheme();
 
   // Resolve only after mount — `resolvedTheme` is undefined during SSR
@@ -55,6 +56,13 @@ export function Mermaid({ chart }: MermaidProps) {
           mermaid.initialize({
             startOnLoad: false,
             theme: 'base',
+            // `useMaxWidth: true` (the default) pins the SVG to its
+            // intrinsic pixel width, so a small diagram stays small in
+            // the middle of a wide article. We strip the dimensions
+            // below and let the viewBox scale to the container instead.
+            flowchart: { useMaxWidth: false },
+            sequence: { useMaxWidth: false },
+            gantt: { useMaxWidth: false },
             // `securityLevel: 'strict'` (default) blocks rendering of any
             // diagram that uses click handlers / external links — fine
             // for case studies where we author the source ourselves.
@@ -78,8 +86,16 @@ export function Mermaid({ chart }: MermaidProps) {
           // prefixed string in React 19. Strip non-word chars to be safe.
           const safeId = `mmd-${id.replace(/\W/g, '')}`;
           const { svg } = await mermaid.render(safeId, chart);
+          // Mermaid still emits fixed `width`/`height` attributes and a
+          // `max-width` inline style on the root <svg>. Strip all three
+          // so only the viewBox drives sizing — the CSS below then
+          // scales the diagram to the full column width.
+          const responsive = svg
+            .replace(/\s*max-width:\s*[\d.]+px;?/g, '')
+            .replace(/(<svg[^>]*?)\swidth="[^"]*"/, '$1')
+            .replace(/(<svg[^>]*?)\sheight="[^"]*"/, '$1');
           if (!cancelled) {
-            setSvg(svg);
+            setSvg(responsive);
             setError(null);
           }
         } catch (e) {
@@ -97,6 +113,37 @@ export function Mermaid({ chart }: MermaidProps) {
       if (timeoutId) clearTimeout(timeoutId);
     };
   }, [chart, id, isDark]);
+
+  /**
+   * Mermaid's own viewBox is unreliable — it measures `foreignObject`
+   * HTML labels before webfonts settle and routinely overshoots. We've
+   * seen a 970×194 flowchart emitted with a 2114×2052 viewBox, which
+   * renders the diagram tiny in the corner of a mostly-empty box.
+   *
+   * Once the SVG is in the DOM we can ask the browser what was actually
+   * drawn (`getBBox`) and retarget the viewBox at those bounds. Layout
+   * effect so the correction lands before paint — no visible reflow.
+   */
+  useLayoutEffect(() => {
+    if (!svg) return;
+    const el = containerRef.current?.querySelector('svg');
+    const root = el?.querySelector('g');
+    if (!el || !root) return;
+
+    try {
+      const box = root.getBBox();
+      if (box.width <= 0 || box.height <= 0) return;
+      const pad = 8;
+      el.setAttribute(
+        'viewBox',
+        `${box.x - pad} ${box.y - pad} ${box.width + pad * 2} ${box.height + pad * 2}`
+      );
+    } catch {
+      // getBBox throws if the element isn't rendered (display:none,
+      // detached). Leaving Mermaid's viewBox in place is the safe
+      // fallback — an oversized diagram beats a crashed page.
+    }
+  }, [svg]);
 
   if (error) {
     return (
@@ -119,7 +166,8 @@ export function Mermaid({ chart }: MermaidProps) {
 
   return (
     <div
-      className="my-4 flex justify-center overflow-x-auto rounded-md border border-border/50 bg-muted/30 p-4 [&>svg]:h-auto [&>svg]:max-w-full"
+      ref={containerRef}
+      className="my-6 overflow-x-auto rounded-md border border-border/50 bg-muted/30 p-4 sm:p-6 [&>svg]:block [&>svg]:h-auto [&>svg]:w-full"
       role="img"
       aria-label="Diagram"
       dangerouslySetInnerHTML={{ __html: svg }}
