@@ -19,11 +19,15 @@ export const GITHUB_USERNAME = siteConfig.links.github
   .pop()!;
 
 /**
- * Site URL with the protocol and any trailing slash stripped —
- * e.g. "https://kartikmouli.me/" → "kartikmouli.me".
+ * Site URL with the protocol, any leading `www.`, and any trailing
+ * slash stripped — e.g. "https://www.kartikmouli.me/" → "kartikmouli.me".
  *
- * Used for human-readable display in the hero info grid and OG card.
+ * The canonical URL in `siteConfig` includes `www.` (so OG image URLs,
+ * sitemap, RSS `<link>` etc. land on the redirect target), but human-
+ * readable display in the hero info grid and OG card looks cleaner as
+ * the bare brand domain.
  */
 export const SITE_HOSTNAME = siteConfig.url
   .replace(/^https?:\/\//, '')
+  .replace(/^www\./, '')
   .replace(/\/$/, '');

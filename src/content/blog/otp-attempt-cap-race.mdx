@@ -1,0 +1,88 @@
+---
+slug: otp-attempt-cap-race
+title: "Your three-attempt limit isn't a limit"
+summary: 'Read the row, check the counter, increment it, save. Under concurrent requests every read sees the same value and the cap never fires — which makes a six-digit OTP brute-forceable.'
+publishedAt: '2026-07-19'
+tags: ['security', 'postgres', 'concurrency', 'postmortem']
+---
+
+Here's a shape you have almost certainly written:
+
+```ts
+const otp = await repo.findOne({ where: { userId } });
+if (!otp || otp.attempts >= MAX_ATTEMPTS) throw new ForbiddenException();
+
+otp.attempts += 1;
+const ok = await bcrypt.compare(code, otp.otpHash);
+await repo.save(otp);
+
+if (!ok) throw new UnauthorizedException();
+```
+
+Read the row. Check the counter. Increment. Verify. Save. It reads like a rate limit, it tests like a rate limit, and in every manual test it behaves like one — try a wrong code four times and the fourth is rejected.
+
+It is not a rate limit.
+
+## The window
+
+Every one of those steps is a separate round-trip, and nothing holds a lock across them. Fire a hundred requests at once and all hundred execute `findOne` before any of them executes `save`. All hundred read `attempts = 0`. All hundred pass the gate. All hundred run `bcrypt.compare`. All hundred write `attempts = 1`.
+
+The counter ends at 1. A hundred guesses happened.
+
+This is a time-of-check-to-time-of-use bug, and the interesting part is what it does to your threat model rather than what it does to your counter. A six-digit numeric OTP has a million possible values. A three-attempt cap is the entire reason that's safe — without it, a million guesses is a rounding error for a script.
+
+The usual reassurance is that bcrypt is slow, so brute-forcing is impractical. That reassurance assumes attempts are **sequential**. Bcrypt costs the attacker nothing in wall-clock time when they run ten thousand comparisons in parallel; it costs _you_ ten thousand CPU-seconds. Slow hashing is a defence against offline attacks on a stolen hash table. It is not a defence against an online attack that your own gate declined to stop.
+
+## The fix is one statement
+
+The gate and the increment have to be the same operation. Postgres will do it for you:
+
+```ts
+const result = await repo
+  .createQueryBuilder()
+  .update(OtpEntity)
+  .set({ attempts: () => '"attempts" + 1' })
+  .where('id = :id', { id })
+  .andWhere('attempts < :max', { max: MAX_ATTEMPTS })
+  .andWhere('"verifiedAt" IS NULL')
+  .andWhere('"usedAt" IS NULL')
+  .andWhere('"expiresAt" > NOW()')
+  .returning('"otpHash"')
+  .execute();
+
+if (result.affected === 0) throw new ForbiddenException();
+
+const ok = await bcrypt.compare(code, result.raw[0].otpHash);
+```
+
+One statement takes a row-level lock, evaluates the condition, and increments — atomically, by definition. Concurrent callers serialise on the row. The hundredth request sees `attempts = 99` because the ninety-ninth already committed.
+
+Two things worth noticing.
+
+**`affected === 0` short-circuits before bcrypt runs.** The expensive operation is now behind the gate rather than in front of it, which means a flood of over-limit requests costs a cheap indexed UPDATE each instead of a full hash comparison. The bug was also a small denial-of-service vector.
+
+**The `WHERE` clause re-validates everything at the moment of the write.** Expiry, consumption, prior verification — all checked in the same instant as the increment. In the original, a code could be consumed by another request between the `findOne` and the `save`, and nothing would notice.
+
+## Why not a transaction?
+
+The reflex answer to a TOCTOU bug is "wrap it in a transaction," and it does work — `SERIALIZABLE`, or `SELECT … FOR UPDATE` to lock the row before reading it.
+
+A single conditional `UPDATE … RETURNING` is better here for reasons that are mostly practical. It's one round-trip instead of a `BEGIN`, a locking read, an update, and a `COMMIT`. It needs no isolation-level escalation and no retry loop for serialisation failures. And `RETURNING` hands back the hash you need for the comparison, so you never re-fetch the row you just locked.
+
+Reach for a transaction when several statements have to agree. When the whole operation is "change this row if it still qualifies," a conditional update _is_ the lock.
+
+## A testing note
+
+I wanted a test asserting that bcrypt never runs when the cap is already blown. You can't spy on `bcrypt.compare` — it's a non-writable export, so the usual mocking route is closed.
+
+The workaround was to pick a different observable. The code path immediately after a successful comparison writes a token via the repository, so asserting that write never happened proves the comparison never happened either. When the thing you want to observe is untouchable, assert on its nearest downstream side effect.
+
+## The general shape
+
+Any time you find this sequence in a codebase, look closer:
+
+1. read a row
+2. make a decision from a field on it
+3. write that field back
+
+Under concurrency, step 2 is reasoning about a value that may already be stale. Counters, quotas, seat limits, one-time tokens, "has this been claimed" flags — they all wear the same disguise, and they all test clean until two requests arrive together.

@@ -10,6 +10,6 @@ export default function robots(): MetadataRoute.Robots {
         disallow: ['/api/', '/private/'],
       },
     ],
-    sitemap: `${siteConfig.url}/sitemap.xml`,
+    sitemap: [`${siteConfig.url}/sitemap.xml`, `${siteConfig.url}/feed.xml`],
   };
 }

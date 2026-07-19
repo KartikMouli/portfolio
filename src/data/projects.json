@@ -1,6 +1,81 @@
 {
   "projects": [
     {
+      "name": "DigiQuick",
+      "description": "An AI SaaS platform for digital-product sellers — validate a product idea, then generate the product itself. A research engine scores ideas on demand, competition, profitability and sustainability; a guided chat wizard turns the winner into PDF, DOCX, XLSX, Notion or live React artifacts, rendered server-side via headless Chromium. A three-app Turborepo monorepo (NestJS 11 API + two Next.js 16 frontends) on PostgreSQL, Redis and BullMQ, with a swappable LLM layer across OpenAI, Azure, Anthropic and Gemini.",
+      "href": "https://digiquickai.com",
+      "image": "/img/project/digiquickai.png",
+      "caseStudy": "digiquick-artifacts",
+      "tags": [
+        "NestJS",
+        "NextJS",
+        "TypeScript",
+        "PostgreSQL",
+        "Redis",
+        "BullMQ",
+        "Turborepo",
+        "TypeORM",
+        "Stripe",
+        "AWS",
+        "Playwright"
+      ],
+      "links": [
+        {
+          "name": "Live Demo",
+          "href": "https://digiquickai.com"
+        }
+      ]
+    },
+    {
+      "name": "iDelta",
+      "description": "An internal brokerage back-office platform for StellarEdge Brokers, serving 1,000+ brokers across three surfaces: an IAM service with scope-partitioned JWTs, TOTP two-factor auth and a five-step resumable KYC flow; a trading-books accounting system running P&L, margin and interest reports over 1M+ daily ledger rows; and a ticketing engine with SLA tracking. NestJS 11 + TypeORM + PostgreSQL APIs paired with React 19 + Vite frontends in a pnpm/Turborepo monorepo, on Redis and BullMQ.",
+      "href": "https://www.stellaredgebrokers.com/",
+      "image": "/img/project/idelta.png",
+      "caseStudy": "idelta-reports",
+      "links": [
+        {
+          "name": "StellarEdge Brokers",
+          "href": "https://www.stellaredgebrokers.com/"
+        }
+      ],
+      "tags": [
+        "NestJS",
+        "React",
+        "TypeScript",
+        "PostgreSQL",
+        "TypeORM",
+        "Redis",
+        "BullMQ",
+        "Turborepo",
+        "JWT",
+        "AWS"
+      ]
+    },
+    {
+      "name": "Converzoy",
+      "description": "An AI sales-agent platform that drops a conversational chatbot into any website with a single script tag, qualifying leads and booking meetings 24/7. The widget ships as a standalone embed bundle with SSE-streamed replies, product-card carousels, an in-chat meeting scheduler and proactive prompts, plus WhatsApp two-way conversations. Built on a self-hosted, customized Dify deployment — a Next.js 14 widget over a Flask/Celery API with PostgreSQL, Redis and vector search.",
+      "href": "https://converzoy.com",
+      "image": "/img/project/converzoy.png",
+      "caseStudy": "converzoy-widget",
+      "tags": [
+        "NextJS",
+        "TypeScript",
+        "Dify",
+        "SSE",
+        "Rollup",
+        "Python",
+        "PostgreSQL",
+        "Redis",
+        "Docker"
+      ],
+      "links": [
+        {
+          "name": "Live Demo",
+          "href": "https://converzoy.com"
+        }
+      ]
+    },
+    {
       "name": "Valoarena",
       "description": "A tournament booking platform for Valorant, allowing users to seamlessly create, manage, and join tournaments, driving community engagement and competitive interaction.",
       "href": "https://valoarena.vercel.app/",

@@ -1,5 +1,6 @@
 import type { MDXComponents } from 'mdx/types';
 import Link from 'next/link';
+import { isValidElement } from 'react';
 
 import { Mermaid } from '@/components/case-study/mermaid';
 import { H1, H2, H3, H4, List, P } from '@/components/typography';
@@ -30,13 +31,13 @@ const components: MDXComponents = {
   code: ({ children, className, ...rest }) => {
     // Fenced ```mermaid blocks are diagrams, not code listings —
     // intercept them and render through the lazy-loaded <Mermaid>
-    // component instead of a <code> element. The `<pre>` wrapper
-    // around this would still apply, so we have to also handle that
-    // case below; the `pre` mapping forwards through unchanged when
-    // the only child is the Mermaid output.
+    // component instead of a <code> element. The `pre` mapping below
+    // detects this case and skips its own chrome, since <Mermaid>
+    // already draws the bordered container.
     if (className === 'language-mermaid') {
       return <Mermaid chart={String(children).trim()} />;
     }
+
     if (className?.startsWith('language-')) {
       return (
         <code className={cn('font-mono text-sm', className)} {...rest}>
@@ -53,20 +54,33 @@ const components: MDXComponents = {
       </code>
     );
   },
-  pre: ({ children, ...rest }) => (
+  pre: ({ children, ...rest }) => {
+    // Mermaid diagrams already render their own bordered, padded
+    // container (see the `code` mapping above). Wrapping them in the
+    // code-block <pre> as well double-draws the border, background and
+    // padding, boxing the diagram inside a second frame.
+    if (
+      isValidElement<{ className?: string }>(children) &&
+      children.props.className === 'language-mermaid'
+    ) {
+      return children;
+    }
+
     // `leading-[1.1]` is intentional: monospace box-drawing characters
     // (┌ ─ ┐ │ └ ┘ ┬) only render as continuous lines when line-height
     // is at or below ~110% — `leading-relaxed` (162.5%) leaves visible
     // vertical gaps. See https://github.com/be5invis/Iosevka/issues/227.
     // Explicit `font-mono` so the JetBrains Mono `--font-mono` is used
     // rather than whatever the parent cascade defaults to.
-    <pre
-      className="my-4 overflow-x-auto rounded-md border border-border/50 bg-muted/30 p-4 font-mono text-sm leading-[1.1]"
-      {...rest}
-    >
-      {children}
-    </pre>
-  ),
+    return (
+      <pre
+        className="my-4 overflow-x-auto rounded-md border border-border/50 bg-muted/30 p-4 font-mono text-sm leading-[1.1]"
+        {...rest}
+      >
+        {children}
+      </pre>
+    );
+  },
   // Internal hrefs use Next's client-side routing transparently;
   // external hrefs open in a new tab with safe rel attrs.
   a: ({ href, children, ...rest }) => {

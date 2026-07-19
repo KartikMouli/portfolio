@@ -1,6 +1,22 @@
 {
   "contributions": [
     {
+      "repo": "langgenius/dify-official-plugins",
+      "prNumber": 3176,
+      "title": "fix(openai): correct stale pricing for gpt-4o family and gpt-5.x pro/5.5",
+      "url": "https://github.com/langgenius/dify-official-plugins/pull/3176",
+      "state": "merged",
+      "date": "2026-05-26"
+    },
+    {
+      "repo": "langgenius/dify-official-plugins",
+      "prNumber": 3177,
+      "title": "fix(anthropic): update claude-3-5-haiku-20241022 pricing to current rates",
+      "url": "https://github.com/langgenius/dify-official-plugins/pull/3177",
+      "state": "merged",
+      "date": "2026-05-25"
+    },
+    {
       "repo": "Unizoy/unizoy-ui",
       "prNumber": 48,
       "title": "fix(ui): tabs reset to manual when changing package manager",

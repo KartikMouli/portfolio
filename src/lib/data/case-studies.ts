@@ -83,6 +83,24 @@ export function getCaseStudyMetas(): CaseStudyMeta[] {
   });
 }
 
+/**
+ * Returns the case-study body (everything after the closing
+ * frontmatter fence) as raw markdown/MDX. Mirror of `getPostBody` in
+ * `blog.ts`. Used by `CaseStudyJsonLd` to populate `Article.articleBody`
+ * so AI search engines have grounded prose to cite.
+ */
+export function getCaseStudyBody(slug: string): string {
+  const path = join(CONTENT_DIR, `${slug}.mdx`);
+  let raw: string;
+  try {
+    raw = readFileSync(path, 'utf8');
+  } catch {
+    return '';
+  }
+  const fm = /^---\n[\s\S]*?\n---\n/.exec(raw);
+  return fm ? raw.slice(fm[0].length).trimStart() : raw;
+}
+
 export interface CaseStudyHeading {
   /** 2 for `<h2>`, 3 for `<h3>`. We deliberately skip h4+ for the TOC. */
   depth: 2 | 3;

@@ -3,6 +3,11 @@ import type { CaseStudyFrontmatter } from '@/lib/schemas';
 
 interface Props {
   meta: CaseStudyFrontmatter;
+  /** Plain-text body for `Article.articleBody`. Lets AI search engines
+   *  (ChatGPT, Perplexity, Gemini grounding, Bing Copilot) cite the
+   *  case study with grounded prose rather than scraping rendered HTML.
+   *  Caller strips MDX scaffolding via `mdxToPlainText`. */
+  articleBody?: string;
 }
 
 /**
@@ -23,7 +28,7 @@ interface Props {
  * the layout's `<JsonLd />`, so this component only adds what's
  * page-specific.
  */
-export function CaseStudyJsonLd({ meta }: Props) {
+export function CaseStudyJsonLd({ meta, articleBody }: Props) {
   const pageUrl = `${siteConfig.url}/projects/${meta.slug}`;
   const ogImage = meta.heroImage ?? `${pageUrl}/opengraph-image.png`;
 
@@ -53,6 +58,9 @@ export function CaseStudyJsonLd({ meta }: Props) {
       '@type': 'CreativeWork',
       name: meta.projectName,
     },
+    // Grounded prose for AI engines. Omitted when empty so we don't
+    // ship a meaningless field if the source read failed.
+    ...(articleBody ? { articleBody } : {}),
   };
 
   const breadcrumbSchema = {

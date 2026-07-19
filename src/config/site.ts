@@ -18,7 +18,11 @@ export const siteConfig = {
     'Software Developer portfolio of Kartik Mouli. Explore projects built with React, Next.js, TypeScript, and modern web technologies. Available for full-time opportunities.',
   shortDescription:
     'Software Developer portfolio showcasing projects built with React, Next.js, TypeScript, and modern web technologies.',
-  url: 'https://kartikmouli.me',
+  // Canonical includes `www.` — apex (`kartikmouli.me`) 301s to this.
+  // Pinning the canonical here keeps OG image URLs, sitemap entries,
+  // RSS `<link>`s, and `canonicalUrl` defaults all on the redirect
+  // target instead of paying a 301 hop on every crawl/share.
+  url: 'https://www.kartikmouli.me',
   // Note: OG / Twitter share images are generated dynamically at
   // `src/app/opengraph-image.tsx` and `src/app/twitter-image.tsx`.
   // The favicon is `src/app/icon.svg` + `src/app/apple-icon.tsx`.

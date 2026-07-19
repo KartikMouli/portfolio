@@ -2,7 +2,7 @@
 
 A personal site. Showcases projects, work history, certifications, GitHub contributions, open-source patches, and a Gemini-powered chatbot grounded on my bio + FAQ.
 
-Live: <https://kartikmouli.me>
+Live: <https://www.kartikmouli.me>
 
 ## Tech stack
 
@@ -73,7 +73,7 @@ draft: true
 
 `pnpm dev` → drafts surface on `/blog` with a `DRAFT` pill so you can preview at `/blog/<slug>`. Flip `draft: false`, push, deploy.
 
-**Cross-posting** — posts are canonical on this site. dev.to → Settings → Extensions → "Publish from RSS" → `https://kartikmouli.me/feed.xml` to auto-import each new post (canonical URL is set automatically). Medium needs manual paste; set "originally published at" to your portfolio URL.
+**Cross-posting** — posts are canonical on this site. dev.to → Settings → Extensions → "Publish from RSS" → `https://www.kartikmouli.me/feed.xml` to auto-import each new post (canonical URL is set automatically). Medium needs manual paste; set "originally published at" to your portfolio URL.
 
 Full reference (case-study frontmatter, complete frontmatter cheat sheet, draft semantics, what's auto-derived) lives in [AUTHORING.md](AUTHORING.md).
 

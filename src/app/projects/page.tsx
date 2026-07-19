@@ -12,7 +12,11 @@ export const metadata: Metadata = {
   alternates: { canonical: `${siteConfig.url}/projects` },
   openGraph: {
     title: `Projects | ${siteConfig.author.name}`,
-    description: `A curated list of ${siteConfig.author.name}'s projects.`,
+    // Was a truncated 8-word version of the page description; OG cards
+    // get plenty of width on Twitter/LinkedIn/Discord so let the full
+    // line through and keep the keyword density consistent with what
+    // <meta name="description"> ships.
+    description: `A curated list of ${siteConfig.author.name}'s projects — production work, side projects, and proofs of concept built with React, Next.js, TypeScript, and friends.`,
     type: 'website',
     url: `${siteConfig.url}/projects`,
   },

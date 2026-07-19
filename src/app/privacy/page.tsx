@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 
+import { BreadcrumbJsonLd } from '@/components/seo/breadcrumb-jsonld';
 import { Button } from '@/components/ui/button';
 import { H1, H2, H3, List, Muted, P } from '@/components/typography';
 import { siteConfig } from '@/config/site';
@@ -19,6 +20,7 @@ const lastUpdated = 'May 2026';
 export default function PrivacyPage() {
   return (
     <section className="mt-8 pb-16 max-w-3xl mx-auto px-4 sm:px-8">
+      <BreadcrumbJsonLd name="Privacy Policy" path="/privacy" />
       {/* Header Section */}
       <div className="space-y-4 mb-8">
         <H1>Privacy Policy</H1>

@@ -3,24 +3,31 @@
     {
       "name": "Unizoy",
       "href": "https://unizoy.com",
-      "title": "Software Developer",
+      "title": "Software Development Engineer",
       "logo": "/logo/work/unizoy.png",
       "start": "Sept 2025",
       "end": "Present",
-      "description": ["Working on Unizoy's AI platform"],
+      "description": [
+        "Own the embeddable AI chat widget behind Converzoy, Unizoy's AI sales-agent platform — a Next.js app bundled by Rollup into a single drop-in embed script, with SSE-streamed responses, product-card carousels, an in-chat meeting scheduler, and proactive pop-ups triggered by scroll depth and dwell time. Live across 5+ client sites at 99.99% uptime, with one client seeing a 40% lift in conversions.",
+        "Built the WhatsApp Business Cloud API integration for the platform: per-app webhooks with signature verification, workflow invocation by app, typing indicators and read receipts, backed by a schema migration and console UI for per-tenant configuration.",
+        "Deployed and customized the self-hosted Dify-based platform on AWS with Docker and CI/CD, and added multi-tenant usage metering so new client apps launch provisioned and ready to use.",
+        "Engineered a custom RAG pipeline powering a persona chatbot that replies in a creator's distinct tone, trained on 250+ videos (~125 hrs) of YouTube content, serving 200+ daily active users.",
+        "Mentor 3–4 interns and drive cross-functional collaboration with designers and product managers, delivering 10+ project milestones at a 95% on-time rate."
+      ],
       "skills": [
         "Next.js",
         "NestJS",
         "TypeScript",
-        "AI",
-        "LangChain",
+        "Dify",
+        "RAG",
+        "SSE",
+        "WhatsApp API",
         "Docker",
         "AWS",
         "Redis",
         "Nginx",
         "CI/CD",
-        "PostgreSQL",
-        "Research"
+        "PostgreSQL"
       ]
     },
     {
@@ -31,19 +38,24 @@
       "start": "Apr 2025",
       "end": "Sept 2025",
       "description": [
-        "Developed and optimized a full-stack (ReactJS + NestJS) Trader Management Software — implemented frontend UI based on Figma designs and reduced backend API latency from 900ms+ to under 200ms through query optimization and efficient data handling.",
-        "Built AI-driven chatbot solutions — designed and implemented chatbot UIs, integrated WhatsApp webhooks, and contributed to developing Retrieval-Augmented Generation (RAG) chatbots for Unizoy’s AI platform."
+        "Developed and optimized a full-stack (React + NestJS) trader management platform — implemented frontend UI from Figma designs and reduced backend API latency from 900ms+ to under 200ms through query optimization and efficient data handling.",
+        "Built the brokerage accounting reporting suite end to end: P&L, margin, interest and account-value reports with per-UCC filtering, family-scoped views and Excel/CSV exports, plus an incremental precompute engine that recomputes only the rows affected by each upload.",
+        "Hardened the trading-data ingestion path — per-user file-upload validation with a surfaced error drawer, duplicate-entry guards keyed on UCC pairs, and corrected NSE/BSE/MCX exchange identifier handling with per-user exchange preferences.",
+        "Shipped e-commerce features for the AI chat widget: product-card carousels and variant selection rendered from tool responses, in-chat add-to-cart, and a Shopify product-tools plugin backing them.",
+        "Built the in-chat meeting scheduler (calendar slot UI, slot start/end handling, conversation-context-aware booking) and fixed multi-turn context by threading parent_message_id through the chat payload.",
+        "Integrated WhatsApp webhooks into the platform and contributed to Retrieval-Augmented Generation (RAG) chatbots for Unizoy's AI platform."
       ],
       "skills": [
         "React.js",
         "NestJS",
-        "Flask",
         "TypeScript",
+        "TypeORM",
+        "PostgreSQL",
         "Docker",
         "Figma",
-        "PostgreSQL",
         "RAG",
         "OpenAI",
+        "Shopify",
         "Webhooks"
       ]
     }
