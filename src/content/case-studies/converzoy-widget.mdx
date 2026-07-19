@@ -1,0 +1,109 @@
+---
+slug: converzoy-widget
+title: "Converzoy — code that has to survive inside someone else's website"
+summary: 'Building an embeddable chat widget means shipping JavaScript into pages you have never seen, cannot test, and must not break. A field report from the parts that fought back.'
+projectName: Converzoy
+publishedAt: '2026-07-19'
+---
+
+## The constraint
+
+Converzoy is an AI sales agent that drops into a customer's website with one script tag. The platform behind it is a self-hosted Dify deployment; what I own is the widget — the part that runs on someone else's page.
+
+That inversion is the whole job. Normally you control the document: your CSS, your scroll position, your event listeners. Embedded, you control none of it. Your code lands in a page built by a stranger, against a framework you didn't pick, and the failure mode isn't "our feature is broken" — it's "we broke their website."
+
+Everything below is from the Aug–Dec 2025 stretch when I was building that out.
+
+## The architecture that makes it survivable
+
+Two elements go into the host DOM: a bubble button and an iframe. Everything else — React, Tailwind, the entire chat UI — lives inside the iframe.
+
+That's the real isolation boundary, and it's why there's no Shadow DOM here. An iframe is a separate document; host CSS cannot reach into it and its styles cannot leak out. The two injected elements carry namespaced IDs, a `z-index` of `2147483647` (the maximum signed 32-bit integer — deliberately unbeatable), and inline styles that outrank any host rule short of `!important`.
+
+The widget itself is vanilla ES modules with **zero runtime dependencies** — no framework, no utility library, no polyfill — bundled by Rollup as an IIFE so nothing leaks into the host's global scope. That's the single biggest size decision, and it's why the shipped bundle is ~52 KB raw and ~13 KB gzipped. I later turned off production sourcemaps and enabled console/debugger stripping, which is the only change I'd call deliberate size work rather than architectural luck.
+
+Worth being precise: this is design discipline, not enforced tooling. There's no CI size budget and no bundle analyzer. The number stays small because there's nothing in it, not because anything stops it growing.
+
+## The day I lost to a keyboard
+
+On mobile the iframe covers the screen at `100dvh`. Tap the textarea, the OS raises the keyboard, and on both iOS Safari and Android Chrome the _layout_ viewport doesn't change — `window.innerHeight` stays put while the visual viewport shrinks. The input renders underneath the keyboard, invisible.
+
+I attacked this for two hours on 12 September 2025. Nine commits, four pull requests, two reverts.
+
+The version that shipped came early. Read `visualViewport`, derive one number, clamp it, push it into two CSS expressions:
+
+```
+offset = documentElement.clientHeight - visualViewport.height
+clamp:  < 20 → 0        // ignore browser-chrome jitter
+        > 360 → 360     // cap rotation transients
+input:    position: sticky; bottom: calc(env(safe-area-inset-bottom,0px) + {offset}px)
+messages: paddingBottom: calc(1rem + {offset}px)
+```
+
+Paired with the host-side half — setting the iframe's height to `visualViewport.height` explicitly on both `resize` **and** `scroll` (iOS fires scroll, not resize, when the keyboard slides in over a scrolled page) plus a body scroll-lock that stashes and restores the host's scroll position.
+
+Then I kept going, and both attempts after that were worse.
+
+The first replaced the live baseline with an `initialHeight` captured once at startup — which goes stale the moment the device rotates or the browser chrome collapses. It also registered an `orientationchange` handler as an inline arrow and removed it by a different reference, leaking a listener. The second added a _second_ viewport effect driving container height, so two independent effects both listened to the same four events and both called `setState` — a re-render storm on every frame of the keyboard animation, and two sources of truth for one measurement.
+
+Both got reverted. Main rolled back to the simple version, which is still what runs today.
+
+The pattern is uncomfortable and worth writing down: **each iteration added state and listeners, and each one was further from working.** The fix that survived reads one value per event and does arithmetic on it. I had a working solution ninety minutes before I stopped changing it.
+
+## The bug that only appeared when nobody used it
+
+Three months later, a subtler one. The iframe is preloaded hidden at init so the first open feels instant. But the style pass that applies the mobile scroll-lock ran on that hidden iframe — so **merely loading the widget froze scrolling on the host page**, before the visitor clicked anything.
+
+A customer's page, broken by a chat bubble nobody had touched yet. That's the archetypal embed failure, and the reason I now treat "what does this do before the user interacts?" as a first-class question rather than an edge case. The fix threads an explicit visibility flag through the style application and adds symmetric unlock paths, including on teardown.
+
+## Absence of data is not an error
+
+Cold starts flashed an "app unavailable" screen for a few hundred milliseconds.
+
+The cause was ordering. A loading guard had been commented out, so during the async config fetch the component fell straight through to the unavailability check — and since every value is null on first render, the error branch won. Worse, a sibling component _committed_ that state on first pass, so it wasn't only cosmetic.
+
+The fix was to run the loading check before the availability check and return a skeleton. Stated as a rule: **absence of data is a loading state, not an error state.** Unknown and broken are different, and the code was conflating them at exactly the moment when everything is unknown.
+
+The genuine-failure path is deliberately blunt in the other direction. When the backend really is down, the widget posts one message to the host — once per page life, latched, wrapped in try/catch so a cross-origin throw can't spill into the customer's console — and the host removes the button and the iframe from the DOM entirely. A visitor sees nothing at all, which is the correct failure mode for third-party code on someone else's site. A broken chat bubble is worse than no chat bubble.
+
+## Delegating what you're not allowed to do
+
+The widget renders product cards from the agent's tool output, with an add-to-cart button. It cannot add anything to a cart. It's on a different origin, and the cart is cookie-scoped to the merchant's domain.
+
+So it doesn't try. It converts the Shopify global ID to the numeric variant ID the cart endpoint wants, checks whether it's actually embedded, and posts the intent to the host page — which _is_ same-origin and can perform the call. Run standalone, it warns explicitly and returns a falsy result instead of failing silently.
+
+I like this one because the answer wasn't a workaround. The privileged action belongs to the privileged context; the widget's job is to ask clearly.
+
+## Waiting for the JSON to finish
+
+When the agent's answer _is_ a structured payload destined to become a card, SSE streams it token by token — so users watched `{"type": "sched` accumulate on screen before it snapped into a rendered card.
+
+You can't `JSON.parse` a partial stream to test whether it's done, and a naive brace count breaks the first time a product description contains a `}` or an escaped quote. So completeness is a small character scanner that tracks brace and bracket depth, skips escaped characters, and only counts delimiters _outside_ string literals — with `JSON.parse` as a second gate after it passes.
+
+The part I'd point at is the third effect: a timer that force-completes any buffer older than fifteen seconds. A malformed payload that never balances its braces degrades to showing raw text instead of hanging that message forever. Streaming parsers need a way to give up.
+
+## Threading a conversation
+
+Multi-turn context was broken in a way that took a while to see. Follow-ups like _"what about the blue one?"_ were answered as if they were the first message.
+
+Conversation history upstream is a message _tree_ walked via parent links, not a flat list under a conversation ID — and the frontend wasn't sending a parent, so every user turn attached at the root. The fix threads the last valid answer's ID into the payload.
+
+"Valid" is where the actual work is. The chat list contains client-side fictions: optimistic placeholders rendered on send before the server assigns an ID, and a locally-generated greeting bubble that has no server row. Threading to either points at an ID the backend has never seen. A later hardening pass caught a third class — timestamp-based temporary IDs, which are pure numeric strings that slipped past both guards.
+
+The rule that emerged: only server-assigned IDs are valid parents, and anything the client invented for rendering purposes must be excluded explicitly. Client-side IDs and server-side IDs living in one array is a design that will keep generating this bug.
+
+## What I'd do differently
+
+**Tighten origin discipline.** The postMessage layer is more permissive than it should be, and I'd revisit it before adding another message type.
+
+**Finish the cancellation path.** Closing the widget mid-stream is plumbed end to end in the UI — state, handlers, guarded abort calls — except the fetch is never actually wired to a signal, so nothing cancels. The stream keeps reading after the UI stops rendering. Every layer looks correct in isolation; the wire between the last two is missing. That's the failure mode of plumbing something top-down and never testing the whole path.
+
+**Don't patch a stranger's History API without unpatching it.** Route changes on host SPAs are detected by wrapping `pushState` and `replaceState`. It delegates to the originals correctly, but teardown never restores them — so re-initializing the widget stacks patches.
+
+**Write tests.** There are none for the embed code. The keyboard saga is exactly the kind of thing a test would have arbitrated in minutes instead of two hours and two reverts, and every honest finding in this section is something a test would have caught.
+
+## Stack
+
+`Next.js 14 · React 18 · TypeScript · Rollup · vanilla ES modules · SSE · Tailwind · Docker`
+
+[Live](https://converzoy.com)
